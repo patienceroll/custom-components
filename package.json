@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "webpack": "^5.42.0"
+  },
+  "scripts": {
+    "commit": "npx git-cz"
+  }
+}
