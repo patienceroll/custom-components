@@ -1,8 +1,8 @@
 body {
-  --cs-success: #52c41a;
-  --cs-processing: #1890ff;
-  --cs-error: #f5222d;
-  --cs-warning: #fa8c16;
+  --cp-success: #52c41a;
+  --cp-processing: #1890ff;
+  --cp-error: #f5222d;
+  --cp-warning: #fa8c16;
 }
 
 cp-tag {
@@ -21,21 +21,21 @@ cp-tag {
 }
 
 cp-tag[color="success"] {
-  color: var(--cs-success);
-  border-color: var(--cs-success);
+  color: var(--cp-success);
+  border-color: var(--cp-success);
 }
 
 cp-tag[color="processing"] {
-  color: var(--cs-processing);
-  border-color: var(--cs-processing);
+  color: var(--cp-processing);
+  border-color: var(--cp-processing);
 }
 
 cp-tag[color="error"] {
-  color: var(--cs-error);
-  border-color: var(--cs-error);
+  color: var(--cp-error);
+  border-color: var(--cp-error);
 }
 
 cp-tag[color="warning"] {
-  color: var(--cs-warning);
-  border-color: var(--cs-warning);
+  color: var(--cp-warning);
+  border-color: var(--cp-warning);
 }
