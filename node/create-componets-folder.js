@@ -21,7 +21,9 @@ const CreateComponetsFolder = () => {
           const componetJs = Fs.readFileSync(
             `${__dirname}\\assets\\componet.js`
           );
+          const css = Fs.readFileSync(`${__dirname}\\assets\\index.css`);
           Fs.writeFileSync(`${componetsPath}\\${name}\\index.html`, html);
+          Fs.writeFileSync(`${componetsPath}\\${name}\\index.css`, css);
           Fs.writeFileSync(
             `${componetsPath}\\${name}\\componet.js`,
             componetJs

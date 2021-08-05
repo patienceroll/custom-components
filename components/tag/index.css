@@ -1,0 +1,41 @@
+body {
+  --cs-success: #52c41a;
+  --cs-processing: #1890ff;
+  --cs-error: #f5222d;
+  --cs-warning: #fa8c16;
+}
+
+cp-tag {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px solid #d9d9d9;
+  font-size: 12px;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+.cp-tag-close-icon {
+  vertical-align: middle;
+  cursor: pointer;
+  margin-left: 3px;
+}
+
+cp-tag[color="success"] {
+  color: var(--cs-success);
+  border-color: var(--cs-success);
+}
+
+cp-tag[color="processing"] {
+  color: var(--cs-processing);
+  border-color: var(--cs-processing);
+}
+
+cp-tag[color="error"] {
+  color: var(--cs-error);
+  border-color: var(--cs-error);
+}
+
+cp-tag[color="warning"] {
+  color: var(--cs-warning);
+  border-color: var(--cs-warning);
+}
