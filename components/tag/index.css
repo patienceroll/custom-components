@@ -6,19 +6,21 @@ body {
 }
 
 cp-tag {
-  display: inline-block;
   padding: 0 7px;
-  border: 1px solid #d9d9d9;
   font-size: 12px;
-  line-height: 20px;
-  vertical-align: middle;
+  line-height: 18px;
+  border: 1px solid #d9d9d9;
 }
 
 .cp-tag-close-icon {
-  vertical-align: middle;
   cursor: pointer;
+  line-height: 12px;
   margin-left: 3px;
 }
+
+/* .cp-tag-close-icon svg {
+ 
+} */
 
 cp-tag[color="success"] {
   color: var(--cp-success);
