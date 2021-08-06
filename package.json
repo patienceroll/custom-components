@@ -2,5 +2,10 @@
   "scripts": {
     "create": "node ./node/create-componets-folder.js",
     "commit": "npx git-cz"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "rollup": "^2.56.0",
+    "typescript": "^4.3.5"
   }
 }
