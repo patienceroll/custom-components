@@ -14,13 +14,8 @@ cp-tag {
 
 .cp-tag-close-icon {
   cursor: pointer;
-  line-height: 12px;
   margin-left: 3px;
 }
-
-/* .cp-tag-close-icon svg {
- 
-} */
 
 cp-tag[color="success"] {
   color: var(--cp-success);

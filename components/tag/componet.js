@@ -7,8 +7,11 @@
        * 值为 success | processing | warning | errror 或 css color 属性的值
        */
       const color = this.getAttribute("color");
+      
       /** 标签是否可关闭 */
       const closable = this.getAttribute("closable");
+
+
       if (
         color &&
         !["success", "processing", "warning", "errror"].includes(color)
