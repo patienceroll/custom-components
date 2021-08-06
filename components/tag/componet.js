@@ -31,6 +31,10 @@
         this.style.color = color;
         this.style.border = `1px solid ${color}`;
       }
+      const style = getComputedStyle(this);
+      this.style.backgroundColor = window.utils.rgbToRgba(style.color, {
+        alphRate: 0.1,
+      });
     }
 
     /**
