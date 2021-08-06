@@ -1,7 +1,10 @@
+import rollupPluginTypescript from "rollup-plugin-typescript";
+
 export default {
-  input: "src/main.js",
+  input: "components/tag/index.ts",
   output: {
-    file: "bundle.js",
+    file: "./debugge/index.js",
     format: "cjs",
   },
+  plugins: [rollupPluginTypescript()],
 };
