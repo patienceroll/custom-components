@@ -2,7 +2,7 @@ body {
   --cp-success: #52c41a;
   --cp-processing: #1890ff;
   --cp-error: #f5222d;
-  --cp-warning: #fa8c16;
+  --cp-warning: #fa8c16;  
 }
 
 cp-tag {
