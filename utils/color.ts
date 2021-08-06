@@ -5,7 +5,7 @@
  * @param {string} color
  * @param {{alphRate:number} | undefined} options alphRate 为 0-1 的数字,会与color的透明度相乘
  */
-const rgbToRgba = (color, options = { alphRate: 1 }) => {
+export const rgbToRgba = (color: string, options = { alphRate: 1 }) => {
   if (typeof color !== "string") return color;
   const regRgbaAndRgb =
     /rgba?\((\d{1,3}),(\d{1,3}),(\d{1,3})([,]?)([\(\).\d]*)?\)/;
@@ -22,5 +22,3 @@ const rgbToRgba = (color, options = { alphRate: 1 }) => {
   }
   return color;
 };
-
-window.utils = { rgbToRgba };
