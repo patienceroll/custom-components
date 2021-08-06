@@ -1,9 +1,12 @@
 {
   "scripts": {
     "create": "node ./node/create-componets-folder.js",
+    "build": " yarn rollup --config rollup.config.js",
     "commit": "npx git-cz"
   },
-  "dependencies": {},
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
   "devDependencies": {
     "rollup": "^2.56.0",
     "rollup-plugin-typescript": "^1.0.1",

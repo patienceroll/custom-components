@@ -1,9 +1,9 @@
 import type { TagType } from "./data";
 import { rgbToRgba } from "../../utils/color";
 
-class Tag extends HTMLSpanElement {
-  closeIcon: HTMLSpanElement;
-  static closeIcon: HTMLSpanElement;
+class Tag extends HTMLElement {
+  closeIcon: HTMLElement;
+  static closeIcon: HTMLElement;
   constructor() {
     super();
     const closeIcon = document.createElement("span");
