@@ -29,10 +29,11 @@
         !["success", "processing", "warning", "errror"].includes(color)
       ) {
         this.style.color = color;
-        this.style.border = `1px solid ${color}`;
       }
+      const { rgbToRgba } = window.utils;
       const style = getComputedStyle(this);
-      this.style.backgroundColor = window.utils.rgbToRgba(style.color, {
+      this.style.border = `1px solid ${rgbToRgba(style.color, { alphRate: 0.3 })}`;
+      this.style.backgroundColor = rgbToRgba(style.color, {
         alphRate: 0.1,
       });
     }
