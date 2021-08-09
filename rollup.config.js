@@ -1,10 +1,14 @@
-import rollupPluginTypescript from "rollup-plugin-typescript";
+import { defineConfig } from "rollup";
 
-export default {
-  input: "components/index.ts",
-  output: {
-    dir: "./debugge",
-  },
-  plugins: [rollupPluginTypescript()],
+import rollupPluginTypescript from "rollup-plugin-typescript";
+import rolluppluginCssOnly from "rollup-plugin-css-only";
+
+export default defineConfig({
+  input: ["components/index.ts", "css/index.css"],
+  output: [{ dir: "./debugge" }],
+  plugins: [
+    rolluppluginCssOnly({ output: "index.css" }),
+    rollupPluginTypescript(),
+  ],
   preserveModules: true,
-};
+});
