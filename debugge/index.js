@@ -85,10 +85,10 @@ class Tag extends HTMLElement {
     attributeChangedCallback(attrName, oldValue, newValue) {
         switch (attrName) {
             case "closable":
-                Tag.setCloseable.call(this, newValue || "");
+                Tag.setCloseable.call(this, newValue);
                 break;
             case "color":
-                Tag.setColor.call(this, newValue || "");
+                Tag.setColor.call(this, newValue);
                 break;
         }
     }
