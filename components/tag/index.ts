@@ -1,5 +1,7 @@
 import type { TagType } from "./data";
 import { rgbToRgba } from "../../utils/color";
+import { pushClassName } from "../../utils/class-name";
+import { secondsToNumber } from "../../utils/time";
 
 class Tag extends HTMLElement {
   closeIcon: HTMLElement;
@@ -14,7 +16,16 @@ class Tag extends HTMLElement {
     closeIcon.onclick = () => {
       this.dispatchEvent(new CustomEvent("close"));
       /** 在 remove 之前还需要执行动画 */
-      this.remove();
+      this.setAttribute(
+        "class",
+        pushClassName(this.getAttribute("class") || "", "cp-disappear")
+      );
+      setTimeout(
+        () => {
+          this.remove();
+        },
+        secondsToNumber(getComputedStyle(this).animationDuration) * 1000
+      );
     };
     closeIcon.style.display = "none";
     this.closeIcon = closeIcon;

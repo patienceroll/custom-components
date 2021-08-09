@@ -1,0 +1,13 @@
+@keyframes disappear {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.cp-disappear {
+  animation: disappear 300ms ease;
+  animation-fill-mode: forwards;
+}

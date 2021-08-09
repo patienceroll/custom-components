@@ -1,39 +1,9 @@
+@import url(./css/animate/index.css);
+@import url(./css/components/tag/index.css);
+
 body {
   --cp-success: #52c41a;
   --cp-processing: #1890ff;
   --cp-error: #f5222d;
-  --cp-warning: #fa8c16;  
-}
-
-cp-tag {
-  padding: 0 7px;
-  font-size: 12px;
-  line-height: 18px;
-  border: 1px solid #d9d9d9;
-  border-radius: 2px;
-}
-
-.cp-tag-close-icon {
-  cursor: pointer;
-  margin-left: 3px;
-}
-
-cp-tag[color="success"] {
-  color: var(--cp-success);
-  border-color: var(--cp-success);
-}
-
-cp-tag[color="processing"] {
-  color: var(--cp-processing);
-  border-color: var(--cp-processing);
-}
-
-cp-tag[color="error"] {
-  color: var(--cp-error);
-  border-color: var(--cp-error);
-}
-
-cp-tag[color="warning"] {
-  color: var(--cp-warning);
-  border-color: var(--cp-warning);
+  --cp-warning: #fa8c16;
 }
