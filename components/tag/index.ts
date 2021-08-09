@@ -20,12 +20,9 @@ class Tag extends HTMLElement {
         "class",
         pushClassName(this.getAttribute("class") || "", "cp-disappear")
       );
-      setTimeout(
-        () => {
-          this.remove();
-        },
-        secondsToNumber(getComputedStyle(this).animationDuration) * 1000
-      );
+      setTimeout(() => {
+        this.remove();
+      }, secondsToNumber(getComputedStyle(this).animationDuration) * 1000);
     };
     closeIcon.style.display = "none";
     this.closeIcon = closeIcon;
@@ -36,7 +33,7 @@ class Tag extends HTMLElement {
 
   static setColor(
     this: HTMLElement,
-    color: TagType | HTMLElement["style"]["color"]
+    color: TagType | HTMLElement["style"]["color"] | null
   ) {
     if (
       color &&
@@ -53,7 +50,7 @@ class Tag extends HTMLElement {
     });
   }
 
-  static setCloseable(closable: string) {
+  static setCloseable(closable: string | null) {
     if (closable === "true") {
       this.closeIcon.style.display = "unset";
     } else {
@@ -70,10 +67,10 @@ class Tag extends HTMLElement {
   ) {
     switch (attrName) {
       case "closable":
-        Tag.setCloseable.call(this, newValue || "");
+        Tag.setCloseable.call(this, newValue);
         break;
       case "color":
-        Tag.setColor.call(this, newValue || "");
+        Tag.setColor.call(this, newValue);
         break;
       default:
         break;
