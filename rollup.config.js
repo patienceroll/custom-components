@@ -3,8 +3,8 @@ import rollupPluginTypescript from "rollup-plugin-typescript";
 export default {
   input: "components/index.ts",
   output: {
-    file: "./debugge/index.js",
-    format: "cjs",
+    dir: "./debugge",
   },
   plugins: [rollupPluginTypescript()],
+  preserveModules: true,
 };
