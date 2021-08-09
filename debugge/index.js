@@ -22,6 +22,24 @@ const rgbToRgba = (color, options = { alphRate: 1 }) => {
     return color;
 };
 
+/** class 字符串末尾添加 class */
+const pushClassName = (current, appendChild) => {
+    if (typeof appendChild === "string") {
+        if (!current)
+            return appendChild;
+        return `${current} ${appendChild}`;
+    }
+    if (Array.isArray(appendChild))
+        return `${current} ${appendChild.join(" ")}`;
+    return current;
+};
+
+/**
+ * #### 字符串秒转换为数字
+ * - 如 "0.3s" --> 0.3
+ */
+const secondsToNumber = (num) => Number(num.replace(/s/g, ""));
+
 class Tag extends HTMLElement {
     constructor() {
         super();
@@ -33,7 +51,10 @@ class Tag extends HTMLElement {
         closeIcon.onclick = () => {
             this.dispatchEvent(new CustomEvent("close"));
             /** 在 remove 之前还需要执行动画 */
-            this.remove();
+            this.setAttribute("class", pushClassName(this.getAttribute("class") || "", "cp-disappear"));
+            setTimeout(() => {
+                this.remove();
+            }, secondsToNumber(getComputedStyle(this).animationDuration) * 1000);
         };
         closeIcon.style.display = "none";
         this.closeIcon = closeIcon;
