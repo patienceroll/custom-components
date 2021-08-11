@@ -1,14 +1,17 @@
 import { defineConfig } from "rollup";
 
 import rollupPluginTypescript from "rollup-plugin-typescript";
-import rolluppluginCssOnly from "rollup-plugin-css-only";
+import postcss from "rollup-plugin-postcss";
 
 export default defineConfig({
-  input: ["components/index.ts", "css/index.css"],
+  input: ["components/index.ts"],
   output: [{ dir: "./debugge" }],
   plugins: [
     rollupPluginTypescript(),
-    rolluppluginCssOnly({ output: "index.css" }),
+    postcss({
+      extract: true,
+      extract: "css/index.css",
+    }),
   ],
   preserveModules: true,
 });
