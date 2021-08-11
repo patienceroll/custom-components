@@ -7,8 +7,8 @@ export default defineConfig({
   input: ["components/index.ts", "css/index.css"],
   output: [{ dir: "./debugge" }],
   plugins: [
-    rolluppluginCssOnly({ output: "index.css" }),
     rollupPluginTypescript(),
+    rolluppluginCssOnly({ output: "index.css" }),
   ],
   preserveModules: true,
 });
