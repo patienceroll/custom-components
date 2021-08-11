@@ -1,7 +1,8 @@
 {
   "scripts": {
     "create": "node ./node/create-componets-folder.js",
-    "build": " yarn rollup --config rollup.config.js",
+    "debugge": "set type=debugge&&rollup --config rollup.config.js",
+    "build": "set type=build&&rollup --config rollup.config.js",
     "commit": "npx git-cz"
   },
   "dependencies": {
