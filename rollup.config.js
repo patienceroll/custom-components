@@ -4,7 +4,7 @@ import rollupPluginTypescript from "rollup-plugin-typescript";
 import postcss from "rollup-plugin-postcss";
 
 export default defineConfig({
-  input: ["components/index.ts"],
+  input: ["index.ts"],
   output: [{ dir: "./debugge" }],
   plugins: [
     rollupPluginTypescript(),
