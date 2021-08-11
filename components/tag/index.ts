@@ -3,6 +3,8 @@ import { rgbToRgba } from "../../utils/color";
 import { pushClassName } from "../../utils/class-name";
 import { secondsToNumber } from "../../utils/time";
 
+import './index.css'
+
 class Tag extends HTMLElement {
   closeIcon: HTMLElement;
   static closeIcon: HTMLElement;
