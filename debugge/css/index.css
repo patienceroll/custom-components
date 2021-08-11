@@ -1,3 +1,24 @@
+body {
+  --cp-success: #52c41a;
+  --cp-processing: #1890ff;
+  --cp-error: #f5222d;
+  --cp-warning: #fa8c16;
+}
+
+@keyframes disappear {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.cp-disappear {
+  animation: disappear 300ms ease;
+  animation-fill-mode: forwards;
+}
+
 cp-tag {
   display: inline-block;
   padding: 0 7px;
@@ -30,25 +51,4 @@ cp-tag[color="error"] {
 cp-tag[color="warning"] {
   color: var(--cp-warning);
   border-color: var(--cp-warning);
-}
-
-body {
-  --cp-success: #52c41a;
-  --cp-processing: #1890ff;
-  --cp-error: #f5222d;
-  --cp-warning: #fa8c16;
-}
-
-@keyframes disappear {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(0);
-  }
-}
-
-.cp-disappear {
-  animation: disappear 300ms ease;
-  animation-fill-mode: forwards;
 }
