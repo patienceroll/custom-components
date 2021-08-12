@@ -29,9 +29,9 @@ class Tag extends HTMLElement {
     this.appendChild(closeIcon);
   }
 
-  closeIcon: HTMLElement;
+  closeIcon: HTMLSpanElement;
   static observedAttributes = ["color", "closable"];
-  
+
   static setColor(
     this: Tag,
     color: TagType | HTMLElement["style"]["color"] | null
