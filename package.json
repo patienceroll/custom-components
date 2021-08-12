@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "debugge": "cross-env type=debugge&&rollup --config rollup.config.js",
-    "build": "cross-env type=build&&rollup --config rollup.config.js",
+    "debugge": "cross-env type=debugge rollup --config rollup.config.js",
+    "build": "cross-env type=build rollup --config rollup.config.js",
     "commit": "npx git-cz"
   },
   "dependencies": {
