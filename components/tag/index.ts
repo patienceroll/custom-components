@@ -7,6 +7,7 @@ import './index.css'
 
 class Tag extends HTMLElement {
   closeIcon: HTMLElement;
+  /** 实际上 Tag 没有这个属性 */
   static closeIcon: HTMLElement;
   constructor() {
     super();
