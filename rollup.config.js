@@ -12,7 +12,7 @@ export default defineConfig({
   input: ["index.ts"],
   output: [{ dir: output[process.env.type] }],
   plugins: [
-    rollupPluginTypescript(),
+    rollupPluginTypescript({ tsconfig: "tsconfig.json" }),
     postcss({
       extract: true,
       extract: "css/index.css",
