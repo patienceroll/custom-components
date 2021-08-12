@@ -3,12 +3,9 @@ import { rgbToRgba } from "../../utils/color";
 import { pushClassName } from "../../utils/class-name";
 import { secondsToNumber } from "../../utils/time";
 
-import './index.css'
+import "./index.css";
 
 class Tag extends HTMLElement {
-  closeIcon: HTMLElement;
-  /** 实际上 Tag 没有这个属性 */
-  static closeIcon: HTMLElement;
   constructor() {
     super();
     const closeIcon = document.createElement("span");
@@ -32,10 +29,11 @@ class Tag extends HTMLElement {
     this.appendChild(closeIcon);
   }
 
+  closeIcon: HTMLElement;
   static observedAttributes = ["color", "closable"];
-
+  
   static setColor(
-    this: HTMLElement,
+    this: Tag,
     color: TagType | HTMLElement["style"]["color"] | null
   ) {
     if (
@@ -53,7 +51,7 @@ class Tag extends HTMLElement {
     });
   }
 
-  static setCloseable(closable: string | null) {
+  static setCloseable(this: Tag, closable: string | null) {
     if (closable === "true") {
       this.closeIcon.style.display = "unset";
     } else {
