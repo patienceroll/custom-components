@@ -5,7 +5,7 @@ body {
   --cp-warning: #fa8c16;
 }
 
-@keyframes disappear {
+@keyframes cp-animate-disappear {
   from {
     transform: scale(1);
   }
@@ -15,7 +15,7 @@ body {
 }
 
 .cp-disappear {
-  animation: disappear 300ms ease;
+  animation: cp-animate-disappear 300ms ease;
   animation-fill-mode: forwards;
 }
 
