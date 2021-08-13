@@ -24,7 +24,8 @@ closeIcon.onclick = (event) => {
   this.dispatchEvent(customEvent);
 };
 ```
--[CustomEvent 相关资料](https://developer.mozilla.org/zh-CN/docs/Web/API/CustomEvent)
+
+- [CustomEvent 相关资料](https://developer.mozilla.org/zh-CN/docs/Web/API/CustomEvent)
 
 #### Web Components 相关资料
 
