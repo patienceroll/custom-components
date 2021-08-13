@@ -6,16 +6,38 @@ body {
 }
 
 @keyframes cp-animate-disappear {
-  from {
+  0% {
     transform: scale(1);
   }
-  to {
+  99% {
     transform: scale(0);
+  }
+  100% {
+    display: none;
   }
 }
 
 .cp-disappear {
   animation: cp-animate-disappear 300ms ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cp-animate-appear {
+  0% {
+    display: inline-block;
+    transform: scale(0);
+  }
+  99% {
+    display: inline-block;
+    transform: scale(1);
+  }
+  100% {
+    display: inline-block;
+  }
+}
+
+.cp-appear {
+  animation: cp-animate-appear 300ms ease;
   animation-fill-mode: forwards;
 }
 

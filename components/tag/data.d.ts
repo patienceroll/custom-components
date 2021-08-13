@@ -4,5 +4,7 @@ export interface TagProps {
   color?: TagType | CSSStyleDeclaration["color"];
   closable?: "true";
   show?: "true" | "false";
-  onclose: () => {};
+  onclose?: (
+    event: CustomEvent<{ domEvent: MouseEvent; show?: boolean }>
+  ) => void;
 }
