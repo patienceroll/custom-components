@@ -6,14 +6,11 @@ body {
 }
 
 @keyframes cp-animate-disappear {
-  0% {
+  from {
     transform: scale(1);
   }
-  99% {
+  to {
     transform: scale(0);
-  }
-  100% {
-    display: none;
   }
 }
 
@@ -23,16 +20,11 @@ body {
 }
 
 @keyframes cp-animate-appear {
-  0% {
-    display: inline-block;
+  from {
     transform: scale(0);
   }
-  99% {
-    display: inline-block;
+  to {
     transform: scale(1);
-  }
-  100% {
-    display: inline-block;
   }
 }
 
