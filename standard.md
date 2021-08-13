@@ -12,7 +12,7 @@
 
 #### 事件处理
 
-1. 组件的自定义方法(如：Tag 的 onclose 方法),需要把触发方法的 DOM 事件通过 Detail 传递出去,字段为 domEvent
+1. 组件的自定义方法(如: Tag 组件的 onclose 方法),需要把触发方法的 DOM 事件通过 Detail 传递出去,字段为 domEvent
 
 ```javascript
 closeIcon.onclick = (event) => {
