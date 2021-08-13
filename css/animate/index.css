@@ -11,3 +11,17 @@
   animation: cp-animate-disappear 300ms ease;
   animation-fill-mode: forwards;
 }
+
+@keyframes cp-animate-appear {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.cp-appear {
+  animation: cp-animate-appear 300ms ease;
+  animation-fill-mode: forwards;
+}

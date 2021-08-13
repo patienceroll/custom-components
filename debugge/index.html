@@ -14,6 +14,7 @@
     <ul>
         <li>标签</li>
         <div>
+            <cp-tag id='cp-tag'>默认</cp-tag>
             <cp-tag color="success" closable="true">成功</cp-tag>
             <cp-tag color="processing">进行中</cp-tag>
             <cp-tag color="error" closable="true">错误</cp-tag>
@@ -23,16 +24,22 @@
             <cp-tag color="yellow" closable="true">yellow</cp-tag>
             <cp-tag color="orange" closable="true">orange</cp-tag>
             <cp-tag color="#f50" closable="true">#f50</cp-tag>
-            <cp-tag color="magenta" closable="true" onclose="onClose(event)">magenta</cp-tag>
+            <cp-tag color="magenta" closable="true" onclose="(function(event){console.log(event);})(event)">magenta
+            </cp-tag>
         </div>
-
     </ul>
     <script type="module" src="./components/index.js"></script>
     <script>
-        function onClose(event) {
-            console.log(event)
-        }
+        const element = document.getElementById('cp-tag')
+        setInterval(() => {
+            const show = element.getAttribute('show')
+            if (show === 'true') element.setAttribute("show", 'false')
+            else if (show === 'false') element.setAttribute('show', "true")
+            else element.setAttribute('show', 'false')
+
+        }, 1000)
     </script>
+
 
 </body>
 
