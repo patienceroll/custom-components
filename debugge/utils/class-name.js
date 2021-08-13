@@ -25,6 +25,16 @@ const elementPushClass = (element, appendClass) => {
     }
     element.setAttribute("class", newClass);
 };
+/**
+ * #### element 移除 class 的部分类名
+ * ```javascript
+ *  // <element class="a b" />    ===>   <element class="a" />
+ *  elementRemoveClass(element,"b")
+ *
+ *  // <element class="a b c" />    ===>   <element class="a" />
+ *  elementRemoveClass(element,["b","c"])
+ * ```
+ */
 const elementRemoveClass = (element, removeClass) => {
     const className = element.getAttribute("class") || "";
     let newClassName = "";
