@@ -26,6 +26,7 @@ export default defineConfig({
         debugge: [],
         build: [
           { src: "components/**/*", dest: "dist/lib/components" },
+          { src: "utils/**/*", dest: "dist/lib/utils" },
           { src: "css/**/*", dest: "dist/lib/css" },
           { src: "index.ts", dest: "dist/lib" },
           { src: "package.json", dest: "dist/lib" },
