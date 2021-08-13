@@ -90,9 +90,9 @@ class Tag extends HTMLElement {
                 if (newValue === "true") {
                     elementRemoveClass(this, "cp-disappear");
                     elementPushClass(this, "cp-appear");
-                    setTimeout(() => {
-                        this.style.display = "inline-block";
-                    }, secondsToNumber(getComputedStyle(this).animationDuration) * 1000);
+                    this.style.display = "inline-block";
+                    // setTimeout(() => {
+                    // }, secondsToNumber(getComputedStyle(this).animationDuration) * 1000);
                 }
                 else if (newValue === "false") {
                     elementRemoveClass(this, "cp-appear");
