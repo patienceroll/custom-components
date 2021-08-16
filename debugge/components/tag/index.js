@@ -56,17 +56,17 @@ class Tag extends HTMLElement {
             !["success", "processing", "warning", "errror"].includes(color)) {
             this.style.color = color;
         }
-        const style = getComputedStyle(this);
+        const { color: computeColor } = getComputedStyle(this);
         if (pureBackground === "true") {
-            this.style.borderColor = style.color;
-            this.style.backgroundColor = style.color;
-            this.style.color = '#fff';
+            this.style.borderColor = computeColor;
+            this.style.backgroundColor = computeColor;
+            this.style.color = "#fff";
         }
         else {
-            this.style.border = `1px solid ${rgbToRgba(style.color, {
+            this.style.border = `1px solid ${rgbToRgba(computeColor, {
                 alphRate: 0.3,
             })}`;
-            this.style.backgroundColor = rgbToRgba(style.color, {
+            this.style.backgroundColor = rgbToRgba(computeColor, {
                 alphRate: 0.1,
             });
         }
@@ -87,12 +87,17 @@ class Tag extends HTMLElement {
     static setCloseIconOnClick() { }
     connectedCallback() { }
     attributeChangedCallback(attrName, oldValue, newValue) {
+        console.log(attrName, newValue);
         switch (attrName) {
             case "closable":
                 Tag.setCloseable.call(this, newValue);
                 break;
             case "color":
                 Tag.setColor.call(this, newValue);
+                break;
+            case "pure-background":
+                const color = this.getAttribute("color");
+                Tag.setColor.call(this, color);
                 break;
             case "show":
                 if (newValue === "true") {
@@ -111,6 +116,6 @@ class Tag extends HTMLElement {
         }
     }
 }
-Tag.observedAttributes = ["color", "closable", "show"];
+Tag.observedAttributes = ["color", "closable", "show", "pure-background"];
 if (!customElements.get("cp-tag"))
     customElements.define("cp-tag", Tag);
