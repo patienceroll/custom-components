@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>custom components</title>
+  <link href="./css/index.css" rel="stylesheet">
+  </link>
+</head>
+
+<body>
+  <ul>
+    <li>
+      <label>标签</label>
+      <br />
+      <ul>
+        <li>
+          <label style="font-size: 12px;">默认类型</label>
+          <br />
+          <cp-tag color="success">success</cp-tag>
+          <cp-tag color="processing">processing</cp-tag>
+          <cp-tag color="warning">warning</cp-tag>
+          <cp-tag color="error">error</cp-tag>
+        </li>
+
+        <li>
+          <label style="font-size: 12px;">自定义颜色</label>
+          <br />
+          <cp-tag color="magenta">magenta</cp-tag>
+          <cp-tag color="#f50">#f50</cp-tag>
+        </li>
+
+        <li>
+          <label style="font-size: 12px;">可关闭的</label>
+          <br />
+          <cp-tag color="cyan" closable="true">cyan</cp-tag>
+          <cp-tag color="purple" closable="true">purple</cp-tag>
+          <cp-tag color="lime" closable="true">lime</cp-tag>
+        </li>
+
+        <li>
+          <label style="font-size: 12px;">受控的显示隐藏</label>
+          <br />
+          <cp-tag color="orange" id="control-tag" closable="true">受控Tag</cp-tag>
+          <br />
+          <button style="margin-top: 10px;" onclick="(() => {
+            document.querySelector('#control-tag').setAttribute('show','true')
+          })()">
+            显示
+          </button>
+          <button onclick="(() => {
+            document.querySelector('#control-tag').setAttribute('show','false');
+          })()">
+            隐藏
+          </button>
+        </li>
+
+      </ul>
+    </li>
+  </ul>
+
+  <script src="./index.js" type="module"></script>
+</body>
+
+</html>

@@ -74,8 +74,8 @@
     ]
   },
   "include": [
-    "components/*",
-    "css/*",
-    "utils/*"
+    "components/**/*",
+    "css/**/*",
+    "utils/**/*"
   ],
 }

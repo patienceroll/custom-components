@@ -66,3 +66,13 @@ cp-tag[color="warning"] {
   color: var(--cp-warning);
   border-color: var(--cp-warning);
 }
+
+.cp-ripple{
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}

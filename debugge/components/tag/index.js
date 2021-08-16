@@ -77,7 +77,8 @@ class Tag extends HTMLElement {
         }
     }
     static setCloseIconOnClick() { }
-    connectedCallback() { }
+    connectedCallback() {
+    }
     attributeChangedCallback(attrName, oldValue, newValue) {
         switch (attrName) {
             case "closable":
