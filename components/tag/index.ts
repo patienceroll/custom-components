@@ -1,7 +1,7 @@
 import type { TagType } from "./data";
-import { rgbToRgba } from "utils/color";
-import { elementPushClass, elementRemoveClass } from "utils/class-name";
-import { secondsToNumber } from "utils/time";
+import { rgbToRgba } from "../../utils/color";
+import { elementPushClass, elementRemoveClass } from "../../utils/class-name";
+import { secondsToNumber } from "../../utils/time";
 
 import "./index.css";
 
@@ -10,6 +10,9 @@ class Tag extends HTMLElement {
     super();
     const closeIcon = Tag.initCloseIcon.call(this);
     this.closeIcon = closeIcon;
+    const IconSlot = document.createElement("slot");
+    IconSlot.name = "icon";
+    this.insertBefore(IconSlot, this.firstChild);
     this.appendChild(closeIcon);
   }
 
