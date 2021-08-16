@@ -7,6 +7,9 @@ class Tag extends HTMLElement {
         super();
         const closeIcon = Tag.initCloseIcon.call(this);
         this.closeIcon = closeIcon;
+        const IconSlot = document.createElement("slot");
+        IconSlot.name = "icon";
+        this.insertBefore(IconSlot, this.firstChild);
         this.appendChild(closeIcon);
     }
     /**
@@ -87,7 +90,6 @@ class Tag extends HTMLElement {
     static setCloseIconOnClick() { }
     connectedCallback() { }
     attributeChangedCallback(attrName, oldValue, newValue) {
-        console.log(attrName, newValue);
         switch (attrName) {
             case "closable":
                 Tag.setCloseable.call(this, newValue);

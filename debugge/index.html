@@ -46,6 +46,18 @@
           <cp-tag color="purple" pure-background="true">purple</cp-tag>
           <cp-tag color="#1976d2" closable="true" pure-background="true">#1976d2</cp-tag>
         </li>
+        <li>
+          <label style="font-size: 12px;">带Icon的Tag</label>
+          <br />
+          <cp-tag color="orange" pure-background="true">
+            orange
+            <slot name='icon'>
+              <span>1</span>
+            </slot>
+          </cp-tag>
+          <cp-tag color="purple">purple</cp-tag>
+          <cp-tag color="#1976d2" closable="true" pure-background="true">#1976d2</cp-tag>
+        </li>
 
         <li>
           <label style="font-size: 12px;">受控的显示隐藏</label>
