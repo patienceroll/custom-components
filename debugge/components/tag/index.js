@@ -51,17 +51,25 @@ class Tag extends HTMLElement {
      * - 调用的时候 this 需要指向 Tag 实例
      */
     static setColor(color) {
+        const pureBackground = this.getAttribute("pure-background");
         if (color &&
             !["success", "processing", "warning", "errror"].includes(color)) {
             this.style.color = color;
         }
         const style = getComputedStyle(this);
-        this.style.border = `1px solid ${rgbToRgba(style.color, {
-            alphRate: 0.3,
-        })}`;
-        this.style.backgroundColor = rgbToRgba(style.color, {
-            alphRate: 0.1,
-        });
+        if (pureBackground === "true") {
+            this.style.borderColor = style.color;
+            this.style.backgroundColor = style.color;
+            this.style.color = '#fff';
+        }
+        else {
+            this.style.border = `1px solid ${rgbToRgba(style.color, {
+                alphRate: 0.3,
+            })}`;
+            this.style.backgroundColor = rgbToRgba(style.color, {
+                alphRate: 0.1,
+            });
+        }
     }
     /**
      * class Tag 私有的设置是否显示关闭按钮的方法
@@ -77,8 +85,7 @@ class Tag extends HTMLElement {
         }
     }
     static setCloseIconOnClick() { }
-    connectedCallback() {
-    }
+    connectedCallback() { }
     attributeChangedCallback(attrName, oldValue, newValue) {
         switch (attrName) {
             case "closable":

@@ -39,11 +39,18 @@
           <cp-tag color="purple" closable="true">purple</cp-tag>
           <cp-tag color="lime" closable="true">lime</cp-tag>
         </li>
+        <li>
+          <label style="font-size: 12px;">纯色背景</label>
+          <br />
+          <cp-tag color="cyan" closable="true" pure-background="true">cyan</cp-tag>
+          <cp-tag color="purple" closable="true" pure-background="true">purple</cp-tag>
+          <cp-tag color="lime" closable="true" pure-background="true">lime</cp-tag>
+        </li>
 
         <li>
           <label style="font-size: 12px;">受控的显示隐藏</label>
           <br />
-          <cp-tag color="orange" id="control-tag" closable="true">受控Tag</cp-tag>
+          <cp-tag color="rgb(220, 0, 78)" id="control-tag" show="true">受控Tag</cp-tag>
           <br />
           <button style="margin-top: 10px;" onclick="(() => {
             document.querySelector('#control-tag').setAttribute('show','true')
