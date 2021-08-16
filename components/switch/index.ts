@@ -6,3 +6,5 @@ class Switch extends HTMLElement {
 
 if (!customElements.get("cp-switch"))
   customElements.define("cp-switch", Switch);
+
+  

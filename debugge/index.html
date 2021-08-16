@@ -24,23 +24,11 @@
             <cp-tag color="yellow" closable="true">yellow</cp-tag>
             <cp-tag color="orange" closable="true">orange</cp-tag>
             <cp-tag color="#f50" closable="true">#f50</cp-tag>
-            <cp-tag color="magenta" closable="true" onclose="(function(event){console.log(event);})(event)">magenta
+            <cp-tag color="magenta" closable="true">magenta
             </cp-tag>
         </div>
     </ul>
     <script type="module" src="./components/index.js"></script>
-    <script>
-        const element = document.getElementById('cp-tag')
-        setInterval(() => {
-            const show = element.getAttribute('show')
-            if (show === 'true') element.setAttribute("show", 'false')
-            else if (show === 'false') element.setAttribute('show', "true")
-            else element.setAttribute('show', 'false')
-
-        }, 1000)
-    </script>
-
-
 </body>
 
 </html>
