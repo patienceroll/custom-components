@@ -96,7 +96,8 @@ class Tag extends HTMLElement {
 
   static setCloseIconOnClick(this: Tag) {}
 
-  connectedCallback() {}
+  connectedCallback() {
+  }
 
   static observedAttributes = ["color", "closable", "show"];
   attributeChangedCallback(
