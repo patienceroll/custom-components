@@ -1,7 +1,5 @@
 import { defineConfig } from "rollup";
 
-import Path from "path";
-
 import rollupPluginTypescript from "rollup-plugin-typescript";
 import postcss from "rollup-plugin-postcss";
 import copy from "rollup-plugin-copy";
