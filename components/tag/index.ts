@@ -66,6 +66,7 @@ class Tag extends HTMLElement {
     this: Tag,
     color: TagType | CSSStyleDeclaration["color"] | null
   ) {
+    const pureBackground = this.getAttribute("pure-background");
     if (
       color &&
       !["success", "processing", "warning", "errror"].includes(color)
@@ -73,12 +74,20 @@ class Tag extends HTMLElement {
       this.style.color = color;
     }
     const style = getComputedStyle(this);
-    this.style.border = `1px solid ${rgbToRgba(style.color, {
-      alphRate: 0.3,
-    })}`;
-    this.style.backgroundColor = rgbToRgba(style.color, {
-      alphRate: 0.1,
-    });
+    if(pureBackground === "true"){
+      this.style.borderColor = style.color
+      this.style.backgroundColor = style.color
+      this.style.color = '#fff'
+    }else{
+      this.style.border = `1px solid ${rgbToRgba(style.color, {
+        alphRate: 0.3,
+      })}`;
+      this.style.backgroundColor = rgbToRgba(style.color, {
+        alphRate: 0.1,
+      });
+    }
+
+
   }
 
   /**
@@ -96,8 +105,7 @@ class Tag extends HTMLElement {
 
   static setCloseIconOnClick(this: Tag) {}
 
-  connectedCallback() {
-  }
+  connectedCallback() {}
 
   static observedAttributes = ["color", "closable", "show"];
   attributeChangedCallback(
