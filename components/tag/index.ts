@@ -73,21 +73,19 @@ class Tag extends HTMLElement {
     ) {
       this.style.color = color;
     }
-    const style = getComputedStyle(this);
-    if(pureBackground === "true"){
-      this.style.borderColor = style.color
-      this.style.backgroundColor = style.color
-      this.style.color = '#fff'
-    }else{
-      this.style.border = `1px solid ${rgbToRgba(style.color, {
+    const { color: computeColor } = getComputedStyle(this);
+    if (pureBackground === "true") {
+      this.style.borderColor = computeColor;
+      this.style.backgroundColor = computeColor;
+      this.style.color = "#fff";
+    } else {
+      this.style.border = `1px solid ${rgbToRgba(computeColor, {
         alphRate: 0.3,
       })}`;
-      this.style.backgroundColor = rgbToRgba(style.color, {
+      this.style.backgroundColor = rgbToRgba(computeColor, {
         alphRate: 0.1,
       });
     }
-
-
   }
 
   /**
@@ -107,9 +105,9 @@ class Tag extends HTMLElement {
 
   connectedCallback() {}
 
-  static observedAttributes = ["color", "closable", "show"];
+  static observedAttributes = ["color", "closable", "show", "pure-background"];
   attributeChangedCallback(
-    attrName: "color" | "closable" | "show",
+    attrName: "color" | "closable" | "show" | "pure-background",
     oldValue: string | null,
     newValue: string | null
   ) {
@@ -119,6 +117,10 @@ class Tag extends HTMLElement {
         break;
       case "color":
         Tag.setColor.call(this, newValue);
+        break;
+      case "pure-background":
+        const color = this.getAttribute("color");
+        Tag.setColor.call(this, color);
         break;
       case "show":
         if (newValue === "true") {
