@@ -91,8 +91,6 @@ class Tag extends HTMLElement {
                     elementRemoveClass(this, "cp-disappear");
                     elementPushClass(this, "cp-appear");
                     this.style.display = "inline-block";
-                    // setTimeout(() => {
-                    // }, secondsToNumber(getComputedStyle(this).animationDuration) * 1000);
                 }
                 else if (newValue === "false") {
                     elementRemoveClass(this, "cp-appear");

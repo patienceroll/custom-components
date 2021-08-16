@@ -1,7 +1,7 @@
 import type { TagType } from "./data";
-import { rgbToRgba } from "../../utils/color";
-import { elementPushClass, elementRemoveClass } from "../../utils/class-name";
-import { secondsToNumber } from "../../utils/time";
+import { rgbToRgba } from "utils/color";
+import { elementPushClass, elementRemoveClass } from "utils/class-name";
+import { secondsToNumber } from "utils/time";
 
 import "./index.css";
 
