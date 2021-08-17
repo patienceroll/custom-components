@@ -1,27 +1,29 @@
 cp-tag {
   display: inline-block;
+  box-sizing: border-box;
   padding: 0 8px;
-  line-height: 18px;
   height: 20px;
   border-radius: 2px;
-
 }
 
 cp-tag::part(icon) {
   display: inline-block;
   overflow: hidden;
-  vertical-align: middle;
+  line-height: 18px;
+  vertical-align: top;
 }
 
 cp-tag::part(text) {
   font-size: 12px;
-  vertical-align: middle;
+  line-height: 18px;
+  vertical-align: top;
 }
 
 cp-tag::part(close-icon) {
   cursor: pointer;
+  line-height: 18px;
   margin-left: 2px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 cp-tag[color="success"] {
