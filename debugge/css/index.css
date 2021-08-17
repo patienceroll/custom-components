@@ -35,25 +35,25 @@ body {
 
 cp-tag {
   display: inline-block;
-  box-sizing: border-box;
   padding: 0 8px;
-  height: 22px;
-  line-height: 20px;
+  height: 20px;
+  line-height: 16px;
   border-radius: 2px;
 }
 
 cp-tag::part(icon) {
-  line-height: 20px;
+  vertical-align: middle;
 }
 
 cp-tag::part(text) {
-  line-height: 18px;
+  line-height: normal;
+  vertical-align: middle;
   font-size: 12px;
 }
 
 cp-tag::part(close-icon) {
+  vertical-align: middle;
   cursor: pointer;
-  line-height: 20px;
   margin-left: 2px;
 }
 
