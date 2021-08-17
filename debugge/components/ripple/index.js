@@ -1,3 +1,4 @@
+/** 涟漪效果组件 */
 class Ripple extends HTMLElement {
     constructor() {
         super();
