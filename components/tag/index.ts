@@ -126,7 +126,7 @@ class Tag extends HTMLElement {
 
   connectedCallback() {
     const iconInsert = this.querySelector<HTMLElement>("[slot='icon']");
-    if(iconInsert) iconInsert.style.marginRight = '6px'
+    if (iconInsert) iconInsert.style.marginRight = "6px";
   }
 
   static observedAttributes = ["color", "closable", "show", "pure-background"];

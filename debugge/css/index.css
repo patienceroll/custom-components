@@ -47,6 +47,7 @@ cp-tag::part(icon) {
 }
 
 cp-tag::part(text) {
+  line-height: 18px;
   font-size: 12px;
 }
 

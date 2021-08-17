@@ -105,7 +105,7 @@ class Tag extends HTMLElement {
     connectedCallback() {
         const iconInsert = this.querySelector("[slot='icon']");
         if (iconInsert)
-            iconInsert.style.marginRight = '6px';
+            iconInsert.style.marginRight = "6px";
     }
     attributeChangedCallback(attrName, oldValue, newValue) {
         switch (attrName) {
