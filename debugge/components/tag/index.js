@@ -5,12 +5,25 @@ import { secondsToNumber } from '../../utils/time.js';
 class Tag extends HTMLElement {
     constructor() {
         super();
+        const shadowRoot = this.attachShadow({ mode: "open" });
+        // 创建 icon 容器
+        const icon = document.createElement("span");
+        // 创建 icon 插槽
+        const iconSlot = document.createElement("slot");
+        icon.setAttribute("part", "icon");
+        iconSlot.setAttribute("name", "icon");
+        icon.appendChild(iconSlot);
+        // 创建 text 容器
+        const text = document.createElement("span");
+        // 创建 text 插槽
+        const textSlot = document.createElement("slot");
+        text.setAttribute("part", "text");
+        text.appendChild(textSlot);
         const closeIcon = Tag.initCloseIcon.call(this);
         this.closeIcon = closeIcon;
-        const IconSlot = document.createElement("slot");
-        IconSlot.name = "icon";
-        this.insertBefore(IconSlot, this.firstChild);
-        this.appendChild(closeIcon);
+        shadowRoot.appendChild(icon);
+        shadowRoot.appendChild(text);
+        shadowRoot.appendChild(closeIcon);
     }
     /**
      * #### 初始化 closeIcon
@@ -19,7 +32,7 @@ class Tag extends HTMLElement {
      */
     static initCloseIcon() {
         const closeIcon = document.createElement("span");
-        closeIcon.setAttribute("class", "cp-tag-close-icon");
+        closeIcon.setAttribute("part", "close-icon");
         closeIcon.innerHTML = `<svg style="font-size:10px" width="1em" height="1em" viewBox="64 64 896 896" focusable="false" data-icon="close" fill="currentColor" aria-hidden="true" data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z">
                               </path>
                             </svg>`;
@@ -61,7 +74,7 @@ class Tag extends HTMLElement {
         }
         const { color: computeColor } = getComputedStyle(this);
         if (pureBackground === "true") {
-            this.style.borderColor = computeColor;
+            this.style.border = `1px solid ${computeColor}`;
             this.style.backgroundColor = computeColor;
             this.style.color = "#fff";
         }
@@ -88,7 +101,11 @@ class Tag extends HTMLElement {
         }
     }
     static setCloseIconOnClick() { }
-    connectedCallback() { }
+    connectedCallback() {
+        const iconInsert = this.querySelector("[slot='icon']");
+        if (iconInsert)
+            iconInsert.style.marginRight = '6px';
+    }
     attributeChangedCallback(attrName, oldValue, newValue) {
         switch (attrName) {
             case "closable":
