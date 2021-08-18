@@ -39,8 +39,6 @@ body {
   animation-fill-mode: forwards;
 }
 
-@keyframes cp-animate-ripple {
-}
 
 cp-tag {
   display: inline-block;
@@ -101,4 +99,10 @@ cp-ripple {
 .cp-ripple-item {
   border-radius: 50%;
   position: absolute;
+  background-image: radial-gradient(circle, #000 90%, transparent 100%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform var(--cp-motion-smooth)
+      cubic-bezier(0.75, 0.23, 0.43, 0.82),
+    opacity var(--cp-motion-smooth);
 }

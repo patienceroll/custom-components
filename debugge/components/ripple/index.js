@@ -16,7 +16,20 @@ class Ripple extends HTMLElement {
             rippleItem.style.width = `${2 * radius}px`;
             rippleItem.style.height = `${2 * radius}px`;
             this.appendChild(rippleItem);
-            return rippleItem;
+            requestAnimationFrame(() => {
+                rippleItem.style.transform = "scale(1)";
+                rippleItem.style.opacity = "0.3";
+            });
+            return {
+                remove() {
+                    requestAnimationFrame(() => {
+                        rippleItem.style.opacity = "0";
+                    });
+                    setTimeout(() => {
+                        rippleItem.remove();
+                    }, 450);
+                },
+            };
         };
     }
 }
