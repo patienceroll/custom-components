@@ -10,11 +10,11 @@
   </link>
   <style>
     .piple-btn {
-      width: 100px;
-      height: 24px;
-      background-color: #ccc;
+      width: 300px;
+      height: 50px;
+      background-color: orange;
       cursor: pointer;
-      line-height: 24px;
+      line-height: 50px;
       text-align: center;
       border-radius: 2px;
       position: relative;
@@ -138,9 +138,10 @@
             parentWidth:event.target.offsetWidth,
             parentHeight:event.target.offsetHeight
           })
-        setTimeout(() => {
-          rippleItem.remove()
-        }, 3000);
+          setTimeout(() => {
+            rippleItem.remove()
+          }, 450);
+       
       })(event)">
         点击
         <cp-ripple></cp-ripple>
