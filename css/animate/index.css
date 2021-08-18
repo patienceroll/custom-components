@@ -8,7 +8,7 @@
 }
 
 .cp-disappear {
-  animation: cp-animate-disappear 300ms ease;
+  animation: cp-animate-disappear var(--cp-motion-base) ease;
   animation-fill-mode: forwards;
 }
 
@@ -22,6 +22,9 @@
 }
 
 .cp-appear {
-  animation: cp-animate-appear 300ms ease;
+  animation: cp-animate-appear var(--cp-motion-base) ease;
   animation-fill-mode: forwards;
+}
+
+@keyframes cp-animate-ripple {
 }

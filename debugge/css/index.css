@@ -1,8 +1,14 @@
 body {
+  /* 基本主题配色 */
   --cp-success: #52c41a;
   --cp-processing: #1890ff;
   --cp-error: #f5222d;
   --cp-warning: #fa8c16;
+  /* 动画速度 */
+  --cp-motion-fast: 150ms;
+  --cp-motion-base: 300ms;
+  --cp-motion-smooth: 450ms;
+  --cp-motion-slow: 600ms;
 }
 
 @keyframes cp-animate-disappear {
@@ -15,7 +21,7 @@ body {
 }
 
 .cp-disappear {
-  animation: cp-animate-disappear 300ms ease;
+  animation: cp-animate-disappear var(--cp-motion-base) ease;
   animation-fill-mode: forwards;
 }
 
@@ -29,8 +35,11 @@ body {
 }
 
 .cp-appear {
-  animation: cp-animate-appear 300ms ease;
+  animation: cp-animate-appear var(--cp-motion-base) ease;
   animation-fill-mode: forwards;
+}
+
+@keyframes cp-animate-ripple {
 }
 
 cp-tag {
@@ -77,7 +86,7 @@ cp-tag[color="warning"] {
   border-color: var(--cp-warning);
 }
 
-.cp-ripple{
+cp-ripple {
   position: absolute;
   top: 0;
   left: 0;
@@ -87,4 +96,9 @@ cp-tag[color="warning"] {
   height: 100%;
   pointer-events: none;
   border-radius: inherit;
+}
+
+.cp-ripple-item {
+  border-radius: 50%;
+  position: absolute;
 }

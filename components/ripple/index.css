@@ -1,4 +1,4 @@
-.cp-ripple{
+cp-ripple {
   position: absolute;
   top: 0;
   left: 0;
@@ -8,4 +8,9 @@
   height: 100%;
   pointer-events: none;
   border-radius: inherit;
+}
+
+.cp-ripple-item {
+  border-radius: 50%;
+  position: absolute;
 }
