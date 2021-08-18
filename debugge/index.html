@@ -17,6 +17,7 @@
       line-height: 24px;
       text-align: center;
       border-radius: 2px;
+      position: relative;
     }
   </style>
 </head>
@@ -129,8 +130,20 @@
       <label>涟漪效果</label>
       <br />
       <br />
-      <div class="piple-btn">
+      <div class="piple-btn" onclick="(function piple(event){
+        const  ripple =  document.querySelector('cp-ripple');
+        const rippleItem =  ripple.startPiple({
+            top:event.offsetY,
+            left:event.offsetX,
+            parentWidth:event.target.offsetWidth,
+            parentHeight:event.target.offsetHeight
+          })
+        setTimeout(() => {
+          rippleItem.remove()
+        }, 3000);
+      })(event)">
         点击
+        <cp-ripple></cp-ripple>
       </div>
     </li>
 
