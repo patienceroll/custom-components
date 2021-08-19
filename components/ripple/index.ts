@@ -38,7 +38,7 @@ class Ripple extends HTMLElement {
       this.appendChild(rippleItem);
       requestAnimationFrame(() => {
         rippleItem.style.transform = "scale(1)";
-        rippleItem.style.opacity = "0.3";
+        rippleItem.style.opacity = "0.1";
       });
 
       return {
