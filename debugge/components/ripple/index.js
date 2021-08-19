@@ -1,14 +1,29 @@
-/** 涟漪效果组件 */
+import { secondsToNumber } from '../../utils/time.js';
+
+/**
+ * 涟漪效果组件
+ * 此组件只暴露了一个开始涟漪的方法出来
+ * 此方法返回一个 remove 函数和当前执行动画的元素
+ */
 class Ripple extends HTMLElement {
     constructor() {
         super();
     }
     /** 开始涟漪动画 */
     get startPiple() {
+        /** 计算 top 和 left 离方形四个点最远的距离,即为涟漪半径 */
+        const calculateRadius = (params) => {
+            const { pow, sqrt, abs } = Math;
+            const { top, left, parentWidth, parentHeight } = params;
+            const offsetRight = abs(left - parentWidth);
+            const offsetBootom = abs(parentHeight - top);
+            const radiusAdjacentWidth = offsetRight > left ? offsetRight : left;
+            const radiusAdjacentHeight = offsetBootom > top ? offsetBootom : top;
+            return sqrt(pow(radiusAdjacentWidth, 2) + pow(radiusAdjacentHeight, 2));
+        };
         return function (options) {
-            const { pow, sqrt } = Math;
-            const { top, left, parentWidth, parentHeight } = options;
-            const radius = sqrt(pow(parentWidth, 2) + pow(parentHeight, 2));
+            const { top, left } = options;
+            const radius = calculateRadius(options);
             const rippleItem = document.createElement("div");
             rippleItem.setAttribute("class", "cp-ripple-item");
             rippleItem.style.top = `${top - radius}px`;
@@ -25,10 +40,14 @@ class Ripple extends HTMLElement {
                     requestAnimationFrame(() => {
                         rippleItem.style.opacity = "0";
                     });
+                    const delay = secondsToNumber(getComputedStyle(rippleItem).transitionDuration, {
+                        transType: "ms",
+                    }) || 300;
                     setTimeout(() => {
                         rippleItem.remove();
-                    }, 450);
+                    }, Number(delay));
                 },
+                animateDom: rippleItem,
             };
         };
     }

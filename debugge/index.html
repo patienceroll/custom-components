@@ -138,13 +138,14 @@
             parentWidth:event.target.offsetWidth,
             parentHeight:event.target.offsetHeight
           })
-          setTimeout(() => {
-            rippleItem.remove()
-          }, 450);
+        
+            setTimeout(() => {
+              rippleItem.remove()
+            },  Number(getComputedStyle(rippleItem.animateDom).transitionDuration.replace(/s/g, '')) * 1000 || 300);
        
       })(event)">
-        点击
         <cp-ripple></cp-ripple>
+        点击
       </div>
     </li>
 
