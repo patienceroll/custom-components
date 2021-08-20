@@ -1,7 +1,5 @@
-import { secondsToNumber } from "utils/time";
 import type { PiplePoint } from "./data";
-
-import "./index.css";
+import { secondsToNumber } from "utils/time";
 
 /**
  * 涟漪效果组件
@@ -13,10 +11,36 @@ class Ripple extends HTMLElement {
     super();
   }
 
+  /** 组件容器样式 */
+  static cpRippleStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    overflow: "hidden",
+    "z-index": 0,
+    width: "100%",
+    height: "100%",
+    "pointer-events": "none",
+    "border-radius": "inherit",
+  };
+
+  /** 组件动画元素样式 */
+  static cpRippleItemStyle = {
+    "border-radius": " 50%",
+    position: "absolute",
+    "background-image": "radial-gradient(circle, #000 40%, transparent 100%)",
+    transform: "scale(0)",
+    opacity: "0",
+    "transition-property": "transform, opacity",
+    "transition-timing-function": "cubic-bezier(0.45, 0.02, 0.39, 0.98),normal",
+  };
+
   /** 开始涟漪动画 */
   get startPiple() {
     /** 计算 top 和 left 离方形四个点最远的距离,即为涟漪半径 */
-    const calculateRadius = (params: PiplePoint) => {
+    const calculateRadius = (
+      params: Omit<PiplePoint, "transitionDuration">
+    ) => {
       const { pow, sqrt, abs } = Math;
       const { top, left, parentWidth, parentHeight } = params;
       const offsetRight = abs(left - parentWidth);
@@ -27,7 +51,7 @@ class Ripple extends HTMLElement {
     };
 
     return function (this: Ripple, options: PiplePoint) {
-      const { top, left } = options;
+      const { top, left, transitionDuration } = options;
       const radius = calculateRadius(options);
       const rippleItem = document.createElement("div");
       rippleItem.setAttribute("class", "cp-ripple-item");
@@ -35,7 +59,7 @@ class Ripple extends HTMLElement {
       rippleItem.style.left = `${left - radius}px`;
       rippleItem.style.width = `${2 * radius}px`;
       rippleItem.style.height = `${2 * radius}px`;
-      this.appendChild(rippleItem);
+      rippleItem.style.transitionDuration = transitionDuration;
       requestAnimationFrame(() => {
         rippleItem.style.transform = "scale(1)";
         rippleItem.style.opacity = "0.1";
@@ -45,6 +69,7 @@ class Ripple extends HTMLElement {
         remove() {
           requestAnimationFrame(() => {
             rippleItem.style.opacity = "0";
+            rippleItem.style.transitionDuration = "var(--cp-motion-fast)";
           });
           const delay =
             secondsToNumber(getComputedStyle(rippleItem).transitionDuration, {

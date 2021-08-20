@@ -8,4 +8,6 @@ export type PiplePoint = {
   parentWidth: number;
   /** 父级高度 */
   parentHeight: number;
+  /** 变化动画时间 */
+  transitionDuration: CSSStyleDeclaration["transitionDuration"];
 };
