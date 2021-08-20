@@ -14,8 +14,6 @@
       height: 40px;
       background-color: orange;
       cursor: pointer;
-      line-height: 40px;
-      text-align: center;
       border-radius: 2px;
       position: relative;
     }
@@ -136,15 +134,15 @@
             top:event.offsetY,
             left:event.offsetX,
             parentWidth:event.target.offsetWidth,
-            parentHeight:event.target.offsetHeight
-          })
+            parentHeight:event.target.offsetHeight,
+            transitionDuration:'var(--cp-motion-smooth)'          })
             setTimeout(() => {
               rippleItem.remove()
             },  Number(getComputedStyle(rippleItem.animateDom).transitionDuration.replace(/s/g, '')) * 1000 || 300);
        
       })(event)">
         <cp-ripple></cp-ripple>
-        <span style="background-color: #fff;position: absolute;height: 14px;line-height: 14px;top: 13px;">点击</span>
+        <span style="color: #fff;position: absolute;height: 100%;width: 100%; line-height: 14px;">点击</span>
       </div>
     </li>
 

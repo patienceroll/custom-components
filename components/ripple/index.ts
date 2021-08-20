@@ -1,5 +1,6 @@
 import type { PiplePoint } from "./data";
 import { secondsToNumber } from "utils/time";
+import { elementAddStyles } from "utils/style";
 
 /**
  * 涟漪效果组件
@@ -9,15 +10,16 @@ import { secondsToNumber } from "utils/time";
 class Ripple extends HTMLElement {
   constructor() {
     super();
+    elementAddStyles(this, Ripple.cpRippleStyle);
   }
 
   /** 组件容器样式 */
   static cpRippleStyle = {
     position: "absolute",
-    top: 0,
-    left: 0,
+    top: "0",
+    left: "0",
     overflow: "hidden",
-    "z-index": 0,
+    "z-index": "0",
     width: "100%",
     height: "100%",
     "pointer-events": "none",
@@ -54,15 +56,16 @@ class Ripple extends HTMLElement {
       const { top, left, transitionDuration } = options;
       const radius = calculateRadius(options);
       const rippleItem = document.createElement("div");
-      rippleItem.setAttribute("class", "cp-ripple-item");
+      elementAddStyles(rippleItem, Ripple.cpRippleItemStyle);
       rippleItem.style.top = `${top - radius}px`;
       rippleItem.style.left = `${left - radius}px`;
       rippleItem.style.width = `${2 * radius}px`;
       rippleItem.style.height = `${2 * radius}px`;
       rippleItem.style.transitionDuration = transitionDuration;
+      this.appendChild(rippleItem);
       requestAnimationFrame(() => {
         rippleItem.style.transform = "scale(1)";
-        rippleItem.style.opacity = "0.1";
+        rippleItem.style.opacity = "0.15";
       });
 
       return {

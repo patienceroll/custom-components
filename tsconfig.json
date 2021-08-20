@@ -65,6 +65,7 @@
   "include": [
     "components/**/*",
     "css/**/*",
-    "utils/**/*"
+    "utils/**/*",
+    "global.d.ts"
   ],
 }
