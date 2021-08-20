@@ -1,13 +1,8 @@
+import type { CSSproperty } from "../css";
+
 /** 给html元素添加行内样式 */
-export const elementAddStyles = (
-  element: HTMLElement,
-  style: { [key in keyof CSSStyleDeclaration]: "string" }
-) => {
+export const elementAddStyles = (element: HTMLElement, style: CSSproperty) => {
   Object.keys(style).forEach((key) => {
-    if (typeof key === "string")
-      element.style.setProperty(
-        key,
-        style[key as keyof CSSStyleDeclaration] || null
-      );
+    element.style.setProperty(key, style[key as keyof CSSproperty] || null);
   });
 };

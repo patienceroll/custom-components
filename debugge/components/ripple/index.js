@@ -1,4 +1,5 @@
 import { secondsToNumber } from '../../utils/time.js';
+import { elementAddStyles } from '../../utils/style.js';
 
 /**
  * 涟漪效果组件
@@ -8,6 +9,7 @@ import { secondsToNumber } from '../../utils/time.js';
 class Ripple extends HTMLElement {
     constructor() {
         super();
+        elementAddStyles(this, Ripple.cpRippleStyle);
     }
     /** 开始涟漪动画 */
     get startPiple() {
@@ -22,24 +24,25 @@ class Ripple extends HTMLElement {
             return sqrt(pow(radiusAdjacentWidth, 2) + pow(radiusAdjacentHeight, 2));
         };
         return function (options) {
-            const { top, left } = options;
+            const { top, left, transitionDuration } = options;
             const radius = calculateRadius(options);
             const rippleItem = document.createElement("div");
-            rippleItem.setAttribute("class", "cp-ripple-item");
+            elementAddStyles(rippleItem, Ripple.cpRippleItemStyle);
             rippleItem.style.top = `${top - radius}px`;
             rippleItem.style.left = `${left - radius}px`;
             rippleItem.style.width = `${2 * radius}px`;
             rippleItem.style.height = `${2 * radius}px`;
+            rippleItem.style.transitionDuration = transitionDuration;
             this.appendChild(rippleItem);
             requestAnimationFrame(() => {
                 rippleItem.style.transform = "scale(1)";
-                rippleItem.style.opacity = "0.1";
+                rippleItem.style.opacity = "0.15";
             });
             return {
                 remove() {
                     requestAnimationFrame(() => {
                         rippleItem.style.opacity = "0";
-                        rippleItem.style.transitionDuration = 'var(--cp-motion-fast)';
+                        rippleItem.style.transitionDuration = "var(--cp-motion-fast)";
                     });
                     const delay = secondsToNumber(getComputedStyle(rippleItem).transitionDuration, {
                         transType: "ms",
@@ -53,5 +56,27 @@ class Ripple extends HTMLElement {
         };
     }
 }
+/** 组件容器样式 */
+Ripple.cpRippleStyle = {
+    position: "absolute",
+    top: "0",
+    left: "0",
+    overflow: "hidden",
+    "z-index": "0",
+    width: "100%",
+    height: "100%",
+    "pointer-events": "none",
+    "border-radius": "inherit",
+};
+/** 组件动画元素样式 */
+Ripple.cpRippleItemStyle = {
+    "border-radius": " 50%",
+    position: "absolute",
+    "background-image": "radial-gradient(circle, #000 40%, transparent 100%)",
+    transform: "scale(0)",
+    opacity: "0",
+    "transition-property": "transform, opacity",
+    "transition-timing-function": "cubic-bezier(0.45, 0.02, 0.39, 0.98),normal",
+};
 if (!customElements.get("cp-ripple"))
     customElements.define("cp-ripple", Ripple);
