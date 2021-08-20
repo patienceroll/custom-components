@@ -1,4 +1,4 @@
-import Button from './button'
+import CpButton from './button'
 
 if (!customElements.get("cp-button"))
-  customElements.define("cp-button", Button);
+  customElements.define("cp-button", CpButton);

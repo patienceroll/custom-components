@@ -1,3 +1,3 @@
-import Tag from "./tag";
+import CpTag from "./tag";
 
-if (!customElements.get("cp-tag")) customElements.define("cp-tag", Tag);
+if (!customElements.get("cp-tag")) customElements.define("cp-tag", CpTag);

@@ -7,10 +7,10 @@ import { elementAddStyles } from "utils/style";
  * 此组件只暴露了一个开始涟漪的方法出来
  * 此方法返回一个 remove 函数和当前执行动画的元素
  */
-export default class Ripple extends HTMLElement {
+export default class CPRipple extends HTMLElement {
   constructor() {
     super();
-    elementAddStyles(this, Ripple.cpRippleStyle);
+    elementAddStyles(this, CPRipple.cpRippleStyle);
   }
 
   /** 组件容器样式 */
@@ -51,11 +51,11 @@ export default class Ripple extends HTMLElement {
       return sqrt(pow(radiusAdjacentWidth, 2) + pow(radiusAdjacentHeight, 2));
     };
 
-    return function (this: Ripple, options: PiplePoint) {
+    return function (this: CPRipple, options: PiplePoint) {
       const { top, left, transitionDuration, rippleColor } = options;
       const radius = calculateRadius(options);
       const rippleItem = document.createElement("div");
-      elementAddStyles(rippleItem, Ripple.cpRippleItemStyle);
+      elementAddStyles(rippleItem, CPRipple.cpRippleItemStyle);
       rippleItem.style.top = `${top - radius}px`;
       rippleItem.style.left = `${left - radius}px`;
       rippleItem.style.width = `${2 * radius}px`;

@@ -1,10 +1,10 @@
-class Switch extends HTMLElement {
+class CpSwitch extends HTMLElement {
   constructor() {
     super();
   }
 }
 
 if (!customElements.get("cp-switch"))
-  customElements.define("cp-switch", Switch);
+  customElements.define("cp-switch", CpSwitch);
 
   
