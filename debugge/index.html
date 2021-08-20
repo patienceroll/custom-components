@@ -135,7 +135,9 @@
             left:event.offsetX,
             parentWidth:event.target.offsetWidth,
             parentHeight:event.target.offsetHeight,
-            transitionDuration:'var(--cp-motion-smooth)'          })
+            transitionDuration:'var(--cp-motion-smooth)',
+            rippleColor:'#000' 
+            })
             setTimeout(() => {
               rippleItem.remove()
             },  Number(getComputedStyle(rippleItem.animateDom).transitionDuration.replace(/s/g, '')) * 1000 || 300);

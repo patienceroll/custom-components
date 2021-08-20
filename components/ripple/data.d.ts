@@ -10,4 +10,6 @@ export type PiplePoint = {
   parentHeight: number;
   /** 变化动画时间 */
   transitionDuration: CSSStyleDeclaration["transitionDuration"];
+  /** 涟漪颜色 */
+  rippleColor: CSSStyleDeclaration["color"];
 };
