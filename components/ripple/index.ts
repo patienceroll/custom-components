@@ -72,15 +72,17 @@ class Ripple extends HTMLElement {
         remove() {
           requestAnimationFrame(() => {
             rippleItem.style.opacity = "0";
-            rippleItem.style.transitionDuration = "var(--cp-motion-fast)";
+            rippleItem.style.transitionDuration = "var(--cp-motion-base)";
           });
-          const delay =
-            secondsToNumber(getComputedStyle(rippleItem).transitionDuration, {
-              transType: "ms",
-            }) || 300;
-          setTimeout(() => {
-            rippleItem.remove();
-          }, Number(delay));
+          requestAnimationFrame(() => {
+            const delay =
+              secondsToNumber(getComputedStyle(rippleItem).transitionDuration, {
+                transType: "ms",
+              }) || 300;
+            setTimeout(() => {
+              rippleItem.remove();
+            }, Number(delay));
+          });
         },
         animateDom: rippleItem,
       };
