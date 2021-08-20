@@ -42,10 +42,9 @@ class Ripple extends HTMLElement {
                 remove() {
                     requestAnimationFrame(() => {
                         rippleItem.style.opacity = "0";
-                        rippleItem.style.transitionDuration = "var(--cp-motion-base)";
+                        rippleItem.style.transitionDuration = "var(--cp-motion-smooth)";
                     });
                     requestAnimationFrame(() => {
-                        console.log(getComputedStyle(rippleItem).transitionDuration);
                         const delay = secondsToNumber(getComputedStyle(rippleItem).transitionDuration, {
                             transType: "ms",
                         }) || 300;
