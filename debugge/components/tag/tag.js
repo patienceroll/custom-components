@@ -2,7 +2,7 @@ import { rgbToRgba } from '../../utils/color.js';
 import { elementRemoveClass, elementPushClass } from '../../utils/class-name.js';
 import { secondsToNumber } from '../../utils/time.js';
 
-class Tag extends HTMLElement {
+class CpTag extends HTMLElement {
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: "open" });
@@ -20,7 +20,7 @@ class Tag extends HTMLElement {
         text.setAttribute("part", "text");
         text.appendChild(textSlot);
         // 创建关闭按钮
-        const closeIcon = Tag.initCloseIcon.call(this);
+        const closeIcon = CpTag.initCloseIcon.call(this);
         this.closeIcon = closeIcon;
         shadowRoot.appendChild(icon);
         shadowRoot.appendChild(text);
@@ -110,14 +110,14 @@ class Tag extends HTMLElement {
     attributeChangedCallback(attrName, oldValue, newValue) {
         switch (attrName) {
             case "closable":
-                Tag.setCloseable.call(this, newValue);
+                CpTag.setCloseable.call(this, newValue);
                 break;
             case "color":
-                Tag.setColor.call(this, newValue);
+                CpTag.setColor.call(this, newValue);
                 break;
             case "pure-background":
                 const color = this.getAttribute("color");
-                Tag.setColor.call(this, color);
+                CpTag.setColor.call(this, color);
                 break;
             case "show":
                 if (newValue === "true") {
@@ -136,6 +136,6 @@ class Tag extends HTMLElement {
         }
     }
 }
-Tag.observedAttributes = ["color", "closable", "show", "pure-background"];
+CpTag.observedAttributes = ["color", "closable", "show", "pure-background"];
 
-export { Tag as default };
+export { CpTag as default };

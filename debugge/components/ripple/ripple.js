@@ -6,10 +6,10 @@ import { elementAddStyles } from '../../utils/style.js';
  * 此组件只暴露了一个开始涟漪的方法出来
  * 此方法返回一个 remove 函数和当前执行动画的元素
  */
-class Ripple extends HTMLElement {
+class CPRipple extends HTMLElement {
     constructor() {
         super();
-        elementAddStyles(this, Ripple.cpRippleStyle);
+        elementAddStyles(this, CPRipple.cpRippleStyle);
     }
     /** 开始涟漪动画 */
     get startPiple() {
@@ -27,7 +27,7 @@ class Ripple extends HTMLElement {
             const { top, left, transitionDuration, rippleColor } = options;
             const radius = calculateRadius(options);
             const rippleItem = document.createElement("div");
-            elementAddStyles(rippleItem, Ripple.cpRippleItemStyle);
+            elementAddStyles(rippleItem, CPRipple.cpRippleItemStyle);
             rippleItem.style.top = `${top - radius}px`;
             rippleItem.style.left = `${left - radius}px`;
             rippleItem.style.width = `${2 * radius}px`;
@@ -61,7 +61,7 @@ class Ripple extends HTMLElement {
     }
 }
 /** 组件容器样式 */
-Ripple.cpRippleStyle = {
+CPRipple.cpRippleStyle = {
     position: "absolute",
     top: "0",
     left: "0",
@@ -73,7 +73,7 @@ Ripple.cpRippleStyle = {
     "border-radius": "inherit",
 };
 /** 组件动画元素样式 */
-Ripple.cpRippleItemStyle = {
+CPRipple.cpRippleItemStyle = {
     "border-radius": " 50%",
     position: "absolute",
     transform: "scale(0)",
@@ -82,4 +82,4 @@ Ripple.cpRippleItemStyle = {
     "transition-timing-function": "cubic-bezier(0.45, 0.02, 0.39, 0.98),normal",
 };
 
-export { Ripple as default };
+export { CPRipple as default };

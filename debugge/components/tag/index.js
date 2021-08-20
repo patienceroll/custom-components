@@ -1,4 +1,4 @@
-import Tag from './tag.js';
+import CpTag from './tag.js';
 
 if (!customElements.get("cp-tag"))
-    customElements.define("cp-tag", Tag);
+    customElements.define("cp-tag", CpTag);

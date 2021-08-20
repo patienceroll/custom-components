@@ -1,4 +1,4 @@
-import Ripple from './ripple.js';
+import CPRipple from './ripple.js';
 
 if (!customElements.get("cp-ripple"))
-    customElements.define("cp-ripple", Ripple);
+    customElements.define("cp-ripple", CPRipple);
