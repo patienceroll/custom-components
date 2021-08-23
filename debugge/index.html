@@ -22,6 +22,8 @@
 
 <body>
   <ul>
+
+    <!-- ---------------------------   Tag 标签 ----------------------------------- -->
     <li>
       <label>标签</label>
       <br />
@@ -124,30 +126,72 @@
     </li>
 
     <br />
+
+    <!-- ---------------------------   涟漪效果 ----------------------------------- -->
     <li>
       <label>涟漪效果</label>
       <br />
       <br />
-      <div class="piple-btn" onclick="(function piple(event){
-        const  ripple =  document.querySelector('cp-ripple');
-        const rippleItem =  ripple.startPiple({
-            top:event.offsetY,
-            left:event.offsetX,
-            parentWidth:event.target.offsetWidth,
-            parentHeight:event.target.offsetHeight,
-            transitionDuration:'var(--cp-motion-slow)',
-            rippleColor:'#000',
-            changeOpacity:true
-            })
-            setTimeout(() => {
-              rippleItem.remove()
-            },  Number(getComputedStyle(rippleItem.animateDom).transitionDuration.replace(/s/g, '')) * 1000 || 300);
-       
-      })(event)">
-        <cp-ripple></cp-ripple>
-        <span
-          style="color: #fff;position: absolute;height: 100%;width: 100%; line-height: 40px;text-align: center;user-select: none;">点击</span>
-      </div>
+      <ul>
+        <li>
+          <span>点击效果</span>
+          <div class="piple-btn" onclick="(function piple(event){
+              const  ripple =  document.querySelector('cp-ripple');
+              const rippleItem =  ripple.startPiple({
+                  top:event.offsetY,
+                  left:event.offsetX,
+                  parentWidth:event.target.offsetWidth,
+                  parentHeight:event.target.offsetHeight,
+                  transitionDuration:'var(--cp-motion-base)',
+                  rippleColor:'#000',
+                  changeOpacity:true
+                  })
+                  setTimeout(() => {
+                    rippleItem.remove()
+                  },  Number(getComputedStyle(rippleItem.animateDom).transitionDuration.replace(/s/g, '')) * 1000 || 300);
+             
+            })(event)">
+            <cp-ripple></cp-ripple>
+            <span
+              style="color: #fff;position: absolute;height: 100%;width: 100%; line-height: 40px;text-align: center;user-select: none;">点击</span>
+          </div>
+        </li>
+        <li>
+          <span>模拟长按3秒</span>
+          <div class="piple-btn" onclick="(function piple(event){
+              const  ripple =  document.querySelectorAll('cp-ripple');
+              const rippleItem =  ripple[1].startPiple({
+                  top:event.offsetY,
+                  left:event.offsetX,
+                  parentWidth:event.target.offsetWidth,
+                  parentHeight:event.target.offsetHeight,
+                  transitionDuration:'var(--cp-motion-base)',
+                  rippleColor:'#000',
+                  changeOpacity:false
+                  })
+                  setTimeout(() => {
+                    rippleItem.remove()
+                  },  3000);
+            })(event)">
+            <cp-ripple></cp-ripple>
+            <span
+              style="color: #fff;position: absolute;height: 100%;width: 100%; line-height: 40px;text-align: center;user-select: none;">点击</span>
+          </div>
+        </li>
+      </ul>
+    </li>
+
+    <!-- ---------------------------   button ----------------------------------- -->
+    <li>
+      <label>按钮</label>
+      <br />
+      <ul>
+        <cp-button>
+          <span slot="start-icon">左侧icon</span>
+          123
+          <span slot="end-icon">右侧icon</span>
+        </cp-button>
+      </ul>
     </li>
 
   </ul>

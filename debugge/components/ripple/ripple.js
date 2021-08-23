@@ -32,7 +32,7 @@ class CpRipple extends HTMLElement {
             rippleItem.style.left = `${left - radius}px`;
             rippleItem.style.width = `${2 * radius}px`;
             rippleItem.style.height = `${2 * radius}px`;
-            rippleItem.style.backgroundImage = `radial-gradient(circle, ${rippleColor},${rippleColor} 80%, transparent 100%)`;
+            rippleItem.style.backgroundImage = `radial-gradient(circle, ${rippleColor},${rippleColor} 95%, transparent 100%)`;
             rippleItem.style.transitionDuration = transitionDuration;
             this.appendChild(rippleItem);
             requestAnimationFrame(() => {
@@ -77,9 +77,9 @@ CpRipple.cpRippleItemStyle = {
     "border-radius": " 50%",
     position: "absolute",
     transform: "scale(0)",
-    opacity: "0.2",
+    opacity: "0.25",
     "transition-property": "transform, opacity",
-    "transition-timing-function": "cubic-bezier(.5,.17,.6,.93)",
+    "transition-timing-function": "cubic-bezier(.49,.44,.6,.87)",
 };
 
 export { CpRipple as default };
