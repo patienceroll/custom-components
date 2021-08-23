@@ -6,10 +6,10 @@ import { elementAddStyles } from '../../utils/style.js';
  * 此组件只暴露了一个开始涟漪的方法出来
  * 此方法返回一个 remove 函数和当前执行动画的元素
  */
-class CPRipple extends HTMLElement {
+class CpRipple extends HTMLElement {
     constructor() {
         super();
-        elementAddStyles(this, CPRipple.cpRippleStyle);
+        elementAddStyles(this, CpRipple.cpRippleStyle);
     }
     /** 开始涟漪动画 */
     get startPiple() {
@@ -27,12 +27,12 @@ class CPRipple extends HTMLElement {
             const { top, left, transitionDuration, rippleColor } = options;
             const radius = calculateRadius(options);
             const rippleItem = document.createElement("div");
-            elementAddStyles(rippleItem, CPRipple.cpRippleItemStyle);
+            elementAddStyles(rippleItem, CpRipple.cpRippleItemStyle);
             rippleItem.style.top = `${top - radius}px`;
             rippleItem.style.left = `${left - radius}px`;
             rippleItem.style.width = `${2 * radius}px`;
             rippleItem.style.height = `${2 * radius}px`;
-            rippleItem.style.backgroundImage = `radial-gradient(circle, ${rippleColor} 20%,${rippleColor} 40%, transparent 100%)`;
+            rippleItem.style.backgroundImage = `radial-gradient(circle, ${rippleColor},${rippleColor} 80%, transparent 100%)`;
             rippleItem.style.transitionDuration = transitionDuration;
             this.appendChild(rippleItem);
             requestAnimationFrame(() => {
@@ -61,7 +61,7 @@ class CPRipple extends HTMLElement {
     }
 }
 /** 组件容器样式 */
-CPRipple.cpRippleStyle = {
+CpRipple.cpRippleStyle = {
     position: "absolute",
     top: "0",
     left: "0",
@@ -73,13 +73,14 @@ CPRipple.cpRippleStyle = {
     "border-radius": "inherit",
 };
 /** 组件动画元素样式 */
-CPRipple.cpRippleItemStyle = {
+CpRipple.cpRippleItemStyle = {
     "border-radius": " 50%",
     position: "absolute",
     transform: "scale(0)",
     opacity: "0",
     "transition-property": "transform, opacity",
-    "transition-timing-function": "cubic-bezier(0.45, 0.02, 0.39, 0.98),normal",
+    // "transition-timing-function": "cubic-bezier(0.45, 0.02, 0.39, 0.98),normal",
+    "transition-timing-function": "cubic-bezier(.5,.17,.6,.93),normal",
 };
 
-export { CPRipple as default };
+export { CpRipple as default };
