@@ -31,16 +31,16 @@ export default class CpRipple extends HTMLElement {
     "border-radius": " 50%",
     position: "absolute",
     transform: "scale(0)",
-    opacity: "0",
+    opacity: "0.3",
     "transition-property": "transform, opacity",
-    "transition-timing-function": "cubic-bezier(.5,.17,.6,.93),normal",
+    "transition-timing-function": "cubic-bezier(.5,.17,.6,.93)",
   };
 
   /** 开始涟漪动画 */
   get startPiple() {
     /** 计算 top 和 left 离方形四个点最远的距离,即为涟漪半径 */
     const calculateRadius = (
-      params: Omit<PiplePoint, "transitionDuration" | "rippleColor">
+      params: Pick<PiplePoint, "left" | "top" | "parentHeight" | "parentWidth">
     ) => {
       const { pow, sqrt, abs } = Math;
       const { top, left, parentWidth, parentHeight } = params;
@@ -52,7 +52,13 @@ export default class CpRipple extends HTMLElement {
     };
 
     return function (this: CpRipple, options: PiplePoint) {
-      const { top, left, transitionDuration, rippleColor } = options;
+      const {
+        top,
+        left,
+        transitionDuration,
+        rippleColor,
+        changeOpacity = true,
+      } = options;
       const radius = calculateRadius(options);
       const rippleItem = document.createElement("div");
       elementAddStyles(rippleItem, CpRipple.cpRippleItemStyle);
@@ -66,15 +72,14 @@ export default class CpRipple extends HTMLElement {
       this.appendChild(rippleItem);
       requestAnimationFrame(() => {
         rippleItem.style.transform = "scale(1)";
-        rippleItem.style.opacity = "0.2";
+        if (changeOpacity) rippleItem.style.opacity = "0";
       });
 
       return {
         remove() {
           requestAnimationFrame(() => {
             rippleItem.style.opacity = "0";
-            rippleItem.style.transitionDuration =
-              "var(--cp-motion-smooth),var(--cp-motion-fast)";
+            rippleItem.style.transitionDuration = "var(--cp-motion-smooth)";
           });
           requestAnimationFrame(() => {
             const delay =

@@ -24,7 +24,7 @@ class CpRipple extends HTMLElement {
             return sqrt(pow(radiusAdjacentWidth, 2) + pow(radiusAdjacentHeight, 2));
         };
         return function (options) {
-            const { top, left, transitionDuration, rippleColor } = options;
+            const { top, left, transitionDuration, rippleColor, changeOpacity = true, } = options;
             const radius = calculateRadius(options);
             const rippleItem = document.createElement("div");
             elementAddStyles(rippleItem, CpRipple.cpRippleItemStyle);
@@ -37,14 +37,14 @@ class CpRipple extends HTMLElement {
             this.appendChild(rippleItem);
             requestAnimationFrame(() => {
                 rippleItem.style.transform = "scale(1)";
-                rippleItem.style.opacity = "0.2";
+                if (changeOpacity)
+                    rippleItem.style.opacity = "0";
             });
             return {
                 remove() {
                     requestAnimationFrame(() => {
                         rippleItem.style.opacity = "0";
-                        rippleItem.style.transitionDuration =
-                            "var(--cp-motion-smooth),var(--cp-motion-fast)";
+                        rippleItem.style.transitionDuration = "var(--cp-motion-smooth)";
                     });
                     requestAnimationFrame(() => {
                         const delay = secondsToNumber(getComputedStyle(rippleItem).transitionDuration, {
@@ -77,10 +77,9 @@ CpRipple.cpRippleItemStyle = {
     "border-radius": " 50%",
     position: "absolute",
     transform: "scale(0)",
-    opacity: "0",
+    opacity: "0.2",
     "transition-property": "transform, opacity",
-    // "transition-timing-function": "cubic-bezier(0.45, 0.02, 0.39, 0.98),normal",
-    "transition-timing-function": "cubic-bezier(.5,.17,.6,.93),normal",
+    "transition-timing-function": "cubic-bezier(.5,.17,.6,.93)",
 };
 
 export { CpRipple as default };
