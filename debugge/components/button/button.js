@@ -3,6 +3,8 @@ import '../ripple/index.js';
 class CpButton extends HTMLElement {
     constructor() {
         super();
+    }
+    connectedCallback() {
         const shadowRoot = this.attachShadow({ mode: "open" });
         // 左侧 icon 容器和插槽
         const startIconWrapper = document.createElement("span");
@@ -12,6 +14,8 @@ class CpButton extends HTMLElement {
         // 右侧 icon 容器和插槽
         const endIconWrapper = document.createElement("span");
         const endIconSlot = document.createElement("slot");
+        const ripple = document.createElement("cp-ripple");
+        const button = document.createElement("button");
         startIconWrapper.setAttribute("part", "start-icon");
         startIconSlot.name = "start-icon";
         startIconWrapper.appendChild(startIconSlot);
@@ -20,7 +24,9 @@ class CpButton extends HTMLElement {
         endIconWrapper.setAttribute("part", "end-icon");
         endIconSlot.name = "end-icon";
         endIconWrapper.appendChild(endIconSlot);
-        shadowRoot.append(startIconWrapper, textWrapper, endIconWrapper);
+        button.setAttribute("part", "button");
+        button.append(startIconWrapper, textWrapper, endIconWrapper, ripple);
+        shadowRoot.appendChild(button);
     }
 }
 

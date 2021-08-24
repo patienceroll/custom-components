@@ -9,7 +9,6 @@ import { elementAddStyles } from '../../utils/style.js';
 class CpRipple extends HTMLElement {
     constructor() {
         super();
-        elementAddStyles(this, CpRipple.cpRippleStyle);
     }
     /** 开始涟漪动画 */
     get startPiple() {
@@ -58,6 +57,9 @@ class CpRipple extends HTMLElement {
                 animateDom: rippleItem,
             };
         };
+    }
+    connectedCallback() {
+        elementAddStyles(this, CpRipple.cpRippleStyle);
     }
 }
 /** 组件容器样式 */

@@ -10,7 +10,6 @@ import { elementAddStyles } from "utils/style";
 export default class CpRipple extends HTMLElement {
   constructor() {
     super();
-    elementAddStyles(this, CpRipple.cpRippleStyle);
   }
 
   /** 组件容器样式 */
@@ -95,5 +94,9 @@ export default class CpRipple extends HTMLElement {
         animateDom: rippleItem,
       };
     };
+  }
+
+  connectedCallback() {
+    elementAddStyles(this, CpRipple.cpRippleStyle);
   }
 }
