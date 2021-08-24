@@ -1,6 +1,6 @@
 #### 自定义组件相关最佳实践
 
-```html
+
 <div class="s-prose js-post-body" itemprop="text">
   <h1>Best practices and rules for custom element constructors</h1>
 
@@ -104,4 +104,4 @@
     </p>
   </blockquote>
 </div>
-```
+
