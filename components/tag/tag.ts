@@ -29,9 +29,7 @@ export default class CpTag extends HTMLElement {
     const closeIcon = CpTag.initCloseIcon.call(this);
     this.closeIcon = closeIcon;
 
-    shadowRoot.appendChild(icon);
-    shadowRoot.appendChild(text);
-    shadowRoot.appendChild(closeIcon);
+    shadowRoot.append(icon, text, closeIcon);
   }
 
   /** 保存在实例里面的 closeIcon 对象 */
