@@ -87,3 +87,7 @@ cp-tag[color="warning"] {
 cp-button{
   
 }
+
+cp-button::part(button){
+  padding: 6px 16px;
+}

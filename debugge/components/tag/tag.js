@@ -22,9 +22,7 @@ class CpTag extends HTMLElement {
         // 创建关闭按钮
         const closeIcon = CpTag.initCloseIcon.call(this);
         this.closeIcon = closeIcon;
-        shadowRoot.appendChild(icon);
-        shadowRoot.appendChild(text);
-        shadowRoot.appendChild(closeIcon);
+        shadowRoot.append(icon, text, closeIcon);
     }
     /**
      * #### 初始化 closeIcon
