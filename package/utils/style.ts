@@ -1,4 +1,4 @@
-import type { CSSproperty } from "../css";
+import type { CSSproperty } from "../css/css";
 
 /** 给html元素添加行内样式 */
 export const elementAddStyles = (element: HTMLElement, style: CSSproperty) => {

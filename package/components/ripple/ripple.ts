@@ -1,6 +1,6 @@
 import type { PiplePoint } from "./data";
-import { secondsToNumber } from "utils/time";
-import { elementAddStyles } from "utils/style";
+import { secondsToNumber } from "../../utils/time";
+import { elementAddStyles } from "../../utils/style";
 
 /**
  * 涟漪效果组件

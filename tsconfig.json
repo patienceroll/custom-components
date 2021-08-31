@@ -63,9 +63,9 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
   "include": [
-    "components/**/*",
-    "css/**/*",
-    "utils/**/*",
+    "package/components/**/*",
+    "package/css/**/*",
+    "package/utils/**/*",
     "global.d.ts"
   ],
 }

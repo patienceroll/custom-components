@@ -13,7 +13,7 @@ const output = {
 };
 
 export default defineConfig({
-  input: ["index.ts"],
+  input: ["./package/index.ts"],
   output: [{ dir: output[buildType] }],
   plugins: [
     rollupPluginTypescript({ tsconfig: "tsconfig.json" }),
@@ -25,11 +25,11 @@ export default defineConfig({
       targets: {
         debugge: [],
         build: [
-          { src: "components/*", dest: "dist/lib/components" },
-          { src: "utils/*", dest: "dist/lib/utils" },
-          { src: "css/*", dest: "dist/lib/css" },
-          { src: "index.ts", dest: "dist/lib" },
-          { src: "package.json", dest: "dist/lib" },
+          { src: "package/components/*", dest: "dist/lib/components" },
+          { src: "package/utils/*", dest: "dist/lib/utils" },
+          { src: "package/css/*", dest: "dist/lib/css" },
+          { src: "package/index.ts", dest: "dist/lib" },
+          { src: "package/package.json", dest: "dist/lib" },
         ],
       }[buildType],
     }),
