@@ -27,7 +27,15 @@ class CpButton extends HTMLElement {
         button.append(startIconWrapper, textWrapper, endIconWrapper, ripple);
         shadowRoot.appendChild(button);
     }
-    connectedCallback() { }
+    connectedCallback() {
+        if (this.shadowRoot)
+            this.shadowRoot.adoptedStyleSheets = [CpButton.cpButtonStyleSheet];
+    }
 }
+CpButton.cpButtonStyleSheet = (() => {
+    const styleSheet = new CSSStyleSheet();
+    styleSheet.addRule("button", "border:none");
+    return styleSheet;
+})();
 
 export { CpButton as default };

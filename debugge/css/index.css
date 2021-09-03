@@ -1,3 +1,11 @@
+cp-button{
+  
+}
+
+cp-button::part(button){
+  padding: 6px 16px;
+  
+}
 body {
   /* 基本主题配色 */
   --cp-success: #52c41a;
@@ -82,13 +90,4 @@ cp-tag[color="error"] {
 cp-tag[color="warning"] {
   color: var(--cp-warning);
   border-color: var(--cp-warning);
-}
-
-cp-button{
-  
-}
-
-cp-button::part(button){
-  padding: 6px 16px;
-  
 }
