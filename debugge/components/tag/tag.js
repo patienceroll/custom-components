@@ -104,6 +104,8 @@ class CpTag extends HTMLElement {
         const iconInsert = this.querySelector("[slot='icon']");
         if (iconInsert)
             iconInsert.style.marginRight = "6px";
+        const styleshwwt = document.adoptedStyleSheets;
+        console.log(styleshwwt);
     }
     attributeChangedCallback(attrName, oldValue, newValue) {
         switch (attrName) {

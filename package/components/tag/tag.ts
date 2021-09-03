@@ -125,9 +125,11 @@ export default class CpTag extends HTMLElement {
 
   static setCloseIconOnClick(this: CpTag) {}
 
-  connectedCallback() {
+  connectedCallback(this:CpTag) {
     const iconInsert = this.querySelector<HTMLElement>("[slot='icon']");
     if (iconInsert) iconInsert.style.marginRight = "6px";
+    const styleshwwt = document.adoptedStyleSheets;
+    console.log(styleshwwt) 
   }
 
   static observedAttributes = ["color", "closable", "show", "pure-background"];
