@@ -137,19 +137,13 @@
           <span>点击效果</span>
           <div class="piple-btn" onclick="(function piple(event){
               const  ripple =  document.querySelector('cp-ripple');
-          const rippleItem =   ripple.start({
+              const rippleItem = ripple.start({
                   top:event.offsetY,
                   left:event.offsetX,
-                  parentWidth:event.target.offsetWidth,
-                  parentHeight:event.target.offsetHeight,
-                  transitionDuration:'var(--cp-motion-base)',
-                  rippleColor:'#000',
-                  changeOpacity:true
                   })
                   setTimeout(() => {
                     rippleItem.finish()
                   },600) 
-             
             })(event)">
             <cp-ripple></cp-ripple>
             <span

@@ -4,6 +4,7 @@ class CpRipple extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: "open" });
         shadowRoot.adoptedStyleSheets = [CpRipple.CpRippleStyleSheet];
     }
+    /** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
     get start() {
         return function (options) {
             if (this.shadowRoot && this.parentElement) {
