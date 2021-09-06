@@ -39,10 +39,12 @@ export default class CpRipple extends HTMLElement {
       transform: scale(1);
       animation-name: start;
       animation-duration: 600ms;
+      animation-fill-mode: forwards;
       }`);
     sheet.insertRule(`.ripple-disappear {
       animation-name: disappear;
       animation-duration: 600ms;
+      animation-fill-mode: forwards;
       }`);
 
     return sheet;
@@ -57,8 +59,12 @@ export default class CpRipple extends HTMLElement {
     return function (
       this: CpRipple,
       options: {
+        /** 涟漪中心点相对父级顶部距离 */
         top: number;
+        /** 涟漪中心点相对父级左侧距离 */
         left: number;
+        /** 涟漪颜色,默认 #333 */
+        backgroundColor?: CSSStyleDeclaration["backgroundColor"];
       }
     ) {
       if (this.shadowRoot && this.parentElement) {

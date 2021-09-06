@@ -78,10 +78,12 @@ CpRipple.CpRippleStyleSheet = (() => {
       transform: scale(1);
       animation-name: start;
       animation-duration: 600ms;
+      animation-fill-mode: forwards;
       }`);
     sheet.insertRule(`.ripple-disappear {
       animation-name: disappear;
       animation-duration: 600ms;
+      animation-fill-mode: forwards;
       }`);
     return sheet;
 })();
