@@ -1,11 +1,3 @@
-cp-button{
-  
-}
-
-cp-button::part(button){
-  padding: 6px 16px;
-  
-}
 body {
   /* 基本主题配色 */
   --cp-success: #52c41a;

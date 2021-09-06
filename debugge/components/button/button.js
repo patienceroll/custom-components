@@ -34,7 +34,7 @@ class CpButton extends HTMLElement {
 }
 CpButton.cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
-    styleSheet.addRule("button", "border:none");
+    styleSheet.insertRule("button{display:inline-block}");
     return styleSheet;
 })();
 

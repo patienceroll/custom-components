@@ -1,22 +1,19 @@
 import "../ripple/index";
 
 export default class CpButton extends HTMLElement {
-
   static cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
-    styleSheet.addRule("button", "border:none");
+    styleSheet.insertRule("button{display:inline-block}");
     return styleSheet;
   })();
 
-  
   connectedCallback(this: CpButton) {
     if (this.shadowRoot)
       this.shadowRoot.adoptedStyleSheets = [CpButton.cpButtonStyleSheet];
   }
 
-
   constructor() {
-    super();  
+    super();
     const shadowRoot = this.attachShadow({ mode: "open" });
     const button = document.createElement("button");
     button.setAttribute("part", "button");
