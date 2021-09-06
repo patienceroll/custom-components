@@ -13,5 +13,30 @@ export default class CpRipple extends HTMLElement {
     shadowRoot.adoptedStyleSheets = [CpRipple.CpRippleStyleSheet];
   }
 
+  get start() {
+    return function (
+      this: CpRipple,
+      options: {
+        top: 0;
+      }
+    ) {
+      console.log(this.parentElement);
+      if (this.parentElement) {
+        console.log(
+          this.parentElement.offsetWidth,
+          this.parentElement.offsetHeight
+        );
+      }
+      if (this.shadowRoot) {
+        const rippleItem = document.createElement("div");
+        this.shadowRoot.appendChild(rippleItem);
+      }
+    };
+  }
+
+  get finish() {
+    return function () {};
+  }
+
   connectedCallback(this: CpRipple) {}
 }

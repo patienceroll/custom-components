@@ -4,6 +4,21 @@ class CpRipple extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: "open" });
         shadowRoot.adoptedStyleSheets = [CpRipple.CpRippleStyleSheet];
     }
+    get start() {
+        return function (options) {
+            console.log(this.parentElement);
+            if (this.parentElement) {
+                console.log(this.parentElement.offsetWidth, this.parentElement.offsetHeight);
+            }
+            if (this.shadowRoot) {
+                const rippleItem = document.createElement("div");
+                this.shadowRoot.appendChild(rippleItem);
+            }
+        };
+    }
+    get finish() {
+        return function () { };
+    }
     connectedCallback() { }
 }
 CpRipple.CpRippleStyleSheet = (() => {
