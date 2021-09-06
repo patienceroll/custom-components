@@ -1,4 +1,4 @@
 /** 扩展 ShadowRoot 属性 */
-interface ShadowRoot {
+declare interface ShadowRoot {
   adoptedStyleSheets: CSSStyleSheet[];
 }
