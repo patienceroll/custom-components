@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>涟漪组件</title>
+</head>
+
+<body>
+  <style>
+    .piple-btn {
+      width: 100px;
+      height: 40px;
+      background-color: orange;
+      cursor: pointer;
+      border-radius: 2px;
+      position: relative;
+    }
+  </style>
+  <li>
+    <label>涟漪效果</label>
+    <br />
+    <br />
+    <ul>
+      <li>
+        <span>点击效果</span>
+        <div class="piple-btn" onclick="(function piple(event){
+                const  ripple =  document.querySelector('cp-ripple');
+                const rippleItem = ripple.start({
+                    top:event.offsetY,
+                    left:event.offsetX,
+                    })
+                    setTimeout(() => {
+                      rippleItem.finish()
+                    },600) 
+              })(event)">
+          <cp-ripple></cp-ripple>
+          <span
+            style="color: #fff;position: absolute;height: 100%;width: 100%; line-height: 40px;text-align: center;user-select: none;">点击</span>
+        </div>
+      </li>
+
+    </ul>
+  </li>
+  <script src="../index.js" type="module"></script>
+</body>
+
+</html>

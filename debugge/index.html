@@ -8,60 +8,18 @@
   <title>custom components</title>
   <link href="./css/index.css" rel="stylesheet">
   </link>
-  <style>
-    .piple-btn {
-      width: 100px;
-      height: 40px;
-      background-color: orange;
-      cursor: pointer;
-      border-radius: 2px;
-      position: relative;
-    }
-  </style>
+
 </head>
 
 <body>
   <ul>
 
-    <!-- ---------------------------   Tag 标签 ----------------------------------- -->
-    <li>
-      <label>标签</label>
-      <br />
-      <ul>
-        <li>
-          <cp-tag show="true">标签</cp-tag>
-        </li>
-      </ul>
-    </li>
+    <li><a href="./html/tag.html">标签</a></li>
 
-    <br />
 
-    <!-- ---------------------------   涟漪效果 ----------------------------------- -->
-    <li>
-      <label>涟漪效果</label>
-      <br />
-      <br />
-      <ul>
-        <li>
-          <span>点击效果</span>
-          <div class="piple-btn" onclick="(function piple(event){
-              const  ripple =  document.querySelector('cp-ripple');
-              const rippleItem = ripple.start({
-                  top:event.offsetY,
-                  left:event.offsetX,
-                  })
-                  setTimeout(() => {
-                    rippleItem.finish()
-                  },600) 
-            })(event)">
-            <cp-ripple></cp-ripple>
-            <span
-              style="color: #fff;position: absolute;height: 100%;width: 100%; line-height: 40px;text-align: center;user-select: none;">点击</span>
-          </div>
-        </li>
 
-      </ul>
-    </li>
+   
+
     <br />
     <!-- ---------------------------   button ----------------------------------- -->
     <li>
