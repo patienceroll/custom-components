@@ -12,3 +12,5 @@ export interface TagProps {
     event: CustomEvent<{ domEvent: MouseEvent; show?: boolean }>
   ) => void;
 }
+
+export type TagObservedAttributes = "visible";
