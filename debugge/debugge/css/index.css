@@ -1,9 +1,0 @@
-@import url(./animate/index.css);
-@import url(../components/tag/indx.css);
-
-body {
-  --cp-success: #52c41a;
-  --cp-processing: #1890ff;
-  --cp-error: #f5222d;
-  --cp-warning: #fa8c16;
-}
