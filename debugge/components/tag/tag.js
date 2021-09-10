@@ -29,17 +29,19 @@ class CpTag extends HTMLElement {
                 // 初始化的时候不展示动画
                 if (Object.is(older, null))
                     return;
-                if (shadowRoot && shadowRoot.firstElementChild) {
-                    if (newer === "true") {
-                        shadowRoot.firstElementChild.style.removeProperty("display");
-                        shadowRoot.firstElementChild.setAttribute("class", "cp-tag-container cp-tag-show");
-                    }
-                    if (newer === "false") {
-                        shadowRoot.firstElementChild.setAttribute("class", "cp-tag-container cp-tag-hide");
-                        setTimeout(() => {
-                            shadowRoot.firstElementChild.style.display =
-                                "none";
-                        }, 300);
+                if (shadowRoot) {
+                    const { firstElementChild } = shadowRoot;
+                    if (firstElementChild) {
+                        if (newer === "true") {
+                            firstElementChild.style.removeProperty("display");
+                            firstElementChild.setAttribute("class", "cp-tag-container cp-tag-show");
+                        }
+                        if (newer === "false") {
+                            firstElementChild.setAttribute("class", "cp-tag-container cp-tag-hide");
+                            setTimeout(() => {
+                                shadowRoot.firstElementChild.style.display = "none";
+                            }, 300);
+                        }
                     }
                 }
                 break;
