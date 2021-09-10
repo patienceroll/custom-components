@@ -45,7 +45,6 @@ export default class CpRipple extends HTMLElement {
       animation-duration: 600ms;
       animation-fill-mode: forwards;
       }`);
-
     return sheet;
   })();
   constructor() {
