@@ -3,12 +3,35 @@ import type { TagObservedAttributes } from "./data";
 export default class CpTag extends HTMLElement {
   static CpTagStyleSheet = (() => {
     const sheet = new CSSStyleSheet();
-    sheet.insertRule(`slot[part="text"] {
-      font-size: 100px;
+    sheet.insertRule(`@keyframes hide {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
     }`);
-    sheet.insertRule(`
-    .cp-tag {
+    sheet.insertRule(`@keyframes show {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }`);
+    sheet.insertRule(`.cp-tag-container {
       display: inline-block;
+      font-size: 14px;
+    }`);
+    sheet.insertRule(`.cp-tag-hide {
+      animation-name: hide;
+      animation-duration: 300ms;
+      animation-fill-mode: forwards;
+    }`);
+    sheet.insertRule(`.cp-tag-show {
+      animation-name: show;
+      animation-duration: 300ms;
+      animation-fill-mode: forwards;
     }`);
     return sheet;
   })();
@@ -23,7 +46,7 @@ export default class CpTag extends HTMLElement {
     const close = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
-    container.setAttribute("class", "cp-tag");
+    container.setAttribute("class", "cp-tag-container");
     container.setAttribute("part", "container");
     iconSlot.name = "icon";
     iconSlot.setAttribute("part", "icon");
@@ -42,16 +65,41 @@ export default class CpTag extends HTMLElement {
     shadowRoot.appendChild(container);
   }
 
-  static observedAttributes: TagObservedAttributes[] = ["visible"];
+  static observedAttributes: TagObservedAttributes[] = ["show"];
   attributeChangedCallback(
     attr: TagObservedAttributes,
     older: string | null,
     newer: string | null
   ) {
     switch (attr) {
-      case "visible":
-        if (newer === "true") this.style.display = "inline-block";
-        if (newer === "false") this.style.display = "none";
+      case "show":
+        const { shadowRoot } = this;
+        // 初始化的时候不展示动画
+        if (Object.is(older, null)) return;
+        if (shadowRoot && shadowRoot.firstElementChild) {
+          if (newer === "true") {
+            (
+              shadowRoot.firstElementChild as HTMLSpanElement
+            ).style.removeProperty("display");
+
+            shadowRoot.firstElementChild.setAttribute(
+              "class",
+              "cp-tag-container cp-tag-show"
+            );
+          }
+
+          if (newer === "false") {
+            shadowRoot.firstElementChild.setAttribute(
+              "class",
+              "cp-tag-container cp-tag-hide"
+            );
+            setTimeout(() => {
+              (shadowRoot.firstElementChild as HTMLSpanElement).style.display =
+                "none";
+            }, 300);
+          }
+        }
+
         break;
       default:
         break;

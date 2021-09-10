@@ -13,4 +13,4 @@ export interface TagProps {
   ) => void;
 }
 
-export type TagObservedAttributes = "visible";
+export type TagObservedAttributes = "show";
