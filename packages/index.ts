@@ -3,4 +3,4 @@ import "./css/animate/index.css";
 
 import "./components/tag";
 import "./components/ripple";
-import "./components/button"
+import "./components/button";

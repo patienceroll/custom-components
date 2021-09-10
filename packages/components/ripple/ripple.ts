@@ -19,7 +19,6 @@ export default class CpRipple extends HTMLElement {
           opacity: 0;
         }
       }`);
-
     sheet.insertRule(`:host {
         width: inherit;
         height: inherit;

@@ -13,10 +13,9 @@ const output = {
 };
 
 export default defineConfig({
-  input: ["./package/index.ts"],
+  input: ["packages/index.ts"],
   output: [{ dir: output[buildType] }],
   plugins: [
-    rollupPluginTypescript({ tsconfig: "tsconfig.json" }),
     postcss({
       extract: true,
       extract: "css/index.css",
@@ -25,14 +24,15 @@ export default defineConfig({
       targets: {
         debugge: [],
         build: [
-          { src: "package/components/*", dest: "dist/lib/components" },
-          { src: "package/utils/*", dest: "dist/lib/utils" },
-          { src: "package/css/*", dest: "dist/lib/css" },
-          { src: "package/index.ts", dest: "dist/lib" },
-          { src: "package/package.json", dest: "dist/lib" },
+          { src: "packages/components/*", dest: "dist/lib/components" },
+          { src: "packages/utils/*", dest: "dist/lib/utils" },
+          { src: "packages/css/*", dest: "dist/lib/css" },
+          { src: "packages/index.ts", dest: "dist/lib" },
+          { src: "packages/package.json", dest: "dist/lib" },
         ],
       }[buildType],
     }),
+    rollupPluginTypescript({ tsconfig: "tsconfig.json" }),
   ],
   preserveModules: true,
 });
