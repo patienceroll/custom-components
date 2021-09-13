@@ -86,15 +86,27 @@ export default class CpRipple extends HTMLElement {
       rippleItem.style.background = backgroundColor || "#333";
       rippleItem.setAttribute("class", "ripple-item ripple-start");
       (this.shadowRoot as ShadowRoot).appendChild(rippleItem);
-      return {
-        dom: rippleItem,
-        finish() {
-          rippleItem.setAttribute("class", "ripple-item ripple-disappear");
+      return new Promise<{ dom: HTMLDivElement; stop: VoidFunction }>(
+        (resolve) => {
           setTimeout(() => {
-            rippleItem.remove();
+            resolve({
+              dom: rippleItem,
+              stop() {
+                rippleItem.setAttribute(
+                  "class",
+                  "ripple-item ripple-disappear"
+                );
+                return new Promise<void>((resolve) => {
+                  setTimeout(() => {
+                    rippleItem.remove();
+                    resolve();
+                  }, 600);
+                });
+              },
+            });
           }, 600);
-        },
-      };
+        }
+      );
     };
   }
 

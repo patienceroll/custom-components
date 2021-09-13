@@ -24,15 +24,22 @@ class CpRipple extends HTMLElement {
             rippleItem.style.background = backgroundColor || "#333";
             rippleItem.setAttribute("class", "ripple-item ripple-start");
             this.shadowRoot.appendChild(rippleItem);
-            return {
-                dom: rippleItem,
-                finish() {
-                    rippleItem.setAttribute("class", "ripple-item ripple-disappear");
-                    setTimeout(() => {
-                        rippleItem.remove();
-                    }, 600);
-                },
-            };
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        dom: rippleItem,
+                        stop() {
+                            rippleItem.setAttribute("class", "ripple-item ripple-disappear");
+                            return new Promise((resolve) => {
+                                setTimeout(() => {
+                                    rippleItem.remove();
+                                    resolve();
+                                }, 600);
+                            });
+                        },
+                    });
+                }, 600);
+            });
         };
     }
     connectedCallback() { }

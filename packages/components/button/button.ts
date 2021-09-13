@@ -51,8 +51,18 @@ export default class CpButton extends HTMLElement {
   }
 
   connectedCallback() {
-    const listenClickThis = (event: MouseEvent) => {};
-    this.addEventListener("click", listenClickThis);
+    const onClickThis = (event: MouseEvent) => {
+      if (
+        this.shadowRoot &&
+        this.shadowRoot.firstElementChild &&
+        this.shadowRoot.firstElementChild.lastElementChild
+      ) {
+        (this.shadowRoot.firstElementChild.lastElementChild as Ripple).start({
+          top: event.offsetY,
+          left: event.offsetX,
+        });
+      }
+    };
+    this.addEventListener("click", onClickThis);
   }
-  disconnectedCallback() {}
 }

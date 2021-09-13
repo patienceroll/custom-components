@@ -23,10 +23,18 @@ class CpButton extends HTMLElement {
         shadowRoot.appendChild(button);
     }
     connectedCallback() {
-        const listenClickThis = (event) => { };
-        this.addEventListener("click", listenClickThis);
+        const onClickThis = (event) => {
+            if (this.shadowRoot &&
+                this.shadowRoot.firstElementChild &&
+                this.shadowRoot.firstElementChild.lastElementChild) {
+                this.shadowRoot.firstElementChild.lastElementChild.start({
+                    top: event.offsetY,
+                    left: event.offsetX,
+                });
+            }
+        };
+        this.addEventListener("click", onClickThis);
     }
-    disconnectedCallback() { }
 }
 CpButton.cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
