@@ -7,35 +7,32 @@ class CpRipple extends HTMLElement {
     /** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
     get start() {
         return function (options) {
-            if (this.shadowRoot && this.parentElement) {
-                const { pow, sqrt, abs } = Math;
-                const { top, left, backgroundColor } = options;
-                const { clientWidth, clientHeight } = this.parentElement;
-                const rippleItem = document.createElement("div");
-                // 计算涟漪半径,涟漪中心点到父元素四个点之中最远的一个点的距离为半径
-                const offsetRight = abs(left - clientWidth);
-                const offsetBootom = abs(clientHeight - top);
-                const radiusAdjacentWidth = offsetRight > left ? offsetRight : left;
-                const radiusAdjacentHeight = offsetBootom > top ? offsetBootom : top;
-                const radius = sqrt(pow(radiusAdjacentWidth, 2) + pow(radiusAdjacentHeight, 2));
-                rippleItem.style.top = `${top - radius}px`;
-                rippleItem.style.left = `${left - radius}px`;
-                rippleItem.style.width = `${2 * radius}px`;
-                rippleItem.style.height = `${2 * radius}px`;
-                rippleItem.style.background = backgroundColor || "#333";
-                rippleItem.setAttribute("class", "ripple-item ripple-start");
-                this.shadowRoot.appendChild(rippleItem);
-                return {
-                    dom: rippleItem,
-                    finish() {
-                        rippleItem.setAttribute("class", "ripple-item ripple-disappear");
-                        setTimeout(() => {
-                            rippleItem.remove();
-                        }, 600);
-                    },
-                };
-            }
-            return null;
+            const { pow, sqrt, abs } = Math;
+            const { top, left, backgroundColor } = options;
+            const { clientWidth, clientHeight } = this;
+            const rippleItem = document.createElement("div");
+            // 计算涟漪半径,涟漪中心点到父元素四个点之中最远的一个点的距离为半径
+            const offsetRight = abs(left - clientWidth);
+            const offsetBootom = abs(clientHeight - top);
+            const radiusAdjacentWidth = offsetRight > left ? offsetRight : left;
+            const radiusAdjacentHeight = offsetBootom > top ? offsetBootom : top;
+            const radius = sqrt(pow(radiusAdjacentWidth, 2) + pow(radiusAdjacentHeight, 2));
+            rippleItem.style.top = `${top - radius}px`;
+            rippleItem.style.left = `${left - radius}px`;
+            rippleItem.style.width = `${2 * radius}px`;
+            rippleItem.style.height = `${2 * radius}px`;
+            rippleItem.style.background = backgroundColor || "#333";
+            rippleItem.setAttribute("class", "ripple-item ripple-start");
+            this.shadowRoot.appendChild(rippleItem);
+            return {
+                dom: rippleItem,
+                finish() {
+                    rippleItem.setAttribute("class", "ripple-item ripple-disappear");
+                    setTimeout(() => {
+                        rippleItem.remove();
+                    }, 600);
+                },
+            };
         };
     }
     connectedCallback() { }

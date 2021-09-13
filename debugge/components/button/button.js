@@ -6,34 +6,44 @@ class CpButton extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: "open" });
         shadowRoot.adoptedStyleSheets = [CpButton.cpButtonStyleSheet];
         const button = document.createElement("button");
+        const textWrapper = document.createElement("span");
         const text = document.createElement("slot");
         const leftIcon = document.createElement("slot");
         const rightIcon = document.createElement("slot");
         const ripple = document.createElement("cp-ripple");
         button.setAttribute("class", "cp-button");
         button.setAttribute("part", "button");
+        textWrapper.setAttribute("class", "cp-button-text");
         leftIcon.name = "left-icon";
         leftIcon.setAttribute("part", "left-icon");
         rightIcon.name = "right-icon";
         rightIcon.setAttribute("part", "right-icon");
-        button.append(leftIcon, text, rightIcon);
-        shadowRoot.append(button, ripple);
+        textWrapper.append(leftIcon, text, rightIcon);
+        button.append(textWrapper, ripple);
+        shadowRoot.appendChild(button);
     }
+    connectedCallback() {
+        const listenClickThis = (event) => { };
+        this.addEventListener("click", listenClickThis);
+    }
+    disconnectedCallback() { }
 }
 CpButton.cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
     styleSheet.insertRule(`:host {
       display: inline-block;
-      position: relative;
     }`);
     styleSheet.insertRule(`.cp-button {
+      padding: 6px 16px;
+      border: none;
       position: relative;
       outline: 0;
       user-select: none;
       cursor: pointer;
       width: 100%;
       height: 100%;
-      border: none;
+      background-color: #e0e0e0;
+      border-radius: 4px;
     }`);
     return styleSheet;
 })();
