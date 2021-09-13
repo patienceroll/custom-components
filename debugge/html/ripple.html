@@ -8,8 +8,83 @@
   <title>涟漪组件</title>
 </head>
 
-<body>
+<body style="background-color: #ccc;">
+  <style>
+    .ripple-wrapper {
+      width: 90px;
+      height: 36px;
+      position: relative;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 5px;
+      overflow: hidden;
+    }
+
+    .ripple-mask {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      line-height: 36px;
+      cursor: pointer;
+      user-select: none;
+      border-radius: inherit;
+    }
+  </style>
+
+  <h1>涟漪效果组件</h1>
+  <ul>
+    <li>
+      <h4>点击效果</h4>
+      <div class="ripple-wrapper" style=" background-color: rgb(220, 0, 78);">
+        <cp-ripple></cp-ripple>
+        <div class="ripple-mask" onclick="onClickRipple()(event)">点击效果</div>
+      </div>
+    </li>
+
+    <li>
+      <h4>不同颜色</h4>
+      <div class="ripple-wrapper">
+        <cp-ripple style="background-color: #ffe58f;"></cp-ripple>
+        <div class="ripple-mask" style="color:#000" onclick="onClickRipple('#faad14')(event)">黄色</div>
+      </div>
+
+      <div class="ripple-wrapper">
+        <cp-ripple style="background-color: #91d5ff;"></cp-ripple>
+        <div class="ripple-mask" style="color:#000" onclick="onClickRipple('#1890ff')(event)">蓝色</div>
+      </div>
+
+      <div class="ripple-wrapper">
+        <cp-ripple style="background-color: #1890ff;"></cp-ripple>
+        <div class="ripple-mask" style="color:#000" onclick="onClickRipple('#fff')(event)">白色</div>
+      </div>
+    </li>
+
+  </ul>
+
   <script src="../index.js" type="module"></script>
+  <script>
+    function onClickRipple(backgroundColor) {
+
+      return function onClickClickEffect(e) {
+        const { offsetX, offsetY, target: { previousElementSibling: ripple } } = e;
+
+        const rippleItem = ripple.start({
+          top: offsetY,
+          left: offsetX,
+          backgroundColor,
+        })
+
+        setTimeout(() => {
+          rippleItem.finish()
+        }, 600);
+      }
+    }
+
+
+
+
+  </script>
 </body>
 
 </html>

@@ -28,6 +28,7 @@ export default class CpRipple extends HTMLElement {
         top: 0;
         left: 0;
         z-index: 0;
+        border-radius: inherit;
       }`);
     sheet.insertRule(`.ripple-item {
         position:absolute;
@@ -68,7 +69,7 @@ export default class CpRipple extends HTMLElement {
     ) {
       if (this.shadowRoot && this.parentElement) {
         const { pow, sqrt, abs } = Math;
-        const { top, left } = options;
+        const { top, left, backgroundColor } = options;
         const { clientWidth, clientHeight } = this.parentElement;
         const rippleItem = document.createElement("div");
         // 计算涟漪半径,涟漪中心点到父元素四个点之中最远的一个点的距离为半径
@@ -83,7 +84,7 @@ export default class CpRipple extends HTMLElement {
         rippleItem.style.left = `${left - radius}px`;
         rippleItem.style.width = `${2 * radius}px`;
         rippleItem.style.height = `${2 * radius}px`;
-        rippleItem.style.background = "#333";
+        rippleItem.style.background = backgroundColor || "#333";
         rippleItem.setAttribute("class", "ripple-item ripple-start");
         this.shadowRoot.appendChild(rippleItem);
         return {
