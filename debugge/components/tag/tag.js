@@ -26,9 +26,6 @@ class CpTag extends HTMLElement {
         switch (attr) {
             case "show":
                 const { shadowRoot } = this;
-                // 初始化的时候不展示动画
-                if (Object.is(older, null))
-                    return;
                 if (shadowRoot) {
                     const { firstElementChild } = shadowRoot;
                     if (firstElementChild) {
