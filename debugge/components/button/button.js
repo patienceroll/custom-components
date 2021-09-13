@@ -27,10 +27,12 @@ class CpButton extends HTMLElement {
             if (this.shadowRoot &&
                 this.shadowRoot.firstElementChild &&
                 this.shadowRoot.firstElementChild.lastElementChild) {
-                this.shadowRoot.firstElementChild.lastElementChild.start({
+                this.shadowRoot.firstElementChild.lastElementChild
+                    .start({
                     top: event.offsetY,
                     left: event.offsetX,
-                });
+                })
+                    .then(({ stop }) => stop());
             }
         };
         this.addEventListener("click", onClickThis);

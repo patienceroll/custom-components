@@ -57,10 +57,12 @@ export default class CpButton extends HTMLElement {
         this.shadowRoot.firstElementChild &&
         this.shadowRoot.firstElementChild.lastElementChild
       ) {
-        (this.shadowRoot.firstElementChild.lastElementChild as Ripple).start({
-          top: event.offsetY,
-          left: event.offsetX,
-        });
+        (this.shadowRoot.firstElementChild.lastElementChild as Ripple)
+          .start({
+            top: event.offsetY,
+            left: event.offsetX,
+          })
+          .then(({ stop }) => stop());
       }
     };
     this.addEventListener("click", onClickThis);
