@@ -36,7 +36,7 @@
   <ul>
     <li>
       <h4>点击效果</h4>
-      <div class="ripple-wrapper" style=" background-color: rgb(220, 0, 78);">
+      <div class="ripple-wrapper" style="background-color: rgb(220, 0, 78);">
         <cp-ripple></cp-ripple>
         <div class="ripple-mask" onclick="onClickRipple()(event)">点击效果</div>
       </div>
@@ -45,18 +45,26 @@
     <li>
       <h4>不同颜色</h4>
       <div class="ripple-wrapper">
-        <cp-ripple style="background-color: #ffe58f;"></cp-ripple>
-        <div class="ripple-mask" style="color:#000" onclick="onClickRipple('#faad14')(event)">黄色</div>
-      </div>
-
-      <div class="ripple-wrapper">
-        <cp-ripple style="background-color: #91d5ff;"></cp-ripple>
-        <div class="ripple-mask" style="color:#000" onclick="onClickRipple('#1890ff')(event)">蓝色</div>
+        <cp-ripple style="background-color: #faad14;"></cp-ripple>
+        <div class="ripple-mask" onclick="onClickRipple('yellow')(event)">yellow</div>
       </div>
 
       <div class="ripple-wrapper">
         <cp-ripple style="background-color: #1890ff;"></cp-ripple>
-        <div class="ripple-mask" style="color:#000" onclick="onClickRipple('#fff')(event)">白色</div>
+        <div class="ripple-mask" onclick="onClickRipple('blue')(event)">blue</div>
+      </div>
+
+      <div class="ripple-wrapper">
+        <cp-ripple style="background-color: #1890ff;"></cp-ripple>
+        <div class="ripple-mask" onclick="onClickRipple('#fff')(event)">white</div>
+      </div>
+    </li>
+
+    <li>
+      <h4>模拟长按</h4>
+      <div class="ripple-wrapper" style="background-color: rgb(220, 0, 78);">
+        <cp-ripple></cp-ripple>
+        <div class="ripple-mask" onclick="onClickDelay(event)">长按3秒</div>
       </div>
     </li>
 
@@ -79,6 +87,19 @@
           rippleItem.finish()
         }, 600);
       }
+    }
+
+    function onClickDelay(e) {
+      const { offsetX, offsetY, target: { previousElementSibling: ripple } } = e;
+
+      const rippleItem = ripple.start({
+        top: offsetY,
+        left: offsetX,
+      })
+
+      setTimeout(() => {
+        rippleItem.finish()
+      }, 3600);
     }
 
 
