@@ -61,8 +61,8 @@ CpRipple.CpRippleStyleSheet = (() => {
         }
       }`);
     sheet.insertRule(`:host {
-        width: inherit;
-        height: inherit;
+        width: 100%;
+        height: 100%;
         overflow: hidden;
         display: inline-block;
         position: absolute;
