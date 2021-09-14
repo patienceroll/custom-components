@@ -114,7 +114,8 @@ export default class CpButton extends HTMLElement {
             );
           }
         }
-
+        break;
+      case "loading":
         break;
       default:
         break;
