@@ -43,7 +43,7 @@ export default class CpRipple extends HTMLElement {
       }`);
     sheet.insertRule(`.ripple-disappear {
       animation-name: disappear;
-      animation-duration: 600ms;
+      animation-duration: 450ms;
       animation-fill-mode: forwards;
       }`);
     return sheet;
@@ -100,7 +100,7 @@ export default class CpRipple extends HTMLElement {
                   setTimeout(() => {
                     rippleItem.remove();
                     resolve();
-                  }, 600);
+                  }, 450);
                 });
               },
             });
