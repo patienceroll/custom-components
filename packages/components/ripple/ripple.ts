@@ -1,23 +1,21 @@
 export default class CpRipple extends HTMLElement {
   static CpRippleStyleSheet = (() => {
     const sheet = new CSSStyleSheet();
-    sheet.insertRule(`@keyframes start {
-        0% {
-          transform: scale(0);
-          opacity: 0.1;
-        }
-        100% {
-          transform: scale(1);
-          opacity: 0.3;
-        }
+    sheet.insertRule(`.ripple-disappear {
+      animation-name: disappear;
+      animation-duration: ms;
+      animation-fill-mode: forwards;
       }`);
-    sheet.insertRule(`@keyframes disappear {
-        0% {
-          opacity: 0.3;
-        }
-        100% {
-          opacity: 0;
-        }
+    sheet.insertRule(`.ripple-start {
+        opacity: 0.3;
+        transform: scale(1);
+        animation-name: start;
+        animation-duration: 600ms;
+        animation-fill-mode: forwards;
+        }`);
+    sheet.insertRule(`.ripple-item {
+        position:absolute;
+        border-radius:50%;
       }`);
     sheet.insertRule(`:host {
         width: 100%;
@@ -30,21 +28,23 @@ export default class CpRipple extends HTMLElement {
         z-index: 0;
         border-radius: inherit;
       }`);
-    sheet.insertRule(`.ripple-item {
-        position:absolute;
-        border-radius:50%;
+    sheet.insertRule(`@keyframes disappear {
+        0% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 0;
+        }
       }`);
-    sheet.insertRule(`.ripple-start {
-      opacity: 0.3;
-      transform: scale(1);
-      animation-name: start;
-      animation-duration: 600ms;
-      animation-fill-mode: forwards;
-      }`);
-    sheet.insertRule(`.ripple-disappear {
-      animation-name: disappear;
-      animation-duration: 450ms;
-      animation-fill-mode: forwards;
+    sheet.insertRule(`@keyframes start {
+        0% {
+          transform: scale(0);
+          opacity: 0.1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.3;
+        }
       }`);
     return sheet;
   })();

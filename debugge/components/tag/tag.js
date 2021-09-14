@@ -47,13 +47,19 @@ class CpTag extends HTMLElement {
 }
 CpTag.CpTagStyleSheet = (() => {
     const sheet = new CSSStyleSheet();
-    sheet.insertRule(`@keyframes hide {
-      0% {
-        transform: scale(1);
-      }
-      100% {
-        transform: scale(0);
-      }
+    sheet.insertRule(`.cp-tag-show {
+      animation-name: show;
+      animation-duration: 300ms;
+      animation-fill-mode: forwards;
+    }`);
+    sheet.insertRule(`.cp-tag-hide {
+      animation-name: hide;
+      animation-duration: 300ms;
+      animation-fill-mode: forwards;
+    }`);
+    sheet.insertRule(`.cp-tag-container {
+      display: inline-block;
+      font-size: 14px;
     }`);
     sheet.insertRule(`@keyframes show {
       0% {
@@ -63,19 +69,13 @@ CpTag.CpTagStyleSheet = (() => {
         transform: scale(1);
       }
     }`);
-    sheet.insertRule(`.cp-tag-container {
-      display: inline-block;
-      font-size: 14px;
-    }`);
-    sheet.insertRule(`.cp-tag-hide {
-      animation-name: hide;
-      animation-duration: 300ms;
-      animation-fill-mode: forwards;
-    }`);
-    sheet.insertRule(`.cp-tag-show {
-      animation-name: show;
-      animation-duration: 300ms;
-      animation-fill-mode: forwards;
+    sheet.insertRule(`@keyframes hide {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
     }`);
     return sheet;
 })();

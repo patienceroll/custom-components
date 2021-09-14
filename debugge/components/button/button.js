@@ -55,12 +55,30 @@ class CpButton extends HTMLElement {
         button.append(textWrapper, ripple);
         shadowRoot.appendChild(button);
     }
+    attributeChangedCallback(attr, older, newer) {
+        switch (attr) {
+            case "disable":
+                if (this.shadowRoot && this.shadowRoot.firstElementChild) {
+                    if (newer === "true") {
+                        this.shadowRoot.firstElementChild.setAttribute("class", "cp-button cp-button-disabled");
+                    }
+                    else {
+                        this.shadowRoot.firstElementChild.setAttribute("class", "cp-button");
+                    }
+                }
+                break;
+        }
+    }
     connectedCallback() { }
 }
 CpButton.cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
-    styleSheet.insertRule(`:host {
-      display: inline-block;
+    styleSheet.insertRule(`:host([disable="true"]) {
+      pointer-events: none;
+    `);
+    styleSheet.insertRule(`.cp-button:hover{
+      background-color: #c0c0c0;
+      box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%);
     }`);
     styleSheet.insertRule(`.cp-button {
       padding: 6px 16px;
@@ -76,11 +94,11 @@ CpButton.cpButtonStyleSheet = (() => {
       box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%);
       transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1); 
     }`);
-    styleSheet.insertRule(`.cp-button:hover{
-      background-color: #c0c0c0;
-      box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%);
+    styleSheet.insertRule(`:host {
+      display: inline-block;
     }`);
     return styleSheet;
 })();
+CpButton.observedAttributes = ["disable"];
 
 export { CpButton as default };
