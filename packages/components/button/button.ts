@@ -6,6 +6,9 @@ import "../ripple/index";
 export default class CpButton extends HTMLElement {
   static cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
+    styleSheet.insertRule(`.cp-button-disabled {
+      box-shadow: none;
+    }`)
     styleSheet.insertRule(`:host([disable="true"]) {
       pointer-events: none;
     `);

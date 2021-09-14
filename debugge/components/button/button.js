@@ -73,6 +73,9 @@ class CpButton extends HTMLElement {
 }
 CpButton.cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
+    styleSheet.insertRule(`.cp-button-disabled {
+      box-shadow: none;
+    }`);
     styleSheet.insertRule(`:host([disable="true"]) {
       pointer-events: none;
     `);
