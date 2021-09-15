@@ -64,7 +64,7 @@ export default class CpRipple extends HTMLElement {
   /** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
   get start() {
     return function (
-      this: CpRipple,
+      this: AttachedShadowRoot<CpRipple>,
       options: {
         /** 涟漪中心点相对父级顶部距离 */
         top: number;
@@ -92,7 +92,7 @@ export default class CpRipple extends HTMLElement {
       rippleItem.style.height = `${2 * radius}px`;
       rippleItem.style.background = backgroundColor || "#333";
       rippleItem.setAttribute("class", "ripple-item ripple-start");
-      (this.shadowRoot as ShadowRoot).appendChild(rippleItem);
+      this.shadowRoot.appendChild(rippleItem);
       return new Promise<{ dom: HTMLDivElement; stop: VoidFunction }>(
         (resolve) => {
           setTimeout(() => {

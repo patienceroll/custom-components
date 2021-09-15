@@ -5,16 +5,9 @@ class CpCircularProgress extends HTMLElement {
         shadowRoot.adoptedStyleSheets = [
             CpCircularProgress.CpCircularProgressStyleSheet,
         ];
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        svg.setAttribute("class", "cp-circular-progress");
-        svg.setAttribute("viewBox", "8 8 44 44");
-        circle.setAttribute("cx", "22");
-        circle.setAttribute("cy", "22");
-        circle.setAttribute("r", "22");
-        circle.setAttribute("stroke-width", "3");
-        svg.appendChild(circle);
-        shadowRoot.appendChild(svg);
+        const circle = `<circle cx="22" cy="22" r="17.2" stroke-width="3.6"></circle>`;
+        const svg = `<svg class="cp-circular-progress"  viewBox="0 0 44 44">${circle}</svg>`;
+        shadowRoot.innerHTML = svg;
     }
 }
 CpCircularProgress.CpCircularProgressStyleSheet = (() => {

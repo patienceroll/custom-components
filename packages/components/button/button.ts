@@ -52,7 +52,7 @@ export default class CpButton extends HTMLElement {
     const text = document.createElement("slot");
     const leftIcon = document.createElement("slot");
     const rightIcon = document.createElement("slot");
-    const ripple = document.createElement("cp-ripple") as Ripple;
+    const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<Ripple>;
 
     button.setAttribute("class", "cp-button");
     textWrapper.setAttribute("class", "cp-button-text");
