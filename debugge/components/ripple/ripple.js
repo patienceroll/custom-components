@@ -46,51 +46,51 @@ class CpRipple extends HTMLElement {
 }
 CpRipple.CpRippleStyleSheet = (() => {
     const sheet = new CSSStyleSheet();
+    sheet.insertRule(`@keyframes start {
+      0% {
+        transform: scale(0);
+        opacity: 0.1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+    }`, 0);
+    sheet.insertRule(`@keyframes disappear {
+      0% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 0;
+      }
+    }`, 0);
+    sheet.insertRule(`:host {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      border-radius: inherit;
+    }`, 0);
+    sheet.insertRule(`.ripple-item {
+      position:absolute;
+      border-radius:50%;
+    }`, 0);
+    sheet.insertRule(`.ripple-start {
+      opacity: 0.3;
+      transform: scale(1);
+      animation-name: start;
+      animation-duration: 600ms;
+      animation-fill-mode: forwards;
+      }`, 0);
     sheet.insertRule(`.ripple-disappear {
       animation-name: disappear;
       animation-duration: ms;
       animation-fill-mode: forwards;
-      }`);
-    sheet.insertRule(`.ripple-start {
-        opacity: 0.3;
-        transform: scale(1);
-        animation-name: start;
-        animation-duration: 600ms;
-        animation-fill-mode: forwards;
-        }`);
-    sheet.insertRule(`.ripple-item {
-        position:absolute;
-        border-radius:50%;
-      }`);
-    sheet.insertRule(`:host {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        display: inline-block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 0;
-        border-radius: inherit;
-      }`);
-    sheet.insertRule(`@keyframes disappear {
-        0% {
-          opacity: 0.3;
-        }
-        100% {
-          opacity: 0;
-        }
-      }`);
-    sheet.insertRule(`@keyframes start {
-        0% {
-          transform: scale(0);
-          opacity: 0.1;
-        }
-        100% {
-          transform: scale(1);
-          opacity: 0.3;
-        }
-      }`);
+      }`, 0);
     return sheet;
 })();
 
