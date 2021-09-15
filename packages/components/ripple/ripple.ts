@@ -59,7 +59,7 @@ export default class CpRipple extends HTMLElement {
     sheet.insertRule(
       `.ripple-disappear {
       animation-name: disappear;
-      animation-duration: ms;
+      animation-duration: 450ms;
       animation-fill-mode: forwards;
       }`,
       0

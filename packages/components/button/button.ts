@@ -132,6 +132,9 @@ export default class CpButton extends HTMLElement {
         }
         break;
       case "loading":
+        if(this.shadowRoot && this.shadowRoot.firstElementChild){
+          
+        }
         break;
       default:
         break;

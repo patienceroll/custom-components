@@ -67,6 +67,9 @@ class CpButton extends HTMLElement {
                     }
                 }
                 break;
+            case "loading":
+                if (this.shadowRoot && this.shadowRoot.firstElementChild) ;
+                break;
         }
     }
     connectedCallback() { }
