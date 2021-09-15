@@ -11,9 +11,7 @@ export default class CpTag extends HTMLElement {
       100% {
         transform: scale(0);
       }
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `@keyframes show {
       0% {
@@ -22,32 +20,24 @@ export default class CpTag extends HTMLElement {
       100% {
         transform: scale(1);
       }
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `.cp-tag-container {
       display: inline-block;
       font-size: 14px;
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `.cp-tag-hide {
       animation-name: hide;
       animation-duration: 300ms;
       animation-fill-mode: forwards;
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `.cp-tag-show {
       animation-name: show;
       animation-duration: 300ms;
       animation-fill-mode: forwards;
-    }`,
-      0
-    );
+    }`, 0);
     return sheet;
   })();
   constructor() {

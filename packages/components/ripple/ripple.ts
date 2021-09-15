@@ -11,9 +11,7 @@ export default class CpRipple extends HTMLElement {
         transform: scale(1);
         opacity: 0.3;
       }
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `@keyframes disappear {
       0% {
@@ -22,9 +20,7 @@ export default class CpRipple extends HTMLElement {
       100% {
         opacity: 0;
       }
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `:host {
       width: 100%;
@@ -36,16 +32,12 @@ export default class CpRipple extends HTMLElement {
       left: 0;
       z-index: 0;
       border-radius: inherit;
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `.ripple-item {
       position:absolute;
       border-radius:50%;
-    }`,
-      0
-    );
+    }`, 0);
     sheet.insertRule(
       `.ripple-start {
       opacity: 0.3;
@@ -53,17 +45,13 @@ export default class CpRipple extends HTMLElement {
       animation-name: start;
       animation-duration: 600ms;
       animation-fill-mode: forwards;
-      }`,
-      0
-    );
+      }`, 0);
     sheet.insertRule(
       `.ripple-disappear {
       animation-name: disappear;
       animation-duration: 450ms;
       animation-fill-mode: forwards;
-      }`,
-      0
-    );
+      }`, 0);
 
     return sheet;
   })();
@@ -129,5 +117,5 @@ export default class CpRipple extends HTMLElement {
     };
   }
 
-  connectedCallback(this: CpRipple) {}
+  connectedCallback(this: CpRipple) { }
 }

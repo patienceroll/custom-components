@@ -9,9 +9,7 @@ export default class CpButton extends HTMLElement {
     styleSheet.insertRule(
       `:host {
       display: inline-block;
-    }`,
-      0
-    );
+    }`, 0);
     styleSheet.insertRule(
       `.cp-button {
       padding: 6px 16px;
@@ -26,28 +24,20 @@ export default class CpButton extends HTMLElement {
       border-radius: 4px;
       box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%);
       transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1); 
-    }`,
-      0
-    );
+    }`, 0);
     styleSheet.insertRule(
       `.cp-button:hover{
       background-color: #c0c0c0;
       box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%);
-    }`,
-      0
-    );
+    }`, 0);
     styleSheet.insertRule(
       `:host([disable="true"]) {
       pointer-events: none;
-    `,
-      0
-    );
+    `, 0);
     styleSheet.insertRule(
       `.cp-button-disabled {
       box-shadow: none;
-    }`,
-      0
-    );
+    }`, 0);
 
     return styleSheet;
   })();
@@ -132,13 +122,13 @@ export default class CpButton extends HTMLElement {
         }
         break;
       case "loading":
-        if(this.shadowRoot && this.shadowRoot.firstElementChild){
-          
+        if (this.shadowRoot && this.shadowRoot.firstElementChild) {
+
         }
         break;
       default:
         break;
     }
   }
-  connectedCallback() {}
+  connectedCallback() { }
 }
