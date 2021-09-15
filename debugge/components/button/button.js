@@ -58,7 +58,7 @@ class CpButton extends HTMLElement {
     attributeChangedCallback(attr, older, newer) {
         switch (attr) {
             case "disable":
-                if (this.shadowRoot && this.shadowRoot.firstElementChild) {
+                if (this.shadowRoot.firstElementChild) {
                     if (newer === "true") {
                         this.shadowRoot.firstElementChild.setAttribute("class", "cp-button cp-button-disabled");
                     }
@@ -68,7 +68,7 @@ class CpButton extends HTMLElement {
                 }
                 break;
             case "loading":
-                if (this.shadowRoot && this.shadowRoot.firstElementChild) ;
+                if (this.shadowRoot.firstElementChild) ;
                 break;
         }
     }
@@ -79,6 +79,9 @@ CpButton.cpButtonStyleSheet = (() => {
     styleSheet.insertRule(`:host {
       display: inline-block;
     }`, 0);
+    styleSheet.insertRule(`:host([disable="true"]) {
+      pointer-events: none;
+    `, 0);
     styleSheet.insertRule(`.cp-button {
       padding: 6px 16px;
       border: none;
@@ -97,9 +100,6 @@ CpButton.cpButtonStyleSheet = (() => {
       background-color: #c0c0c0;
       box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%);
     }`, 0);
-    styleSheet.insertRule(`:host([disable="true"]) {
-      pointer-events: none;
-    `, 0);
     styleSheet.insertRule(`.cp-button-disabled {
       box-shadow: none;
     }`, 0);

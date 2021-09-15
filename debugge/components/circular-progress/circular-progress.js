@@ -7,9 +7,22 @@ class CpCircularProgress extends HTMLElement {
         shadowRoot.adoptedStyleSheets = [
             CpCircularProgress.CpCircularProgressStyleSheet,
         ];
-        const circle = `<circle class="cp-circular-progress-circle cp-circular-progress-circle-unstable" cx="22" cy="22" r="17.2"  stroke-width="3.6" fill="none"></circle>`;
+        const circle = `<circle class="cp-circular-progress-circle cp-circular-progress-circle-unstable" cx="22" cy="22" r="17.2" stroke=${Theme.color.primary}  stroke-width="3.6" fill="none"></circle>`;
         const svg = `<svg class="cp-circular-progress cp-circular-progress-svg-rotate"  viewBox="0 0 44 44">${circle}</svg>`;
         shadowRoot.innerHTML = svg;
+    }
+    attributeChangedCallback(attr, older, newer) {
+        switch (attr) {
+            case 'color':
+                const circle = this.shadowRoot.firstElementChild.firstElementChild;
+                if (newer) {
+                    circle.setAttribute('stroke', newer);
+                }
+                else {
+                    circle.setAttribute('stroke', Theme.color.primary);
+                }
+                break;
+        }
     }
 }
 CpCircularProgress.CpCircularProgressStyleSheet = (() => {
@@ -24,15 +37,15 @@ CpCircularProgress.CpCircularProgressStyleSheet = (() => {
     }`, 0);
     styleSheet.insertRule(`@keyframes cp-circular-progress-circle-dash {
       0% {
-        stroke-dasharray: 1px,108px;
+        stroke-dasharray: 1px 108px;
         stroke-dashoffset: 0
       }
       50% {
-        stroke-dasharray: 70px,108px;
+        stroke-dasharray: 70px 108px;
         stroke-dashoffset: -15px
       }
       100% {
-        stroke-dasharray: 108px,108px;
+        stroke-dasharray: 108px 108px;
         stroke-dashoffset: -108px
       }
     }`, 0);
@@ -44,7 +57,6 @@ CpCircularProgress.CpCircularProgressStyleSheet = (() => {
       height: 100%;
     }`, 0);
     styleSheet.insertRule(`.cp-circular-progress-circle {
-      stroke: ${Theme.themeColor};
       stroke-dasharray: 80px 108px;
       stroke-dashoffset: 0;
     }`, 0);
@@ -58,5 +70,6 @@ CpCircularProgress.CpCircularProgressStyleSheet = (() => {
     }`, 0);
     return styleSheet;
 })();
+CpCircularProgress.observedAttributes = ['color', 'value'];
 
 export { CpCircularProgress as default };
