@@ -8,7 +8,7 @@
  */
 const Theme = {
   color: {
-    primary: '#1976d2'
+    primary: '#1976d2',
   }
 };
 

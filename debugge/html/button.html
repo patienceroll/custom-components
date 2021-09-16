@@ -11,6 +11,9 @@
       background-color: #ccc;
       color: #fff;
     }
+    mark {
+      font-size: 14px;
+    }
   </style>
 </head>
 
@@ -29,7 +32,32 @@
         <cp-button disable="true">disabled</cp-button>
       </div>
     </li>
+    <li>
+      <h4>受控的加载中</h4>
+      <mark>加载中同禁用按钮一样,会禁止事件的触发</mark>
+      <br />
+      <br />
+      <div>
+        <cp-button onclick="onClickLoading(event)">请点击</cp-button>
+      </div>
+    </li>
+    <li>
+      <h4>不同颜色的加载中</h4>
+      <div>
+        <cp-button loading="true" loading-color="#dc004e">#dc004e</cp-button>
+        <cp-button loading="true" loading-color="#4caf50">#4caf50</cp-button>
+        <cp-button loading="true" loading-color="gold">gold</cp-button>
+      </div>
+    </li>
   </ul>
+  <script>
+    function onClickLoading(event) {
+      event.target.setAttribute('loading', 'true');
+      setTimeout(() => {
+        event.target.removeAttribute("loading")
+      }, 3000);
+    }
+  </script>
   <script src="../index.js" type="module"></script>
 </body>
 
