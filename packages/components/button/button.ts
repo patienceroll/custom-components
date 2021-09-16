@@ -101,7 +101,6 @@ export default class CpButton extends HTMLElement {
 
     let rippleItem: ReturnType<Ripple["start"]> | undefined;
     this.addEventListener("mousedown", (e) => {
-      e.preventDefault();
       rippleItem = ripple.start({ top: e.offsetY, left: e.offsetX });
     });
     this.addEventListener("mouseup", () => {
@@ -113,7 +112,6 @@ export default class CpButton extends HTMLElement {
     this.addEventListener("touchstart", (e) => {
       if (e.targetTouches.length !== 1) return;
       if (e.cancelable) {
-        e.preventDefault();
         const { targetTouches, target } = e;
         if (target) {
           const [touch] = targetTouches;
@@ -123,7 +121,7 @@ export default class CpButton extends HTMLElement {
           rippleItem = ripple.start({ top: pageY - top, left: pageX - left });
         }
       }
-    });
+    }, { passive: true });
     this.addEventListener("touchend", () => {
       if (rippleItem) {
         rippleItem.then(({ stop }) => stop());
