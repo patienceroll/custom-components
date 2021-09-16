@@ -15,7 +15,7 @@ class CpButton extends HTMLElement {
         const ripple = document.createElement("cp-ripple");
         const loadingSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         loadingSvg.innerHTML = `<rect 
-        class="cp-button-loading-rect"
+        class="cp-button-loading_svg-rect"
         x="1" 
         y="1" 
         rx="4" 
@@ -27,8 +27,8 @@ class CpButton extends HTMLElement {
         fill="none"  
         />`;
         button.setAttribute("class", "cp-button");
-        textWrapper.setAttribute("class", "cp-button-text");
-        loadingSvg.setAttribute('class', 'cp-button-loading');
+        textWrapper.setAttribute('class', 'cp-button-text');
+        loadingSvg.setAttribute('class', 'cp-button-loading_svg');
         button.setAttribute("part", "button");
         leftIcon.setAttribute("part", "left-icon");
         rightIcon.setAttribute("part", "right-icon");
@@ -102,10 +102,10 @@ class CpButton extends HTMLElement {
 }
 CpButton.cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
-    styleSheet.insertRule(`.cp-button-loading-rect {
+    styleSheet.insertRule(`.cp-button-loading_svg-rect {
       animation: loading 2s linear infinite;
     }`);
-    styleSheet.insertRule(`.cp-button-loading {
+    styleSheet.insertRule(`.cp-button-loading_svg {
       display: none;
       position: absolute;
       left: 0;
@@ -123,7 +123,7 @@ CpButton.cpButtonStyleSheet = (() => {
     styleSheet.insertRule(`.cp-button {
       display: flex;
       align-items: center;
-      padding: 6px 16px;
+      padding: 6px 12px;
       border: none;
       position: relative;
       outline: 0;
