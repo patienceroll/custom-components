@@ -106,7 +106,4 @@ export default class CpCircularProgress extends HTMLElement {
         break;
     }
   }
-
-
-
 }
