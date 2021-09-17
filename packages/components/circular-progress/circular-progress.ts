@@ -6,13 +6,15 @@ export default class CpCircularProgress extends HTMLElement {
     const styleSheet = new CSSStyleSheet();
     styleSheet.insertRule(`.cp-circular-svg > circle {
       animation: circle-dash 1.4s ease-in-out infinite;
-      stroke-dasharray: 1px 108px;
+      stroke-dasharray: 0px 108px;
       stroke-dashoffset: 0;
+      transition: stroke-dasharray ease 300ms;
     }`)
     styleSheet.insertRule(`.cp-circular-svg {
       width: 100%;
       height: 100%;
       animation: svg-rotate 1.4s ease-in-out infinite;
+      transform: rotate(-90deg);
     }`);
     styleSheet.insertRule(`:host {
       display: block;
@@ -33,10 +35,11 @@ export default class CpCircularProgress extends HTMLElement {
     }`)
     styleSheet.insertRule(`@keyframes svg-rotate {
       0% {
-        transform-origin: 50% 50%
+        transform-origin: center center
+        transform: rotate(-90deg);
       }
       100% {
-        transform: rotate(360deg)
+        transform: rotate(270deg)
       }
     }`)
     return styleSheet;
@@ -56,10 +59,10 @@ export default class CpCircularProgress extends HTMLElement {
 
   static observedAttributes: CircularProgressObservedAttributes[] = ['color', 'value']
   attributeChangedCallback(this: AttachedShadowRoot<CpCircularProgress>, attr: CircularProgressObservedAttributes, older: string | null, newer: string | null) {
+    const svg = this.shadowRoot.firstElementChild as SVGAElement;
+    const circle = svg.firstElementChild as SVGCircleElement;
     switch (attr) {
       case 'color':
-        const circle = (this.shadowRoot.firstElementChild as SVGAElement).firstElementChild as SVGCircleElement;
-
         if (newer) {
           circle.setAttribute('stroke', newer)
         } else {
@@ -67,7 +70,18 @@ export default class CpCircularProgress extends HTMLElement {
         }
         break;
       case 'value':
-
+        if (newer) {
+          svg.style.setProperty('animation', 'none');
+          circle.style.setProperty('animation', 'none')
+          let value = Number(newer);
+          if (Number.isNaN(value)) value = 0;
+          else if (value < 0) value = 0;
+          else if (value > 100) value = 100
+          circle.style.setProperty("stroke-dasharray", `${value / 100 * 108}px 108px`)
+        } else {
+          svg.style.removeProperty('animation')
+          circle.style.removeProperty('animation')
+        }
         break;
       default:
         break;

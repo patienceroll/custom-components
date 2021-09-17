@@ -29,8 +29,31 @@
         <cp-circular-progress color="#f50" style="width: 40px;height: 40px;"></cp-circular-progress>
       </div>
     </li>
+    <li>
+      <h4>定量的环形进度条</h4>
+      <div style="display: flex;">
+        <cp-circular-progress style="width: 40px;height: 40px;" value="100"></cp-circular-progress>
+        <cp-circular-progress style="width: 40px;height: 40px;" value="25"></cp-circular-progress>
+        <cp-circular-progress style="width: 40px;height: 40px;" value="50"></cp-circular-progress>
+        <cp-circular-progress style="width: 40px;height: 40px;" value="75"></cp-circular-progress>
+        <cp-circular-progress id="cp-circular-progress-value-change" style="width: 40px;height: 40px;">
+        </cp-circular-progress>
+      </div>
+    </li>
   </ul>
   <script src="../index.js" type="module"></script>
+  <script>
+    const cpCircularProgress = document.querySelector("#cp-circular-progress-value-change")
+    const changeValue = () => {
+      const value = cpCircularProgress.getAttribute('value')
+      setTimeout(() => {
+        if (Object.is(null, value) || Number.isNaN(Number(value)) || Number(value) > 90) cpCircularProgress.setAttribute('value', "0");
+        else cpCircularProgress.setAttribute('value', `${Number(value) + 10}`);
+        changeValue()
+      },1000);
+    }
+    changeValue()
+  </script>
 
 </body>
 
