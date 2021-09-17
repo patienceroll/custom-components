@@ -1,6 +1,7 @@
 import type { CircularProgressObservedAttributes } from './data'
 
 import theme from '../../theme/index'
+
 export default class CpCircularProgress extends HTMLElement {
   static CpCircularProgressStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
