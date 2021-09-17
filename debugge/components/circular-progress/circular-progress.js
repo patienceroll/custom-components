@@ -7,13 +7,29 @@ class CpCircularProgress extends HTMLElement {
         shadowRoot.adoptedStyleSheets = [
             CpCircularProgress.CpCircularProgressStyleSheet,
         ];
-        const circle = `<circle  cx="22" cy="22" r="17.2" stroke=${Theme.color.primary}  stroke-width="3.6" fill="none"></circle>`;
-        const svg = `<svg class="cp-circular-svg"  viewBox="0 0 44 44">${circle}</svg>`;
+        const circle = `<circle  cx="22" cy="22" r="20.2" stroke=${Theme.color.primary}  stroke-width="3.6" fill="none">
+      </circle>`;
+        const text = `<text 
+      x="22" 
+      y="22" 
+      font-size="12" 
+      color="#fff" 
+      style=" dominant-baseline: middle;
+              text-anchor: middle;
+              transform: rotate(90deg);
+              transform-origin: center center;
+      display:none">
+      </text>`;
+        const svg = `<svg class="cp-circular-svg"  viewBox="0 0 44 44">
+        ${circle}
+        ${text}
+      </svg>`;
         shadowRoot.innerHTML = svg;
     }
     attributeChangedCallback(attr, older, newer) {
         const svg = this.shadowRoot.firstElementChild;
         const circle = svg.firstElementChild;
+        const text = svg.lastElementChild;
         switch (attr) {
             case 'color':
                 if (newer) {
@@ -34,12 +50,20 @@ class CpCircularProgress extends HTMLElement {
                         value = 0;
                     else if (value > 100)
                         value = 100;
-                    circle.style.setProperty("stroke-dasharray", `${value / 100 * 108}px 108px`);
+                    text.innerHTML = `${value}%`;
+                    circle.style.setProperty("stroke-dasharray", `${value / 100 * 127}px 127px`);
                 }
                 else {
+                    text.innerHTML = '';
                     svg.style.removeProperty('animation');
                     circle.style.removeProperty('animation');
                 }
+                break;
+            case 'label':
+                if (newer === 'true')
+                    text.style.removeProperty('display');
+                else
+                    text.style.display = 'none';
                 break;
         }
     }
@@ -48,7 +72,7 @@ CpCircularProgress.CpCircularProgressStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
     styleSheet.insertRule(`.cp-circular-svg > circle {
       animation: circle-dash 1.4s ease-in-out infinite;
-      stroke-dasharray: 0px 108px;
+      stroke-dasharray: 0px 127px;
       stroke-dashoffset: 0;
       transition: stroke-dasharray ease 300ms;
     }`);
@@ -63,16 +87,16 @@ CpCircularProgress.CpCircularProgressStyleSheet = (() => {
     }`);
     styleSheet.insertRule(`@keyframes circle-dash {
       0% {
-        stroke-dasharray: 1px 108px;
+        stroke-dasharray: 1px 127px;
         stroke-dashoffset: 0
       }
       50% {
-        stroke-dasharray: 70px 108px;
+        stroke-dasharray: 70px 127px;
         stroke-dashoffset: -15px
       }
       100% {
-        stroke-dasharray: 108px 108px;
-        stroke-dashoffset: -108px
+        stroke-dasharray: 127px 127px;
+        stroke-dashoffset: -127px
       }
     }`);
     styleSheet.insertRule(`@keyframes svg-rotate {
@@ -86,6 +110,6 @@ CpCircularProgress.CpCircularProgressStyleSheet = (() => {
     }`);
     return styleSheet;
 })();
-CpCircularProgress.observedAttributes = ['color', 'value'];
+CpCircularProgress.observedAttributes = ['color', 'value', 'label'];
 
 export { CpCircularProgress as default };

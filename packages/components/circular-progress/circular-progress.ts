@@ -6,7 +6,7 @@ export default class CpCircularProgress extends HTMLElement {
     const styleSheet = new CSSStyleSheet();
     styleSheet.insertRule(`.cp-circular-svg > circle {
       animation: circle-dash 1.4s ease-in-out infinite;
-      stroke-dasharray: 0px 108px;
+      stroke-dasharray: 0px 127px;
       stroke-dashoffset: 0;
       transition: stroke-dasharray ease 300ms;
     }`)
@@ -21,16 +21,16 @@ export default class CpCircularProgress extends HTMLElement {
     }`);
     styleSheet.insertRule(`@keyframes circle-dash {
       0% {
-        stroke-dasharray: 1px 108px;
+        stroke-dasharray: 1px 127px;
         stroke-dashoffset: 0
       }
       50% {
-        stroke-dasharray: 70px 108px;
+        stroke-dasharray: 70px 127px;
         stroke-dashoffset: -15px
       }
       100% {
-        stroke-dasharray: 108px 108px;
-        stroke-dashoffset: -108px
+        stroke-dasharray: 127px 127px;
+        stroke-dashoffset: -127px
       }
     }`)
     styleSheet.insertRule(`@keyframes svg-rotate {
@@ -51,16 +51,32 @@ export default class CpCircularProgress extends HTMLElement {
       CpCircularProgress.CpCircularProgressStyleSheet,
     ];
 
-    const circle = `<circle  cx="22" cy="22" r="17.2" stroke=${theme.color.primary}  stroke-width="3.6" fill="none"></circle>`
-    const svg = `<svg class="cp-circular-svg"  viewBox="0 0 44 44">${circle}</svg>`
+    const circle = `<circle  cx="22" cy="22" r="20.2" stroke=${theme.color.primary}  stroke-width="3.6" fill="none">
+      </circle>`
+    const text = `<text 
+      x="22" 
+      y="22" 
+      font-size="12" 
+      color="#fff" 
+      style=" dominant-baseline: middle;
+              text-anchor: middle;
+              transform: rotate(90deg);
+              transform-origin: center center;
+      display:none">
+      </text>`;
+    const svg = `<svg class="cp-circular-svg"  viewBox="0 0 44 44">
+        ${circle}
+        ${text}
+      </svg>`
 
     shadowRoot.innerHTML = svg;
   }
 
-  static observedAttributes: CircularProgressObservedAttributes[] = ['color', 'value']
+  static observedAttributes: CircularProgressObservedAttributes[] = ['color', 'value', 'label']
   attributeChangedCallback(this: AttachedShadowRoot<CpCircularProgress>, attr: CircularProgressObservedAttributes, older: string | null, newer: string | null) {
     const svg = this.shadowRoot.firstElementChild as SVGAElement;
     const circle = svg.firstElementChild as SVGCircleElement;
+    const text = svg.lastElementChild as SVGTextElement
     switch (attr) {
       case 'color':
         if (newer) {
@@ -77,11 +93,18 @@ export default class CpCircularProgress extends HTMLElement {
           if (Number.isNaN(value)) value = 0;
           else if (value < 0) value = 0;
           else if (value > 100) value = 100
-          circle.style.setProperty("stroke-dasharray", `${value / 100 * 108}px 108px`)
+          text.innerHTML = `${value}%`
+          circle.style.setProperty("stroke-dasharray", `${value / 100 * 127}px 127px`)
         } else {
+          text.innerHTML = ''
           svg.style.removeProperty('animation')
           circle.style.removeProperty('animation')
         }
+        break;
+      case 'label':
+        if (newer === 'true')
+          text.style.removeProperty('display')
+        else text.style.display = 'none'
         break;
       default:
         break;
