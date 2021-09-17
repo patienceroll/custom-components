@@ -7,20 +7,11 @@ class CpCircularProgress extends HTMLElement {
         shadowRoot.adoptedStyleSheets = [
             CpCircularProgress.CpCircularProgressStyleSheet,
         ];
-        const circle = `<circle  cx="22" cy="22" r="20.2" stroke=${Theme.color.primary}  stroke-width="3.6" fill="none">
+        const circle = `<circle cx="22" cy="22" r="20.2" stroke=${Theme.color.primary} stroke-width="3.6" fill="none">
       </circle>`;
-        const text = `<text 
-      x="22" 
-      y="22" 
-      font-size="12" 
-      color="#fff" 
-      style=" dominant-baseline: middle;
-              text-anchor: middle;
-              transform: rotate(90deg);
-              transform-origin: center center;
-      display:none">
+        const text = `<text x="22" display="none" y="22" font-size="12" color="#fff">
       </text>`;
-        const svg = `<svg class="cp-circular-svg"  viewBox="0 0 44 44">
+        const svg = `<svg class="cp-circular-svg" viewBox="0 0 44 44">
         ${circle}
         ${text}
       </svg>`;
@@ -61,15 +52,21 @@ class CpCircularProgress extends HTMLElement {
                 break;
             case 'label':
                 if (newer === 'true')
-                    text.style.removeProperty('display');
+                    text.removeAttribute('display');
                 else
-                    text.style.display = 'none';
+                    text.setAttribute("display", 'none');
                 break;
         }
     }
 }
 CpCircularProgress.CpCircularProgressStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
+    styleSheet.insertRule(`.cp-circular-svg > text {
+      dominant-baseline: middle;
+      text-anchor: middle;
+      transform: rotate(90deg);
+      transform-origin: center center;
+    }`);
     styleSheet.insertRule(`.cp-circular-svg > circle {
       animation: circle-dash 1.4s ease-in-out infinite;
       stroke-dasharray: 0px 127px;
