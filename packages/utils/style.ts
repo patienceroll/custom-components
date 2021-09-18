@@ -17,6 +17,7 @@ const transitionStyle = (selector: string, style: CssProperty) => {
     const transitionKey = humpToOverline(key as keyof CssProperty);
     str += `${transitionKey}:${style[key as keyof CssProperty]};`;
   });
+
   return str + "}";
 };
 
@@ -27,7 +28,8 @@ const transitionStyle = (selector: string, style: CssProperty) => {
 const foramtStyle = (style: Record<string, CssProperty>) => {
   const styleSheet = new CSSStyleSheet();
   Object.keys(style).forEach((key) => {
-    styleSheet.insertRule(transitionStyle(key, style[key]));
+    const temp = humpToOverline(key as keyof CssProperty);
+    styleSheet.insertRule(transitionStyle(temp, style[key]));
   });
   return styleSheet;
 };
