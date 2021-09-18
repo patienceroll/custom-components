@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弹窗组件</title>
+  <style>
+    body {
+      background-color: #ccc;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>标签组件</h1>
+  <ul>
+    <li>
+      <button onclick="clickButton()">按钮</button>
+      <cp-dialog id="dialog" open="false" />
+
+    </li>
+  </ul>
+  <script>
+    const dialog = document.getElementById('dialog')
+    const clickButton = function () {
+
+      dialog.setAttribute('open', !JSON.parse(dialog.getAttribute('open')))
+    }
+  </script>
+  <script src="../index.js" type="module"></script>
+</body>
+
+</html>
