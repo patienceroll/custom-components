@@ -22,6 +22,10 @@ export default defineConfig({
     }),
     copy({
       targets: {
+        debugge: [
+          { src: "packages/**/*.html", dest: "debugge/html" },
+          { src: "packages/index.html", dest: "debugge" },
+        ],
         build: [
           { src: "packages/components/*", dest: "dist/lib/components" },
           { src: "packages/utils/*", dest: "dist/lib/utils" },

@@ -1,13 +1,3 @@
-
-//  getPropertyPriority(property: string): string;
-//  getPropertyValue(property: string): string;
-//  item(index: number): string;
-//  removeProperty(property: string): string;
-//  setProperty(property: string, value: string | null,
-const createStyle = (params: CssProperty) => {
-
-}
-
 export default class CpPaper extends HTMLElement {
   static CpPaperStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet()
