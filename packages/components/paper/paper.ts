@@ -1,6 +1,7 @@
 export default class CpPaper extends HTMLElement {
   static CpPaperStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet()
+    styleSheet.insertRule(`:host([variant="outlined"])`)
     styleSheet.insertRule(`:host {
       display: block;
       background-color: #fff;
