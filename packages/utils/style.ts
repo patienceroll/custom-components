@@ -1,28 +1,33 @@
-/** 给html元素添加行内样式 */
 /**
- * @method 格式化样式
- * @param style
+ * @method 驼峰转中划线
+ * @param str 需要转换的字符串
  */
-const foramtStyle = (style: Record<string, Partial<CSSStyleDeclaration>>) => {
-  // 需要忽略的key
-  const excludeKey = ["@keyframes", ":host"];
-  const styleSheet = new CSSStyleSheet();
+const humpToOverline = (str: keyof CssProperty) =>
+  (str as string).replace(/([A-Z])/g, "-$1").toLowerCase();
 
-  const transitionStyle = (className: string, style: Record<string, any>) => {
-    let str = `${className} {`;
-    Object.keys(style).forEach((key) => {
-      // 驼峰转中划线
-      const transitionKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
-      str += `${transitionKey}:${style[key]};`;
-    });
-    return str + "}";
-  };
-  Object.keys(style).forEach((key) => {
+/**
+ * @method 转换对象属性名为css类名
+ * @param selector 选择器
+ * @param style 样式对象
+ */
+const transitionStyle = (selector: string, style: CssProperty) => {
+  let str = `${selector} {`;
+  Object.keys(style).forEach((key: string) => {
     // 驼峰转中划线
-    const transitionKey = excludeKey.some((str) => key.indexOf(str) > -1)
-      ? key
-      : `.${key.replace(/([A-Z])/g, "-$1").toLowerCase()}`;
-    styleSheet.insertRule(transitionStyle(transitionKey, style[key]));
+    const transitionKey = humpToOverline(key as keyof CssProperty);
+    str += `${transitionKey}:${style[key as keyof CssProperty]};`;
+  });
+  return str + "}";
+};
+
+/**
+ * @method 格式化样式配置对象
+ * @param style 需要格式化的组件样式
+ */
+const foramtStyle = (style: Record<string, CssProperty>) => {
+  const styleSheet = new CSSStyleSheet();
+  Object.keys(style).forEach((key) => {
+    styleSheet.insertRule(transitionStyle(key, style[key]));
   });
   return styleSheet;
 };
