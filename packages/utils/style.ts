@@ -24,7 +24,7 @@ const transitionStyle = (selector: string, style: CssProperty) => {
  * @method 格式化样式配置对象
  * @param style 需要格式化的组件样式
  */
-const foramtStyle = (style: Record<string, CssProperty>) => {
+const foramtStyle = (style: CssStyleSheetObject) => {
   const styleSheet = new CSSStyleSheet();
   Object.keys(style).forEach((key) => {
     styleSheet.insertRule(transitionStyle(key, style[key]));

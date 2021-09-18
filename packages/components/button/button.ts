@@ -2,6 +2,7 @@ import type Ripple from "../ripple/ripple";
 import type { ButtonObservedAttributes } from "./data";
 
 import theme from '../../theme/index'
+import { foramtStyle } from '../../utils/style'
 
 import "../ripple";
 import "../circular-progress"
@@ -9,7 +10,6 @@ import "../circular-progress"
 export default class CpButton extends HTMLElement {
   static cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
-
     styleSheet.insertRule(`.cp-button-loading_svg-rect {
       animation: loading 2s linear infinite;
     }`)

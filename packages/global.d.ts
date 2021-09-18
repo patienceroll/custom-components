@@ -6,6 +6,8 @@ declare interface ShadowRoot {
 /** css 属性对象 */
 declare type CssProperty = Partial<Omit<CSSStyleDeclaration, typeof Symbol.iterator | number | 'getPropertyPriority' | 'getPropertyValue' | 'item' | 'removeProperty' | "setProperty">>
 
+/** css 样式表属性对象 */
+declare type CssStyleSheetObject = Record<string, CssProperty>
 
 /** 开启了shadowRoot的元素 */
 declare type AttachedShadowRoot<T> = Omit<T, 'shadowRoot'> & {
