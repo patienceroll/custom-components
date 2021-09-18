@@ -3,7 +3,7 @@
  * @param str 需要转换的字符串
  */
 const humpToOverline = (str: keyof CssProperty) =>
-  (str as string).replace(/([A-Z])/g, "-$1").toLowerCase();
+  str.replace(/([A-Z])/g, "-$1").toLowerCase();
 
 /**
  * @method 转换对象属性名为css类名
@@ -12,7 +12,7 @@ const humpToOverline = (str: keyof CssProperty) =>
  */
 const transitionStyle = (selector: string, style: CssProperty) => {
   let str = `${selector} {`;
-  Object.keys(style).forEach((key: string) => {
+  Object.keys(style).forEach((key) => {
     // 驼峰转中划线
     const transitionKey = humpToOverline(key as keyof CssProperty);
     str += `${transitionKey}:${style[key as keyof CssProperty]};`;
