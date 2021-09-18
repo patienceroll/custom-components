@@ -8,48 +8,52 @@ import "../ripple";
 import "../circular-progress"
 
 export default class CpButton extends HTMLElement {
+  static styleSheet: CSSStyleSheet | undefined;
+  static style: CssStyleSheetObject = {
+    ".cp-button-loading > rect": {
+      animation: "loading 2s linear infinite"
+    },
+    ".cp-button-loading": {
+      display: 'none',
+      position: 'absolute',
+      left: '0',
+      top: '0',
+      width: '100%',
+      height: '100%',
+    },
+    ".cp-button-disabled": {
+      boxShadow: "none"
+    },
+    ".cp-button:hover": {
+      backgroundColor: "#c0c0c0",
+      boxShadow: "0px 2px 4px - 1px rgb(0 0 0 / 20 %)"
+    },
+    ".cp-button": {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '6px 12px',
+      border: 'none',
+      position: 'relative',
+      outline: '0',
+      userSelect: 'none',
+      cursor: 'pointer',
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#e0e0e0',
+      borderRadius: '4px',
+      boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%)',
+      transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)'
+    },
+    ':host([disable="true"])': {
+      pointerEvents: 'none'
+    },
+    ":host": {
+      display: 'inline-block',
+    }
+  };
+
   static cpButtonStyleSheet = (() => {
     const styleSheet = new CSSStyleSheet();
-    styleSheet.insertRule(`.cp-button-loading_svg-rect {
-      animation: loading 2s linear infinite;
-    }`)
-    styleSheet.insertRule(`.cp-button-loading_svg {
-      display: none;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-    }`)
-    styleSheet.insertRule(`.cp-button-disabled {
-      box-shadow: none;
-    }`);
-    styleSheet.insertRule(`.cp-button:hover{
-      background-color: #c0c0c0;
-      box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%);
-    }`);
-    styleSheet.insertRule(`.cp-button {
-      display: flex;
-      align-items: center;
-      padding: 6px 12px;
-      border: none;
-      position: relative;
-      outline: 0;
-      user-select: none;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      background-color: #e0e0e0;
-      border-radius: 4px;
-      box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%);
-      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1); 
-    }`);
-    styleSheet.insertRule(`:host([disable="true"]) {
-      pointer-events: none;
-    `);
-    styleSheet.insertRule(`:host {
-      display: inline-block;
-    }`);
     styleSheet.insertRule(`@keyframes loading {
       0% {
         stroke-dasharray: 0% 400%;
@@ -66,7 +70,8 @@ export default class CpButton extends HTMLElement {
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
-    shadowRoot.adoptedStyleSheets = [CpButton.cpButtonStyleSheet];
+    if (typeof CpButton.styleSheet === 'undefined') CpButton.styleSheet = foramtStyle(CpButton.style)
+    shadowRoot.adoptedStyleSheets = [CpButton.styleSheet];
 
     const button = document.createElement("button");
     const textWrapper = document.createElement("span");
@@ -74,10 +79,9 @@ export default class CpButton extends HTMLElement {
     const leftIcon = document.createElement("slot");
     const rightIcon = document.createElement("slot");
     const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<Ripple>;
-    const loadingSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const loading = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
-    loadingSvg.innerHTML = `<rect 
-        class="cp-button-loading_svg-rect"
+    loading.innerHTML = `<rect 
         x="1" 
         y="1" 
         rx="4" 
@@ -91,11 +95,11 @@ export default class CpButton extends HTMLElement {
 
     button.setAttribute("class", "cp-button");
     textWrapper.setAttribute('class', 'cp-button-text')
-    loadingSvg.setAttribute('class', 'cp-button-loading_svg')
+    loading.setAttribute('class', 'cp-button-loading')
     button.setAttribute("part", "button");
     leftIcon.setAttribute("part", "left-icon");
     rightIcon.setAttribute("part", "right-icon");
-    loadingSvg.setAttribute('part', "loading")
+    loading.setAttribute('part', "loading")
     leftIcon.name = "left-icon";
     rightIcon.name = "right-icon";
 
@@ -130,7 +134,7 @@ export default class CpButton extends HTMLElement {
     });
 
     textWrapper.append(leftIcon, text, rightIcon);
-    button.append(textWrapper, ripple, loadingSvg);
+    button.append(textWrapper, ripple, loading);
     shadowRoot.appendChild(button);
   }
 
@@ -157,13 +161,13 @@ export default class CpButton extends HTMLElement {
         }
         break;
       case "loading":
-        const loadingSvg = this.shadowRoot.querySelector('svg[part="loading"]') as SVGAElement
+        const loading = this.shadowRoot.querySelector('svg[part="loading"]') as SVGAElement
         if (newer === 'true') {
           this.style.setProperty('pointer-events', 'none');
-          loadingSvg.style.display = 'block'
+          loading.style.display = 'block'
         } else {
           this.style.removeProperty('pointer-events');
-          loadingSvg.style.display = 'none'
+          loading.style.display = 'none'
         }
         break;
       case 'loading-color':

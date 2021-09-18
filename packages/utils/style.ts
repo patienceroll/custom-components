@@ -34,4 +34,9 @@ const foramtStyle = (style: CssStyleSheetObject) => {
   return styleSheet;
 };
 
+const formatKeyframs = (keyframes: KeyframeObject){
+  const
+}
+
+
 export { foramtStyle };

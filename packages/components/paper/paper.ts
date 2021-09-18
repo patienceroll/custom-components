@@ -3,7 +3,9 @@ import { foramtStyle } from '../../utils/style'
 export default class CpPaper extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
   static style: CssStyleSheetObject = {
-    ':host([variant="outlined"])': {},
+    ':host([variant="outlined"])': {
+
+    },
     ":host": {
       display: 'block',
       backgroundColor: '#fff',
