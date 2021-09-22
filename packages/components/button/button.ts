@@ -2,7 +2,7 @@ import type Ripple from "../ripple/ripple";
 import type { ButtonObservedAttributes } from "./data";
 
 import theme from '../../theme/index'
-import { foramtStyle, formatKeyframes } from '../../utils/style'
+import { formatStyle, formatKeyframes } from '../../utils/style'
 
 import "../ripple";
 import "../circular-progress"
@@ -69,7 +69,7 @@ export default class CpButton extends HTMLElement {
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
-    if (typeof CpButton.styleSheet === 'undefined') CpButton.styleSheet = foramtStyle(CpButton.style)
+    if (typeof CpButton.styleSheet === 'undefined') CpButton.styleSheet = formatStyle(CpButton.style)
     if (typeof CpButton.keyframesSheet === 'undefined') CpButton.keyframesSheet = formatKeyframes(CpButton.keyframes)
 
     shadowRoot.adoptedStyleSheets = [CpButton.keyframesSheet, CpButton.styleSheet];
@@ -82,16 +82,16 @@ export default class CpButton extends HTMLElement {
     const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<Ripple>;
     const loading = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
-    loading.innerHTML = `<rect 
-        x="1" 
-        y="1" 
-        rx="4" 
-        ry="4" 
-        width="calc(100% - 2px)" 
-        height="calc(100% - 2px)"  
+    loading.innerHTML = `<rect
+        x="1"
+        y="1"
+        rx="4"
+        ry="4"
+        width="calc(100% - 2px)"
+        height="calc(100% - 2px)"
         stroke-width="2"
-        stroke="${theme.color.primary}" 
-        fill="none"  
+        stroke="${theme.color.primary}"
+        fill="none"
         />`
 
     button.setAttribute("class", "cp-button");

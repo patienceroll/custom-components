@@ -1,4 +1,4 @@
-import { foramtStyle } from '../../utils/style'
+import { formatStyle } from '../../utils/style'
 
 export default class CpPaper extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
@@ -17,7 +17,7 @@ export default class CpPaper extends HTMLElement {
   constructor() {
     super()
     const shadowRoot = this.attachShadow({ mode: 'open' })
-    if (typeof CpPaper.styleSheet === 'undefined') CpPaper.styleSheet = foramtStyle(CpPaper.style)
+    if (typeof CpPaper.styleSheet === 'undefined') CpPaper.styleSheet = formatStyle(CpPaper.style)
     shadowRoot.adoptedStyleSheets = [CpPaper.styleSheet];
     const slot = document.createElement('slot');
     shadowRoot.appendChild(slot)
