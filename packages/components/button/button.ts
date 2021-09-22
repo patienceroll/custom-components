@@ -25,7 +25,7 @@ export default class CpButton extends HTMLElement {
       boxShadow: "none"
     },
     ".cp-button:hover": {
-      backgroundColor: "#c0c0c0",
+      backgroundColor: theme.color.backgroundHover,
       boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%)"
     },
     ".cp-button": {
@@ -39,8 +39,8 @@ export default class CpButton extends HTMLElement {
       cursor: 'pointer',
       width: '100%',
       height: '100%',
-      backgroundColor: '#e0e0e0',
-      borderRadius: '4px',
+      backgroundColor: theme.color.background,
+      borderRadius: theme.border.radius,
       boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%)',
       transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)'
     },
@@ -72,7 +72,6 @@ export default class CpButton extends HTMLElement {
     if (typeof CpButton.styleSheet === 'undefined') CpButton.styleSheet = foramtStyle(CpButton.style)
     if (typeof CpButton.keyframesSheet === 'undefined') CpButton.keyframesSheet = formatKeyframes(CpButton.keyframes)
 
-    console.log(CpButton.styleSheet)
     shadowRoot.adoptedStyleSheets = [CpButton.keyframesSheet, CpButton.styleSheet];
 
     const button = document.createElement("button");
