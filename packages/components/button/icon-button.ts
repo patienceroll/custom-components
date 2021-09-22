@@ -8,15 +8,19 @@ import "../ripple";
 export default class CpIconButton extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
   static style: CssStyleSheetObject = {
+    ".cp-icon-button:hover": {
+      backgroundColor: theme.color.background,
+    },
     ".cp-icon-button": {
+      padding: '8px',
+      borderRadius: '50%',
       position: 'relative',
       outline: '0',
       border: 'none',
       userSelect: 'none',
       cursor: 'pointer',
-      width: '100%',
-      height: '100%',
-      backgroundColor: theme.color.background,
+      backgroundColor: "transparent",
+      transition: `background-color ${theme.transition.delay.base} ease `
     },
     ':host': {
       display: 'inline-block',
@@ -34,6 +38,33 @@ export default class CpIconButton extends HTMLElement {
     const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<Ripple>;
 
     button.setAttribute('class', "cp-icon-button")
+
+    let rippleItem: ReturnType<Ripple["start"]> | undefined;
+    this.addEventListener("mousedown", () => {
+      const { clientWidth, clientHeight } = this;
+      rippleItem = ripple.start({ top: clientWidth / 2, left: clientHeight / 2 });
+    });
+    this.addEventListener("mouseup", () => {
+      if (rippleItem) {
+        rippleItem.then(({ stop }) => stop());
+        rippleItem = undefined;
+      }
+    });
+    this.addEventListener("touchstart", (e) => {
+      if (e.targetTouches.length !== 1) return;
+      if (e.cancelable) {
+        const { clientWidth, clientHeight } = this;
+        if (rippleItem) rippleItem.then(({ stop }) => stop());
+        rippleItem = ripple.start({ top: clientWidth / 2, left: clientHeight / 2 });
+      }
+    }, { passive: true });
+    this.addEventListener("touchend", () => {
+      if (rippleItem) {
+        rippleItem.then(({ stop }) => stop());
+        rippleItem = undefined;
+      }
+    });
+
     button.append(IconSlot, ripple)
     shadowRoot.appendChild(button)
   }

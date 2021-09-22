@@ -14,6 +14,14 @@ const Theme = {
   },
   border: {
     radius: '4px'
+  },
+  transition: {
+    delay: {
+      fast: '150ms',
+      base: '300ms',
+      smooth: '450ms',
+      slow: '600ms'
+    }
   }
 };
 
