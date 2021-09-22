@@ -1,64 +1,67 @@
-export default class CpRipple extends HTMLElement {
-  static CpRippleStyleSheet = (() => {
-    const sheet = new CSSStyleSheet();
-    sheet.insertRule(
-      `@keyframes start {
-      0% {
-        transform: scale(0);
-        opacity: 0.1;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0.3;
-      }
-    }`, 0);
-    sheet.insertRule(
-      `@keyframes disappear {
-      0% {
-        opacity: 0.3;
-      }
-      100% {
-        opacity: 0;
-      }
-    }`, 0);
-    sheet.insertRule(
-      `:host {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      display: inline-block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      border-radius: inherit;
-    }`, 0);
-    sheet.insertRule(
-      `.ripple-item {
-      position:absolute;
-      border-radius:50%;
-    }`, 0);
-    sheet.insertRule(
-      `.ripple-start {
-      opacity: 0.3;
-      transform: scale(1);
-      animation-name: start;
-      animation-duration: 600ms;
-      animation-fill-mode: forwards;
-      }`, 0);
-    sheet.insertRule(
-      `.ripple-disappear {
-      animation-name: disappear;
-      animation-duration: 450ms;
-      animation-fill-mode: forwards;
-      }`, 0);
+import { foramtStyle, formatKeyframes } from '../../utils/style'
 
-    return sheet;
-  })();
+export default class CpRipple extends HTMLElement {
+  static styleSheet: CSSStyleSheet | undefined;
+  static style: CssStyleSheetObject = {
+    ".ripple-disappear": {
+      animationName: 'disappear',
+      animationDuration: '450ms',
+      animationFillMode: 'forwards',
+    },
+    ".ripple-start": {
+      opacity: '0.3',
+      transform: 'scale(1)',
+      animationName: 'start',
+      animationDuration: '600ms',
+      animationFillMode: 'forwards',
+    },
+    ".ripple-item": {
+      position: "absolute",
+      borderRadius: "50%",
+    },
+    ":host": {
+      width: "100%",
+      height: "100%",
+      overflow: "hidden",
+      display: "inline-block",
+      position: "absolute",
+      top: "0",
+      left: "0",
+      zIndex: "0",
+      borderRadius: "inherit",
+    },
+  }
+
+  static keyframes: KeyframeObject = {
+    start: {
+      '0%': {
+        transform: "scale(0)",
+        opacity: "0.1"
+      },
+      "100%": {
+        transform: "scale(1)",
+        opacity: '0.3'
+      }
+    },
+    "disappear": {
+      '0%': {
+        opacity: "0.3"
+      },
+      "100%": {
+        opacity: '0'
+      }
+    }
+  }
+  static keyframesSheet: CSSStyleSheet | undefined
+
+
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
-    shadowRoot.adoptedStyleSheets = [CpRipple.CpRippleStyleSheet];
+    if (typeof CpRipple.styleSheet === "undefined") CpRipple.styleSheet = foramtStyle(CpRipple.style)
+    if (typeof CpRipple.keyframesSheet === 'undefined') CpRipple.keyframesSheet = formatKeyframes(CpRipple.keyframes)
+
+    shadowRoot.adoptedStyleSheets = [CpRipple.keyframesSheet, CpRipple.styleSheet];
   }
 
   /** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
