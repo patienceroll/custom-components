@@ -1,2 +1,2 @@
 /** 纸张进度条监听的属性值 */
-export type CpPaperObservedAttributes = "color" | "value" | 'label'
+export type CpPaperObservedAttributes = ""
