@@ -4,7 +4,8 @@ export default class CpPaper extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
   static style: CssStyleSheetObject = {
     ':host([variant="outlined"])': {
-
+      boxShadow: 'none',
+      border: '1px solid rgba(0,0,0,0.120)'
     },
     ":host": {
       display: 'block',

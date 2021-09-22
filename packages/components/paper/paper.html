@@ -11,16 +11,27 @@
       background-color: #ccc;
       color: #fff;
     }
+
+    div {
+      color: #000;
+      height: 40px;
+    }
   </style>
 </head>
 
-<body >
+<body>
   <h1>纸张组件</h1>
   <ul>
     <li>
       <h4>默认</h4>
       <cp-paper>
-        <div style="color: #000;height: 40px;">这是纸张组件</div>
+        <div>这是纸张组件</div>
+      </cp-paper>
+    </li>
+    <li>
+      <h4>变体</h4>
+      <cp-paper variant="outlined">
+        <div>这是纸张组件</div>
       </cp-paper>
     </li>
   </ul>
