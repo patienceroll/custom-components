@@ -43,7 +43,7 @@ export default class CpRipple extends HTMLElement {
         opacity: '0.3'
       }
     },
-    "disappear": {
+    disappear: {
       '0%': {
         opacity: "0.3"
       },
