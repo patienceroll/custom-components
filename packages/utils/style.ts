@@ -34,9 +34,19 @@ const foramtStyle = (style: CssStyleSheetObject) => {
   return styleSheet;
 };
 
-const formatKeyframs = (keyframes: KeyframeObject){
-  const
+/** 格式化 keyframes 对象 */
+const formatKeyframes = (keyframes: KeyframeObject) => {
+  const styleSheet = new CSSStyleSheet();
+  const keyframeNames = Object.keys(keyframes);
+  keyframeNames.forEach((name) => {
+    let keyframeStepStr = '';
+    Object.keys(keyframes[name]).forEach(step => {
+      keyframeStepStr += transitionStyle(step, keyframes[name][step])
+    })
+    styleSheet.insertRule(`@keyframes ${name} { ${keyframeStepStr} }`)
+  })
+  return styleSheet;
 }
 
 
-export { foramtStyle };
+export { foramtStyle, formatKeyframes };

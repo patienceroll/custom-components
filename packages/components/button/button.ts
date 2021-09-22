@@ -2,7 +2,7 @@ import type Ripple from "../ripple/ripple";
 import type { ButtonObservedAttributes } from "./data";
 
 import theme from '../../theme/index'
-import { foramtStyle } from '../../utils/style'
+import { foramtStyle, formatKeyframes } from '../../utils/style'
 
 import "../ripple";
 import "../circular-progress"
@@ -52,26 +52,27 @@ export default class CpButton extends HTMLElement {
     }
   };
 
-  static cpButtonStyleSheet = (() => {
-    const styleSheet = new CSSStyleSheet();
-    styleSheet.insertRule(`@keyframes loading {
-      0% {
-        stroke-dasharray: 0% 400%;
-        stroke-dashoffset: 0;
+  static keyframes: KeyframeObject = {
+    loading: {
+      '0%': {
+        strokeDasharray: '0% 400%',
+        strokeDashoffset: '0'
+      },
+      "100%": {
+        strokeDasharray: '400% 400%',
+        strokeDashoffset: "-400%"
       }
-      100% {
-        stroke-dasharray: 400% 400%;
-        stroke-dashoffset: -400%;
-      }
-    }`)
-    return styleSheet;
-  })();
+    }
+  }
+  static keyframesSheet: CSSStyleSheet | undefined
 
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
     if (typeof CpButton.styleSheet === 'undefined') CpButton.styleSheet = foramtStyle(CpButton.style)
-    shadowRoot.adoptedStyleSheets = [CpButton.styleSheet];
+    if (typeof CpButton.keyframesSheet === 'undefined') CpButton.keyframesSheet = formatKeyframes(CpButton.keyframes)
+
+    shadowRoot.adoptedStyleSheets = [CpButton.keyframesSheet, CpButton.styleSheet];
 
     const button = document.createElement("button");
     const textWrapper = document.createElement("span");
