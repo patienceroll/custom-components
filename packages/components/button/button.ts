@@ -25,8 +25,8 @@ export default class CpButton extends HTMLElement {
       boxShadow: "none"
     },
     ".cp-button:hover": {
-      backgroundColor: "#c0c0c0",
-      boxShadow: "0px 2px 4px - 1px rgb(0 0 0 / 20 %)"
+      backgroundColor: theme.color.backgroundHover,
+      boxShadow: "0px 2px 4px -1px rgb(0 0 0 / 20%)"
     },
     ".cp-button": {
       display: 'flex',
@@ -39,10 +39,10 @@ export default class CpButton extends HTMLElement {
       cursor: 'pointer',
       width: '100%',
       height: '100%',
-      backgroundColor: '#e0e0e0',
-      borderRadius: '4px',
+      backgroundColor: theme.color.background,
+      borderRadius: theme.border.radius,
       boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%)',
-      transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)'
+      transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)'
     },
     ':host([disable="true"])': {
       pointerEvents: 'none'

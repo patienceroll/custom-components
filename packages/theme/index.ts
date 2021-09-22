@@ -9,6 +9,19 @@
 const Theme = {
   color: {
     primary: '#1976d2',
+    background: '#e0e0e0',
+    backgroundHover: "#c0c0c0"
+  },
+  border: {
+    radius: '4px'
+  },
+  transition: {
+    delay: {
+      fast: '150ms',
+      base: '300ms',
+      smooth: '450ms',
+      slow: '600ms'
+    }
   }
 };
 

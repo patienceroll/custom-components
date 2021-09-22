@@ -1,61 +1,68 @@
 import type { CircularProgressObservedAttributes } from "./data";
 
 import theme from "../../theme/index";
+import { foramtStyle, formatKeyframes } from '../../utils/style'
 
 export default class CpCircularProgress extends HTMLElement {
-  static CpCircularProgressStyleSheet = (() => {
-    const styleSheet = new CSSStyleSheet();
-    styleSheet.insertRule(`.cp-circular-svg > text {
-      dominant-baseline: middle;
-      text-anchor: middle;
-      transform: rotate(90deg);
-      transform-origin: center center;
-    }`);
-    styleSheet.insertRule(`.cp-circular-svg > circle {
-      animation: circle-dash 1.4s ease-in-out infinite;
-      stroke-dasharray: 0px 127px;
-      stroke-dashoffset: 0;
-      transition: stroke-dasharray ease 300ms;
-    }`);
-    styleSheet.insertRule(`.cp-circular-svg {
-      width: 100%;
-      height: 100%;
-      animation: svg-rotate 1.4s ease-in-out infinite;
-      transform: rotate(-90deg);
-    }`);
-    styleSheet.insertRule(`:host {
-      display: block;
-    }`);
-    styleSheet.insertRule(`@keyframes circle-dash {
-      0% {
-        stroke-dasharray: 1px 127px;
-        stroke-dashoffset: 0
+  static styleSheet: CSSStyleSheet | undefined;
+  static style: CssStyleSheetObject = {
+    ".cp-circular-svg > text": {
+      dominantBaseline: 'middle',
+      textAnchor: 'middle',
+      transform: 'rotate(90deg)',
+      transformOrigin: 'center center',
+    },
+    ".cp-circular-svg > circle": {
+      animation: 'circle-dash 1.4s ease-in-out infinite',
+      strokeDasharray: '0px 127px',
+      strokeDashoffset: '0',
+      transition: "stroke-dasharray ease 300ms",
+    },
+    ".cp-circular-svg": {
+      width: '100%',
+      height: '100%',
+      animation: 'svg-rotate 1.4s ease-in-out infinite',
+      transform: 'rotate(-90deg)',
+    },
+    ":host": {
+      display: 'block'
+    }
+  }
+
+  static keyframes: KeyframeObject = {
+    "circle-dash": {
+      '0%': {
+        strokeDasharray: '1px 127px',
+        strokeDashoffset: '0'
+      },
+      '50%': {
+        strokeDasharray: '70px 127px',
+        strokeDashoffset: '-15px'
+      },
+      '100%': {
+        strokeDasharray: '127px 127px',
+        strokeDashoffset: '-127px'
+      },
+    },
+    "svg-rotate": {
+      "0%": {
+        transformOrigin: 'center',
+        transform: 'rotate(-90deg)'
+      },
+      "100%": {
+        transform: 'rotate(270deg)'
       }
-      50% {
-        stroke-dasharray: 70px 127px;
-        stroke-dashoffset: -15px
-      }
-      100% {
-        stroke-dasharray: 127px 127px;
-        stroke-dashoffset: -127px
-      }
-    }`);
-    styleSheet.insertRule(`@keyframes svg-rotate {
-      0% {
-        transform-origin: center center
-        transform: rotate(-90deg);
-      }
-      100% {
-        transform: rotate(270deg)
-      }
-    }`);
-    return styleSheet;
-  })();
+    }
+  }
+  static keyframesSheet: CSSStyleSheet | undefined
+
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
+    if (typeof CpCircularProgress.keyframesSheet === 'undefined') CpCircularProgress.keyframesSheet = formatKeyframes(CpCircularProgress.keyframes)
+    if (typeof CpCircularProgress.styleSheet === 'undefined') CpCircularProgress.styleSheet = foramtStyle(CpCircularProgress.style)
     shadowRoot.adoptedStyleSheets = [
-      CpCircularProgress.CpCircularProgressStyleSheet,
+      CpCircularProgress.keyframesSheet, CpCircularProgress.styleSheet
     ];
 
     const circle = `<circle cx="22" cy="22" r="20.2" stroke=${theme.color.primary} stroke-width="3.6" fill="none">
