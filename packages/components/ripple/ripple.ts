@@ -1,4 +1,4 @@
-import { foramtStyle, formatKeyframes } from '../../utils/style'
+import { formatStyle, formatKeyframes } from '../../utils/style'
 
 export default class CpRipple extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
@@ -58,7 +58,7 @@ export default class CpRipple extends HTMLElement {
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
-    if (typeof CpRipple.styleSheet === "undefined") CpRipple.styleSheet = foramtStyle(CpRipple.style)
+    if (typeof CpRipple.styleSheet === "undefined") CpRipple.styleSheet = formatStyle(CpRipple.style)
     if (typeof CpRipple.keyframesSheet === 'undefined') CpRipple.keyframesSheet = formatKeyframes(CpRipple.keyframes)
 
     shadowRoot.adoptedStyleSheets = [CpRipple.keyframesSheet, CpRipple.styleSheet];

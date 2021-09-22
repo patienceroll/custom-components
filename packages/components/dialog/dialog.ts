@@ -8,7 +8,6 @@ export default class CpDialog extends HTMLElement {
   static keyframesSheet: CSSStyleSheet | undefined;
   // 基础层级
   static baseIndex = 0;
-
   contentPosition = { x: 0, y: 0 };
 
   static keyframes: KeyframeObject = {

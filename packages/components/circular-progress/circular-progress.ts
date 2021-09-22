@@ -1,7 +1,7 @@
 import type { CircularProgressObservedAttributes } from "./data";
 
 import theme from "../../theme/index";
-import { foramtStyle, formatKeyframes } from '../../utils/style'
+import { formatStyle, formatKeyframes } from '../../utils/style'
 
 export default class CpCircularProgress extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
@@ -60,7 +60,7 @@ export default class CpCircularProgress extends HTMLElement {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
     if (typeof CpCircularProgress.keyframesSheet === 'undefined') CpCircularProgress.keyframesSheet = formatKeyframes(CpCircularProgress.keyframes)
-    if (typeof CpCircularProgress.styleSheet === 'undefined') CpCircularProgress.styleSheet = foramtStyle(CpCircularProgress.style)
+    if (typeof CpCircularProgress.styleSheet === 'undefined') CpCircularProgress.styleSheet = formatStyle(CpCircularProgress.style)
     shadowRoot.adoptedStyleSheets = [
       CpCircularProgress.keyframesSheet, CpCircularProgress.styleSheet
     ];

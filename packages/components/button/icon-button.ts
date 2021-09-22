@@ -1,5 +1,5 @@
 import type Ripple from "../ripple/ripple";
-import { foramtStyle } from '../../utils/style'
+import { formatStyle } from '../../utils/style'
 
 import theme from '../../theme/index'
 
@@ -30,7 +30,7 @@ export default class CpIconButton extends HTMLElement {
     super()
     const shadowRoot = this.attachShadow({ mode: "open" });
 
-    if (typeof CpIconButton.styleSheet === 'undefined') CpIconButton.styleSheet = foramtStyle(CpIconButton.style)
+    if (typeof CpIconButton.styleSheet === 'undefined') CpIconButton.styleSheet = formatStyle(CpIconButton.style)
 
     shadowRoot.adoptedStyleSheets = [CpIconButton.styleSheet]
     const button = document.createElement("button");
