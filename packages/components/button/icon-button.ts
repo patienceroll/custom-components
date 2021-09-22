@@ -42,7 +42,8 @@ export default class CpIconButton extends HTMLElement {
     let rippleItem: ReturnType<Ripple["start"]> | undefined;
     this.addEventListener("mousedown", () => {
       const { clientWidth, clientHeight } = this;
-      rippleItem = ripple.start({ top: clientWidth / 2, left: clientHeight / 2 });
+      const rippleColor = this.getAttribute('ripple-color')
+      rippleItem = ripple.start({ top: clientWidth / 2, left: clientHeight / 2, backgroundColor: rippleColor });
     });
     this.addEventListener("mouseup", () => {
       if (rippleItem) {
@@ -55,7 +56,8 @@ export default class CpIconButton extends HTMLElement {
       if (e.cancelable) {
         const { clientWidth, clientHeight } = this;
         if (rippleItem) rippleItem.then(({ stop }) => stop());
-        rippleItem = ripple.start({ top: clientWidth / 2, left: clientHeight / 2 });
+        const rippleColor = this.getAttribute('ripple-color')
+        rippleItem = ripple.start({ top: clientWidth / 2, left: clientHeight / 2, backgroundColor: rippleColor });
       }
     }, { passive: true });
     this.addEventListener("touchend", () => {

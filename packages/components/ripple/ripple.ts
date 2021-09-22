@@ -74,7 +74,7 @@ export default class CpRipple extends HTMLElement {
         /** 涟漪中心点相对父级左侧距离 */
         left: number;
         /** 涟漪颜色,默认 #333 */
-        backgroundColor?: CSSStyleDeclaration["backgroundColor"];
+        backgroundColor?: CSSStyleDeclaration["backgroundColor"] | null;
       }
     ) {
       const { pow, sqrt, abs } = Math;
