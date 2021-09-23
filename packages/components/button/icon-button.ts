@@ -6,6 +6,7 @@ import theme from "../../theme/index";
 import "../ripple";
 
 export default class CpIconButton extends HTMLElement {
+  private rippleItem: ReturnType<Ripple["start"]> | undefined;
   static styleSheet: CSSStyleSheet | undefined;
   static style: CssStyleSheetObject = {
     ".cp-icon-button:hover": {
@@ -42,20 +43,19 @@ export default class CpIconButton extends HTMLElement {
 
     button.classList.add("cp-icon-button");
 
-    let rippleItem: ReturnType<Ripple["start"]> | undefined;
     this.addEventListener("mousedown", () => {
       const { clientWidth, clientHeight } = this;
       const rippleColor = this.getAttribute("ripple-color");
-      rippleItem = ripple.start({
+      this.rippleItem = ripple.start({
         top: clientWidth / 2,
         left: clientHeight / 2,
         backgroundColor: rippleColor,
       });
     });
     this.addEventListener("mouseup", () => {
-      if (rippleItem) {
-        rippleItem.then(({ stop }) => stop());
-        rippleItem = undefined;
+      if (this.rippleItem) {
+        this.rippleItem.then(({ stop }) => stop());
+        this.rippleItem = undefined;
       }
     });
     this.addEventListener(
@@ -64,9 +64,9 @@ export default class CpIconButton extends HTMLElement {
         if (e.targetTouches.length !== 1) return;
         if (e.cancelable) {
           const { clientWidth, clientHeight } = this;
-          if (rippleItem) rippleItem.then(({ stop }) => stop());
+          if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
           const rippleColor = this.getAttribute("ripple-color");
-          rippleItem = ripple.start({
+          this.rippleItem = ripple.start({
             top: clientWidth / 2,
             left: clientHeight / 2,
             backgroundColor: rippleColor,
@@ -76,9 +76,9 @@ export default class CpIconButton extends HTMLElement {
       { passive: true }
     );
     this.addEventListener("touchend", () => {
-      if (rippleItem) {
-        rippleItem.then(({ stop }) => stop());
-        rippleItem = undefined;
+      if (this.rippleItem) {
+        this.rippleItem.then(({ stop }) => stop());
+        this.rippleItem = undefined;
       }
     });
 

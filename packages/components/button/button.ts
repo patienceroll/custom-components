@@ -8,6 +8,7 @@ import "../ripple";
 import "../circular-progress";
 
 export default class CpButton extends HTMLElement {
+  private rippleItem: ReturnType<Ripple["start"]> | undefined;
   static styleSheet: CSSStyleSheet | undefined;
   static style: CssStyleSheetObject = {
     ".cp-button-loading > rect": {
@@ -105,15 +106,14 @@ export default class CpButton extends HTMLElement {
     leftIcon.name = "left-icon";
     rightIcon.name = "right-icon";
 
-    let rippleItem: ReturnType<Ripple["start"]> | undefined;
     this.addEventListener("mousedown", (e) => {
-      if (rippleItem) rippleItem.then(({ stop }) => stop());
-      rippleItem = ripple.start({ top: e.offsetY, left: e.offsetX });
+      if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
+      this.rippleItem = ripple.start({ top: e.offsetY, left: e.offsetX });
     });
     this.addEventListener("mouseup", () => {
-      if (rippleItem) {
-        rippleItem.then(({ stop }) => stop());
-        rippleItem = undefined;
+      if (this.rippleItem) {
+        this.rippleItem.then(({ stop }) => stop());
+        this.rippleItem = undefined;
       }
     });
     this.addEventListener(
@@ -126,17 +126,20 @@ export default class CpButton extends HTMLElement {
             const [touch] = targetTouches;
             const { pageX, pageY } = touch;
             const { left, top } = (target as this).getBoundingClientRect();
-            if (rippleItem) rippleItem.then(({ stop }) => stop());
-            rippleItem = ripple.start({ top: pageY - top, left: pageX - left });
+            if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
+            this.rippleItem = ripple.start({
+              top: pageY - top,
+              left: pageX - left,
+            });
           }
         }
       },
       { passive: true }
     );
     this.addEventListener("touchend", () => {
-      if (rippleItem) {
-        rippleItem.then(({ stop }) => stop());
-        rippleItem = undefined;
+      if (this.rippleItem) {
+        this.rippleItem.then(({ stop }) => stop());
+        this.rippleItem = undefined;
       }
     });
 
