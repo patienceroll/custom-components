@@ -27,3 +27,25 @@ declare type KeyframeObject = Record<string, Record<string, CSSProperty>>;
 declare type AttachedShadowRoot<T> = Omit<T, "shadowRoot"> & {
   shadowRoot: ShadowRoot;
 };
+
+
+// https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/Using_custom_elements
+declare class CustomElement {
+
+  /** 当 custom element首次被插入文档DOM时，被调用 */
+  connectedCallback?() { }
+
+  /** 当 custom element从文档DOM中删除时，被调用 */
+  disconnectedCallback?() { }
+
+  /** 当 custom element被移动到新的文档时，被调用 */
+  adoptedCallback?() { }
+
+  /** 需要监听的属性名称 */
+  static observedAttributes?= [];
+
+  /** 当 custom element增加、删除、修改自身属性时，被调用 与 observedAttributes 配套使用 */
+  attributeChangedCallback?(name: string, oldValue: string, newValue: string) {
+
+  }
+}
