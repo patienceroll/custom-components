@@ -49,4 +49,12 @@ const formatKeyframes = (keyframes: KeyframeObject) => {
   return styleSheet;
 };
 
+export const setDomNodeStyle = (node: HTMLElement, style: CssStyleSheetObject) => {
+  let str = '';
+  Object.keys(style).forEach(key => {
+    str += `${key}:${style[key]};`
+  })
+  node.setAttribute('style', str);
+}
+
 export { formatStyle, formatKeyframes };

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>蒙层组件</title>
+  <style>
+    div {
+      width: 500px;
+      height: 200px;
+      background-color: yellowgreen;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <cp-mask open="false" id='cp-mask'>
+    <div>弹窗内容</div>
+  </cp-mask>
+
+  <button onclick="onClickButton()">按钮</button>
+
+  <script>
+    const mask = document.getElementById('cp-mask');
+    function onClickButton() {
+      mask.showMask();
+    }
+  </script>
+
+  <script type="module" src="../index.js"></script>
+</body>
+
+
+</html>

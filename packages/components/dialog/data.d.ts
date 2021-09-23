@@ -1,5 +1,1 @@
-export type CalssNames =
-  | "dialogContainer"
-  | "dialogMask"
-  | "dialogContent"
-  | string;
+export type DialogType = 'modal' | 'drawer';
