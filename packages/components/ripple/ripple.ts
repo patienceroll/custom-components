@@ -106,7 +106,10 @@ export default class CpRipple extends HTMLElement {
             resolve({
               dom: rippleItem,
               stop() {
-                rippleItem.classList.add("ripple-disappear");
+                rippleItem.classList.replace(
+                  "ripple-start",
+                  "ripple-disappear"
+                );
                 return new Promise<void>((resolve) => {
                   setTimeout(() => {
                     rippleItem.remove();
