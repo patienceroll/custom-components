@@ -2,7 +2,7 @@ import { formatStyle, formatKeyframes } from "../../utils/style";
 
 export default class CpRipple extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
-  static style: CssStyleSheetObject = {
+  static style:CSSStyleObject = {
     ".ripple-disappear": {
       animationName: "disappear",
       animationDuration: "450ms",

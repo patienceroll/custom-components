@@ -7,7 +7,7 @@ declare interface ShadowRoot {
 declare type CssProperty = Partial<Omit<CSSStyleDeclaration, typeof Symbol.iterator | number | 'getPropertyPriority' | 'getPropertyValue' | 'item' | 'removeProperty' | "setProperty">>
 
 /** css 样式表属性对象 */
-declare type CssStyleSheetObject = Record<string, CssProperty>
+declare type CSSStyleObject = Record<string, CssProperty>
 
 /** keyframe 样式表属性对象  */
 declare type KeyframeObject = Record<string, Record<string, CssProperty>>

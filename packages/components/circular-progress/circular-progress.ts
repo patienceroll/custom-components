@@ -5,7 +5,7 @@ import { formatStyle, formatKeyframes } from "../../utils/style";
 
 export default class CpCircularProgress extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
-  static style: CssStyleSheetObject = {
+  static style:CSSStyleObject = {
     ".cp-circular-svg > text": {
       dominantBaseline: "middle",
       textAnchor: "middle",

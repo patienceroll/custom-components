@@ -25,7 +25,7 @@ const transitionStyle = (selector: string, style: CssProperty) => {
  * @method 格式化样式配置对象
  * @param style 需要格式化的组件样式
  */
-const formatStyle = (style: CssStyleSheetObject) => {
+const formatStyle = (style: CSSStyleObject) => {
   const styleSheet = new CSSStyleSheet();
   Object.keys(style).forEach((key) => {
     const temp = humpToOverline(key as keyof CssProperty);

@@ -3,7 +3,7 @@ import theme from '../../theme/index';
 
 export default class CpPaper extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
-  static style: CssStyleSheetObject = {
+  static style:CSSStyleObject = {
     ':host([variant="outlined"])': {
       boxShadow: 'none',
       border: '1px solid rgba(0,0,0,0.120)'

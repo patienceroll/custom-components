@@ -49,7 +49,7 @@ export default class CpDialog extends HTMLElement {
     }
   };
 
-  static style: CssStyleSheetObject = {
+  static style:CSSStyleObject = {
     [":host([open=true])"]: {
       display: "block",
     },
