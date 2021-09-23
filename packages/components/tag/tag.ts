@@ -11,7 +11,9 @@ export default class CpTag extends HTMLElement {
       100% {
         transform: scale(0);
       }
-    }`, 0);
+    }`,
+      0
+    );
     sheet.insertRule(
       `@keyframes show {
       0% {
@@ -20,24 +22,32 @@ export default class CpTag extends HTMLElement {
       100% {
         transform: scale(1);
       }
-    }`, 0);
+    }`,
+      0
+    );
     sheet.insertRule(
       `.cp-tag-container {
       display: inline-block;
       font-size: 14px;
-    }`, 0);
+    }`,
+      0
+    );
     sheet.insertRule(
       `.cp-tag-hide {
       animation-name: hide;
       animation-duration: 300ms;
       animation-fill-mode: forwards;
-    }`, 0);
+    }`,
+      0
+    );
     sheet.insertRule(
       `.cp-tag-show {
       animation-name: show;
       animation-duration: 300ms;
       animation-fill-mode: forwards;
-    }`, 0);
+    }`,
+      0
+    );
     return sheet;
   })();
   constructor() {
@@ -72,39 +82,23 @@ export default class CpTag extends HTMLElement {
 
   static observedAttributes: TagObservedAttributes[] = ["show"];
   attributeChangedCallback(
+    this: AttachedShadowRoot<CpTag>,
     attr: TagObservedAttributes,
     older: string | null,
     newer: string | null
   ) {
+    const container = this.shadowRoot.firstElementChild as HTMLSpanElement;
     switch (attr) {
       case "show":
-        const { shadowRoot } = this;
-        if (shadowRoot) {
-          const { firstElementChild } = shadowRoot;
-          if (firstElementChild) {
-            if (newer === "true") {
-              (firstElementChild as HTMLSpanElement).style.removeProperty(
-                "display"
-              );
-
-              firstElementChild.setAttribute(
-                "class",
-                "cp-tag-container cp-tag-show"
-              );
-            }
-
-            if (newer === "false") {
-              firstElementChild.setAttribute(
-                "class",
-                "cp-tag-container cp-tag-hide"
-              );
-              setTimeout(() => {
-                (
-                  shadowRoot.firstElementChild as HTMLSpanElement
-                ).style.display = "none";
-              }, 300);
-            }
-          }
+        if (newer === "true") {
+          container.style.removeProperty("display");
+          container.setAttribute("class", "cp-tag-container cp-tag-show");
+        }
+        if (newer === "false") {
+          container.setAttribute("class", "cp-tag-container cp-tag-hide");
+          setTimeout(() => {
+            container.style.display = "none";
+          }, 300);
         }
         break;
       default:

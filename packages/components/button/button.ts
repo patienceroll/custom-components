@@ -107,6 +107,7 @@ export default class CpButton extends HTMLElement {
 
     let rippleItem: ReturnType<Ripple["start"]> | undefined;
     this.addEventListener("mousedown", (e) => {
+      if (rippleItem) rippleItem.then(({ stop }) => stop());
       rippleItem = ripple.start({ top: e.offsetY, left: e.offsetX });
     });
     this.addEventListener("mouseup", () => {
