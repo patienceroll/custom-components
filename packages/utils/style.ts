@@ -49,10 +49,15 @@ const formatKeyframes = (keyframes: KeyframeObject) => {
   return styleSheet;
 };
 
-export const setDomNodeStyle = (node: HTMLElement, style: CSSStyleObject) => {
+/**
+ * @method 设置dom节点央视
+ * @param node dom节点
+ * @param style 样式对象
+ */
+export const setDomNodeStyle = (node: HTMLElement, style: CSSProperty) => {
   let str = '';
   Object.keys(style).forEach(key => {
-    str += `${key}:${style[key]};`
+    str += `${key}:${style[key as keyof CSSProperty]};`
   })
   node.setAttribute('style', str);
 }
