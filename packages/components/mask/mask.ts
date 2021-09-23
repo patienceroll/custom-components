@@ -2,7 +2,7 @@ import { formatStyle, formatKeyframes } from '../../utils/style';
 
 export default class CpMask extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
-  static style: CssStyleSheetObject = {
+  static style: CSSStyleObject = {
     ':host([open=true])': {
       display: 'block',
     },
