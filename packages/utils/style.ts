@@ -2,7 +2,7 @@
  * @method 驼峰转中划线
  * @param str 需要转换的字符串
  */
-const humpToOverline = (str: keyof CssProperty | string) =>
+const humpToOverline = (str: keyof CSSProperty | string) =>
   str.replace(/([A-Z])/g, "-$1").toLowerCase();
 
 /**
@@ -10,12 +10,12 @@ const humpToOverline = (str: keyof CssProperty | string) =>
  * @param selector 选择器
  * @param style 样式对象
  */
-const transitionStyle = (selector: string, style: CssProperty) => {
+const transitionStyle = (selector: string, style: CSSProperty) => {
   let str = `${selector} {`;
-  Object.keys(style).forEach((key: keyof CssProperty | string) => {
+  Object.keys(style).forEach((key: keyof CSSProperty | string) => {
     // 驼峰转中划线
     const transitionKey = humpToOverline(key);
-    str += `${transitionKey}:${style[key as keyof CssProperty]};`;
+    str += `${transitionKey}:${style[key as keyof CSSProperty]};`;
   });
 
   return str + "}";
@@ -25,10 +25,10 @@ const transitionStyle = (selector: string, style: CssProperty) => {
  * @method 格式化样式配置对象
  * @param style 需要格式化的组件样式
  */
-const formatStyle = (style: CssStyleSheetObject) => {
+const formatStyle = (style: CSSStyleObject) => {
   const styleSheet = new CSSStyleSheet();
   Object.keys(style).forEach((key) => {
-    const temp = humpToOverline(key as keyof CssProperty);
+    const temp = humpToOverline(key as keyof CSSProperty);
     styleSheet.insertRule(transitionStyle(temp, style[key]));
   });
 

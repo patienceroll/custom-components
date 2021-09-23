@@ -3,16 +3,27 @@ declare interface ShadowRoot {
   adoptedStyleSheets: CSSStyleSheet[];
 }
 
-/** css 属性对象 */
-declare type CssProperty = Partial<Omit<CSSStyleDeclaration, typeof Symbol.iterator | number | 'getPropertyPriority' | 'getPropertyValue' | 'item' | 'removeProperty' | "setProperty">>
+/** CSS 属性值 */
+declare type CSSProperty = Partial<
+  Omit<
+    CSSStyleDeclaration,
+    | typeof Symbol.iterator
+    | number
+    | "getPropertyPriority"
+    | "getPropertyValue"
+    | "item"
+    | "removeProperty"
+    | "setProperty"
+  >
+>;
 
-/** css 样式表属性对象 */
-declare type CssStyleSheetObject = Record<string, CssProperty>
+/** key 为 className,值为 css 属性值对象的集合 */
+declare type CSSStyleObject = Record<string, CSSProperty>;
 
-/** keyframe 样式表属性对象  */
-declare type KeyframeObject = Record<string, Record<string, CssProperty>>
+/** key 为 动画名字,值为 CSSStyleObject 的动画集合  */
+declare type KeyframeObject = Record<string, Record<string, CSSProperty>>;
 
 /** 开启了shadowRoot的元素 */
-declare type AttachedShadowRoot<T> = Omit<T, 'shadowRoot'> & {
-  shadowRoot: ShadowRoot
-}
+declare type AttachedShadowRoot<T> = Omit<T, "shadowRoot"> & {
+  shadowRoot: ShadowRoot;
+};
