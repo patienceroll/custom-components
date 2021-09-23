@@ -1,19 +1,19 @@
-import { formatStyle, formatKeyframes } from '../../utils/style'
+import { formatStyle, formatKeyframes } from "../../utils/style";
 
 export default class CpRipple extends HTMLElement {
   static styleSheet: CSSStyleSheet | undefined;
   static style: CssStyleSheetObject = {
     ".ripple-disappear": {
-      animationName: 'disappear',
-      animationDuration: '450ms',
-      animationFillMode: 'forwards',
+      animationName: "disappear",
+      animationDuration: "450ms",
+      animationFillMode: "forwards",
     },
     ".ripple-start": {
-      opacity: '0.3',
-      transform: 'scale(1)',
-      animationName: 'start',
-      animationDuration: '600ms',
-      animationFillMode: 'forwards',
+      opacity: "0.3",
+      transform: "scale(1)",
+      animationName: "start",
+      animationDuration: "600ms",
+      animationFillMode: "forwards",
     },
     ".ripple-item": {
       position: "absolute",
@@ -30,38 +30,42 @@ export default class CpRipple extends HTMLElement {
       zIndex: "0",
       borderRadius: "inherit",
     },
-  }
+  };
 
   static keyframes: KeyframeObject = {
     start: {
-      '0%': {
+      "0%": {
         transform: "scale(0)",
-        opacity: "0.1"
+        opacity: "0.1",
       },
       "100%": {
         transform: "scale(1)",
-        opacity: '0.3'
-      }
+        opacity: "0.3",
+      },
     },
     disappear: {
-      '0%': {
-        opacity: "0.3"
+      "0%": {
+        opacity: "0.3",
       },
       "100%": {
-        opacity: '0'
-      }
-    }
-  }
-  static keyframesSheet: CSSStyleSheet | undefined
-
+        opacity: "0",
+      },
+    },
+  };
+  static keyframesSheet: CSSStyleSheet | undefined;
 
   constructor() {
     super();
     const shadowRoot = this.attachShadow({ mode: "open" });
-    if (typeof CpRipple.styleSheet === "undefined") CpRipple.styleSheet = formatStyle(CpRipple.style)
-    if (typeof CpRipple.keyframesSheet === 'undefined') CpRipple.keyframesSheet = formatKeyframes(CpRipple.keyframes)
+    if (typeof CpRipple.styleSheet === "undefined")
+      CpRipple.styleSheet = formatStyle(CpRipple.style);
+    if (typeof CpRipple.keyframesSheet === "undefined")
+      CpRipple.keyframesSheet = formatKeyframes(CpRipple.keyframes);
 
-    shadowRoot.adoptedStyleSheets = [CpRipple.keyframesSheet, CpRipple.styleSheet];
+    shadowRoot.adoptedStyleSheets = [
+      CpRipple.keyframesSheet,
+      CpRipple.styleSheet,
+    ];
   }
 
   /** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
@@ -94,7 +98,7 @@ export default class CpRipple extends HTMLElement {
       rippleItem.style.width = `${2 * radius}px`;
       rippleItem.style.height = `${2 * radius}px`;
       rippleItem.style.background = backgroundColor || "#333";
-      rippleItem.setAttribute("class", "ripple-item ripple-start");
+      rippleItem.classList.add("ripple-item", "ripple-start");
       this.shadowRoot.appendChild(rippleItem);
       return new Promise<{ dom: HTMLDivElement; stop: VoidFunction }>(
         (resolve) => {
@@ -102,10 +106,7 @@ export default class CpRipple extends HTMLElement {
             resolve({
               dom: rippleItem,
               stop() {
-                rippleItem.setAttribute(
-                  "class",
-                  "ripple-item ripple-disappear"
-                );
+                rippleItem.classList.add("ripple-disappear");
                 return new Promise<void>((resolve) => {
                   setTimeout(() => {
                     rippleItem.remove();
@@ -120,5 +121,5 @@ export default class CpRipple extends HTMLElement {
     };
   }
 
-  connectedCallback(this: CpRipple) { }
+  connectedCallback(this: CpRipple) {}
 }
