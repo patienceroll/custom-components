@@ -1,16 +1,17 @@
 import type Ripple from '../ripple/ripple';
 import type { ButtonObservedAttributes } from './data';
 
+import ButtonBase from './button-base';
+
 import theme from '../../theme/index';
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
 import '../ripple';
 import '../circular-progress';
 
-export default class CpButton extends HTMLElement implements CustomElement {
-	private rippleItem: ReturnType<Ripple['start']> | undefined;
-	static styleSheet?: CSSStyleSheet;
-	static style: CSSStyleObject = {
+export default class CpButton extends ButtonBase {
+	#styleSheet?: CSSStyleSheet;
+	#style: CSSStyleObject = {
 		'.cp-button-loading > rect': {
 			animation: 'loading 2s linear infinite',
 		},
@@ -25,35 +26,9 @@ export default class CpButton extends HTMLElement implements CustomElement {
 		'.cp-button-disabled': {
 			boxShadow: 'none',
 		},
-		'.cp-button:hover': {
-			backgroundColor: theme.color.backgroundHover,
-			boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%)',
-		},
-		'.cp-button': {
-			display: 'flex',
-			alignItems: 'center',
-			padding: '6px 12px',
-			border: 'none',
-			position: 'relative',
-			outline: '0',
-			userSelect: 'none',
-			cursor: 'pointer',
-			width: '100%',
-			height: '100%',
-			backgroundColor: theme.color.background,
-			borderRadius: theme.border.radius,
-			boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%)',
-			transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)',
-		},
-		':host([disable="true"])': {
-			pointerEvents: 'none',
-		},
-		':host': {
-			display: 'inline-block',
-		},
 	};
 
-	static keyframes: KeyframeObject = {
+	#keyframes: KeyframeObject = {
 		loading: {
 			'0%': {
 				strokeDasharray: '0% 400%',
@@ -65,76 +40,34 @@ export default class CpButton extends HTMLElement implements CustomElement {
 			},
 		},
 	};
-	static keyframesSheet?: CSSStyleSheet;
+	#keyframesSheet?: CSSStyleSheet;
 
 	constructor() {
 		super();
-		const shadowRoot = this.attachShadow({ mode: 'open' });
-		if (typeof CpButton.styleSheet === 'undefined') CpButton.styleSheet = formatStyle(CpButton.style);
-		if (typeof CpButton.keyframesSheet === 'undefined') CpButton.keyframesSheet = formatKeyframes(CpButton.keyframes);
 
-		shadowRoot.adoptedStyleSheets = [CpButton.keyframesSheet, CpButton.styleSheet];
+		const { shadowRoot } = this as AttachedShadowRoot<ButtonBase>;
+		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
+		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 
-		const button = document.createElement('button');
+		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, this.#keyframesSheet, this.#styleSheet];
+
+		const button = shadowRoot.firstElementChild as HTMLButtonElement;
 		const textWrapper = document.createElement('span');
 		const text = document.createElement('slot');
 		const leftIcon = document.createElement('slot');
 		const rightIcon = document.createElement('slot');
-		const ripple = document.createElement('cp-ripple') as AttachedShadowRoot<Ripple>;
 		const loading = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
 		loading.innerHTML = `<rect x="1"  y="1" rx="4" ry="4"  width="calc(100% - 2px)" height="calc(100% - 2px)" stroke-width="2" stroke="${theme.color.primary}" fill="none" />`;
-
-		button.classList.add('cp-button');
-		textWrapper.classList.add('cp-button-text');
 		loading.classList.add('cp-button-loading');
-		button.setAttribute('part', 'button');
 		leftIcon.setAttribute('part', 'left-icon');
 		rightIcon.setAttribute('part', 'right-icon');
 		loading.setAttribute('part', 'loading');
 		leftIcon.name = 'left-icon';
 		rightIcon.name = 'right-icon';
 
-		this.addEventListener('mousedown', (e) => {
-			if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
-			this.rippleItem = ripple.start({ top: e.offsetY, left: e.offsetX });
-		});
-		this.addEventListener('mouseup', () => {
-			if (this.rippleItem) {
-				this.rippleItem.then(({ stop }) => stop());
-				this.rippleItem = undefined;
-			}
-		});
-		this.addEventListener(
-			'touchstart',
-			(e) => {
-				if (e.targetTouches.length !== 1) return;
-				if (e.cancelable) {
-					const { targetTouches, target } = e;
-					if (target) {
-						const [touch] = targetTouches;
-						const { pageX, pageY } = touch;
-						const { left, top } = (target as this).getBoundingClientRect();
-						if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
-						this.rippleItem = ripple.start({
-							top: pageY - top,
-							left: pageX - left,
-						});
-					}
-				}
-			},
-			{ passive: true }
-		);
-		this.addEventListener('touchend', () => {
-			if (this.rippleItem) {
-				this.rippleItem.then(({ stop }) => stop());
-				this.rippleItem = undefined;
-			}
-		});
-
 		textWrapper.append(leftIcon, text, rightIcon);
-		button.append(textWrapper, ripple, loading);
-		shadowRoot.appendChild(button);
+		button.append(textWrapper, loading);
 	}
 
 	static observedAttributes: ButtonObservedAttributes[] = ['disable', 'loading', 'loading-color'];
@@ -171,3 +104,6 @@ export default class CpButton extends HTMLElement implements CustomElement {
 	}
 	connectedCallback() {}
 }
+
+
+
