@@ -11,6 +11,10 @@
       background-color: #EAEEF3;
       color: #333;
     }
+
+    div {
+      width: 60%;
+    }
   </style>
 </head>
 
@@ -18,7 +22,24 @@
 
   <h1>骨架屏</h1>
   <ul>
-
+    <li>
+      <h4>默认</h4>
+      <div>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+      </div>
+    </li>
+    <li>
+      <h4>不同长度</h4>
+      <div>
+        <cp-skeleton ></cp-skeleton>
+        <cp-skeleton ></cp-skeleton>
+        <cp-skeleton width="80%"></cp-skeleton>
+        <cp-skeleton width="60%"></cp-skeleton>
+        <cp-skeleton width="20%"></cp-skeleton>
+      </div>
+    </li>
   </ul>
   <script src="../index.js" type="module"></script>
 
