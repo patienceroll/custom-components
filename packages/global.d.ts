@@ -45,3 +45,6 @@ declare class CustomElement extends HTMLElement {
 	/** 当 custom element增加、删除、修改自身属性时，被调用 与 observedAttributes 配套使用 */
 	attributeChangedCallback?(name: string, oldValue: string, newValue: string) {}
 }
+
+/** 字符串形式的布尔值 */
+declare type CharacterBoolean = 'true' | 'false';
