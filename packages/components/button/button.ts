@@ -9,7 +9,7 @@ import '../circular-progress';
 
 export default class CpButton extends HTMLElement implements CustomElement {
 	private rippleItem: ReturnType<Ripple['start']> | undefined;
-	static styleSheet: CSSStyleSheet | undefined;
+	static styleSheet?: CSSStyleSheet;
 	static style: CSSStyleObject = {
 		'.cp-button-loading > rect': {
 			animation: 'loading 2s linear infinite',
@@ -65,7 +65,7 @@ export default class CpButton extends HTMLElement implements CustomElement {
 			},
 		},
 	};
-	static keyframesSheet: CSSStyleSheet | undefined;
+	static keyframesSheet?: CSSStyleSheet;
 
 	constructor() {
 		super();

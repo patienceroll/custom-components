@@ -2,7 +2,7 @@ import { formatStyle } from '../../utils/style';
 import theme from '../../theme/index';
 
 export default class CpPaper extends HTMLElement {
-	static styleSheet: CSSStyleSheet | undefined;
+	static styleSheet?: CSSStyleSheet;
 	static style: CSSStyleObject = {
 		':host([square="true"])': {
 			borderRadius: '0',
