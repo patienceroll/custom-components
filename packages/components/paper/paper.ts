@@ -1,7 +1,7 @@
 import { formatStyle } from '../../utils/style'
 import theme from '../../theme/index';
 
-export default class CpPaper extends HTMLElement {
+export default class CpPaper extends HTMLElement implements CustomElement {
   static styleSheet: CSSStyleSheet | undefined;
   static style:CSSStyleObject = {
     ':host([variant="outlined"])': {

@@ -3,7 +3,7 @@ import type { CircularProgressObservedAttributes } from "./data";
 import theme from "../../theme/index";
 import { formatStyle, formatKeyframes } from "../../utils/style";
 
-export default class CpCircularProgress extends HTMLElement {
+export default class CpCircularProgress extends HTMLElement implements CustomElement {
   static styleSheet: CSSStyleSheet | undefined;
   static style: CSSStyleObject = {
     ".cp-circular-svg > text": {
