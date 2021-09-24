@@ -18,16 +18,21 @@
 
 <body>
 
-  <cp-mask open="false" id='cp-mask'>
-    <div>弹窗内容</div>
-  </cp-mask>
+  <h1>蒙层组件</h1>
+
+  <ul>
+    <li>基础蒙层</li>
+    <cp-mask open="false" id='cp-mask'> </cp-mask>
+  </ul>
+
 
   <button onclick="onClickButton()">按钮</button>
 
   <script>
     const mask = document.getElementById('cp-mask');
+
     function onClickButton() {
-      mask.showMask();
+      mask.show();
     }
   </script>
 
