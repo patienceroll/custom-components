@@ -1,11 +1,11 @@
 import { formatStyle, formatKeyframes, setDomNodeStyle } from '../../utils/style';
+import CpMask from '../mask/mask';
 import { DialogType } from './data';
-export default class CpDialog extends HTMLElement {
-	private container: HTMLElement | null = null;
-	private content: HTMLElement | null = null;
-	private type: DialogType = 'modal';
-	static styleSheet: CSSStyleSheet | undefined;
-	static keyframesSheet?: CSSStyleSheet;
+export default class CpDialog extends CpMask {
+	content: HTMLElement;
+	type: DialogType = 'modal';
+	static styleSheet: CSSStyleSheet;
+	static keyframesSheet: CSSStyleSheet;
 	// 基础层级
 	static baseIndex = 0;
 	// 鼠标位置
@@ -31,12 +31,6 @@ export default class CpDialog extends HTMLElement {
 	};
 
 	static style: CSSStyleObject = {
-		[':host([open=true])']: {
-			display: 'block',
-		},
-		[':host([open=false])']: {
-			display: 'none',
-		},
 		'.cp-dialog-hiden': {
 			opacity: '0',
 			animation: 'hiden 0.3s',
@@ -45,76 +39,47 @@ export default class CpDialog extends HTMLElement {
 			opacity: '1',
 			animation: 'show 0.3s',
 		},
-		'.cp-dialog-container': {
-			position: 'fixed',
-			width: '100%',
-			height: '100%',
-			top: '0',
-			left: '0',
-			zIndex: '1000',
-		},
-		'.cp-dialog-mask': {
-			width: '100%',
-			height: '100%',
-			backgroundColor: 'rgba(0,0,0,.1)',
-			top: '0',
-			left: '0',
-		},
 		'.cp-dialog-modal-content': {
-			position: 'absolute',
+			position: 'fixed',
 			top: '20%',
 			fontSize: '40px',
 			left: '50%',
 			transform: 'translateX(-50%)',
 			transition: 'all .2s ease',
+			zIndex: '100',
 		},
 		'.cp-dialog-drawer-content': {
-			position: 'absolute',
+			position: 'fixed',
 			top: '0',
 			fontSize: '40px',
 			right: '0',
 			transition: 'all .2s ease',
-			minWidth: '200px',
+			minWidth: '500px',
 			height: '100vh',
 			backgroundColor: '#fff',
 			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
+			zIndex: '100',
 		},
 	};
 
 	constructor() {
-		super();
-		if (CpDialog.styleSheet === undefined) CpDialog.styleSheet = formatStyle(CpDialog.style);
-		if (CpDialog.keyframesSheet === undefined) CpDialog.keyframesSheet = formatKeyframes(CpDialog.keyframes);
+		super([CpDialog.styleSheet, CpDialog.keyframesSheet]);
 
+		const content = document.createElement('div');
+		const contentSlot = document.createElement('slot');
+		content.append(contentSlot);
+		this.content = content;
+		this.setDialogClass();
+		this.shadowRoot?.append(content);
+	}
+
+	private setDialogClass() {
 		const type = this.getAttribute('type');
 		if (['modal', 'drawer'].includes(type as DialogType)) {
 			this.type = type as DialogType;
 		} else {
 			this.type = 'modal';
 		}
-
-		const shadowRoot = this.attachShadow({ mode: 'open' });
-		const dialogContainer = document.createElement('div');
-		dialogContainer.classList.add('cp-dialog-container');
-		this.container = dialogContainer;
-
-		const dialogMask = document.createElement('div');
-		dialogMask.classList.add('cp-dialog-mask');
-		dialogMask.addEventListener('click', this.onclickMask);
-
-		const content = document.createElement('div');
-		const contentSlot = document.createElement('slot');
-		content.append(contentSlot);
-		this.content = content;
-		this.setContent();
-
-		shadowRoot.adoptedStyleSheets = [CpDialog.keyframesSheet, CpDialog.styleSheet];
-
-		dialogContainer.append(content, dialogMask);
-		shadowRoot.append(dialogContainer);
-	}
-
-	private setContent() {
 		switch (this.type) {
 			case 'modal':
 				this.content?.classList.add('cp-dialog-modal-content');
@@ -126,10 +91,6 @@ export default class CpDialog extends HTMLElement {
 				break;
 		}
 	}
-
-	private onclickMask = () => {
-		return this.hidenDialog();
-	};
 
 	/**
 	 * @method 设置鼠标点击位置
@@ -169,24 +130,14 @@ export default class CpDialog extends HTMLElement {
 		}
 	}
 
-	/** 打开弹窗 */
-	showDialog() {
-		if (this.container) {
-			this.container.style.zIndex = `${1000 + CpDialog.baseIndex++}`;
-			this.container.classList.replace('cp-dialog-hiden', 'cp-dialog-show');
-			this.setAttribute('open', 'true');
-		}
-		this.setmousePosition();
-	}
-
-	hidenDialog() {
-		CpDialog.baseIndex--;
-		if (this.container) {
-			this.container.classList.replace('cp-dialog-show', 'cp-dialog-hiden');
-			setTimeout(() => {
-				this.setAttribute('open', 'false');
-			}, 200);
-		}
+	closeCallback() {
 		this.setmousePosition(false);
 	}
+
+	showCallback() {
+		this.setmousePosition();
+	}
 }
+
+CpDialog.styleSheet = formatStyle(CpDialog.style);
+CpDialog.keyframesSheet = formatKeyframes(CpDialog.keyframes);
