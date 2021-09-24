@@ -16,7 +16,7 @@ export default defineConfig({
 	input: ['packages/index.ts'],
 	output: [{ dir: output[buildType] }],
 	plugins: [
-		typescript({ declarationDir: output[buildType] }),
+		typescript({ outDir: output[buildType] }),
 		postcss({
 			extract: true,
 			extract: 'css/index.css',
@@ -24,8 +24,8 @@ export default defineConfig({
 		copy({
 			targets: {
 				debugge: [
-					{ src: 'packages/**/*.html', dest: 'debugge/html' },
-					{ src: 'packages/index.html', dest: 'debugge' },
+					{ src: 'packages/**/*.html', dest: 'debugge/packages/html' },
+					{ src: 'packages/index.html', dest: 'debugge/packages' },
 				],
 				build: [
 					{ src: 'packages/components/*', dest: 'dist/lib/components' },
