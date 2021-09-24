@@ -1,102 +1,110 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
-export default class CpMask extends HTMLElement {
-  static styleSheet: CSSStyleSheet | undefined;
-  static style: CSSStyleObject = {
-    ':host([open=true])': {
-      display: 'block',
-    },
-    ':host([open=false])': {
-      display: 'none',
-    },
-    '.cp-mask-container': {
-      position: 'fixed',
-      width: '100%',
-      height: '100%',
-      top: '0',
-      left: '0'
-    },
-    '.cp-mask': {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0,0,0,.1)',
-      top: '0',
-      left: '0',
-    },
-    '.cp-mask-show': {
-      animation: 'show 0.2s ease'
-    },
-    '.cp-mask-hiden': {
-      animation: 'hiden 0.2 ease'
-    }
-  };
-  static keyframesSheet: CSSStyleSheet | undefined;
-  static keyframes: KeyframeObject = {
-    show: {
-      "0%": {
-        opacity: "0",
-      },
-      "100%": {
-        opacity: "1",
-      },
-    },
-    hiden: {
-      "0%": {
-        opacity: "1",
-      },
-      "100%": {
-        opacity: "0",
-      },
-    },
-  };
+export default class CpMask extends HTMLElement implements CustomElement {
+	/** 蒙层节点 */
+	maskNode: HTMLElement | null = null;
+	static styleSheet: CSSStyleSheet;
+	static style: CSSStyleObject = {
+		':host([open=true])': {
+			display: 'block',
+		},
+		':host([open=false])': {
+			display: 'none',
+		},
+		'.cp-mask': {
+			position: 'absolute',
+			width: '100%',
+			height: '100%',
+			backgroundColor: 'rgba(0,0,0,.1)',
+			top: '0',
+			left: '0',
+			zIndex: '50',
+		},
+		'.cp-mask-show': {
+			animation: 'show 0.2s ease',
+		},
+		'.cp-mask-close': {
+			animation: 'close 0.2 ease',
+		},
+	};
+	static keyframesSheet: CSSStyleSheet;
+	static keyframes: KeyframeObject = {
+		show: {
+			'0%': {
+				opacity: '0',
+			},
+			'100%': {
+				opacity: '1',
+			},
+		},
+		close: {
+			'0%': {
+				opacity: '1',
+			},
+			'100%': {
+				opacity: '0',
+			},
+		},
+	};
 
-  maskNode: HTMLElement | null = null;
+	constructor(styleSheet: CSSStyleSheet[]) {
+		super();
+		if (CpMask.styleSheet === undefined) CpMask.styleSheet = formatStyle(CpMask.style);
+		if (CpMask.keyframesSheet === undefined) CpMask.keyframesSheet = formatKeyframes(CpMask.keyframes);
 
-  setMask() {
-    if (this.maskNode) {
-      if (this.getAttribute('open') === 'true') {
-        this.maskNode.classList.add('cp-mask-show');
-        this.maskNode.classList.remove('cp-mask-hiden');
-      } else {
-        this.maskNode.classList.replace('cp-mask-show', 'cp-mask-hiden');
-      }
-    }
-  }
+		const shadowRoot = this.attachShadow({ mode: 'open' });
 
-  showMask() {
-    this.setAttribute('open', 'true');
-    this.setMask();
-  }
+		const mask = document.createElement('div');
+		mask.classList.add('cp-mask');
+		this.maskNode = mask;
 
-  hidenMask() {
-    this.setAttribute('open', 'false');
-    this.setMask();
-  }
+		shadowRoot.adoptedStyleSheets = [CpMask.styleSheet, CpMask.keyframesSheet, ...styleSheet];
+		shadowRoot.append(mask);
+	}
 
-  constructor() {
-    super();
-    if (CpMask.styleSheet === undefined) CpMask.styleSheet = formatStyle(CpMask.style);
-    if (CpMask.keyframesSheet === undefined) CpMask.keyframesSheet = formatKeyframes(CpMask.keyframes);
-    const shadowRoot = this.attachShadow({ mode: 'open' });
-    const container = document.createElement('div');
-    container.classList.add('cp-mask-container');
-    const mask = document.createElement('div');
-    mask.classList.add('cp-mask');
-    this.maskNode = mask;
+	connectedCallback() {
+		this.maskNode?.addEventListener('click', () => {
+			this.close();
+		});
+	}
 
-    const content = document.createElement('div');
-    content.classList.add('cp-mask-content');
-    const contentSlot = document.createElement('slot');
-    content.append(contentSlot);
+	static observedAttributes = ['open'];
+	attributeChangedCallback(name: 'open', _: string, newValue: string) {
+		switch (name) {
+			case 'open':
+				this.setMask(newValue);
+				break;
+			default:
+				break;
+		}
+	}
 
-    container.append(mask, content);
-    shadowRoot.append(container);
+	setMask(open = 'true') {
+		if (this.maskNode) {
+			if (open === 'true') {
+				this.maskNode.classList.add('cp-mask-show');
+				this.maskNode.classList.remove('cp-mask-close');
+			} else {
+				this.maskNode.classList.replace('cp-mask-show', 'cp-mask-close');
+			}
+		}
+	}
 
-    mask.addEventListener('click', () => {
-      this.hidenMask();
-    })
+	/** 关闭mask回调 */
+	closeCallback() {}
 
-    shadowRoot.adoptedStyleSheets = [CpMask.styleSheet, CpMask.keyframesSheet]
-  }
+	/** 开启mask回调 */
+	showCallback() {}
+
+	/** 打开蒙层 */
+	show() {
+		this.showCallback();
+		this.setAttribute('open', 'true');
+	}
+
+	/** 关闭蒙层 */
+	close() {
+		this.closeCallback();
+		this.setAttribute('open', 'false');
+	}
 }

@@ -31,7 +31,7 @@
     <div>dialog-1</div>
   </cp-dialog>
   <cp-dialog id="dialog-2" type='drawer' open="false">
-    <div>dialog-2</div>
+    <div>抽屉组件</div>
   </cp-dialog>
   <cp-dialog id="dialog-3" open="false">
     <div>dialog-3</div>
@@ -40,7 +40,7 @@
     <div>dialog-4</div>
   </cp-dialog>
   <button onclick="onClickButton1(event)">dialog-1</button>
-  <button onclick="onClickButton2(event)">dialog-2</button>
+  <button onclick="onClickButton2(event)">抽屉组件</button>
   <button onclick="onClickButton3(event)">dialog-3</button>
   <button id="btn" onclick="onClickButton4(event)">定位按钮</button>
 
@@ -51,16 +51,16 @@
     const dialog4 = document.querySelector('#dialog-4');
 
     function onClickButton1(e) {
-      dialog1.showDialog(e);
+      dialog1.show();
     }
     function onClickButton2(e) {
-      dialog2.showDialog(e);
+      dialog2.show();
     }
     function onClickButton3(e) {
-      dialog3.showDialog(e);
+      dialog3.show();
     }
     function onClickButton4(e) {
-      dialog4.showDialog(e);
+      dialog4.show();
     }
 
   </script>

@@ -53,7 +53,7 @@ const formatKeyframes = (keyframes: KeyframeObject) => {
  * @param node dom节点
  * @param style 样式对象
  */
-export const setDomNodeStyle = (node: HTMLElement, style: CSSProperty) => {
+const setDomNodeStyle = (node: HTMLElement, style: CSSProperty) => {
 	let str = '';
 	Object.keys(style).forEach((key) => {
 		str += `${key}:${style[key as keyof CSSProperty]};`;
@@ -61,4 +61,4 @@ export const setDomNodeStyle = (node: HTMLElement, style: CSSProperty) => {
 	node.setAttribute('style', str);
 };
 
-export { formatStyle, formatKeyframes };
+export { formatStyle, formatKeyframes, setDomNodeStyle };
