@@ -1,4 +1,4 @@
-export default class CpSkeleton extends HTMLElement {
+export default class CpSkeleton extends HTMLElement implements CustomElement {
   static style: CSSStyleObject = {};
   constructor() {
     super();
