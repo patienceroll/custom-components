@@ -7,7 +7,7 @@ import '../ripple';
 
 export default class CpIconButton extends HTMLElement implements CustomElement {
 	private rippleItem: ReturnType<Ripple['start']> | undefined;
-	static styleSheet: CSSStyleSheet | undefined;
+	static styleSheet?: CSSStyleSheet;
 	static style: CSSStyleObject = {
 		'.cp-icon-button:hover': {
 			backgroundColor: theme.color.background,

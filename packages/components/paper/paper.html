@@ -8,19 +8,19 @@
   <title>纸张组件</title>
   <style>
     body {
-      background-color: #ccc;
-      color: #fff;
+      background-color: #EAEEF3;
+      color: #333;
     }
 
-    ul {
-      background-color: #fff;
-      padding: 40px;
-      border-radius: 4px;
+    cp-paper {
+      flex: 1;
+      margin-right: 15px;
+      max-width: 128px;
+      min-height: 128px;
     }
 
-    div {
-      color: #000;
-      height: 40px;
+    span {
+      color: #999;
     }
   </style>
 </head>
@@ -30,15 +30,26 @@
   <ul>
     <li>
       <h4>默认</h4>
-      <cp-paper>
-        <div>这是纸张组件</div>
-      </cp-paper>
+      <div style="display: flex;">
+        <cp-paper>
+          <span>纸张</span>
+        </cp-paper>
+      </div>
     </li>
     <li>
       <h4>变体</h4>
-      <cp-paper variant="outlined">
-        <div>这是纸张组件</div>
-      </cp-paper>
+      <div style="display: flex;">
+        <cp-paper variant="outlined">
+          <span>边框纸张</span>
+        </cp-paper>
+        <cp-paper square="true">
+          <span>直角纸张</span>
+        </cp-paper>
+        <cp-paper variant="outlined" square="true">
+          <span>边框且直角纸张</span>
+        </cp-paper>
+      </div>
+
     </li>
   </ul>
   <script src="../index.js" type="module"></script>

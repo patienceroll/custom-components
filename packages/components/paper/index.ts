@@ -1,7 +1,5 @@
-import CpPaper from './paper'
+import CpPaper from './paper';
 
-
-
-if (typeof customElements.get('cp-paper') === "undefined") {
-  customElements.define('cp-paper', CpPaper);
+if (typeof customElements.get('cp-paper') === 'undefined') {
+	customElements.define('cp-paper', CpPaper);
 }

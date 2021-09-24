@@ -2,18 +2,19 @@
   "scripts": {
     "debugge": "cross-env type=debugge rollup --config rollup.config.js --watch",
     "build": "cross-env type=build rollup --config rollup.config.js",
-    "commit": "npx git-cz"
+    "commit": "npx git-cz",
+    "prettier": "prettier --write  ./packages/**/*.ts"
   },
-  "dependencies": {
-    "cross-env": "^7.0.3",
-    "tslib": "^2.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "postcss": "^8.3.6",
+    "prettier": "2.4.1",
     "rollup": "^2.56.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-typescript": "^1.0.1",
+    "tslib": "^2.3.1",
     "typescript": "^4.3.5"
   }
 }
