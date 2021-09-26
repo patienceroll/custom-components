@@ -26,7 +26,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			width: '100%',
 			height: '100%',
 			backgroundColor: theme.color.background,
-			borderRadius: theme.border.radius,
+			borderRadius: 'inherit',
 			boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%)',
 			transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)',
 		},
@@ -34,6 +34,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			pointerEvents: 'none',
 		},
 		':host': {
+			borderRadius: theme.border.radius,
 			display: 'inline-block',
 		},
 	};
@@ -49,28 +50,22 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
 
 		const button = document.createElement('button');
-		button.classList.add('cp-button');
-		button.setAttribute('part', 'button');
 		const ripple = document.createElement('cp-ripple') as AttachedShadowRoot<Ripple>;
 
-		button.addEventListener('mousedown', (e) => {
+		button.classList.add('cp-button');
+		button.setAttribute('part', 'button');
+
+		this.addEventListener('mousedown', (e) => {
 			if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
 			this.rippleItem = ripple.start({ top: e.offsetY, left: e.offsetX });
 		});
-		button.addEventListener('mouseup', (event) => {
+		this.addEventListener('mouseup', () => {
 			if (this.rippleItem) {
 				this.rippleItem.then(({ stop }) => stop());
 				this.rippleItem = undefined;
 			}
-			this.dispatchEvent(
-				new CustomEvent('click', {
-					detail: {
-						domEvent: event,
-					},
-				})
-			);
 		});
-		button.addEventListener(
+		this.addEventListener(
 			'touchstart',
 			(e) => {
 				if (e.targetTouches.length !== 1) return;
@@ -90,21 +85,14 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			},
 			{ passive: true }
 		);
-		button.addEventListener('touchend', (event) => {
+		this.addEventListener('touchend', () => {
 			if (this.rippleItem) {
 				this.rippleItem.then(({ stop }) => stop());
 				this.rippleItem = undefined;
 			}
-			this.dispatchEvent(
-				new CustomEvent('click', {
-					detail: {
-						domEvent: event,
-					},
-				})
-			);
 		});
 
-    button.appendChild(ripple)
+		button.appendChild(ripple);
 		shadowRoot.appendChild(button);
 	}
 }

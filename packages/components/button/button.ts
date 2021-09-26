@@ -1,7 +1,6 @@
-import type Ripple from '../ripple/ripple';
 import type { ButtonObservedAttributes } from './data';
 
-import ButtonBase from './button-base';
+import CpButtonBase from './button-base';
 
 import theme from '../../theme/index';
 import { formatStyle, formatKeyframes } from '../../utils/style';
@@ -9,7 +8,7 @@ import { formatStyle, formatKeyframes } from '../../utils/style';
 import '../ripple';
 import '../circular-progress';
 
-export default class CpButton extends ButtonBase {
+export default class CpButton extends CpButtonBase {
 	#styleSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
 		'.cp-button-loading > rect': {
@@ -45,7 +44,7 @@ export default class CpButton extends ButtonBase {
 	constructor() {
 		super();
 
-		const { shadowRoot } = this as AttachedShadowRoot<ButtonBase>;
+		const { shadowRoot } = this as AttachedShadowRoot<CpButtonBase>;
 		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
 		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 
@@ -104,6 +103,3 @@ export default class CpButton extends ButtonBase {
 	}
 	connectedCallback() {}
 }
-
-
-
