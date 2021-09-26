@@ -1,4 +1,4 @@
-export type CpSkeletonObservedAttributes = 'width' | 'variant';
+export type CpSkeletonObservedAttributes = 'width' | 'variant' | 'animation';
 
 export type CpSkeletonProps = {
 	/** 骨架屏条幅的宽度 */
@@ -10,4 +10,10 @@ export type CpSkeletonProps = {
 	 * 3. rectangular - 方形骨架屏
 	 */
 	variant?: 'text' | 'circular' | 'rectangular';
+	/**
+	 * 动画
+	 * 1. wave	-	波浪(默认)
+	 * 2. twinkle	-	闪烁
+	 */
+	animation?: 'wave' | 'twinkle';
 };
