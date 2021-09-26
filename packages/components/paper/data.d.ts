@@ -10,5 +10,5 @@ export interface CpPaperProps {
 	 */
 	variant?: 'outlined' | 'primary';
 	/** 方形圆角,默认 false */
-	square?: CharacterBoolean;
+	square?: BooleanCharacter;
 }

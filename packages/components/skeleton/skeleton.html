@@ -33,11 +33,48 @@
     <li>
       <h4>不同长度</h4>
       <div>
-        <cp-skeleton ></cp-skeleton>
-        <cp-skeleton ></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
         <cp-skeleton width="80%"></cp-skeleton>
         <cp-skeleton width="60%"></cp-skeleton>
         <cp-skeleton width="20%"></cp-skeleton>
+      </div>
+    </li>
+    <li>
+      <h4>变体</h4>
+      <div>
+        <ul>
+          <li>
+            <h6>圆形</h6>
+            <cp-skeleton width="60px" variant="circular"></cp-skeleton>
+          </li>
+          <li>
+            <h6>块状</h6>
+            <cp-skeleton style="font-size: 60px;margin-top: 20px;" variant="rectangular"></cp-skeleton>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <h4>动画</h4>
+      <div>
+        <ul>
+          <h6>波动</h6>
+          <li>
+            <cp-skeleton animation="wave" width="80px"></cp-skeleton>
+            <cp-skeleton animation="wave" width="40px" variant="circular" style="margin-top: 10px;">
+            </cp-skeleton>
+            <cp-skeleton animation="wave" style="font-size: 60px;margin-top: 10px;" variant="rectangular"></cp-skeleton>
+          </li>
+          <h6>闪烁</h6>
+          <li>
+            <cp-skeleton animation="twinkle" width="80px"></cp-skeleton>
+            <cp-skeleton animation="twinkle" width="40px" style="margin-top: 10px;" variant="circular">
+            </cp-skeleton>
+            <cp-skeleton animation="twinkle" style="font-size: 60px;margin-top: 10px;" variant="rectangular">
+            </cp-skeleton>
+          </li>
+        </ul>
       </div>
     </li>
   </ul>
