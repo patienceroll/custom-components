@@ -82,8 +82,7 @@ export default class CpSkeleton extends HTMLElement implements CustomElement {
 				break;
 			case 'variant':
 				if (newer === 'circular') {
-					const width = this.getAttribute('width');
-					span.style.setProperty('height', width || `${span.clientWidth}px`);
+					span.style.setProperty('height', `${span.clientWidth}px`);
 					span.classList.remove('cp-skeleton-rectangular');
 					span.classList.add('cp-skeleton-circular');
 				} else if (newer === 'rectangular') {
