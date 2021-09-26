@@ -1,14 +1,12 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
-import CpDialog from '../dialog/dialog';
 import { OpenType } from './data';
 
 export default class CpMask extends HTMLElement implements CustomElement {
-	/** 蒙层节点 */
-	maskNode: HTMLElement;
 	static index = 0;
-	static styleSheet: CSSStyleSheet;
-
-	static style: CSSStyleObject = {
+	#maskNode: HTMLElement;
+	#styleSheet?: CSSStyleSheet;
+	#keyframesSheet?: CSSStyleSheet;
+	#style: CSSStyleObject = {
 		':host([open=true])': {
 			display: 'block',
 		},
@@ -29,12 +27,11 @@ export default class CpMask extends HTMLElement implements CustomElement {
 			animation: 'show 0.2s ease',
 		},
 		'.cp-mask-close': {
-			opacity: '1',
+			opacity: '0',
 			animation: 'close 0.2s ease',
 		},
 	};
-	static keyframesSheet: CSSStyleSheet;
-	static keyframes: KeyframeObject = {
+	#keyframes: KeyframeObject = {
 		show: {
 			'0%': {
 				opacity: '0',
@@ -55,39 +52,46 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	constructor() {
 		super();
-		if (CpMask.styleSheet === undefined) CpMask.styleSheet = formatStyle(CpMask.style);
-		if (CpMask.keyframesSheet === undefined) CpMask.keyframesSheet = formatKeyframes(CpMask.keyframes);
+		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
+		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
+
 		const shadowRoot = this.attachShadow({ mode: 'open' });
+		const closable = this.getAttribute('mask-closable');
 		const mask = document.createElement('div');
 		mask.classList.add('cp-mask');
-		this.maskNode = mask;
-		shadowRoot.adoptedStyleSheets = [CpMask.styleSheet, CpMask.keyframesSheet];
+		this.#maskNode = mask;
+		this.disposeMaskClosable(closable as OpenType);
+		shadowRoot.adoptedStyleSheets = [this.#styleSheet, this.#keyframesSheet];
 		shadowRoot.append(mask);
 	}
 
-	connectedCallback() {
-		this.maskNode?.addEventListener('click', () => {
-			this.close();
-		});
-	}
-
-	static observedAttributes = ['open'];
-	attributeChangedCallback(name: 'open', _: string, newValue: string) {
-		switch (name) {
-			case 'open':
-				this.disposeOpen(newValue as OpenType);
-				break;
-			default:
-				break;
+	disposeMaskClosable(closable: OpenType) {
+		if (closable === 'false') {
+			this.#maskNode.removeEventListener('click', this.close.bind(this));
+		} else if (closable === 'true') {
+			this.#maskNode.addEventListener('click', this.close.bind(this));
 		}
 	}
 
 	disposeOpen(open: OpenType = 'true') {
 		if (open === 'true') {
-			this.maskNode.classList.add('cp-mask-show');
-			this.maskNode.classList.remove('cp-mask-close');
+			this.#maskNode.classList.add('cp-mask-show');
+			this.#maskNode.classList.remove('cp-mask-close');
 		} else {
-			this.maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
+			this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
+		}
+	}
+
+	static observedAttributes = ['open', 'mask-closable'];
+	attributeChangedCallback(name: 'open' | 'mask-closable', _: string, newValue: string) {
+		switch (name) {
+			case 'open':
+				this.disposeOpen(newValue as OpenType);
+				break;
+			case 'mask-closable':
+				this.disposeMaskClosable(newValue as OpenType);
+			default:
+				break;
 		}
 	}
 
@@ -99,7 +103,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	/** 打开蒙层 */
 	async show() {
-		CpDialog.index++;
+		CpMask.index++;
 		await this.onBeforeShow();
 		this.setAttribute('open', 'true');
 	}
@@ -107,6 +111,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	/** 关闭蒙层 */
 	async close() {
 		CpMask.index--;
+		this.disposeOpen('false');
 		await this.onBeforeClose();
 		this.setAttribute('open', 'false');
 	}
