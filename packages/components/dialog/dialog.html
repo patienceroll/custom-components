@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script type="module" src="../index.js"></script>
+
   <style>
     div {
       width: 1200px;
@@ -26,47 +26,36 @@
 </head>
 
 <body>
+  <ul>
+    <li>
+      <h4>默认弹窗</h4>
+      <button onclick="onClickButton1(event)">打开弹窗</button>
+    </li>
+    <li>
+      <h4>抽屉组件</h4>
+      <button onclick="onClickButton2(event)">打开抽屉</button>
+    </li>
+    <li>
+      <h4>不允许点击蒙层关闭</h4>
+      <button onclick="onClickButton3(event)">打开弹窗</button>
+    </li>
+    <button id="btn" onclick="onClickButton4(event)">定位按钮</button>
+  </ul>
 
   <cp-dialog id="dialog-1" open="false">
-    <div>dialog-1</div>
+    <div>默认弹窗</div>
   </cp-dialog>
   <cp-dialog id="dialog-2" type='drawer' open="false">
     <div>
       <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
-      <div>抽屉组件</div>
     </div>
   </cp-dialog>
-  <cp-dialog id="dialog-3" open="false">
-    <div>dialog-3</div>
+  <cp-dialog mask-closable="false" id="dialog-3" open="false">
+    <div>禁止点击蒙层关闭</div>
   </cp-dialog>
   <cp-dialog id="dialog-4" open="false">
-    <div>dialog-4</div>
+    <div>定位按钮</div>
   </cp-dialog>
-  <button onclick="onClickButton1(event)">dialog-1</button>
-  <button onclick="onClickButton2(event)">抽屉组件</button>
-  <button onclick="onClickButton3(event)">dialog-3</button>
-  <button id="btn" onclick="onClickButton4(event)">定位按钮</button>
 
   <script>
     const dialog1 = document.querySelector('#dialog-1');
@@ -88,7 +77,7 @@
     }
 
   </script>
-
+  <script type="module" src="../index.js"></script>
 </body>
 
 </html>
