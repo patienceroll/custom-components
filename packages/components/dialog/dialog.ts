@@ -3,12 +3,60 @@ import CpMask from '../mask/mask';
 import { DialogType } from './data';
 
 export default class CpDialog extends CpMask implements CustomElement {
-	content: HTMLElement;
-	type: DialogType = 'modal';
-	static styleSheet: CSSStyleSheet;
-	static keyframesSheet: CSSStyleSheet;
-	static style: CSSStyleObject;
-	static keyframes: KeyframeObject;
+	#content: HTMLElement;
+	#type: DialogType = 'modal';
+	#styleSheet?: CSSStyleSheet;
+	#keyframesSheet?: CSSStyleSheet;
+	#style: CSSStyleObject = {
+		'.cp-dialog-hiden': {
+			opacity: '0',
+			animation: 'hiden 0.3s',
+		},
+		'.cp-dialog-show': {
+			opacity: '1',
+			animation: 'show 0.3s',
+		},
+		'.cp-dialog-modal-content': {
+			position: 'absolute',
+			top: '20%',
+			fontSize: '40px',
+			left: '50%',
+			transform: 'translateX(-50%)',
+			transition: 'all .3s ease',
+			zIndex: '100',
+		},
+		'.cp-dialog-drawer-content': {
+			position: 'fixed',
+			top: '0',
+			fontSize: '40px',
+			right: '0',
+			transition: 'all .3s ease',
+			minWidth: '500px',
+			height: '100vh',
+			backgroundColor: '#fff',
+			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
+			zIndex: '100',
+			overflow: 'auto',
+		},
+	};
+	#keyframes: KeyframeObject = {
+		show: {
+			'0%': {
+				opacity: '0',
+			},
+			'100%': {
+				opacity: '1',
+			},
+		},
+		hiden: {
+			'0%': {
+				opacity: '1',
+			},
+			'100%': {
+				opacity: '0',
+			},
+		},
+	};
 	// 基础层级
 	static baseIndex = 0;
 	// 鼠标位置
@@ -17,17 +65,19 @@ export default class CpDialog extends CpMask implements CustomElement {
 	constructor() {
 		super();
 
+		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
+		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 		const content = document.createElement('div');
 		const contentSlot = document.createElement('slot');
 		content.append(contentSlot);
-		this.content = content;
+		this.#content = content;
 		this.setDialogClass();
 		if (this.shadowRoot) {
 			this.shadowRoot?.append(content);
 			this.shadowRoot.adoptedStyleSheets = [
 				...this.shadowRoot.adoptedStyleSheets,
-				CpDialog.styleSheet,
-				CpDialog.keyframesSheet,
+				this.#styleSheet,
+				this.#keyframesSheet,
 			];
 		}
 	}
@@ -35,16 +85,16 @@ export default class CpDialog extends CpMask implements CustomElement {
 	private setDialogClass() {
 		const type = this.getAttribute('type');
 		if (['modal', 'drawer'].includes(type as DialogType)) {
-			this.type = type as DialogType;
+			this.#type = type as DialogType;
 		} else {
-			this.type = 'modal';
+			this.#type = 'modal';
 		}
-		switch (this.type) {
+		switch (this.#type) {
 			case 'modal':
-				this.content?.classList.add('cp-dialog-modal-content');
+				this.#content?.classList.add('cp-dialog-modal-content');
 				break;
 			case 'drawer':
-				this.content?.classList.add('cp-dialog-drawer-content');
+				this.#content?.classList.add('cp-dialog-drawer-content');
 				break;
 			default:
 				break;
@@ -62,28 +112,28 @@ export default class CpDialog extends CpMask implements CustomElement {
 		}
 		const { x, y } = this.mousePosition;
 
-		if (this.content) {
-			if (this.type === 'modal') {
+		if (this.#content) {
+			if (this.#type === 'modal') {
 				if (isShow) {
-					setDomNodeStyle(this.content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
+					setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
 					setTimeout(() => {
-						if (this.content) {
-							setDomNodeStyle(this.content, { left: '', top: '', opacity: '1' });
+						if (this.#content) {
+							setDomNodeStyle(this.#content, { left: '', top: '', opacity: '1' });
 						}
-					}, 300);
+					}, 200);
 				} else {
-					setDomNodeStyle(this.content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
+					setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
 				}
 			} else {
 				if (isShow) {
-					setDomNodeStyle(this.content, { right: '-100%', top: '0', opacity: '0' });
+					setDomNodeStyle(this.#content, { right: '-100%', top: '0', opacity: '0' });
 					setTimeout(() => {
-						if (this.content) {
-							setDomNodeStyle(this.content, { right: '', top: '', opacity: '1' });
+						if (this.#content) {
+							setDomNodeStyle(this.#content, { right: '', top: '', opacity: '1' });
 						}
-					}, 300);
+					}, 200);
 				} else {
-					setDomNodeStyle(this.content, { right: '-100%', top: '0', opacity: '0' });
+					setDomNodeStyle(this.#content, { right: '-100%', top: '0', opacity: '0' });
 				}
 			}
 		}
@@ -102,58 +152,3 @@ export default class CpDialog extends CpMask implements CustomElement {
 		this.setmousePosition();
 	}
 }
-
-CpDialog.keyframes = {
-	show: {
-		'0%': {
-			opacity: '0',
-		},
-		'100%': {
-			opacity: '1',
-		},
-	},
-	hiden: {
-		'0%': {
-			opacity: '1',
-		},
-		'100%': {
-			opacity: '0',
-		},
-	},
-};
-
-CpDialog.style = {
-	'.cp-dialog-hiden': {
-		opacity: '0',
-		animation: 'hiden 0.3s',
-	},
-	'.cp-dialog-show': {
-		opacity: '1',
-		animation: 'show 0.3s',
-	},
-	'.cp-dialog-modal-content': {
-		position: 'absolute',
-		top: '20%',
-		fontSize: '40px',
-		left: '50%',
-		transform: 'translateX(-50%)',
-		transition: 'all .3s ease',
-		zIndex: '100',
-	},
-	'.cp-dialog-drawer-content': {
-		position: 'fixed',
-		top: '0',
-		fontSize: '40px',
-		right: '0',
-		transition: 'all .3s ease',
-		minWidth: '500px',
-		height: '100vh',
-		backgroundColor: '#fff',
-		boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
-		zIndex: '100',
-		overflow: 'auto',
-	},
-};
-
-CpDialog.styleSheet = formatStyle(CpDialog.style);
-CpDialog.keyframesSheet = formatKeyframes(CpDialog.keyframes);
