@@ -1,5 +1,4 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
-import { OpenType } from './data';
 
 export default class CpMask extends HTMLElement implements CustomElement {
 	static index = 0;
@@ -60,20 +59,20 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		const mask = document.createElement('div');
 		mask.classList.add('cp-mask');
 		this.#maskNode = mask;
-		this.disposeMaskClosable(closable as OpenType);
+		this.disposeMaskClosable(closable as BooleanCharacter);
 		shadowRoot.adoptedStyleSheets = [this.#styleSheet, this.#keyframesSheet];
 		shadowRoot.append(mask);
 	}
 
-	disposeMaskClosable(closable: OpenType) {
+	disposeMaskClosable(closable: BooleanCharacter) {
 		if (closable === 'false') {
 			this.#maskNode.removeEventListener('click', this.close.bind(this));
-		} else if (closable === 'true') {
+		} else {
 			this.#maskNode.addEventListener('click', this.close.bind(this));
 		}
 	}
 
-	disposeOpen(open: OpenType = 'true') {
+	disposeOpen(open: BooleanCharacter = 'true') {
 		if (open === 'true') {
 			this.#maskNode.classList.add('cp-mask-show');
 			this.#maskNode.classList.remove('cp-mask-close');
@@ -86,10 +85,10 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	attributeChangedCallback(name: 'open' | 'mask-closable', _: string, newValue: string) {
 		switch (name) {
 			case 'open':
-				this.disposeOpen(newValue as OpenType);
+				this.disposeOpen(newValue as BooleanCharacter);
 				break;
 			case 'mask-closable':
-				this.disposeMaskClosable(newValue as OpenType);
+				this.disposeMaskClosable(newValue as BooleanCharacter);
 			default:
 				break;
 		}
