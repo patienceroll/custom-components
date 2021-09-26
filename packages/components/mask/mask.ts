@@ -13,13 +13,14 @@ export default class CpMask extends HTMLElement implements CustomElement {
 			display: 'none',
 		},
 		'.cp-mask': {
-			position: 'absolute',
-			width: '100%',
-			height: '100%',
+			position: 'fixed',
+			width: '100vw',
+			height: '100vh',
 			backgroundColor: 'rgba(0,0,0,.2)',
 			top: '0',
 			left: '0',
 			zIndex: `${CpMask.index + 1000}px`,
+			overflow: 'hidden',
 		},
 		'.cp-mask-show': {
 			opacity: '1',
@@ -53,7 +54,6 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		super();
 		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
 		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
-
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		const closable = this.getAttribute('mask-closable');
 		const mask = document.createElement('div');
@@ -95,7 +95,13 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	/** 关闭mask回调 */
-	onBeforeClose() {}
+	onBeforeClose() {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve('close');
+			}, 200);
+		});
+	}
 
 	/** 开启mask回调 */
 	onBeforeShow() {}

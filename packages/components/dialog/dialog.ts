@@ -5,6 +5,8 @@ import { DialogType } from './data';
 export default class CpDialog extends CpMask implements CustomElement {
 	#content: HTMLElement;
 	#type: DialogType = 'modal';
+	// 鼠标位置
+	#mousePosition = { x: '', y: '' };
 	#styleSheet?: CSSStyleSheet;
 	#keyframesSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
@@ -17,13 +19,13 @@ export default class CpDialog extends CpMask implements CustomElement {
 			animation: 'show 0.3s',
 		},
 		'.cp-dialog-modal-content': {
-			position: 'absolute',
+			position: 'fixed',
 			top: '20%',
 			fontSize: '40px',
+			minWidth: '30%',
 			left: '50%',
 			transform: 'translateX(-50%)',
 			transition: 'all .3s ease',
-			zIndex: '100',
 		},
 		'.cp-dialog-drawer-content': {
 			position: 'fixed',
@@ -31,11 +33,11 @@ export default class CpDialog extends CpMask implements CustomElement {
 			fontSize: '40px',
 			right: '0',
 			transition: 'all .3s ease',
-			minWidth: '500px',
+			minWidth: '30%',
 			height: '100vh',
 			backgroundColor: '#fff',
 			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
-			zIndex: '100',
+
 			overflow: 'auto',
 		},
 	};
@@ -59,8 +61,6 @@ export default class CpDialog extends CpMask implements CustomElement {
 	};
 	// 基础层级
 	static baseIndex = 0;
-	// 鼠标位置
-	mousePosition = { x: '', y: '' };
 
 	constructor() {
 		super();
@@ -73,7 +73,7 @@ export default class CpDialog extends CpMask implements CustomElement {
 		this.#content = content;
 		this.setDialogClass();
 		if (this.shadowRoot) {
-			this.shadowRoot?.append(content);
+			this.shadowRoot.append(content);
 			this.shadowRoot.adoptedStyleSheets = [
 				...this.shadowRoot.adoptedStyleSheets,
 				this.#styleSheet,
@@ -108,33 +108,30 @@ export default class CpDialog extends CpMask implements CustomElement {
 	setmousePosition(isShow = true) {
 		if (isShow) {
 			const { x, y } = window.event as PointerEvent;
-			this.mousePosition = { x: `${x}`, y: `${y}` };
-		}
-		const { x, y } = this.mousePosition;
 
-		if (this.#content) {
-			if (this.#type === 'modal') {
-				if (isShow) {
-					setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
-					setTimeout(() => {
-						if (this.#content) {
-							setDomNodeStyle(this.#content, { left: '', top: '', opacity: '1' });
-						}
-					}, 200);
-				} else {
-					setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
-				}
+			this.#mousePosition = { x: `${x}`, y: `${y}` };
+		}
+		const { x, y } = this.#mousePosition;
+
+		if (this.#type === 'modal') {
+			// 弹窗
+			if (isShow) {
+				setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
+				setTimeout(() => {
+					setDomNodeStyle(this.#content, { left: '', top: '', opacity: '1' });
+				}, 200);
 			} else {
-				if (isShow) {
-					setDomNodeStyle(this.#content, { right: '-100%', top: '0', opacity: '0' });
-					setTimeout(() => {
-						if (this.#content) {
-							setDomNodeStyle(this.#content, { right: '', top: '', opacity: '1' });
-						}
-					}, 200);
-				} else {
-					setDomNodeStyle(this.#content, { right: '-100%', top: '0', opacity: '0' });
-				}
+				setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
+			}
+		} else {
+			// 抽屉
+			if (isShow) {
+				setDomNodeStyle(this.#content, { right: '-100%', top: '0', opacity: '0' });
+				setTimeout(() => {
+					setDomNodeStyle(this.#content, { right: '', top: '', opacity: '1' });
+				}, 200);
+			} else {
+				setDomNodeStyle(this.#content, { right: '-100%', top: '0', opacity: '0' });
 			}
 		}
 	}
