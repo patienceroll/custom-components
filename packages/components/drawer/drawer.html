@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽屉组件</title>
+
+  <style>
+    .content {
+      height: 200px;
+      background-color: pink;
+      text-align: center;
+      line-height: 200px;
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>抽屉组件</h1>
+  <ul>
+    <li>
+      <h4>默认抽屉</h4>
+      <button class="btn">打开抽屉</button>
+    </li>
+    <li>
+      <h4>通过插槽定义抽屉标题</h4>
+      <button class="btn">打开抽屉</button>
+    </li>
+    <cp-drawer title="我是标题" class="drawer" open="false">
+      <div>
+        <div class="content">抽屉组件</div>
+      </div>
+    </cp-drawer>
+
+    <cp-drawer class="drawer" open="false">
+      <span name="drawer-header-title">通过插槽定义标题</span>
+      <div class="content">xxxxxx</div>
+    </cp-drawer>
+
+    <script type="module" src="../index.js"></script>
+    <script>
+      const drawer = document.getElementsByClassName('drawer');
+      const button = document.getElementsByClassName('btn');
+
+      for (let i = 0; i < button.length; i++) {
+        button[i].onclick = function () {
+          drawer[i].show();
+        }
+      }
+    </script>
+
+</body>
+
+</html>

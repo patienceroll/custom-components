@@ -6,28 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>蒙层组件</title>
-  <style>
-    div {
-      width: 500px;
-      height: 200px;
-      background-color: yellowgreen;
-
-    }
-  </style>
 </head>
 
 <body>
-
   <h1>蒙层组件</h1>
-
   <ul>
-    <li>基础蒙层</li>
+    <li>
+      <button onclick="onClickButton()">打开蒙层</button>
+    </li>
     <cp-mask open="false" id='cp-mask'> </cp-mask>
   </ul>
-
-
-  <button onclick="onClickButton()">按钮</button>
-
   <script>
     const mask = document.getElementById('cp-mask');
 

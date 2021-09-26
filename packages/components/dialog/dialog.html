@@ -25,14 +25,11 @@
 </head>
 
 <body>
+  <h1>弹窗组件</h1>
   <ul>
     <li>
       <h4>默认弹窗</h4>
       <button onclick="onClickButton1(event)">打开弹窗</button>
-    </li>
-    <li>
-      <h4>抽屉组件</h4>
-      <button onclick="onClickButton2(event)">打开抽屉</button>
     </li>
     <li>
       <h4>不允许点击蒙层关闭</h4>
@@ -44,13 +41,11 @@
   <cp-dialog id="dialog-1" open="false">
     <div>默认弹窗</div>
   </cp-dialog>
-  <cp-dialog id="dialog-2" type='drawer' open="false">
-    <div>
-      <div>抽屉组件</div>
-    </div>
-  </cp-dialog>
   <cp-dialog mask-closable="false" id="dialog-3" open="false">
-    <div>禁止点击蒙层关闭</div>
+    <div>
+      <p>禁止点击蒙层关闭</p>
+      <button onclick="onClickClose()">关闭弹窗</button>
+    </div>
   </cp-dialog>
   <cp-dialog id="dialog-4" open="false">
     <div>定位按钮</div>
@@ -58,21 +53,20 @@
 
   <script>
     const dialog1 = document.querySelector('#dialog-1');
-    const dialog2 = document.querySelector('#dialog-2');
     const dialog3 = document.querySelector('#dialog-3');
     const dialog4 = document.querySelector('#dialog-4');
 
     function onClickButton1(e) {
       dialog1.show();
     }
-    function onClickButton2(e) {
-      dialog2.show();
-    }
     function onClickButton3(e) {
       dialog3.show();
     }
     function onClickButton4(e) {
       dialog4.show();
+    }
+    function onClickClose() {
+      dialog3.close();
     }
 
   </script>
