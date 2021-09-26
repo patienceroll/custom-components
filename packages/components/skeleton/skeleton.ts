@@ -3,7 +3,7 @@ import type { CpSkeletonObservedAttributes } from './data';
 import { formatKeyframes, formatStyle } from '../../utils/style';
 
 export default class CpSkeleton extends HTMLElement implements CustomElement {
-	static style: CSSStyleObject = {
+	#style: CSSStyleObject = {
 		'span': {
 			display: 'block',
 			height: '1.2em',
@@ -15,17 +15,16 @@ export default class CpSkeleton extends HTMLElement implements CustomElement {
 			display: 'block',
 		},
 	};
-	static styleSheet?: CSSStyleSheet;
-	static keyframes: KeyframeObject = {};
-	static keyframesSheet?: CSSStyleSheet;
+	#styleSheet?: CSSStyleSheet;
+	#keyframes: KeyframeObject = {};
+	#keyframesSheet?: CSSStyleSheet;
 
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-		if (typeof CpSkeleton.styleSheet === 'undefined') CpSkeleton.styleSheet = formatStyle(CpSkeleton.style);
-		if (typeof CpSkeleton.keyframesSheet === 'undefined')
-			CpSkeleton.keyframesSheet = formatKeyframes(CpSkeleton.keyframes);
-		shadowRoot.adoptedStyleSheets = [CpSkeleton.keyframesSheet, CpSkeleton.styleSheet];
+		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
+		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
+		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
 
 		const span = document.createElement('span');
 		shadowRoot.appendChild(span);

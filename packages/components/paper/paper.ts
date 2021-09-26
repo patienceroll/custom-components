@@ -2,8 +2,8 @@ import { formatStyle } from '../../utils/style';
 import theme from '../../theme/index';
 
 export default class CpPaper extends HTMLElement {
-	static styleSheet?: CSSStyleSheet;
-	static style: CSSStyleObject = {
+	#styleSheet?: CSSStyleSheet;
+	#style: CSSStyleObject = {
 		':host([square="true"])': {
 			borderRadius: '0',
 		},
@@ -23,8 +23,8 @@ export default class CpPaper extends HTMLElement {
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-		if (typeof CpPaper.styleSheet === 'undefined') CpPaper.styleSheet = formatStyle(CpPaper.style);
-		shadowRoot.adoptedStyleSheets = [CpPaper.styleSheet];
+		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
+		shadowRoot.adoptedStyleSheets = [this.#styleSheet];
 		const slot = document.createElement('slot');
 		shadowRoot.appendChild(slot);
 	}

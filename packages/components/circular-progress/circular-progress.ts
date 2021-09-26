@@ -4,8 +4,8 @@ import theme from '../../theme/index';
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
 export default class CpCircularProgress extends HTMLElement implements CustomElement {
-	static styleSheet?: CSSStyleSheet;
-	static style: CSSStyleObject = {
+	#styleSheet?: CSSStyleSheet;
+	#style: CSSStyleObject = {
 		'.cp-circular-svg > text': {
 			dominantBaseline: 'middle',
 			textAnchor: 'middle',
@@ -29,7 +29,7 @@ export default class CpCircularProgress extends HTMLElement implements CustomEle
 		},
 	};
 
-	static keyframes: KeyframeObject = {
+	#keyframes: KeyframeObject = {
 		'circle-dash': {
 			'0%': {
 				strokeDasharray: '1px 127px',
@@ -54,16 +54,14 @@ export default class CpCircularProgress extends HTMLElement implements CustomEle
 			},
 		},
 	};
-	static keyframesSheet?: CSSStyleSheet;
+	#keyframesSheet?: CSSStyleSheet;
 
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-		if (typeof CpCircularProgress.keyframesSheet === 'undefined')
-			CpCircularProgress.keyframesSheet = formatKeyframes(CpCircularProgress.keyframes);
-		if (typeof CpCircularProgress.styleSheet === 'undefined')
-			CpCircularProgress.styleSheet = formatStyle(CpCircularProgress.style);
-		shadowRoot.adoptedStyleSheets = [CpCircularProgress.keyframesSheet, CpCircularProgress.styleSheet];
+		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
+		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
+		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
 
 		const circle = `<circle cx="22" cy="22" r="20.2" stroke=${theme.color.primary} stroke-width="3.6" fill="none">
       </circle>`;
