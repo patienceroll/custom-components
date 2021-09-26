@@ -7,3 +7,4 @@ import './components/paper';
 import './components/skeleton';
 import './components/mask';
 import './components/drawer';
+import './components/radio';
