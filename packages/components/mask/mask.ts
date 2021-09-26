@@ -1,9 +1,13 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
+import CpDialog from '../dialog/dialog';
+import { OpenType } from './data';
 
 export default class CpMask extends HTMLElement implements CustomElement {
 	/** 蒙层节点 */
-	maskNode: HTMLElement | null = null;
+	maskNode: HTMLElement;
+	static index = 0;
 	static styleSheet: CSSStyleSheet;
+
 	static style: CSSStyleObject = {
 		':host([open=true])': {
 			display: 'block',
@@ -15,16 +19,18 @@ export default class CpMask extends HTMLElement implements CustomElement {
 			position: 'absolute',
 			width: '100%',
 			height: '100%',
-			backgroundColor: 'rgba(0,0,0,.1)',
+			backgroundColor: 'rgba(0,0,0,.2)',
 			top: '0',
 			left: '0',
-			zIndex: '50',
+			zIndex: `${CpMask.index + 1000}px`,
 		},
 		'.cp-mask-show': {
+			opacity: '1',
 			animation: 'show 0.2s ease',
 		},
 		'.cp-mask-close': {
-			animation: 'close 0.2 ease',
+			opacity: '1',
+			animation: 'close 0.2s ease',
 		},
 	};
 	static keyframesSheet: CSSStyleSheet;
@@ -47,18 +53,15 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		},
 	};
 
-	constructor(styleSheet: CSSStyleSheet[]) {
+	constructor() {
 		super();
 		if (CpMask.styleSheet === undefined) CpMask.styleSheet = formatStyle(CpMask.style);
 		if (CpMask.keyframesSheet === undefined) CpMask.keyframesSheet = formatKeyframes(CpMask.keyframes);
-
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-
 		const mask = document.createElement('div');
 		mask.classList.add('cp-mask');
 		this.maskNode = mask;
-
-		shadowRoot.adoptedStyleSheets = [CpMask.styleSheet, CpMask.keyframesSheet, ...styleSheet];
+		shadowRoot.adoptedStyleSheets = [CpMask.styleSheet, CpMask.keyframesSheet];
 		shadowRoot.append(mask);
 	}
 
@@ -72,39 +75,39 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	attributeChangedCallback(name: 'open', _: string, newValue: string) {
 		switch (name) {
 			case 'open':
-				this.setMask(newValue);
+				this.disposeOpen(newValue as OpenType);
 				break;
 			default:
 				break;
 		}
 	}
 
-	setMask(open = 'true') {
-		if (this.maskNode) {
-			if (open === 'true') {
-				this.maskNode.classList.add('cp-mask-show');
-				this.maskNode.classList.remove('cp-mask-close');
-			} else {
-				this.maskNode.classList.replace('cp-mask-show', 'cp-mask-close');
-			}
+	disposeOpen(open: OpenType = 'true') {
+		if (open === 'true') {
+			this.maskNode.classList.add('cp-mask-show');
+			this.maskNode.classList.remove('cp-mask-close');
+		} else {
+			this.maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
 		}
 	}
 
 	/** 关闭mask回调 */
-	closeCallback() {}
+	onBeforeClose() {}
 
 	/** 开启mask回调 */
-	showCallback() {}
+	onBeforeShow() {}
 
 	/** 打开蒙层 */
-	show() {
-		this.showCallback();
+	async show() {
+		CpDialog.index++;
+		await this.onBeforeShow();
 		this.setAttribute('open', 'true');
 	}
 
 	/** 关闭蒙层 */
-	close() {
-		this.closeCallback();
+	async close() {
+		CpMask.index--;
+		await this.onBeforeClose();
 		this.setAttribute('open', 'false');
 	}
 }

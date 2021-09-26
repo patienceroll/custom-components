@@ -1,1 +1,1 @@
-export type MaskStatus = { resolve: (value?: any) => void; reject: (value?: any) => void };
+export type OpenType = 'true' | 'false';
