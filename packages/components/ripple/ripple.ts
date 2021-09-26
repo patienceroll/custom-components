@@ -1,8 +1,8 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
 export default class CpRipple extends HTMLElement {
-	static styleSheet?: CSSStyleSheet;
-	static style: CSSStyleObject = {
+	#styleSheet?: CSSStyleSheet;
+	#style: CSSStyleObject = {
 		'.ripple-disappear': {
 			animationName: 'disappear',
 			animationDuration: '450ms',
@@ -32,7 +32,7 @@ export default class CpRipple extends HTMLElement {
 		},
 	};
 
-	static keyframes: KeyframeObject = {
+	#keyframes: KeyframeObject = {
 		start: {
 			'0%': {
 				transform: 'scale(0)',
@@ -52,15 +52,15 @@ export default class CpRipple extends HTMLElement {
 			},
 		},
 	};
-	static keyframesSheet?: CSSStyleSheet;
+	#keyframesSheet?: CSSStyleSheet;
 
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-		if (typeof CpRipple.styleSheet === 'undefined') CpRipple.styleSheet = formatStyle(CpRipple.style);
-		if (typeof CpRipple.keyframesSheet === 'undefined') CpRipple.keyframesSheet = formatKeyframes(CpRipple.keyframes);
+		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
+		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 
-		shadowRoot.adoptedStyleSheets = [CpRipple.keyframesSheet, CpRipple.styleSheet];
+		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
 	}
 
 	/** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
