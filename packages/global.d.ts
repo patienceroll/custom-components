@@ -17,6 +17,9 @@ declare type CSSProperty = Partial<
 	>
 >;
 
+/** 布尔值 html属性字符串形式的值 */
+declare type BooleanCharacter = 'true' | 'false';
+
 /** key 为 className,值为 css 属性值对象的集合 */
 declare type CSSStyleObject = Record<string, CSSProperty>;
 
