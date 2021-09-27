@@ -2,7 +2,7 @@ import { formatStyle, formatKeyframes, setDomNodeStyle } from '../../utils/style
 import CpMask from '../mask/mask';
 import { DrawerHeaderProps, Direction } from './data';
 
-const icon = `<svg  t="1632705635683" class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"><defs><style type="text/css"></style></defs><path d="M576 512l277.333333 277.333333-64 64-277.333333-277.333333L234.666667 853.333333 170.666667 789.333333l277.333333-277.333333L170.666667 234.666667 234.666667 170.666667l277.333333 277.333333L789.333333 170.666667 853.333333 234.666667 576 512z" fill="#444444" p-id="2364"></path></svg>`;
+const icon = `<svg  t="1632705635683" class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><style type="text/css"></style></defs><path d="M576 512l277.333333 277.333333-64 64-277.333333-277.333333L234.666667 853.333333 170.666667 789.333333l277.333333-277.333333L170.666667 234.666667 234.666667 170.666667l277.333333 277.333333L789.333333 170.666667 853.333333 234.666667 576 512z" fill="#444444" p-id="2364"></path></svg>`;
 
 export default class CpDrawer extends CpMask implements CustomElement {
 	/** 弹出位置 */
@@ -108,6 +108,8 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		'.cp-drawer-header-title-content .cp-drawer-header-close-icon': {
 			marginRight: '10px',
 			cursor: 'pointer',
+			width: '30px',
+			height: '30px',
 		},
 		'.cp-drawer-header-title-content .cp-drawer-header-close-icon:hover': {
 			backgroundColor: '#fff',
