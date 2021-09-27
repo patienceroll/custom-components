@@ -1,4 +1,4 @@
-import { formatStyle, formatKeyframes, setDomNodeStyle } from '../../utils/style';
+import { formatStyle, formatKeyframes } from '../../utils/style';
 import CpMask from '../mask/mask';
 import { DrawerHeaderProps, Direction } from './data';
 
@@ -15,45 +15,40 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		'.cp-drawer-container': {
 			position: 'fixed',
 			backgroundColor: '#fff',
+			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
+			overflow: 'auto',
+		},
+		'.cp-drawer-close-container': {
+			opacity: '0',
 		},
 		// right
 		'.cp-drawer-right-container': {
 			top: '0',
 			right: '0',
-			minWidth: '40vw',
+			minWidth: '35vw',
 			height: '100vh',
-			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
-			overflow: 'auto',
 			animation: 'right-show .4s ease-in-out',
 		},
 		'.cp-drawer-right-close-container': {
 			right: '0',
 			top: '0',
-			minWidth: '40vw',
+			minWidth: '35vw',
 			height: '100vh',
-			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
-			overflow: 'auto',
-			opacity: '0',
 			animation: 'right-close .4s ease-in-out',
 		},
 		// left
 		'.cp-drawer-left-container': {
 			left: '0',
 			top: '0',
-			minWidth: '40vw',
+			minWidth: '35vw',
 			height: '100vh',
-			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
-			overflow: 'auto',
 			animation: 'left-show .4s ease-in-out',
 		},
 		'.cp-drawer-left-close-container': {
 			left: '0',
 			top: '0',
-			minWidth: '40vw',
+			minWidth: '35vw',
 			height: '100vh',
-			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
-			overflow: 'auto',
-			opacity: '0',
 			animation: 'left-close .4s ease-in-out',
 		},
 		// top
@@ -69,7 +64,6 @@ export default class CpDrawer extends CpMask implements CustomElement {
 			minHeight: '40vh',
 			left: '0',
 			top: '0',
-			opacity: '0',
 			animation: 'top-close .4s ease-in-out',
 		},
 		// bottom
@@ -85,7 +79,6 @@ export default class CpDrawer extends CpMask implements CustomElement {
 			minHeight: '40vh',
 			left: '0',
 			bottom: '0',
-			opacity: '0',
 			animation: 'bottom-close .4s ease-in-out',
 		},
 		'.cp-drawer-content': {
@@ -119,7 +112,7 @@ export default class CpDrawer extends CpMask implements CustomElement {
 			fontSize: '22px',
 		},
 		'.cp-drawer-header-action': {
-			minWidth: '40vw',
+			minWidth: '35vw',
 			height: '100%',
 		},
 		'.cp-drawer-footer-content': {
@@ -140,7 +133,6 @@ export default class CpDrawer extends CpMask implements CustomElement {
 				transform: 'translateX(100%)',
 			},
 			'100%': {
-				opacity: '1',
 				transform: 'translateX(0)',
 			},
 		},
@@ -220,11 +212,12 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		super();
 		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
 		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
+
 		const container = document.createElement('div');
 		container.classList.add('cp-drawer-container');
 		this.#container = container;
 		this.#disposeDirection();
-		this.disposeDrawerAnimation();
+		this.#disposeDrawerAnimation();
 		container.append(this.#renderHeader(), this.#renderContent());
 
 		if (this.shadowRoot) {
@@ -250,19 +243,20 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		headerTitleSlot.name = 'drawer-header-title';
 		headerTitle.innerHTML = title ? `<span>${title}</span>` : '';
 		headerTitle.append(headerTitleSlot);
-
 		const closeIcon = document.createElement('div');
 		closeIcon.innerHTML = icon;
 		closeIcon.classList.add('cp-drawer-header-close-icon');
 		this.#closeIcon = closeIcon;
 		headerTitleContent.append(closeIcon, headerTitle);
 		closeIcon.addEventListener('click', this.close.bind(this), false);
+
 		const headerAction = document.createElement('div');
 		headerAction.classList.add('cp-drawer-header-action');
 		const headerActionSlot = document.createElement('slot');
 		headerActionSlot.name = 'drawer-header-action';
 		headerAction.append(headerActionSlot);
 		header.append(headerTitleContent, headerAction);
+
 		return header;
 	}
 
@@ -296,14 +290,14 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	}
 
 	/** 处理抽屉动画*/
-	disposeDrawerAnimation(isShow = true) {
+	#disposeDrawerAnimation(isShow = true) {
 		if (isShow) {
 			this.#container.classList.add(`cp-drawer-${this.#direction}-container`);
-			this.#container.classList.remove(`cp-drawer-${this.#direction}-close-container`);
+			this.#container.classList.remove(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
 		} else {
 			return new Promise((resolve) => {
 				this.#container.classList.remove(`cp-drawer-${this.#direction}-container`);
-				this.#container.classList.add(`cp-drawer-${this.#direction}-close-container`);
+				this.#container.classList.add(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
 				setTimeout(() => {
 					resolve('close');
 				}, 400);
@@ -312,10 +306,12 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	}
 
 	onBeforeShow() {
-		this.disposeDrawerAnimation(true);
+		this.#container.style.zIndex = `${1000 + CpDrawer.index}`;
+		this.#disposeDrawerAnimation(true);
 	}
 
 	async onBeforeClose() {
-		return this.disposeDrawerAnimation(false);
+		this.#container.style.zIndex = `${1000 + CpDrawer.index}`;
+		return this.#disposeDrawerAnimation(false);
 	}
 }

@@ -16,10 +16,9 @@ export default class CpMask extends HTMLElement implements CustomElement {
 			position: 'fixed',
 			width: '100vw',
 			height: '100vh',
-			backgroundColor: 'rgba(0,0,0,.2)',
+			backgroundColor: 'rgba(0,0,0,.45)',
 			top: '0',
 			left: '0',
-			zIndex: `${CpMask.index + 1000}px`,
 			overflow: 'hidden',
 		},
 		'.cp-mask-show': {
@@ -59,6 +58,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		const mask = document.createElement('div');
 		mask.classList.add('cp-mask');
 		this.#maskNode = mask;
+
 		this.disposeMaskClosable(closable as BooleanCharacter);
 		shadowRoot.adoptedStyleSheets = [this.#styleSheet, this.#keyframesSheet];
 		shadowRoot.append(mask);
@@ -112,16 +112,19 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	/** 打开蒙层 */
 	async show() {
-		CpMask.index++;
+		if (this.getAttribute('open') === 'true') return;
+		this.#maskNode.style.zIndex = `${1000 + ++CpMask.index}`;
 		await this.onBeforeShow();
 		this.setAttribute('open', 'true');
 	}
 
 	/** 关闭蒙层 */
 	async close() {
-		CpMask.index--;
+		if (this.getAttribute('open') === 'false') return;
 		this.disposeOpen('false');
+		this.#maskNode.style.zIndex = `${1000 + --CpMask.index}`;
 		await this.onBeforeClose();
+
 		this.setAttribute('open', 'false');
 	}
 }

@@ -1,76 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+		<style>
+			div {
+				height: 200px;
+				background-color: pink;
+				text-align: center;
+				font-size: 30px;
+			}
 
-  <style>
-    div {
-      height: 200px;
-      background-color: pink;
-      text-align: center;
-      line-height: 200px;
-      font-size: 30px;
-    }
+			#btn {
+				position: fixed;
+				bottom: 10px;
+				right: 20px;
+			}
+		</style>
+	</head>
 
-    #btn {
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
-    }
-  </style>
-</head>
+	<body>
+		<h1>弹窗组件</h1>
+		<ul>
+			<li>
+				<h4>默认弹窗</h4>
+				<cp-button onclick="onClickButton1(event)">打开弹窗</cp-button>
+			</li>
+			<li>
+				<h4>不允许点击蒙层关闭</h4>
+				<cp-button onclick="onClickButton3(event)">打开弹窗</cp-button>
+			</li>
+			<cp-button id="btn" onclick="onClickButton4(event)">定位按钮</cp-button>
+		</ul>
 
-<body>
-  <h1>弹窗组件</h1>
-  <ul>
-    <li>
-      <h4>默认弹窗</h4>
-      <button onclick="onClickButton1(event)">打开弹窗</button>
-    </li>
-    <li>
-      <h4>不允许点击蒙层关闭</h4>
-      <button onclick="onClickButton3(event)">打开弹窗</button>
-    </li>
-    <button id="btn" onclick="onClickButton4(event)">定位按钮</button>
-  </ul>
+		<cp-dialog id="dialog-1" open="false">
+			<div>默认弹窗</div>
+		</cp-dialog>
+		<cp-dialog mask-closable="false" id="dialog-3" open="false">
+			<div>
+				<p>禁止点击蒙层关闭</p>
+				<cp-button onclick="onClickClose()">关闭弹窗</cp-button>
+			</div>
+		</cp-dialog>
+		<cp-dialog id="dialog-4" open="false">
+			<div>定位按钮</div>
+		</cp-dialog>
 
-  <cp-dialog id="dialog-1" open="false">
-    <div>默认弹窗</div>
-  </cp-dialog>
-  <cp-dialog mask-closable="false" id="dialog-3" open="false">
-    <div>
-      <p>禁止点击蒙层关闭</p>
-      <button onclick="onClickClose()">关闭弹窗</button>
-    </div>
-  </cp-dialog>
-  <cp-dialog id="dialog-4" open="false">
-    <div>定位按钮</div>
-  </cp-dialog>
+		<script>
+			const dialog1 = document.querySelector('#dialog-1');
+			const dialog3 = document.querySelector('#dialog-3');
+			const dialog4 = document.querySelector('#dialog-4');
 
-  <script>
-    const dialog1 = document.querySelector('#dialog-1');
-    const dialog3 = document.querySelector('#dialog-3');
-    const dialog4 = document.querySelector('#dialog-4');
-
-    function onClickButton1(e) {
-      dialog1.show();
-    }
-    function onClickButton3(e) {
-      dialog3.show();
-    }
-    function onClickButton4(e) {
-      dialog4.show();
-    }
-    function onClickClose() {
-      dialog3.close();
-    }
-
-  </script>
-  <script type="module" src="../index.js"></script>
-</body>
-
+			function onClickButton1(e) {
+				dialog1.show();
+			}
+			function onClickButton3(e) {
+				dialog3.show();
+			}
+			function onClickButton4(e) {
+				dialog4.show();
+			}
+			function onClickClose() {
+				dialog3.close();
+			}
+		</script>
+		<script type="module" src="../index.js"></script>
+	</body>
 </html>
