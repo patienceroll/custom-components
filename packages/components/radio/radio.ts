@@ -3,12 +3,12 @@ import type { CpRadioObservedAttributes } from './data';
 import { formatStyle } from 'packages/utils/style';
 
 export default class CpRadio extends HTMLElement implements CustomElement {
+	/** 组件实例 radio 元素 */
+	radio: HTMLInputElement;
 	#styleSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
 		':host': {},
 	};
-	/** 组件实例 radio 元素 */
-	radioElement: HTMLInputElement;
 
 	constructor() {
 		super();
@@ -19,24 +19,16 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		const radio = document.createElement('input');
 		const label = document.createElement('label');
 		const labelText = document.createElement('slot');
-		this.radioElement = radio;
+
+		this.radio = radio;
 		radio.type = 'radio';
 
-		radio.addEventListener('click', () => {
-			this.checked = !this.checked;
+		radio.addEventListener('change', () => {
+			this.setAttribute('checked', radio.checked ? 'true' : 'false');
 		});
-		
+
 		label.append(radio, labelText);
 		shadowRoot.append(label);
-	}
-
-	get checked() {
-		return this.getAttribute('checked') === 'true';
-	}
-
-	set checked(checked) {
-		this.setAttribute('checked', checked ? 'true' : 'false');
-		this.radioElement.checked = checked;
 	}
 
 	static observedAttributes: CpRadioObservedAttributes[] = ['checked'];
@@ -48,11 +40,16 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 	) {
 		switch (attr) {
 			case 'checked':
-				if (newer === 'true') this.checked = true;
-				else this.checked = false;
+				if (newer === 'true') this.radio.checked = true;
+				else this.radio.checked = false;
 				break;
 			default:
 				break;
+		}
+	}
+	connectedCallback() {
+		if (this.getAttribute('default-checked') === 'true') {
+			this.setAttribute('checked', 'true');
 		}
 	}
 }
