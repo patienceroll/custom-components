@@ -9,6 +9,8 @@ import '../ripple';
 import '../circular-progress';
 
 export default class CpButton extends CpButtonBase {
+	/** 组件 loading(加载中动画) Dom元素  */
+	loading: SVGElement;
 	#styleSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
 		'.cp-button-loading > rect': {
@@ -57,6 +59,7 @@ export default class CpButton extends CpButtonBase {
 		const rightIcon = document.createElement('slot');
 		const loading = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
+		this.loading = loading;
 		loading.innerHTML = `<rect x="1"  y="1" rx="4" ry="4"  width="calc(100% - 2px)" height="calc(100% - 2px)" stroke-width="2" stroke="${theme.color.primary}" fill="none" />`;
 		loading.classList.add('cp-button-loading');
 		leftIcon.setAttribute('part', 'left-icon');
@@ -78,24 +81,20 @@ export default class CpButton extends CpButtonBase {
 	) {
 		switch (attr) {
 			case 'disable':
-				const button = this.shadowRoot.firstElementChild as HTMLButtonElement;
-				if (newer === 'true') button.classList.add('cp-button-disabled');
-				else button.classList.remove('cp-button-disabled');
+				if (newer === 'true') this.button.classList.add('cp-button-disabled');
+				else this.button.classList.remove('cp-button-disabled');
 				break;
 			case 'loading':
-				const loading = this.shadowRoot.querySelector('svg[part="loading"]') as SVGAElement;
 				if (newer === 'true') {
 					this.style.setProperty('pointer-events', 'none');
-					loading.style.display = 'block';
+					this.loading.style.display = 'block';
 				} else {
 					this.style.removeProperty('pointer-events');
-					loading.style.display = 'none';
+					this.loading.style.display = 'none';
 				}
 				break;
 			case 'loading-color':
-				const loadingRect = (this.shadowRoot.querySelector('svg[part="loading"]') as SVGAElement)
-					.firstElementChild as SVGRectElement;
-				loadingRect.setAttribute('stroke', newer || theme.color.primary);
+				(this.loading.firstElementChild as SVGRectElement).setAttribute('stroke', newer || theme.color.primary);
 				break;
 			default:
 				break;

@@ -7,6 +7,8 @@ import '../ripple';
 
 export default class CpButtonBase extends HTMLElement implements CustomElement {
 	private rippleItem?: ReturnType<Ripple['start']>;
+	/** 组件 button Dom元素 */
+	button: HTMLButtonElement;
 	#styleSheet?: CSSStyleSheet;
 	#keyframesSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
@@ -52,6 +54,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		const button = document.createElement('button');
 		const ripple = document.createElement('cp-ripple') as AttachedShadowRoot<Ripple>;
 
+		this.button = button;
 		button.classList.add('cp-button');
 		button.setAttribute('part', 'button');
 

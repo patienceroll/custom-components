@@ -3,6 +3,8 @@ import type { CpSkeletonObservedAttributes } from './data';
 import { formatKeyframes, formatStyle } from '../../utils/style';
 
 export default class CpSkeleton extends HTMLElement implements CustomElement {
+	/** skeleton , html 为 span 元素 */
+	skeleton: HTMLSpanElement;
 	#style: CSSStyleObject = {
 		'.cp-skeleton-wave': {
 			backgroundImage: 'linear-gradient(to right,transparent 0%,#eee 25%,transparent 50%)',
@@ -62,9 +64,12 @@ export default class CpSkeleton extends HTMLElement implements CustomElement {
 		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
 
-		const span = document.createElement('span');
-		span.classList.add('cp-skeleton');
-		shadowRoot.appendChild(span);
+		const skeleton = document.createElement('span');
+
+		this.skeleton = skeleton;
+		skeleton.classList.add('cp-skeleton');
+
+		shadowRoot.appendChild(skeleton);
 	}
 
 	static observedAttributes: CpSkeletonObservedAttributes[] = ['width', 'variant', 'animation'];
@@ -74,36 +79,35 @@ export default class CpSkeleton extends HTMLElement implements CustomElement {
 		older: string | null,
 		newer: string | null
 	) {
-		const span = this.shadowRoot.firstElementChild as HTMLSpanElement;
 		switch (attr) {
 			case 'width':
-				if (newer) span.style.setProperty('width', newer);
-				else span.style.removeProperty('width');
+				if (newer) this.skeleton.style.setProperty('width', newer);
+				else this.skeleton.style.removeProperty('width');
 				break;
 			case 'variant':
 				if (newer === 'circular') {
-					span.style.setProperty('height', `${span.clientWidth}px`);
-					span.classList.remove('cp-skeleton-rectangular');
-					span.classList.add('cp-skeleton-circular');
+					this.skeleton.style.setProperty('height', `${this.skeleton.clientWidth}px`);
+					this.skeleton.classList.remove('cp-skeleton-rectangular');
+					this.skeleton.classList.add('cp-skeleton-circular');
 				} else if (newer === 'rectangular') {
-					span.style.removeProperty('height');
-					span.classList.remove('cp-skeleton-circular');
-					span.classList.add('cp-skeleton-rectangular');
+					this.skeleton.style.removeProperty('height');
+					this.skeleton.classList.remove('cp-skeleton-circular');
+					this.skeleton.classList.add('cp-skeleton-rectangular');
 				} else {
 					// 默认为 text
-					span.style.removeProperty('height');
-					span.classList.remove('cp-skeleton-circular', 'cp-skeleton-rectangular');
+					this.skeleton.style.removeProperty('height');
+					this.skeleton.classList.remove('cp-skeleton-circular', 'cp-skeleton-rectangular');
 				}
 				break;
 			case 'animation':
 				if (newer === 'wave') {
-					span.classList.remove('cp-skeleton-twinkle');
-					span.classList.add('cp-skeleton-wave');
+					this.skeleton.classList.remove('cp-skeleton-twinkle');
+					this.skeleton.classList.add('cp-skeleton-wave');
 				} else if (newer === 'twinkle') {
-					span.classList.remove('cp-skeleton-wave');
-					span.classList.add('cp-skeleton-twinkle');
+					this.skeleton.classList.remove('cp-skeleton-wave');
+					this.skeleton.classList.add('cp-skeleton-twinkle');
 				} else {
-					span.classList.remove('cp-skeleton-wave cp-skeleton-twinkle');
+					this.skeleton.classList.remove('cp-skeleton-wave cp-skeleton-twinkle');
 				}
 				break;
 			default:
