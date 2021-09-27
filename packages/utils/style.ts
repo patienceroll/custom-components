@@ -55,8 +55,11 @@ const formatKeyframes = (keyframes: KeyframeObject) => {
  */
 const setDomNodeStyle = (node: HTMLElement, style: CSSProperty) => {
 	let str = '';
-	Object.keys(style).forEach((key) => {
-		str += `${key}:${style[key as keyof CSSProperty]};`;
+	const styleObj: CSSProperty = { ...node.style, ...style };
+	Object.keys(styleObj).forEach((key) => {
+		if (styleObj[key as keyof CSSProperty]) {
+			str += `${humpToOverline(key)}:${style[key as keyof CSSProperty]};`;
+		}
 	});
 	node.setAttribute('style', str);
 };

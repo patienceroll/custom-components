@@ -1,6 +1,5 @@
 import { formatStyle, formatKeyframes, setDomNodeStyle } from '../../utils/style';
 import CpMask from '../mask/mask';
-import { DialogType } from './data';
 
 export default class CpDialog extends CpMask implements CustomElement {
 	#content: HTMLElement;
@@ -16,14 +15,14 @@ export default class CpDialog extends CpMask implements CustomElement {
 			minWidth: '30%',
 			left: '50%',
 			transform: 'translateX(-50%)',
-			transition: 'all .3s ease',
+			transition: 'all .4s ease',
 		},
 		'.cp-dialog-drawer-content': {
 			position: 'fixed',
 			top: '0',
 			fontSize: '40px',
 			right: '0',
-			transition: 'all .3s ease',
+			transition: 'all .3s ease-in-out',
 			minWidth: '30%',
 			height: '100vh',
 			backgroundColor: '#fff',
@@ -62,14 +61,13 @@ export default class CpDialog extends CpMask implements CustomElement {
 		content.append(contentSlot);
 		content.classList.add('cp-dialog-modal-content');
 		this.#content = content;
-		if (this.shadowRoot) {
-			this.shadowRoot.append(content);
-			this.shadowRoot.adoptedStyleSheets = [
-				...this.shadowRoot.adoptedStyleSheets,
-				this.#styleSheet,
-				this.#keyframesSheet,
-			];
-		}
+
+		(this.shadowRoot as ShadowRoot).append(content);
+		(this.shadowRoot as ShadowRoot).adoptedStyleSheets = [
+			...(this.shadowRoot as ShadowRoot).adoptedStyleSheets,
+			this.#styleSheet,
+			this.#keyframesSheet,
+		];
 	}
 
 	/**
@@ -84,25 +82,35 @@ export default class CpDialog extends CpMask implements CustomElement {
 		const { x, y } = this.#mousePosition;
 		// 弹窗
 		if (isShow) {
-			setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
+			setDomNodeStyle(this.#content, {
+				left: `${x}px`,
+				top: `${y}px`,
+				opacity: '0',
+				zIndex: `${1000 + CpDialog.index}`,
+			});
 			setTimeout(() => {
-				setDomNodeStyle(this.#content, { left: '', top: '', opacity: '1' });
-			}, 200);
+				setDomNodeStyle(this.#content, { left: '', top: '', opacity: '1', zIndex: `${1000 + CpDialog.index}` });
+			}, 400);
 		} else {
-			setDomNodeStyle(this.#content, { left: `${x}px`, top: `${y}px`, opacity: '0' });
+			return new Promise((resolve) => {
+				setDomNodeStyle(this.#content, {
+					left: `${x}px`,
+					top: `${y}px`,
+					opacity: '0',
+					zIndex: `${1000 + CpDialog.index}`,
+				});
+				setTimeout(() => {
+					resolve('close');
+				}, 400);
+			});
 		}
 	}
 
-	onBeforeClose() {
-		this.setmousePosition(false);
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				resolve('close');
-			}, 200);
-		});
+	async onBeforeClose() {
+		await this.setmousePosition(false);
 	}
 
-	onBeforeShow() {
-		this.setmousePosition();
+	async onBeforeShow() {
+		await this.setmousePosition();
 	}
 }
