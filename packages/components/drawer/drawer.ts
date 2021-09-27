@@ -1,10 +1,12 @@
 import { formatStyle, formatKeyframes, setDomNodeStyle } from '../../utils/style';
 import CpMask from '../mask/mask';
-import { DrawerHeaderProps } from './data';
+import { DrawerHeaderProps, Direction } from './data';
 
-const icon = `<svg  t="1632705635683" class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30"><defs><style type="text/css"></style></defs><path d="M576 512l277.333333 277.333333-64 64-277.333333-277.333333L234.666667 853.333333 170.666667 789.333333l277.333333-277.333333L170.666667 234.666667 234.666667 170.666667l277.333333 277.333333L789.333333 170.666667 853.333333 234.666667 576 512z" fill="#444444" p-id="2364"></path></svg>`;
+const icon = `<svg  t="1632705635683" class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><style type="text/css"></style></defs><path d="M576 512l277.333333 277.333333-64 64-277.333333-277.333333L234.666667 853.333333 170.666667 789.333333l277.333333-277.333333L170.666667 234.666667 234.666667 170.666667l277.333333 277.333333L789.333333 170.666667 853.333333 234.666667 576 512z" fill="#444444" p-id="2364"></path></svg>`;
 
 export default class CpDrawer extends CpMask implements CustomElement {
+	/** 弹出位置 */
+	#direction?: Direction;
 	#closeIcon?: HTMLElement;
 	#container: HTMLElement;
 	#styleSheet?: CSSStyleSheet;
@@ -12,15 +14,79 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	#style: CSSStyleObject = {
 		'.cp-drawer-container': {
 			position: 'fixed',
-			top: '0',
-			fontSize: '40px',
-			right: '0',
-			transition: 'all .2s ease',
-			minWidth: '30%',
-			height: '100vh',
 			backgroundColor: '#fff',
+		},
+		// right
+		'.cp-drawer-right-container': {
+			top: '0',
+			right: '0',
+			minWidth: '40vw',
+			height: '100vh',
 			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
 			overflow: 'auto',
+			animation: 'right-show .4s ease-in-out',
+		},
+		'.cp-drawer-right-close-container': {
+			right: '0',
+			top: '0',
+			minWidth: '40vw',
+			height: '100vh',
+			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
+			overflow: 'auto',
+			opacity: '0',
+			animation: 'right-close .4s ease-in-out',
+		},
+		// left
+		'.cp-drawer-left-container': {
+			left: '0',
+			top: '0',
+			minWidth: '40vw',
+			height: '100vh',
+			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
+			overflow: 'auto',
+			animation: 'left-show .4s ease-in-out',
+		},
+		'.cp-drawer-left-close-container': {
+			left: '0',
+			top: '0',
+			minWidth: '40vw',
+			height: '100vh',
+			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
+			overflow: 'auto',
+			opacity: '0',
+			animation: 'left-close .4s ease-in-out',
+		},
+		// top
+		'.cp-drawer-top-container': {
+			width: '100%',
+			minHeight: '40vh',
+			left: '0',
+			top: '0',
+			animation: 'top-show .4s ease-in-out',
+		},
+		'.cp-drawer-top-close-container': {
+			width: '100%',
+			minHeight: '40vh',
+			left: '0',
+			top: '0',
+			opacity: '0',
+			animation: 'top-close .4s ease-in-out',
+		},
+		// bottom
+		'.cp-drawer-bottom-container': {
+			width: '100%',
+			minHeight: '40vh',
+			left: '0',
+			bottom: '0',
+			animation: 'bottom-show .4s ease-in-out',
+		},
+		'.cp-drawer-bottom-close-container': {
+			width: '100%',
+			minHeight: '40vh',
+			left: '0',
+			bottom: '0',
+			opacity: '0',
+			animation: 'bottom-close .4s ease-in-out',
 		},
 		'.cp-drawer-content': {
 			padding: '10px',
@@ -37,20 +103,23 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		'.cp-drawer-header-title-content': {
 			display: 'flex',
 			alignItems: 'center',
+			justifyContent: 're',
 		},
 		'.cp-drawer-header-title-content .cp-drawer-header-close-icon': {
 			marginRight: '10px',
 			cursor: 'pointer',
+			width: '30px',
+			height: '30px',
 		},
 		'.cp-drawer-header-title-content .cp-drawer-header-close-icon:hover': {
 			backgroundColor: '#fff',
-			transition: 'background-color 1s ease',
+			transition: 'background-color 1s ease-in-out',
 		},
 		'.cp-drawer-header-title-content .cp-drawer-header-title': {
 			fontSize: '22px',
 		},
 		'.cp-drawer-header-action': {
-			minWidth: '30%',
+			minWidth: '40vw',
 			height: '100%',
 		},
 		'.cp-drawer-footer-content': {
@@ -64,20 +133,85 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		},
 	};
 	#keyframes: KeyframeObject = {
-		show: {
+		'right-show': {
 			'0%': {
 				opacity: '0',
+				// 100% 是相对于自身宽度
+				transform: 'translateX(100%)',
 			},
 			'100%': {
 				opacity: '1',
+				transform: 'translateX(0)',
 			},
 		},
-		hiden: {
+		'right-close': {
 			'0%': {
 				opacity: '1',
+				transform: 'translateX(0)',
 			},
 			'100%': {
 				opacity: '0',
+				transform: 'translateX(100%)',
+			},
+		},
+		'left-show': {
+			'0%': {
+				opacity: '0',
+				transform: 'translateX(-100%)',
+			},
+			'100%': {
+				opacity: '1',
+				transform: 'translateX(0)',
+			},
+		},
+		'left-close': {
+			'0%': {
+				opacity: '1',
+				transform: 'translateX(0)',
+			},
+			'100%': {
+				opacity: '0',
+				transform: 'translateX(-100%)',
+			},
+		},
+		'top-show': {
+			'0%': {
+				opacity: '0',
+				transform: 'translateY(-100%)',
+			},
+			'100%': {
+				opacity: '1',
+				transform: 'translateY(0)',
+			},
+		},
+		'top-close': {
+			'0%': {
+				opacity: '1',
+				transform: 'translateY(0)',
+			},
+			'100%': {
+				opacity: '0',
+				transform: 'translateY(-100%)',
+			},
+		},
+		'bottom-show': {
+			'0%': {
+				opacity: '0',
+				transform: 'translateY(100%)',
+			},
+			'100%': {
+				opacity: '1',
+				transform: 'translateY(0)',
+			},
+		},
+		'bottom-close': {
+			'0%': {
+				opacity: '1',
+				transform: 'translateY(0)',
+			},
+			'100%': {
+				opacity: '0',
+				transform: 'translateY(100%)',
 			},
 		},
 	};
@@ -89,6 +223,8 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		const container = document.createElement('div');
 		container.classList.add('cp-drawer-container');
 		this.#container = container;
+		this.#disposeDirection();
+		this.disposeDrawerAnimation();
 		container.append(this.#renderHeader(), this.#renderContent());
 
 		if (this.shadowRoot) {
@@ -150,6 +286,11 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	// 	return footerContent;
 	// }
 
+	#disposeDirection() {
+		const direction = this.getAttribute('direction') as Direction;
+		this.#direction = direction || 'right';
+	}
+
 	disconnectedCallback() {
 		this.#closeIcon?.removeEventListener('click', this.close.bind(this), false);
 	}
@@ -157,12 +298,16 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	/** 处理抽屉动画*/
 	disposeDrawerAnimation(isShow = true) {
 		if (isShow) {
-			setDomNodeStyle(this.#container, { right: '-100%', top: '0', opacity: '0' });
-			setTimeout(() => {
-				setDomNodeStyle(this.#container, { right: '', top: '', opacity: '1' });
-			}, 200);
+			this.#container.classList.add(`cp-drawer-${this.#direction}-container`);
+			this.#container.classList.remove(`cp-drawer-${this.#direction}-close-container`);
 		} else {
-			setDomNodeStyle(this.#container, { right: '-100%', top: '0', opacity: '0' });
+			return new Promise((resolve) => {
+				this.#container.classList.remove(`cp-drawer-${this.#direction}-container`);
+				this.#container.classList.add(`cp-drawer-${this.#direction}-close-container`);
+				setTimeout(() => {
+					resolve('close');
+				}, 400);
+			});
 		}
 	}
 
@@ -170,12 +315,7 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		this.disposeDrawerAnimation(true);
 	}
 
-	onBeforeClose() {
-		this.disposeDrawerAnimation(false);
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				resolve('close');
-			}, 200);
-		});
+	async onBeforeClose() {
+		return this.disposeDrawerAnimation(false);
 	}
 }
