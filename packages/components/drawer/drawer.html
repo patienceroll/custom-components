@@ -1,57 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>抽屉组件</title>
+		<script type="module" src="../index.js"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>抽屉组件</title>
+		<style>
+			.content {
+				height: 200px;
+				background-color: pink;
+				text-align: center;
+				line-height: 200px;
+				font-size: 20px;
+			}
 
-  <style>
-    .content {
-      height: 200px;
-      background-color: pink;
-      text-align: center;
-      line-height: 200px;
-      font-size: 30px;
-    }
-  </style>
-</head>
+			h3 {
+				margin: 0;
+			}
+			.drawer-action {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				padding: 10px;
+				box-sizing: border-box;
+				height: 100%;
+			}
 
-<body>
-  <h1>抽屉组件</h1>
-  <ul>
-    <li>
-      <h4>默认抽屉</h4>
-      <button class="btn">打开抽屉</button>
-    </li>
-    <li>
-      <h4>通过插槽定义抽屉标题</h4>
-      <button class="btn">打开抽屉</button>
-    </li>
-    <cp-drawer title="我是标题" class="drawer" open="false">
-      <div>
-        <div class="content">抽屉组件</div>
-      </div>
-    </cp-drawer>
+			.action-button:first-child {
+				margin-right: 10px;
+			}
+		</style>
+	</head>
 
-    <cp-drawer class="drawer" open="false">
-      <span name="drawer-header-title">通过插槽定义标题</span>
-      <div class="content">xxxxxx</div>
-    </cp-drawer>
+	<body>
+		<h1>抽屉组件</h1>
+		<ul>
+			<li>
+				<h4>默认抽屉</h4>
+				<button class="btn">打开抽屉</button>
+			</li>
+			<li>
+				<h4>通过插槽定义抽屉标题</h4>
+				<button class="btn">打开抽屉</button>
+			</li>
+			<li>
+				<h4>配置操作按钮</h4>
+				<button class="btn">打开抽屉</button>
+			</li>
+      <li>
+				<h4>禁止点击蒙层关闭抽屉</h4>
+				<button class="btn">打开抽屉</button>
+			</li>
+		</ul>
 
-    <script type="module" src="../index.js"></script>
-    <script>
-      const drawer = document.getElementsByClassName('drawer');
-      const button = document.getElementsByClassName('btn');
+		<cp-drawer title="默认抽屉" class="drawer" open="false">
+			<div>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton width="80%"></cp-skeleton>
+        <cp-skeleton width="60%"></cp-skeleton>
+        <cp-skeleton width="20%"></cp-skeleton>
+			</div>
+		</cp-drawer>
 
-      for (let i = 0; i < button.length; i++) {
-        button[i].onclick = function () {
-          drawer[i].show();
-        }
-      }
-    </script>
+		<cp-drawer class="drawer" open="false">
+			<div slot="drawer-header-title">
+				<h3>通过插槽定义标题</h3>
+				<span>子标题</span>
+			</div>
+      <cp-skeleton animation="wave"></cp-skeleton>
+      <cp-skeleton animation="wave"></cp-skeleton>
+      <cp-skeleton width="80%"></cp-skeleton>
+      <cp-skeleton width="60%"></cp-skeleton>
+      <cp-skeleton width="20%"></cp-skeleton>
+		</cp-drawer>
 
-</body>
+		<cp-drawer title="配置操作按钮" class="drawer" open="false">
+			<div slot="drawer-header-action" class="drawer-action">
+				<cp-button color="yellowgreen" class="action-button">按钮1</cp-button>
+				<cp-button color="pink" class="action-button">按钮2</button>
+			</div>
+      <cp-skeleton></cp-skeleton>
+      <cp-skeleton></cp-skeleton>
+      <cp-skeleton width="80%"></cp-skeleton>
+      <cp-skeleton width="60%"></cp-skeleton>
+      <cp-skeleton width="20%"></cp-skeleton>
+		</cp-drawer>
+    <cp-drawer title="禁止点击蒙层关闭抽屉" mask-closable="false" class="drawer" open="false">
+		  <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton width="80%"></cp-skeleton>
+        <cp-skeleton width="60%"></cp-skeleton>
+        <cp-skeleton width="20%"></cp-skeleton>
+		</cp-drawer>
 
+		<script>
+			const drawer = document.getElementsByClassName('drawer');
+			const button = document.getElementsByClassName('btn');
+
+			for (let i = 0; i < button.length; i++) {
+				button[i].onclick = function () {
+					drawer[i].show();
+				};
+			}
+		</script>
+	</body>
 </html>
