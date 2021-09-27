@@ -66,9 +66,9 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	disposeMaskClosable(closable: BooleanCharacter) {
 		if (closable === 'false') {
-			this.#maskNode.removeEventListener('click', this.close.bind(this));
+			this.#maskNode.removeEventListener('click', this.close.bind(this), false);
 		} else {
-			this.#maskNode.addEventListener('click', this.close.bind(this));
+			this.#maskNode.addEventListener('click', this.close.bind(this), false);
 		}
 	}
 
@@ -92,6 +92,10 @@ export default class CpMask extends HTMLElement implements CustomElement {
 			default:
 				break;
 		}
+	}
+
+	disconnectedCallback() {
+		this.#maskNode.removeEventListener('click', this.close.bind(this), false);
 	}
 
 	/** 关闭mask回调 */
