@@ -39,19 +39,26 @@
 		<ul>
 			<li>
 				<h4>默认抽屉</h4>
-				<button class="btn">打开抽屉</button>
+				<cp-button class="btn">打开抽屉</cp-button>
 			</li>
 			<li>
 				<h4>通过插槽定义抽屉标题</h4>
-				<button class="btn">打开抽屉</button>
+				<cp-button class="btn">打开抽屉</cp-button>
 			</li>
 			<li>
 				<h4>配置操作按钮</h4>
-				<button class="btn">打开抽屉</button>
+				<cp-button class="btn">打开抽屉</cp-button>
 			</li>
       <li>
 				<h4>禁止点击蒙层关闭抽屉</h4>
-				<button class="btn">打开抽屉</button>
+				<cp-button class="btn">打开抽屉</cp-button>
+			</li>
+      <li>
+				<h4>自定义方向抽屉</h4>
+				<cp-button class="btn">上</cp-button>
+				<cp-button class="btn">下</cp-button>
+				<cp-button class="btn">左</cp-button>
+				<cp-button class="btn">右</cp-button>
 			</li>
 		</ul>
 
@@ -88,7 +95,37 @@
       <cp-skeleton width="60%"></cp-skeleton>
       <cp-skeleton width="20%"></cp-skeleton>
 		</cp-drawer>
+
     <cp-drawer title="禁止点击蒙层关闭抽屉" mask-closable="false" class="drawer" open="false">
+		  <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton width="80%"></cp-skeleton>
+        <cp-skeleton width="60%"></cp-skeleton>
+        <cp-skeleton width="20%"></cp-skeleton>
+		</cp-drawer>
+
+    <cp-drawer title="顶部打开" direction="top" class="drawer" open="false">
+		  <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton width="80%"></cp-skeleton>
+        <cp-skeleton width="60%"></cp-skeleton>
+        <cp-skeleton width="20%"></cp-skeleton>
+		</cp-drawer>
+    <cp-drawer title="底部打开" direction="bottom" class="drawer" open="false">
+		  <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton width="80%"></cp-skeleton>
+        <cp-skeleton width="60%"></cp-skeleton>
+        <cp-skeleton width="20%"></cp-skeleton>
+		</cp-drawer>
+    <cp-drawer title="左边打开" direction="left" class="drawer" open="false">
+		  <cp-skeleton></cp-skeleton>
+        <cp-skeleton></cp-skeleton>
+        <cp-skeleton width="80%"></cp-skeleton>
+        <cp-skeleton width="60%"></cp-skeleton>
+        <cp-skeleton width="20%"></cp-skeleton>
+		</cp-drawer>
+    <cp-drawer title="右边打开" direction="right" class="drawer" open="false">
 		  <cp-skeleton></cp-skeleton>
         <cp-skeleton></cp-skeleton>
         <cp-skeleton width="80%"></cp-skeleton>

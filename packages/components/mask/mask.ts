@@ -24,11 +24,11 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		},
 		'.cp-mask-show': {
 			opacity: '1',
-			animation: 'show 0.2s ease',
+			animation: 'show 0.4s ease',
 		},
 		'.cp-mask-close': {
 			opacity: '0',
-			animation: 'close 0.2s ease',
+			animation: 'close 0.4s ease',
 		},
 	};
 	#keyframes: KeyframeObject = {
@@ -103,7 +103,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		return new Promise((resolve) => {
 			setTimeout(() => {
 				resolve('close');
-			}, 200);
+			}, 400);
 		});
 	}
 
