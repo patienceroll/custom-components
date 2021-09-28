@@ -2,7 +2,7 @@ import type Ripple from '../ripple/ripple';
 
 import CpButtonBase from './button-base';
 
-import theme from '../../theme/index';
+
 import { formatStyle } from '../../utils/style';
 
 import '../ripple';

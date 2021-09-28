@@ -1,19 +1,18 @@
 import type Ripple from '../ripple/ripple';
 
-import theme from '../../theme/index';
 import { formatKeyframes, formatStyle } from 'packages/utils/style';
 
 import '../ripple';
 
 export default class CpButtonBase extends HTMLElement implements CustomElement {
-	private rippleItem?: ReturnType<Ripple['start']>;
+	private ripple?: ReturnType<Ripple['spread']>;
 	/** 组件 button Dom元素 */
 	button: HTMLButtonElement;
 	#styleSheet?: CSSStyleSheet;
 	#keyframesSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
 		'.cp-button:hover': {
-			backgroundColor: theme.color.backgroundHover,
+			backgroundColor: '#c0c0c0',
 			boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%)',
 		},
 		'.cp-button': {
@@ -27,7 +26,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			cursor: 'pointer',
 			width: '100%',
 			height: '100%',
-			backgroundColor: theme.color.background,
+			backgroundColor: '#e0e0e0',
 			borderRadius: 'inherit',
 			boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%)',
 			transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -36,7 +35,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			pointerEvents: 'none',
 		},
 		':host': {
-			borderRadius: theme.border.radius,
+			borderRadius: '4px',
 			display: 'inline-block',
 		},
 	};
@@ -59,13 +58,13 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		button.setAttribute('part', 'button');
 
 		this.addEventListener('mousedown', (e) => {
-			if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
-			this.rippleItem = ripple.start({ top: e.offsetY, left: e.offsetX });
+			if (this.ripple) this.ripple.stable();
+			this.ripple = ripple.spread({ top: e.offsetY, left: e.offsetX });
 		});
 		this.addEventListener('mouseup', () => {
-			if (this.rippleItem) {
-				this.rippleItem.then(({ stop }) => stop());
-				this.rippleItem = undefined;
+			if (this.ripple) {
+				this.ripple.stable();
+				this.ripple = undefined;
 			}
 		});
 		this.addEventListener(
@@ -78,8 +77,8 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 						const [touch] = targetTouches;
 						const { pageX, pageY } = touch;
 						const { left, top } = (target as this).getBoundingClientRect();
-						if (this.rippleItem) this.rippleItem.then(({ stop }) => stop());
-						this.rippleItem = ripple.start({
+						if (this.ripple) this.ripple.stable();
+						this.ripple = ripple.spread({
 							top: pageY - top,
 							left: pageX - left,
 						});
@@ -89,9 +88,9 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			{ passive: true }
 		);
 		this.addEventListener('touchend', () => {
-			if (this.rippleItem) {
-				this.rippleItem.then(({ stop }) => stop());
-				this.rippleItem = undefined;
+			if (this.ripple) {
+				this.ripple.stable();
+				this.ripple = undefined;
 			}
 		});
 

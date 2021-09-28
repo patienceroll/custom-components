@@ -3,21 +3,18 @@ import { formatStyle, formatKeyframes } from '../../utils/style';
 export default class CpRipple extends HTMLElement {
 	#styleSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
-		'.ripple-disappear': {
-			animationName: 'disappear',
-			animationDuration: '450ms',
-			animationFillMode: 'forwards',
+		'.stable': {
+			opacity: '0',
 		},
-		'.ripple-start': {
+		'.spread': {
+			animation: 'spread 600ms forwards',
 			opacity: '0.3',
-			transform: 'scale(1)',
-			animationName: 'start',
-			animationDuration: '600ms',
-			animationFillMode: 'forwards',
 		},
-		'.ripple-item': {
+		'.ripple': {
 			position: 'absolute',
 			borderRadius: '50%',
+			transition: 'opacity ease 450ms',
+			opacity: '0',
 		},
 		':host': {
 			width: '100%',
@@ -33,22 +30,12 @@ export default class CpRipple extends HTMLElement {
 	};
 
 	#keyframes: KeyframeObject = {
-		start: {
+		spread: {
 			'0%': {
 				transform: 'scale(0)',
-				opacity: '0.1',
 			},
 			'100%': {
 				transform: 'scale(1)',
-				opacity: '0.3',
-			},
-		},
-		disappear: {
-			'0%': {
-				opacity: '0.3',
-			},
-			'100%': {
-				opacity: '0',
 			},
 		},
 	};
@@ -61,10 +48,13 @@ export default class CpRipple extends HTMLElement {
 		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 
 		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
+
+		const child = document.createElement('slot');
+		shadowRoot.appendChild(child);
 	}
 
 	/** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
-	get start() {
+	get spread() {
 		return function (
 			this: AttachedShadowRoot<CpRipple>,
 			options: {
@@ -72,43 +62,39 @@ export default class CpRipple extends HTMLElement {
 				top: number;
 				/** 涟漪中心点相对父级左侧距离 */
 				left: number;
-				/** 涟漪颜色,默认 #333 */
-				backgroundColor?: CSSStyleDeclaration['backgroundColor'] | null;
+				/** 涟漪颜色,默认 #999 */
+				backgroundColor?: CSSStyleDeclaration['backgroundColor'];
 			}
 		) {
 			const { pow, sqrt, abs } = Math;
-			const { top, left, backgroundColor } = options;
+			const { top, left, backgroundColor = '#999' } = options;
 			const { clientWidth, clientHeight } = this;
-			const rippleItem = document.createElement('div');
+			const ripple = document.createElement('div');
 			// 计算涟漪半径,涟漪中心点到父元素四个点之中最远的一个点的距离为半径
 			const offsetRight = abs(left - clientWidth);
 			const offsetBootom = abs(clientHeight - top);
 			const radiusAdjacentWidth = offsetRight > left ? offsetRight : left;
 			const radiusAdjacentHeight = offsetBootom > top ? offsetBootom : top;
 			const radius = sqrt(pow(radiusAdjacentWidth, 2) + pow(radiusAdjacentHeight, 2));
-			rippleItem.style.top = `${top - radius}px`;
-			rippleItem.style.left = `${left - radius}px`;
-			rippleItem.style.width = `${2 * radius}px`;
-			rippleItem.style.height = `${2 * radius}px`;
-			rippleItem.style.background = backgroundColor || '#333';
-			rippleItem.classList.add('ripple-item', 'ripple-start');
-			this.shadowRoot.appendChild(rippleItem);
-			return new Promise<{ dom: HTMLDivElement; stop: VoidFunction }>((resolve) => {
-				setTimeout(() => {
-					resolve({
-						dom: rippleItem,
-						stop() {
-							rippleItem.classList.replace('ripple-start', 'ripple-disappear');
-							return new Promise<void>((resolve) => {
-								setTimeout(() => {
-									rippleItem.remove();
-									resolve();
-								}, 450);
-							});
-						},
-					});
-				}, 600);
-			});
+			ripple.style.top = `${top - radius}px`;
+			ripple.style.left = `${left - radius}px`;
+			ripple.style.width = `${2 * radius}px`;
+			ripple.style.height = `${2 * radius}px`;
+			ripple.style.background = backgroundColor;
+			ripple.classList.add('ripple', 'spread');
+			this.shadowRoot.appendChild(ripple);
+
+			return {
+				dom: ripple,
+				stable: () => {
+					setTimeout(() => {
+						ripple.classList.add('stable');
+						setTimeout(() => {
+							ripple.remove();
+						}, 450);
+					}, 150);
+				},
+			};
 		};
 	}
 
