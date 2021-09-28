@@ -2,18 +2,16 @@ import { formatStyle, formatKeyframes } from '../../utils/style';
 import CpMask from '../mask/mask';
 import { DrawerHeaderProps, Direction } from './data';
 
-const icon = `<svg  t="1632705635683" class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><style type="text/css"></style></defs><path d="M576 512l277.333333 277.333333-64 64-277.333333-277.333333L234.666667 853.333333 170.666667 789.333333l277.333333-277.333333L170.666667 234.666667 234.666667 170.666667l277.333333 277.333333L789.333333 170.666667 853.333333 234.666667 576 512z" fill="#444444" p-id="2364"></path></svg>`;
+const icon = `<svg  t="1632705635683" class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><style type="text/css"></style></defs><path width="100%" height="100%" d="M576 512l277.333333 277.333333-64 64-277.333333-277.333333L234.666667 853.333333 170.666667 789.333333l277.333333-277.333333L170.666667 234.666667 234.666667 170.666667l277.333333 277.333333L789.333333 170.666667 853.333333 234.666667 576 512z" fill="#444444" p-id="2364"></path></svg>`;
 
 export default class CpDrawer extends CpMask implements CustomElement {
 	/** 弹出位置 */
 	#direction?: Direction;
 	#closeIcon?: HTMLElement;
-	#container: HTMLElement;
 	#styleSheet?: CSSStyleSheet;
 	#keyframesSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
 		'.cp-drawer-container': {
-			position: 'fixed',
 			backgroundColor: '#fff',
 			boxShadow: '-5px 0px 15px rgba(0,0,0,0.2)',
 			overflow: 'auto',
@@ -96,20 +94,21 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		'.cp-drawer-header-title-content': {
 			display: 'flex',
 			alignItems: 'center',
-			justifyContent: 're',
+			height: '60px',
+			fontSize: '24px',
 		},
 		'.cp-drawer-header-title-content .cp-drawer-header-close-icon': {
 			marginRight: '10px',
 			cursor: 'pointer',
-			width: '30px',
-			height: '30px',
+			width: '1em',
+			height: '1em',
+			transition: 'transform .3s ease-in-out',
 		},
 		'.cp-drawer-header-title-content .cp-drawer-header-close-icon:hover': {
-			backgroundColor: '#fff',
-			transition: 'background-color 1s ease-in-out',
+			transform: 'rotate(90deg)',
 		},
 		'.cp-drawer-header-title-content .cp-drawer-header-title': {
-			fontSize: '22px',
+			fontSize: '1em',
 		},
 		'.cp-drawer-header-action': {
 			minWidth: '35vw',
@@ -213,15 +212,12 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
 		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 
-		const container = document.createElement('div');
-		container.classList.add('cp-drawer-container');
-		this.#container = container;
+		this.maskContent.classList.add('cp-drawer-container');
+
 		this.#disposeDirection();
 		this.#disposeDrawerAnimation();
-		container.append(this.#renderHeader(), this.#renderContent());
-
+		this.maskContent.append(this.#renderHeader(), this.#renderContent());
 		if (this.shadowRoot) {
-			this.shadowRoot.append(container);
 			this.shadowRoot.adoptedStyleSheets = [
 				...this.shadowRoot.adoptedStyleSheets,
 				this.#styleSheet,
@@ -292,12 +288,12 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	/** 处理抽屉动画*/
 	#disposeDrawerAnimation(isShow = true) {
 		if (isShow) {
-			this.#container.classList.add(`cp-drawer-${this.#direction}-container`);
-			this.#container.classList.remove(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
+			this.maskContent.classList.add(`cp-drawer-${this.#direction}-container`);
+			this.maskContent.classList.remove(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
 		} else {
 			return new Promise((resolve) => {
-				this.#container.classList.remove(`cp-drawer-${this.#direction}-container`);
-				this.#container.classList.add(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
+				this.maskContent.classList.remove(`cp-drawer-${this.#direction}-container`);
+				this.maskContent.classList.add(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
 				setTimeout(() => {
 					resolve('close');
 				}, 400);
@@ -306,12 +302,10 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	}
 
 	onBeforeShow() {
-		this.#container.style.zIndex = `${1000 + CpDrawer.index}`;
 		this.#disposeDrawerAnimation(true);
 	}
 
 	async onBeforeClose() {
-		this.#container.style.zIndex = `${1000 + CpDrawer.index}`;
 		return this.#disposeDrawerAnimation(false);
 	}
 }

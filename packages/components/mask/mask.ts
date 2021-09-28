@@ -1,6 +1,7 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
 export default class CpMask extends HTMLElement implements CustomElement {
+	maskContent: HTMLElement;
 	static index = 0;
 	#maskNode: HTMLElement;
 	#styleSheet?: CSSStyleSheet;
@@ -20,6 +21,9 @@ export default class CpMask extends HTMLElement implements CustomElement {
 			top: '0',
 			left: '0',
 			overflow: 'hidden',
+		},
+		'.cp-mask-content': {
+			position: 'fixed',
 		},
 		'.cp-mask-show': {
 			opacity: '1',
@@ -56,12 +60,15 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		const closable = this.getAttribute('mask-closable');
 		const mask = document.createElement('div');
+		const maskContent = document.createElement('div');
+		maskContent.classList.add('cp-mask-content');
 		mask.classList.add('cp-mask');
+		this.maskContent = maskContent;
 		this.#maskNode = mask;
 
 		this.disposeMaskClosable(closable as BooleanCharacter);
 		shadowRoot.adoptedStyleSheets = [this.#styleSheet, this.#keyframesSheet];
-		shadowRoot.append(mask);
+		shadowRoot.append(mask, maskContent);
 	}
 
 	disposeMaskClosable(closable: BooleanCharacter) {
@@ -72,13 +79,20 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		}
 	}
 
-	disposeOpen(open: BooleanCharacter = 'true') {
-		if (open === 'true') {
+	disposeOpen(isOpen: BooleanCharacter = 'true') {
+		if (isOpen === 'true') {
 			this.#maskNode.classList.add('cp-mask-show');
 			this.#maskNode.classList.remove('cp-mask-close');
 		} else {
 			this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
 		}
+	}
+
+	/** 处理蒙层和蒙层内容层级*/
+	disposeMaskZIndex(isOpen: BooleanCharacter = 'true') {
+		const zIndex = `${1000 + (isOpen === 'true' ? ++CpMask.index : --CpMask.index)}`;
+		this.#maskNode.style.zIndex = zIndex;
+		this.maskContent.style.zIndex = zIndex;
 	}
 
 	static observedAttributes = ['open', 'mask-closable'];
@@ -112,19 +126,20 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	/** 打开蒙层 */
 	async show() {
-		if (this.getAttribute('open') === 'true') return;
-		this.#maskNode.style.zIndex = `${1000 + ++CpMask.index}`;
+		const isOpen = this.getAttribute('open') as BooleanCharacter;
+		if (isOpen === 'true') return;
+		this.disposeMaskZIndex();
 		await this.onBeforeShow();
 		this.setAttribute('open', 'true');
 	}
 
 	/** 关闭蒙层 */
 	async close() {
-		if (this.getAttribute('open') === 'false') return;
+		const isOpen = this.getAttribute('open') as BooleanCharacter;
+		if (isOpen === 'false') return;
 		this.disposeOpen('false');
-		this.#maskNode.style.zIndex = `${1000 + --CpMask.index}`;
+		this.disposeMaskZIndex('false');
 		await this.onBeforeClose();
-
 		this.setAttribute('open', 'false');
 	}
 }
