@@ -1,6 +1,6 @@
 import type { CircularProgressObservedAttributes } from './data';
 
-import theme from '../../theme/index';
+
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
 export default class CpCircularProgress extends HTMLElement implements CustomElement {
@@ -63,7 +63,7 @@ export default class CpCircularProgress extends HTMLElement implements CustomEle
 		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
 		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
 
-		const circle = `<circle cx="22" cy="22" r="20.2" stroke=${theme.color.primary} stroke-width="3.6" fill="none">
+		const circle = `<circle cx="22" cy="22" r="20.2" stroke=${#1976d2} stroke-width="3.6" fill="none">
       </circle>`;
 		const text = `<text x="22" display="none" y="22" font-size="12" color="#fff">
       </text>`;
@@ -90,7 +90,7 @@ export default class CpCircularProgress extends HTMLElement implements CustomEle
 				if (newer) {
 					circle.setAttribute('stroke', newer);
 				} else {
-					circle.setAttribute('stroke', theme.color.primary);
+					circle.setAttribute('stroke', #1976d2);
 				}
 				break;
 			case 'value':

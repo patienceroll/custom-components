@@ -1,6 +1,5 @@
 import type Ripple from '../ripple/ripple';
 
-import theme from '../../theme/index';
 import { formatKeyframes, formatStyle } from 'packages/utils/style';
 
 import '../ripple';
@@ -13,7 +12,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 	#keyframesSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
 		'.cp-button:hover': {
-			backgroundColor: theme.color.backgroundHover,
+			backgroundColor: '#c0c0c0',
 			boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%)',
 		},
 		'.cp-button': {
@@ -27,7 +26,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			cursor: 'pointer',
 			width: '100%',
 			height: '100%',
-			backgroundColor: theme.color.background,
+			backgroundColor: '#e0e0e0',
 			borderRadius: 'inherit',
 			boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%)',
 			transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -36,7 +35,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 			pointerEvents: 'none',
 		},
 		':host': {
-			borderRadius: theme.border.radius,
+			borderRadius: '4px',
 			display: 'inline-block',
 		},
 	};
