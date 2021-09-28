@@ -62,12 +62,12 @@ export default class CpRipple extends HTMLElement {
 				top: number;
 				/** 涟漪中心点相对父级左侧距离 */
 				left: number;
-				/** 涟漪颜色,默认 #333 */
-				backgroundColor?: CSSStyleDeclaration['backgroundColor'] | null;
+				/** 涟漪颜色,默认 #999 */
+				backgroundColor?: CSSStyleDeclaration['backgroundColor'];
 			}
 		) {
 			const { pow, sqrt, abs } = Math;
-			const { top, left, backgroundColor } = options;
+			const { top, left, backgroundColor = '#999' } = options;
 			const { clientWidth, clientHeight } = this;
 			const ripple = document.createElement('div');
 			// 计算涟漪半径,涟漪中心点到父元素四个点之中最远的一个点的距离为半径
@@ -80,25 +80,21 @@ export default class CpRipple extends HTMLElement {
 			ripple.style.left = `${left - radius}px`;
 			ripple.style.width = `${2 * radius}px`;
 			ripple.style.height = `${2 * radius}px`;
-			ripple.style.background = backgroundColor || '#333';
+			ripple.style.background = backgroundColor;
 			ripple.classList.add('ripple', 'spread');
 			this.shadowRoot.appendChild(ripple);
-			return new Promise<{ dom: HTMLDivElement; stable: VoidFunction }>((resolve) => {
-				setTimeout(() => {
-					resolve({
-						dom: ripple,
-						stable() {
-							ripple.classList.add('stable');
-							return new Promise<void>((resolve) => {
-								setTimeout(() => {
-									ripple.remove();
-									resolve();
-								}, 450);
-							});
-						},
-					});
-				}, 600);
-			});
+
+			return {
+				dom: ripple,
+				stable: () => {
+					setTimeout(() => {
+						ripple.classList.add('stable');
+						setTimeout(() => {
+							ripple.remove();
+						}, 450);
+					}, 150);
+				},
+			};
 		};
 	}
 

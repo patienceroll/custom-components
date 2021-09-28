@@ -68,12 +68,11 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		inputWrap.classList.add('cp-radio-input-wrap');
 
 		inputWrap.addEventListener('click', () => {
-			ripple
-				.spread({
-					top: inputWrap.clientHeight / 2,
-					left: inputWrap.clientWidth / 2,
-				})
-				.then(({ stable }) => stable());
+			const { stable } = ripple.spread({
+				top: inputWrap.clientHeight / 2,
+				left: inputWrap.clientWidth / 2,
+			});
+			stable();
 		});
 
 		ripple.appendChild(radio);

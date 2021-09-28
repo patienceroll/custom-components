@@ -92,13 +92,15 @@
           offsetY,
           target: { previousElementSibling: ripple },
         } = e;
-        ripple
+
+        const { stable } = ripple
           .spread({
             top: offsetY,
             left: offsetX,
             backgroundColor,
           })
-          .then(({ stable }) => stable());
+
+        stable()
       };
     }
 
@@ -108,16 +110,16 @@
         offsetY,
         target: { previousElementSibling: ripple },
       } = e;
-      ripple
+      const { stable } = ripple
         .spread({
           top: offsetY,
           left: offsetX,
         })
-        .then(({ stable }) => {
-          setTimeout(() => {
-            stable();
-          }, 2400);
-        });
+
+      setTimeout(() => {
+        stable()
+      }, 3000);
+
     }
   </script>
 </body>
