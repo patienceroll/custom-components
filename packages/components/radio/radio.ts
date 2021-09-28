@@ -8,8 +8,32 @@ import '../ripple';
 export default class CpRadio extends HTMLElement implements CustomElement {
 	/** 组件实例 input 元素 */
 	radio: HTMLInputElement;
+	/** 组件实例 svg 元素,用来模拟原生的 radio 的图标 */
+	radioIcon: SVGSVGElement;
 	#styleSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
+		'.inner-checked': {
+			fill: '#1976d2',
+			transform: 'scale(1)',
+		},
+		'.outer-checked': {
+			stroke: '#1976d2',
+		},
+		'.inner': {
+			fill: '#999',
+			transform: 'scale(0)',
+			transition: 'transform 300ms ease',
+			transformOrigin: 'center',
+		},
+		'.outer': {
+			stroke: '#999',
+			fill: 'none',
+			strokeWidth: '8',
+		},
+		'.cp-radio-icon': {
+			width: '100%',
+			height: '100%',
+		},
 		'.cp-radio-radio-wrap > input': {
 			opacity: '0',
 			position: 'absolute',
@@ -19,10 +43,7 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 			margin: '0',
 			top: '0',
 			left: '0',
-		},
-		'.cp-radio-icon': {
-			width: '100%',
-			height: '100%',
+			cursor: 'pointer',
 		},
 		'.cp-radio-radio-wrap': {
 			display: 'inline-flex',
@@ -42,9 +63,11 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 			display: 'inline-block',
 			cursor: 'pointer',
 		},
+		':host([disabled="true"])': {
+			pointerEvents: 'none',
+		},
 		':host': {
 			display: 'inline-block',
-			cursor: 'pointer',
 		},
 	};
 
@@ -62,8 +85,8 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		const textSlot = document.createElement('slot');
 
 		radioIcon.setAttribute('viewBox', '0 0 100 100');
-		radioIcon.innerHTML = `<circle cx="50" cy="50" r="42" stroke="#e0e0e0" fill="none" stroke-width="8"  />
-			<circle cx="50" cy="50" r="28" fill="#e0e0e0" />
+		radioIcon.innerHTML = `<circle class="outer" cx="50" cy="50" r="42" />
+			<circle class="inner" cx="50" cy="50" r="28"  />
 		`;
 
 		radioIcon.classList.add('cp-radio-icon');
@@ -72,11 +95,16 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 
 		radio.type = 'radio';
 
+		this.addEventListener('click', () => {
+			if (this.getAttribute('checked') !== 'true') this.setAttribute('checked', 'true');
+		});
+
 		radioWrap.append(radio, ripple, radioIcon);
 		label.append(radioWrap, textSlot);
 		shadowRoot.append(label);
 
 		this.radio = radio;
+		this.radioIcon = radioIcon;
 	}
 
 	static observedAttributes: CpRadioObservedAttributes[] = ['checked'];
@@ -88,8 +116,15 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 	) {
 		switch (attr) {
 			case 'checked':
-				if (newer === 'true') this.radio.checked = true;
-				else this.radio.checked = false;
+				if (newer === 'true') {
+					this.radio.checked = true;
+					(this.radioIcon.firstElementChild as SVGCircleElement).classList.add('outer-checked');
+					(this.radioIcon.lastElementChild as SVGCircleElement).classList.add('inner-checked');
+				} else {
+					this.radio.checked = false;
+					(this.radioIcon.firstElementChild as SVGCircleElement).classList.remove('outer-checked');
+					(this.radioIcon.lastElementChild as SVGCircleElement).classList.remove('inner-checked');
+				}
 				break;
 			default:
 				break;
