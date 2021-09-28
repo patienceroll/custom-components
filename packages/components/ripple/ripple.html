@@ -93,12 +93,12 @@
           target: { previousElementSibling: ripple },
         } = e;
         ripple
-          .start({
+          .spread({
             top: offsetY,
             left: offsetX,
             backgroundColor,
           })
-          .then(({ stop }) => stop());
+          .then(({ stable }) => stable());
       };
     }
 
@@ -109,13 +109,13 @@
         target: { previousElementSibling: ripple },
       } = e;
       ripple
-        .start({
+        .spread({
           top: offsetY,
           left: offsetX,
         })
-        .then(({ stop }) => {
+        .then(({ stable }) => {
           setTimeout(() => {
-            stop();
+            stable();
           }, 2400);
         });
     }

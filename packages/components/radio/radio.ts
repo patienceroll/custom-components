@@ -10,24 +10,18 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 	radio: HTMLInputElement;
 	#styleSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
-		'.text-slot': {
-			display: 'inline-block',
-			lineHeight: '1.2em',
-			verticalAlign: 'middle',
-		},
-		'.cp-radio-radio-wrapper > input': {
+		'.cp-radio-input-wrap > input': {
 			margin: '0',
-			width: '0.6em',
-			height: '0.6em',
-			left: '0.6em',
-			top: '0.6em',
-			position: 'absolute',
+			width: '100%',
+			height: '100%',
 		},
-		'.cp-radio-radio-wrapper:hover': {
+		'.cp-radio-input-wrap:hover': {
 			backgroundColor: '#e0e0e0',
 		},
-		'.cp-radio-radio-wrapper': {
-			display: 'inline-block',
+		'.cp-radio-input-wrap': {
+			display: 'inline-flex',
+			justifyContent: 'center',
+			alignItems: 'center',
 			position: 'relative',
 			width: '1.2em',
 			height: '1.2em',
@@ -36,8 +30,13 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 			verticalAlign: 'middle',
 			overflow: 'hidden',
 		},
-		'.cp-radio': {
+		'.cp-radio-label > slot': {
 			display: 'inline-block',
+			verticalAlign: 'middle',
+		},
+		'.cp-radio-label': {
+			display: 'inline-block',
+			cursor: 'pointer',
 		},
 		':host': {
 			display: 'inline-block',
@@ -51,35 +50,36 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		shadowRoot.adoptedStyleSheets = [this.#styleSheet];
 
 		const label = document.createElement('label');
-		const radioWrapper = document.createElement('span');
+		const inputWrap = document.createElement('span');
 		const radio = document.createElement('input');
 		const text = document.createElement('slot');
 		const ripple = document.createElement('cp-ripple') as AttachedShadowRoot<Ripple>;
 
 		this.radio = radio;
 		radio.type = 'radio';
+		radio.id = 'radio';
+		label.setAttribute('for', 'radio');
 
 		radio.addEventListener('change', () => {
 			this.setAttribute('checked', radio.checked ? 'true' : 'false');
 		});
 
-		label.classList.add('cp-radio');
-		radioWrapper.classList.add('cp-radio-radio-wrapper');
-		text.classList.add('text-slot');
+		label.classList.add('cp-radio-label');
+		inputWrap.classList.add('cp-radio-input-wrap');
 
-		radioWrapper.addEventListener('click', (event) => {
-			event.preventDefault();
+		inputWrap.addEventListener('click', () => {
 			ripple
-				.start({
-					top: radioWrapper.clientHeight / 2,
-					left: radioWrapper.clientWidth / 2,
+				.spread({
+					top: inputWrap.clientHeight / 2,
+					left: inputWrap.clientWidth / 2,
 				})
-				.then(({ stop }) => stop());
+				.then(({ stable }) => stable());
 		});
 
-		radioWrapper.append(ripple, radio);
-		label.append(radioWrapper, text);
-		shadowRoot.append(label);
+		ripple.appendChild(radio);
+		inputWrap.append(ripple);
+		label.append(text);
+		shadowRoot.append(inputWrap, label);
 	}
 
 	static observedAttributes: CpRadioObservedAttributes[] = ['checked'];
