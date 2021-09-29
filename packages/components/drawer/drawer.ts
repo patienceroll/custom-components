@@ -226,8 +226,14 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		}
 	}
 
+	disconnectedCallback() {
+		this.#closeIcon?.removeEventListener('click', this.close.bind(this), false);
+	}
+
+	/** 渲染抽屉头部 */
 	#renderHeader() {
 		const title = this.getAttribute('title') as DrawerHeaderProps['title'];
+
 		const header = document.createElement('header');
 		header.classList.add('cp-drawer-header');
 
@@ -242,20 +248,22 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		const closeIcon = document.createElement('div');
 		closeIcon.innerHTML = icon;
 		closeIcon.classList.add('cp-drawer-header-close-icon');
-		this.#closeIcon = closeIcon;
-		headerTitleContent.append(closeIcon, headerTitle);
 		closeIcon.addEventListener('click', this.close.bind(this), false);
+		headerTitleContent.append(closeIcon, headerTitle);
+		this.#closeIcon = closeIcon;
 
 		const headerAction = document.createElement('div');
 		headerAction.classList.add('cp-drawer-header-action');
 		const headerActionSlot = document.createElement('slot');
 		headerActionSlot.name = 'drawer-header-action';
 		headerAction.append(headerActionSlot);
+
 		header.append(headerTitleContent, headerAction);
 
 		return header;
 	}
 
+	/** 渲染抽屉内容 */
 	#renderContent() {
 		const content = document.createElement('div');
 		content.classList.add('cp-drawer-content');
@@ -276,13 +284,10 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	// 	return footerContent;
 	// }
 
+	/** 处理方向 */
 	#disposeDirection() {
 		const direction = this.getAttribute('direction') as Direction;
 		this.#direction = direction || 'right';
-	}
-
-	disconnectedCallback() {
-		this.#closeIcon?.removeEventListener('click', this.close.bind(this), false);
 	}
 
 	/** 处理抽屉动画*/

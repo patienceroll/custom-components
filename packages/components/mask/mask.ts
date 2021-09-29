@@ -1,6 +1,7 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
 export default class CpMask extends HTMLElement implements CustomElement {
+	/** 蒙层内容 */
 	maskContent: HTMLElement;
 	static index = 0;
 	#maskNode: HTMLElement;
@@ -24,6 +25,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		},
 		'.cp-mask-content': {
 			position: 'fixed',
+			boxSizing: 'border-box',
 		},
 		'.cp-mask-show': {
 			opacity: '1',
@@ -79,17 +81,14 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		}
 	}
 
-	disposeOpen(isOpen: BooleanCharacter = 'true') {
+	#disposeOpen(isOpen: BooleanCharacter = 'true') {
 		if (isOpen === 'true') {
 			this.#maskNode.classList.add('cp-mask-show');
 			this.#maskNode.classList.remove('cp-mask-close');
 		} else {
 			this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
 		}
-	}
 
-	/** 处理蒙层和蒙层内容层级*/
-	disposeMaskZIndex(isOpen: BooleanCharacter = 'true') {
 		const zIndex = `${1000 + (isOpen === 'true' ? ++CpMask.index : --CpMask.index)}`;
 		this.#maskNode.style.zIndex = zIndex;
 		this.maskContent.style.zIndex = zIndex;
@@ -99,8 +98,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	attributeChangedCallback(name: 'open' | 'mask-closable', _: string, newValue: string) {
 		switch (name) {
 			case 'open':
-				this.disposeOpen(newValue as BooleanCharacter);
-				break;
+				throw new Error("not support directly modify 'open' attributes");
 			case 'mask-closable':
 				this.disposeMaskClosable(newValue as BooleanCharacter);
 			default:
@@ -113,7 +111,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	/** 关闭mask回调 */
-	onBeforeClose() {
+	onBeforeClose?() {
 		return new Promise((resolve) => {
 			setTimeout(() => {
 				resolve('close');
@@ -122,14 +120,14 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	/** 开启mask回调 */
-	onBeforeShow() {}
+	onBeforeShow?() {}
 
 	/** 打开蒙层 */
 	async show() {
 		const isOpen = this.getAttribute('open') as BooleanCharacter;
 		if (isOpen === 'true') return;
-		this.disposeMaskZIndex();
-		await this.onBeforeShow();
+		this.#disposeOpen('true');
+		await (this.onBeforeShow && this.onBeforeShow());
 		this.setAttribute('open', 'true');
 	}
 
@@ -137,9 +135,8 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	async close() {
 		const isOpen = this.getAttribute('open') as BooleanCharacter;
 		if (isOpen === 'false') return;
-		this.disposeOpen('false');
-		this.disposeMaskZIndex('false');
-		await this.onBeforeClose();
+		this.#disposeOpen('false');
+		await (this.onBeforeClose && this.onBeforeClose());
 		this.setAttribute('open', 'false');
 	}
 }
