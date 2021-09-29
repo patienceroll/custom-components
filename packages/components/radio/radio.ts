@@ -45,15 +45,19 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 			left: '0',
 			cursor: 'pointer',
 		},
+		'.cp-radio-radio-wrap:hover': {
+			backgroundColor: '#e9e9e9',
+		},
 		'.cp-radio-radio-wrap': {
 			display: 'inline-flex',
 			justifyContent: 'center',
 			alignItems: 'center',
 			position: 'relative',
-			padding: '0.2em',
+			padding: '0.4em',
 			width: '1.2em',
 			height: '1.2em',
 			verticalAlign: 'middle',
+			borderRadius: '50%',
 		},
 		'.cp-radio-label > slot': {
 			display: 'inline-block',
@@ -98,6 +102,13 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		this.addEventListener('click', () => {
 			if (this.getAttribute('checked') !== 'true') this.setAttribute('checked', 'true');
 		});
+		radioWrap.addEventListener('click', () => {
+			const { stable } = ripple.spread({
+				top: radioWrap.clientHeight / 2,
+				left: radioWrap.clientWidth / 2,
+			});
+			stable();
+		});
 
 		radioWrap.append(radio, ripple, radioIcon);
 		label.append(radioWrap, textSlot);
@@ -107,7 +118,7 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		this.radioIcon = radioIcon;
 	}
 
-	static observedAttributes: CpRadioObservedAttributes[] = ['checked'];
+	static observedAttributes: CpRadioObservedAttributes[] = ['checked', 'name'];
 	attributeChangedCallback(
 		this: AttachedShadowRoot<CpRadio>,
 		attr: CpRadioObservedAttributes,
@@ -125,6 +136,11 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 					(this.radioIcon.firstElementChild as SVGCircleElement).classList.remove('outer-checked');
 					(this.radioIcon.lastElementChild as SVGCircleElement).classList.remove('inner-checked');
 				}
+				// 如果不是初次
+				break;
+			case 'name':
+				if (newer) this.radio.name = newer;
+				else this.radio.removeAttribute('name');
 				break;
 			default:
 				break;
