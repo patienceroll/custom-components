@@ -7,13 +7,6 @@
 		<title>Document</title>
 
 		<style>
-			div {
-				height: 200px;
-				background-color: pink;
-				text-align: center;
-				font-size: 30px;
-			}
-
 			#btn {
 				position: fixed;
 				bottom: 10px;
@@ -36,16 +29,13 @@
 			<cp-button id="btn" onclick="onClickButton4(event)">定位按钮</cp-button>
 		</ul>
 
-		<cp-dialog id="dialog-1" open="false">
+		<cp-dialog title="默认弹窗" id="dialog-1" open="false">
 			<div>默认弹窗</div>
 		</cp-dialog>
-		<cp-dialog mask-closable="false" id="dialog-3" open="false">
-			<div>
-				<p>禁止点击蒙层关闭</p>
-				<cp-button onclick="onClickClose()">关闭弹窗</cp-button>
-			</div>
+		<cp-dialog title="禁止点击蒙层关闭" mask-closable="false" id="dialog-3" open="false">
+			<div>禁止点击蒙层关闭</div>
 		</cp-dialog>
-		<cp-dialog id="dialog-4" open="false">
+		<cp-dialog title="定位按钮" id="dialog-4" open="false">
 			<div>定位按钮</div>
 		</cp-dialog>
 

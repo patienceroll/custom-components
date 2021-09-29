@@ -54,14 +54,11 @@ const formatKeyframes = (keyframes: KeyframeObject) => {
  * @param style 样式对象
  */
 const setDomNodeStyle = (node: HTMLElement, style: CSSProperty) => {
-	let str = '';
-	const styleObj: CSSProperty = { ...node.style, ...style };
-	Object.keys(styleObj).forEach((key) => {
-		if (styleObj[key as keyof CSSProperty]) {
-			str += `${humpToOverline(key)}:${style[key as keyof CSSProperty]};`;
+	Object.keys(style).forEach((key) => {
+		if (style[key as keyof CSSProperty]) {
+			node.style.cssText += `${humpToOverline(key)}:${style[key as keyof CSSProperty]};`;
 		}
 	});
-	node.setAttribute('style', str);
 };
 
 export { formatStyle, formatKeyframes, setDomNodeStyle };
