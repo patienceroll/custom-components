@@ -1,6 +1,23 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
+import Stack from '../../utils/stack';
+
+const stack = new Stack<CpMask>();
+stack.finished = function (removeItem: CpMask) {
+	const len = this.stack.length;
+	// 新增弹窗才会走这个for循环
+	if (!removeItem) {
+		for (let i = 0; i < len; i++) {
+			this.stack[i].zIndex = i;
+			this.stack[i].disposeEvent(true);
+		}
+	}
+	removeItem?.disposeEvent?.(true);
+	this.top?.disposeEvent();
+};
 
 export default class CpMask extends HTMLElement implements CustomElement {
+	/** 层级 */
+	zIndex: number = 0;
 	/** 蒙层内容 */
 	maskContent: HTMLElement;
 	static index = 0;
@@ -11,7 +28,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		':host([open=true])': {
 			display: 'block',
 		},
-		':host([open=false])': {
+		':host': {
 			display: 'none',
 		},
 		'.cp-mask': {
@@ -29,11 +46,11 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		},
 		'.cp-mask-show': {
 			opacity: '1',
-			animation: 'show 0.4s ease',
+			animation: 'show 0.3s ease',
 		},
 		'.cp-mask-close': {
 			opacity: '0',
-			animation: 'close 0.4s ease',
+			animation: 'close 0.3s ease',
 		},
 	};
 	#keyframes: KeyframeObject = {
@@ -73,6 +90,22 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		shadowRoot.append(mask, maskContent);
 	}
 
+	#onKeydown = (e: KeyboardEvent) => {
+		if (e.keyCode === 27) {
+			this.dispatchEvent(new CustomEvent('close', { detail: null, bubbles: false }));
+		}
+	};
+
+	disposeEvent(remove = false) {
+		if (!remove) {
+			this.addEventListener('close', this.close.bind(this), false);
+			document.addEventListener('keydown', this.#onKeydown, false);
+		} else {
+			this.removeEventListener('close', this.close.bind(this), false);
+			document.removeEventListener('keydown', this.#onKeydown, false);
+		}
+	}
+
 	disposeMaskClosable(closable: BooleanCharacter) {
 		if (closable === 'false') {
 			this.#maskNode.removeEventListener('click', this.close.bind(this), false);
@@ -85,20 +118,16 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		if (isOpen === 'true') {
 			this.#maskNode.classList.add('cp-mask-show');
 			this.#maskNode.classList.remove('cp-mask-close');
+			this.#maskNode.style.zIndex = `${1000 + this.zIndex}`;
+			this.maskContent.style.zIndex = `${1000 + this.zIndex}`;
 		} else {
 			this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
 		}
-
-		const zIndex = `${1000 + (isOpen === 'true' ? ++CpMask.index : --CpMask.index)}`;
-		this.#maskNode.style.zIndex = zIndex;
-		this.maskContent.style.zIndex = zIndex;
 	}
 
-	static observedAttributes = ['open', 'mask-closable'];
-	attributeChangedCallback(name: 'open' | 'mask-closable', _: string, newValue: string) {
+	static observedAttributes = ['mask-closable'];
+	attributeChangedCallback(name: 'mask-closable', _: string, newValue: string) {
 		switch (name) {
-			case 'open':
-				throw new Error("not support directly modify 'open' attributes");
 			case 'mask-closable':
 				this.disposeMaskClosable(newValue as BooleanCharacter);
 			default:
@@ -115,28 +144,32 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		return new Promise((resolve) => {
 			setTimeout(() => {
 				resolve('close');
-			}, 400);
+			}, 300);
 		});
 	}
 
 	/** 开启mask回调 */
-	onBeforeShow?() {}
+	onBeforeShow?() {
+		return Promise.resolve();
+	}
 
 	/** 打开蒙层 */
 	async show() {
 		const isOpen = this.getAttribute('open') as BooleanCharacter;
 		if (isOpen === 'true') return;
+		stack.push(this);
 		this.#disposeOpen('true');
-		await (this.onBeforeShow && this.onBeforeShow());
 		this.setAttribute('open', 'true');
+		await this.onBeforeShow?.();
 	}
 
 	/** 关闭蒙层 */
 	async close() {
+		await this.onBeforeClose?.();
 		const isOpen = this.getAttribute('open') as BooleanCharacter;
 		if (isOpen === 'false') return;
 		this.#disposeOpen('false');
-		await (this.onBeforeClose && this.onBeforeClose());
 		this.setAttribute('open', 'false');
+		stack.remove(this);
 	}
 }

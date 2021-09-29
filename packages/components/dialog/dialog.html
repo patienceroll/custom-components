@@ -20,41 +20,41 @@
 		<ul>
 			<li>
 				<h4>默认弹窗</h4>
-				<cp-button onclick="onClickButton1(event)">打开弹窗</cp-button>
+				<cp-button class="button">打开弹窗</cp-button>
+			</li>
+			<li>
+				<h4>自定义标题</h4>
+				<cp-button class="button">打开弹窗</cp-button>
 			</li>
 			<li>
 				<h4>不允许点击蒙层关闭</h4>
-				<cp-button onclick="onClickButton3(event)">打开弹窗</cp-button>
+				<cp-button class="button">打开弹窗</cp-button>
 			</li>
-			<cp-button id="btn" onclick="onClickButton4(event)">定位按钮</cp-button>
+			<cp-button id="btn" class="button">定位按钮</cp-button>
 		</ul>
 
-		<cp-dialog title="默认弹窗" id="dialog-1" open="false">
+		<cp-dialog title="默认弹窗">
 			<div>默认弹窗</div>
 		</cp-dialog>
-		<cp-dialog title="禁止点击蒙层关闭" mask-closable="false" id="dialog-3" open="false">
+		<cp-dialog>
+			<div slot="dialog-title" style="color: rgb(132, 0, 255)">自定义标题</div>
+			<div>自定义标题</div>
+		</cp-dialog>
+		<cp-dialog title="禁止点击蒙层关闭" mask-closable="false">
 			<div>禁止点击蒙层关闭</div>
 		</cp-dialog>
-		<cp-dialog title="定位按钮" id="dialog-4" open="false">
+		<cp-dialog title="定位按钮">
 			<div>定位按钮</div>
 		</cp-dialog>
 
 		<script>
-			const dialog1 = document.querySelector('#dialog-1');
-			const dialog3 = document.querySelector('#dialog-3');
-			const dialog4 = document.querySelector('#dialog-4');
+			const btns = document.getElementsByClassName('button');
+			const dialogs = document.getElementsByTagName('cp-dialog');
 
-			function onClickButton1(e) {
-				dialog1.show();
-			}
-			function onClickButton3(e) {
-				dialog3.show();
-			}
-			function onClickButton4(e) {
-				dialog4.show();
-			}
-			function onClickClose() {
-				dialog3.close();
+			for (let i = 0; i < btns.length; i++) {
+				btns[i].onclick = function () {
+					dialogs[i].show();
+				};
 			}
 		</script>
 		<script type="module" src="../index.js"></script>

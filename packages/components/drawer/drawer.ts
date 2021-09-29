@@ -25,14 +25,14 @@ export default class CpDrawer extends CpMask implements CustomElement {
 			right: '0',
 			minWidth: '35vw',
 			height: '100vh',
-			animation: 'right-show .4s ease-in-out',
+			animation: 'right-show .3s ease-in-out',
 		},
 		'.cp-drawer-right-close-container': {
 			right: '0',
 			top: '0',
 			minWidth: '35vw',
 			height: '100vh',
-			animation: 'right-close .4s ease-in-out',
+			animation: 'right-close .3s ease-in-out',
 		},
 		// left
 		'.cp-drawer-left-container': {
@@ -40,14 +40,14 @@ export default class CpDrawer extends CpMask implements CustomElement {
 			top: '0',
 			minWidth: '35vw',
 			height: '100vh',
-			animation: 'left-show .4s ease-in-out',
+			animation: 'left-show .3s ease-in-out',
 		},
 		'.cp-drawer-left-close-container': {
 			left: '0',
 			top: '0',
 			minWidth: '35vw',
 			height: '100vh',
-			animation: 'left-close .4s ease-in-out',
+			animation: 'left-close .3s ease-in-out',
 		},
 		// top
 		'.cp-drawer-top-container': {
@@ -55,14 +55,14 @@ export default class CpDrawer extends CpMask implements CustomElement {
 			minHeight: '40vh',
 			left: '0',
 			top: '0',
-			animation: 'top-show .4s ease-in-out',
+			animation: 'top-show .3s ease-in-out',
 		},
 		'.cp-drawer-top-close-container': {
 			width: '100%',
 			minHeight: '40vh',
 			left: '0',
 			top: '0',
-			animation: 'top-close .4s ease-in-out',
+			animation: 'top-close .3s ease-in-out',
 		},
 		// bottom
 		'.cp-drawer-bottom-container': {
@@ -70,14 +70,14 @@ export default class CpDrawer extends CpMask implements CustomElement {
 			minHeight: '40vh',
 			left: '0',
 			bottom: '0',
-			animation: 'bottom-show .4s ease-in-out',
+			animation: 'bottom-show .3s ease-in-out',
 		},
 		'.cp-drawer-bottom-close-container': {
 			width: '100%',
 			minHeight: '40vh',
 			left: '0',
 			bottom: '0',
-			animation: 'bottom-close .4s ease-in-out',
+			animation: 'bottom-close .3s ease-in-out',
 		},
 		'.cp-drawer-content': {
 			padding: '10px',
@@ -301,16 +301,16 @@ export default class CpDrawer extends CpMask implements CustomElement {
 				this.maskContent.classList.add(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
 				setTimeout(() => {
 					resolve('close');
-				}, 400);
+				}, 300);
 			});
 		}
 	}
 
-	onBeforeShow() {
-		this.#disposeDrawerAnimation(true);
+	async onBeforeShow() {
+		await this.#disposeDrawerAnimation(true);
 	}
 
 	async onBeforeClose() {
-		return this.#disposeDrawerAnimation(false);
+		await this.#disposeDrawerAnimation(false);
 	}
 }
