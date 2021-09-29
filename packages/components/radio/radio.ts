@@ -100,8 +100,14 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		radio.type = 'radio';
 
 		this.addEventListener('click', () => {
-			if (this.getAttribute('checked') !== 'true') this.setAttribute('checked', 'true');
+			if (this.getAttribute('checked') !== 'true') {
+				this.setAttribute('checked', 'true');
+				this.dispatchEvent(
+					new CustomEvent<{ checked: boolean }>('check', { detail: { checked: true }, bubbles: true })
+				);
+			}
 		});
+
 		radioWrap.addEventListener('click', () => {
 			const { stable } = ripple.spread({
 				top: radioWrap.clientHeight / 2,
@@ -136,7 +142,6 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 					(this.radioIcon.firstElementChild as SVGCircleElement).classList.remove('outer-checked');
 					(this.radioIcon.lastElementChild as SVGCircleElement).classList.remove('inner-checked');
 				}
-				// 如果不是初次
 				break;
 			case 'name':
 				if (newer) this.radio.name = newer;

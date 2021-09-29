@@ -1,5 +1,5 @@
 import CpRadio from './radio';
-import CpRadioGroup from './radio-gropu';
+import CpRadioGroup from './radio-group';
 
 if (customElements.get('cp-radio') === undefined) {
 	customElements.define('cp-radio', CpRadio);
