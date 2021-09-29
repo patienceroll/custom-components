@@ -1,4 +1,4 @@
-import { formatStyle, formatKeyframes, setDomNodeStyle } from '../../utils/style';
+import { formatStyle, formatKeyframes, disposeDomNodeStyle } from '../../utils/style';
 import { DrawerHeaderProps } from '../drawer/data';
 import CpMask from '../mask/mask';
 
@@ -16,7 +16,7 @@ export default class CpDialog extends CpMask implements CustomElement {
 			minWidth: '30%',
 			left: '50%',
 			transform: 'translateX(-50%)',
-			transition: 'all .4s ease-in-out',
+			transition: 'all .3s ease-in-out',
 			backgroundColor: '#fff',
 		},
 		'.cp-dialog-header': {
@@ -27,6 +27,7 @@ export default class CpDialog extends CpMask implements CustomElement {
 			borderBottom: '1px solid #eee',
 			fontSize: '20px',
 			padding: '10px',
+			boxSizing: 'border-box',
 		},
 		'.cp-dialog-header .cp-dialog-header-close-icon': {
 			marginRight: '10px',
@@ -52,6 +53,7 @@ export default class CpDialog extends CpMask implements CustomElement {
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'flex-end',
+			boxSizing: 'border-box',
 		},
 		'.cp-dialog-footer .cp-dialog-footer-cancel-button': {
 			marginRight: '10px',
@@ -75,8 +77,6 @@ export default class CpDialog extends CpMask implements CustomElement {
 			},
 		},
 	};
-	// 基础层级
-	static baseIndex = 0;
 
 	constructor() {
 		super();
@@ -108,7 +108,7 @@ export default class CpDialog extends CpMask implements CustomElement {
 		const headerTitle = document.createElement('div');
 		headerTitle.classList.add('cp-dialog-header-title');
 		const headerTitleSlot = document.createElement('slot');
-		headerTitleSlot.name = 'dialog-header-title';
+		headerTitleSlot.name = 'dialog-title';
 		headerTitle.innerHTML = title ? `<span>${title}</span>` : '';
 		headerTitle.append(headerTitleSlot);
 		const closeIcon = document.createElement('div');
@@ -158,23 +158,24 @@ export default class CpDialog extends CpMask implements CustomElement {
 		const { x, y } = this.#mousePosition;
 		// 弹窗
 		if (isShow) {
-			setDomNodeStyle(this.maskContent, {
+			disposeDomNodeStyle(this.maskContent, {
 				left: `${x}px`,
 				top: `${y}px`,
 				transform: 'scale(0,0)',
 				opacity: '0',
 			});
+
 			setTimeout(() => {
-				setDomNodeStyle(this.maskContent, {
+				disposeDomNodeStyle(this.maskContent, {
 					left: '50%',
 					top: '20%',
 					transform: 'scale(1,1) translateX(-50%)',
 					opacity: '1',
 				});
-			}, 400);
+			}, 300);
 		} else {
 			return new Promise((resolve) => {
-				setDomNodeStyle(this.maskContent, {
+				disposeDomNodeStyle(this.maskContent, {
 					left: `${x}px`,
 					top: `${y}px`,
 					transform: 'scale(0.5,0.5)',
@@ -182,7 +183,7 @@ export default class CpDialog extends CpMask implements CustomElement {
 				});
 				setTimeout(() => {
 					resolve('close');
-				}, 400);
+				}, 300);
 			});
 		}
 	}
