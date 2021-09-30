@@ -18,6 +18,10 @@ class Stack<T> {
 		this.finished?.(item);
 	}
 
+	getLength() {
+		return this.stack.length;
+	}
+
 	/** 删除或增加元素的回调 */
 	finished?(oldTop?: T) {}
 }

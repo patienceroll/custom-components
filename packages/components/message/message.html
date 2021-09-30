@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>消息弹窗</title>
+	</head>
+	<body>
+		<h1>消息弹窗</h1>
+
+		<ul>
+			<li>
+				<h4>基础消息</h4>
+				<cp-button class="button">打开消息</cp-button>
+			</li>
+
+			<cp-message class="message"></cp-message>
+		</ul>
+
+		<script src="../index.js" type="module"></script>
+
+		<script>
+			const btns = document.getElementsByClassName('button');
+			const msgs = document.getElementsByClassName('message');
+
+			for (let i = 0; i < btns.length; i++) {
+				btns[i].onclick = function () {
+					msgs[i].showMessage({ message: '测试消息', duration: 2000 });
+				};
+			}
+		</script>
+	</body>
+</html>
