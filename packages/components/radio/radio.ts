@@ -105,8 +105,6 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 			}
 		});
 
-		console.dir(this);
-
 		radioWrap.addEventListener('click', () => {
 			const { stable } = ripple.spread({
 				top: radioWrap.clientHeight / 2,
