@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>蒙层组件</title>
+	</head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>蒙层组件</title>
-</head>
+	<body>
+		<h1>蒙层组件</h1>
+		<ul>
+			<li>
+				<button onclick="onClickButton()">打开蒙层</button>
+			</li>
+			<cp-mask open="false" id="cp-mask"> </cp-mask>
+		</ul>
+		<script>
+			const mask = document.getElementById('cp-mask');
 
-<body>
-  <h1>蒙层组件</h1>
-  <ul>
-    <li>
-      <button onclick="onClickButton()">打开蒙层</button>
-    </li>
-    <cp-mask open="false" id='cp-mask'> </cp-mask>
-  </ul>
-  <script>
-    const mask = document.getElementById('cp-mask');
+			function onClickButton() {
+				mask.show();
+			}
+		</script>
 
-    function onClickButton() {
-      mask.show();
-    }
-  </script>
-
-  <script type="module" src="../index.js"></script>
-</body>
-
-
+		<script type="module" src="../index.js"></script>
+	</body>
 </html>

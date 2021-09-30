@@ -3,19 +3,21 @@ import Stack from '../../utils/stack';
 
 const stack = new Stack<CpMask>();
 stack.finished = function (removeItem: CpMask) {
-	const len = this.stack.length;
+	const len = this.getLength();
 	// 新增弹窗才会走这个for循环
 	if (!removeItem) {
 		for (let i = 0; i < len; i++) {
-			this.stack[i].zIndex = i;
 			this.stack[i].disposeEvent(true);
 		}
 	}
 	removeItem?.disposeEvent?.(true);
 	this.top?.disposeEvent();
+	if (this.top) this.top.zIndex = len;
 };
 
 export default class CpMask extends HTMLElement implements CustomElement {
+	/**是否需要展示蒙层 */
+	showMask: boolean = true;
 	/** 层级 */
 	zIndex: number = 0;
 	/** 蒙层内容 */
@@ -85,7 +87,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		this.maskContent = maskContent;
 		this.#maskNode = mask;
 
-		this.disposeMaskClosable(closable as BooleanCharacter);
+		this.#disposeMaskClosable(closable as BooleanCharacter);
 		shadowRoot.adoptedStyleSheets = [this.#styleSheet, this.#keyframesSheet];
 		shadowRoot.append(mask, maskContent);
 	}
@@ -106,7 +108,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		}
 	}
 
-	disposeMaskClosable(closable: BooleanCharacter) {
+	#disposeMaskClosable(closable: BooleanCharacter) {
 		if (closable === 'false') {
 			this.#maskNode.removeEventListener('click', this.close.bind(this), false);
 		} else {
@@ -115,21 +117,26 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	#disposeOpen(isOpen: BooleanCharacter = 'true') {
-		if (isOpen === 'true') {
-			this.#maskNode.classList.add('cp-mask-show');
-			this.#maskNode.classList.remove('cp-mask-close');
-			this.#maskNode.style.zIndex = `${1000 + this.zIndex}`;
-			this.maskContent.style.zIndex = `${1000 + this.zIndex}`;
+		if (this.showMask) {
+			if (isOpen === 'true') {
+				this.#maskNode.classList.add('cp-mask-show');
+				this.#maskNode.classList.remove('cp-mask-close');
+				this.#maskNode.style.zIndex = `${1000 + this.zIndex}`;
+			} else {
+				this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
+			}
 		} else {
-			this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
+			this.#maskNode.style.display = 'none';
 		}
+
+		this.maskContent.style.zIndex = `${1000 + this.zIndex}`;
 	}
 
 	static observedAttributes = ['mask-closable'];
 	attributeChangedCallback(name: 'mask-closable', _: string, newValue: string) {
 		switch (name) {
 			case 'mask-closable':
-				this.disposeMaskClosable(newValue as BooleanCharacter);
+				this.#disposeMaskClosable(newValue as BooleanCharacter);
 			default:
 				break;
 		}
@@ -165,10 +172,10 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	/** 关闭蒙层 */
 	async close() {
+		this.#disposeOpen('false');
 		await this.onBeforeClose?.();
 		const isOpen = this.getAttribute('open') as BooleanCharacter;
 		if (isOpen === 'false') return;
-		this.#disposeOpen('false');
 		this.setAttribute('open', 'false');
 		stack.remove(this);
 	}
