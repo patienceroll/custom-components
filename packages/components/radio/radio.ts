@@ -100,8 +100,13 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		radio.type = 'radio';
 
 		this.addEventListener('click', () => {
-			if (this.getAttribute('checked') !== 'true') this.setAttribute('checked', 'true');
+			if (this.getAttribute('checked') !== 'true') {
+				this.setAttribute('checked', 'true');
+			}
 		});
+
+		console.dir(this);
+
 		radioWrap.addEventListener('click', () => {
 			const { stable } = ripple.spread({
 				top: radioWrap.clientHeight / 2,
@@ -127,16 +132,24 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 	) {
 		switch (attr) {
 			case 'checked':
+				const { firstElementChild: outerCircle, lastElementChild: innerCircle } = this.radioIcon as unknown as {
+					firstElementChild: SVGCircleElement;
+					lastElementChild: SVGCircleElement;
+				};
 				if (newer === 'true') {
 					this.radio.checked = true;
-					(this.radioIcon.firstElementChild as SVGCircleElement).classList.add('outer-checked');
-					(this.radioIcon.lastElementChild as SVGCircleElement).classList.add('inner-checked');
+					outerCircle.classList.add('outer-checked');
+					innerCircle.classList.add('inner-checked');
+
+					if (older !== 'true') {
+						const event = new CustomEvent<{ checked: true }>('check', { detail: { checked: true }, bubbles: true });
+						this.dispatchEvent(event);
+					}
 				} else {
 					this.radio.checked = false;
-					(this.radioIcon.firstElementChild as SVGCircleElement).classList.remove('outer-checked');
-					(this.radioIcon.lastElementChild as SVGCircleElement).classList.remove('inner-checked');
+					outerCircle.classList.remove('outer-checked');
+					innerCircle.classList.remove('inner-checked');
 				}
-				// 如果不是初次
 				break;
 			case 'name':
 				if (newer) this.radio.name = newer;

@@ -2,7 +2,6 @@ import type Ripple from '../ripple/ripple';
 
 import CpButtonBase from './button-base';
 
-
 import { formatStyle } from '../../utils/style';
 
 import '../ripple';

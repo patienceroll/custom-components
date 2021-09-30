@@ -1,6 +1,5 @@
 import { formatStyle } from '../../utils/style';
 
-
 export default class CpPaper extends HTMLElement {
 	#styleSheet?: CSSStyleSheet;
 	#style: CSSStyleObject = {
