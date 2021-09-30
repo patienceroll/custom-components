@@ -8,4 +8,6 @@ export type CpRadioProps = {
 	'name'?: string;
 	/** 单选 icon 的颜色 */
 	'color'?: string;
+	/** 单选框选中事件 */
+	'oncheck': (event: CustomEvent<true>) => void;
 };
