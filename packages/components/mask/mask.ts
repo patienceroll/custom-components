@@ -7,17 +7,15 @@ stack.finished = function (removeItem: CpMask) {
 	// 新增弹窗才会走这个for循环
 	if (!removeItem) {
 		for (let i = 0; i < len; i++) {
-			this.stack[i].disposeEvent(true);
+			this.stack[i]._disposeEvent(true);
 		}
 	}
-	removeItem?.disposeEvent?.(true);
-	this.top?.disposeEvent();
+	removeItem?._disposeEvent?.(true);
+	this.top?._disposeEvent();
 	if (this.top) this.top.zIndex = len;
 };
 
 export default class CpMask extends HTMLElement implements CustomElement {
-	/**是否需要展示蒙层 */
-	showMask: boolean = true;
 	/** 层级 */
 	zIndex: number = 0;
 	/** 蒙层内容 */
@@ -88,8 +86,40 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		this.#maskNode = mask;
 
 		this.#disposeMaskClosable(closable as BooleanCharacter);
+		// 动画结束
+		this.#maskNode.addEventListener('animationend', this.onMaskAnimation);
 		shadowRoot.adoptedStyleSheets = [this.#styleSheet, this.#keyframesSheet];
 		shadowRoot.append(mask, maskContent);
+	}
+
+	onMaskAnimation = (e: AnimationEvent) => {
+		switch (e.animationName) {
+			case 'close':
+				// 动画结束
+				if ([...this.#maskNode.classList].includes('cp-mask-close')) {
+					this.setAttribute('open', 'false');
+					stack.remove(this);
+				}
+				break;
+			default:
+				break;
+		}
+	};
+
+	disconnectedCallback() {
+		this.#maskNode.removeEventListener('animationend', this.onMaskAnimation);
+		this.#maskNode.removeEventListener('click', this.close.bind(this), false);
+	}
+
+	static observedAttributes = ['mask-closable'];
+	attributeChangedCallback(name: 'mask-closable', _: string, newValue: string) {
+		switch (name) {
+			case 'mask-closable':
+				this.#disposeMaskClosable(newValue as BooleanCharacter);
+				break;
+			default:
+				break;
+		}
 	}
 
 	#onKeydown = (e: KeyboardEvent) => {
@@ -98,7 +128,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		}
 	};
 
-	disposeEvent(remove = false) {
+	_disposeEvent(remove = false) {
 		if (!remove) {
 			this.addEventListener('close', this.close.bind(this), false);
 			document.addEventListener('keydown', this.#onKeydown, false);
@@ -117,66 +147,35 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	#disposeOpen(isOpen: BooleanCharacter = 'true') {
-		if (this.showMask) {
-			if (isOpen === 'true') {
-				this.#maskNode.classList.add('cp-mask-show');
-				this.#maskNode.classList.remove('cp-mask-close');
-				this.#maskNode.style.zIndex = `${1000 + this.zIndex}`;
-			} else {
-				this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
-			}
+		if (isOpen === 'true') {
+			this.#maskNode.classList.add('cp-mask-show');
+			this.#maskNode.classList.remove('cp-mask-close');
+			this.#maskNode.style.zIndex = `${1000 + this.zIndex}`;
+			this.maskContent.style.zIndex = `${1000 + this.zIndex}`;
 		} else {
-			this.#maskNode.style.display = 'none';
+			this.#maskNode?.classList.replace('cp-mask-show', 'cp-mask-close');
 		}
-
-		this.maskContent.style.zIndex = `${1000 + this.zIndex}`;
-	}
-
-	static observedAttributes = ['mask-closable'];
-	attributeChangedCallback(name: 'mask-closable', _: string, newValue: string) {
-		switch (name) {
-			case 'mask-closable':
-				this.#disposeMaskClosable(newValue as BooleanCharacter);
-			default:
-				break;
-		}
-	}
-
-	disconnectedCallback() {
-		this.#maskNode.removeEventListener('click', this.close.bind(this), false);
 	}
 
 	/** 关闭mask回调 */
-	onBeforeClose?() {
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				resolve('close');
-			}, 300);
-		});
-	}
+	onMaskClose?() {}
 
 	/** 开启mask回调 */
-	onBeforeShow?() {
-		return Promise.resolve();
-	}
+	onMaskShow?() {}
 
 	/** 打开蒙层 */
 	async show() {
 		const isOpen = this.getAttribute('open') as BooleanCharacter;
 		if (isOpen === 'true') return;
 		stack.push(this);
-		this.#disposeOpen('true');
 		this.setAttribute('open', 'true');
-		await this.onBeforeShow?.();
+		this.#disposeOpen('true');
+		this.onMaskShow?.();
 	}
 
 	/** 关闭蒙层 */
 	async close() {
 		this.#disposeOpen('false');
-		await this.onBeforeClose?.();
-		const isOpen = this.getAttribute('open') as BooleanCharacter;
-		if (isOpen === 'false') return;
-		this.setAttribute('open', 'false');
-		stack.remove(this);
+		this.onMaskClose?.();
 	}
 }

@@ -56,10 +56,12 @@ export default class CpMessage extends CpMask implements CustomElement {
 
 	constructor() {
 		super();
-
 		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
 		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
-
+		const message = document.createElement('div');
+		this.maskContent.classList.add('cp-message-content');
+		this.#message = message;
+		this.maskContent.append(message);
 		if (this.shadowRoot) {
 			this.shadowRoot.adoptedStyleSheets = [
 				...this.shadowRoot.adoptedStyleSheets,
@@ -67,17 +69,9 @@ export default class CpMessage extends CpMask implements CustomElement {
 				this.#keyframesSheet,
 			];
 		}
-
-		const message = document.createElement('div');
-		this.maskContent.classList.add('cp-message-content');
-		this.showMask = false;
-		this.#message = message;
-		message.innerText = '消息弹窗';
-		this.maskContent.append(message);
 	}
 
 	#timer: number = 0;
-
 	showMessage({ message, duration = 3000 }: MessageInt) {
 		this.#message.innerHTML = message;
 		this.show();
@@ -87,18 +81,13 @@ export default class CpMessage extends CpMask implements CustomElement {
 		}, duration);
 	}
 
-	async onBeforeShow() {
+	async onMaskShow() {
 		this.maskContent.classList.add('cp-message-show');
-		this.maskContent.classList.remove('cp-message-close');
+		this.maskContent.classList.toggle('cp-message-close', false);
 	}
 
-	async onBeforeClose() {
+	async onMaskClose() {
 		clearTimeout(this.#timer);
-		return new Promise((resolve) => {
-			this.maskContent.classList.replace('cp-message-show', 'cp-message-close');
-			setTimeout(() => {
-				resolve('close');
-			}, 300);
-		});
+		this.maskContent.classList.replace('cp-message-show', 'cp-message-close');
 	}
 }

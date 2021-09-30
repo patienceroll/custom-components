@@ -188,11 +188,11 @@ export default class CpDialog extends CpMask implements CustomElement {
 		}
 	}
 
-	async onBeforeClose() {
-		await this.disposemousePosition(false);
+	async onMaskShow() {
+		await this.disposemousePosition();
 	}
 
-	async onBeforeShow() {
-		await this.disposemousePosition();
+	async onMaskClose() {
+		await this.disposemousePosition(false);
 	}
 }
