@@ -33,7 +33,8 @@ declare type AttachedShadowRoot<T> = Omit<T, 'shadowRoot'> & {
 
 // https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/Using_custom_elements
 declare class CustomElement extends HTMLElement {
-
+	static styleSheet?: CSSStyleSheet;
+	static keyframesSheet?: CSSStyleSheet;
 	/** 当 custom element首次被插入文档DOM时，被调用 */
 	connectedCallback?() {}
 

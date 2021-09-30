@@ -1,85 +1,85 @@
 import type { CpRadioObservedAttributes } from './data';
 import type Ripple from '../ripple/ripple';
 
-import { formatStyle } from 'packages/utils/style';
+import { style } from '../../utils/decorators';
 
 import '../ripple';
 
+@style({
+	'.inner-checked': {
+		fill: '#1976d2',
+		transform: 'scale(1)',
+	},
+	'.outer-checked': {
+		stroke: '#1976d2',
+	},
+	'.inner': {
+		fill: '#999',
+		transform: 'scale(0)',
+		transition: 'transform 300ms ease',
+		transformOrigin: 'center',
+	},
+	'.outer': {
+		stroke: '#999',
+		fill: 'none',
+		strokeWidth: '8',
+	},
+	'.cp-radio-icon': {
+		width: '100%',
+		height: '100%',
+	},
+	'.cp-radio-radio-wrap > input': {
+		opacity: '0',
+		position: 'absolute',
+		zIndex: '1',
+		width: '100%',
+		height: '100%',
+		margin: '0',
+		top: '0',
+		left: '0',
+		cursor: 'pointer',
+	},
+	'.cp-radio-radio-wrap:hover': {
+		backgroundColor: '#e9e9e9',
+	},
+	'.cp-radio-radio-wrap': {
+		display: 'inline-flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		position: 'relative',
+		padding: '0.4em',
+		width: '1.2em',
+		height: '1.2em',
+		verticalAlign: 'middle',
+		borderRadius: '50%',
+	},
+	'.cp-radio-label > slot': {
+		display: 'inline-block',
+		verticalAlign: 'middle',
+	},
+	'.cp-radio-label': {
+		display: 'inline-block',
+		cursor: 'pointer',
+	},
+	':host([disabled="true"])': {
+		pointerEvents: 'none',
+	},
+	':host': {
+		display: 'inline-block',
+	},
+})
 export default class CpRadio extends HTMLElement implements CustomElement {
 	/** 组件实例 input 元素 */
 	radio: HTMLInputElement;
 	/** 组件实例 svg 元素,用来模拟原生的 radio 的图标 */
 	radioIcon: SVGSVGElement;
-	#styleSheet?: CSSStyleSheet;
-	#style: CSSStyleObject = {
-		'.inner-checked': {
-			fill: '#1976d2',
-			transform: 'scale(1)',
-		},
-		'.outer-checked': {
-			stroke: '#1976d2',
-		},
-		'.inner': {
-			fill: '#999',
-			transform: 'scale(0)',
-			transition: 'transform 300ms ease',
-			transformOrigin: 'center',
-		},
-		'.outer': {
-			stroke: '#999',
-			fill: 'none',
-			strokeWidth: '8',
-		},
-		'.cp-radio-icon': {
-			width: '100%',
-			height: '100%',
-		},
-		'.cp-radio-radio-wrap > input': {
-			opacity: '0',
-			position: 'absolute',
-			zIndex: '1',
-			width: '100%',
-			height: '100%',
-			margin: '0',
-			top: '0',
-			left: '0',
-			cursor: 'pointer',
-		},
-		'.cp-radio-radio-wrap:hover': {
-			backgroundColor: '#e9e9e9',
-		},
-		'.cp-radio-radio-wrap': {
-			display: 'inline-flex',
-			justifyContent: 'center',
-			alignItems: 'center',
-			position: 'relative',
-			padding: '0.4em',
-			width: '1.2em',
-			height: '1.2em',
-			verticalAlign: 'middle',
-			borderRadius: '50%',
-		},
-		'.cp-radio-label > slot': {
-			display: 'inline-block',
-			verticalAlign: 'middle',
-		},
-		'.cp-radio-label': {
-			display: 'inline-block',
-			cursor: 'pointer',
-		},
-		':host([disabled="true"])': {
-			pointerEvents: 'none',
-		},
-		':host': {
-			display: 'inline-block',
-		},
-	};
+	static styleSheet: CSSStyleSheet;
 
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
-		shadowRoot.adoptedStyleSheets = [this.#styleSheet];
+
+		shadowRoot.adoptedStyleSheets = [CpRadio.styleSheet];
 
 		const label = document.createElement('label');
 		const radioWrap = document.createElement('span');
