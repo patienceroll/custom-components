@@ -215,7 +215,7 @@ export default class CpDrawer extends CpMask implements CustomElement {
 		this.maskContent.classList.add('cp-drawer-container');
 
 		this.#disposeDirection();
-		this.#disposeDrawerAnimation();
+		this.#disposeDrawerClass();
 		this.maskContent.append(this.#renderHeader(), this.#renderContent());
 		if (this.shadowRoot) {
 			this.shadowRoot.adoptedStyleSheets = [
@@ -291,26 +291,21 @@ export default class CpDrawer extends CpMask implements CustomElement {
 	}
 
 	/** 处理抽屉动画*/
-	#disposeDrawerAnimation(isShow = true) {
+	#disposeDrawerClass(isShow = true) {
 		if (isShow) {
 			this.maskContent.classList.add(`cp-drawer-${this.#direction}-container`);
 			this.maskContent.classList.remove(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
 		} else {
-			return new Promise((resolve) => {
-				this.maskContent.classList.remove(`cp-drawer-${this.#direction}-container`);
-				this.maskContent.classList.add(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
-				setTimeout(() => {
-					resolve('close');
-				}, 300);
-			});
+			this.maskContent.classList.remove(`cp-drawer-${this.#direction}-container`);
+			this.maskContent.classList.add(`cp-drawer-${this.#direction}-close-container`, 'cp-drawer-close-container');
 		}
 	}
 
-	async onBeforeShow() {
-		await this.#disposeDrawerAnimation(true);
+	onMaskShow() {
+		this.#disposeDrawerClass(true);
 	}
 
-	async onBeforeClose() {
-		await this.#disposeDrawerAnimation(false);
+	onMaskClose() {
+		this.#disposeDrawerClass(false);
 	}
 }
