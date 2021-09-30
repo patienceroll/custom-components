@@ -53,7 +53,6 @@ export default class CpRipple extends HTMLElement {
 		shadowRoot.appendChild(child);
 	}
 
-	/** 目前涟漪动画开始和消失动画的时间分别都为 600ms,后续应该会添加自定义配置功能 */
 	get spread() {
 		return function (
 			this: AttachedShadowRoot<CpRipple>,

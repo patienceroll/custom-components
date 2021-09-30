@@ -31,18 +31,23 @@
 
     <li>
       <h4>默认</h4>
-      <cp-radio disabled="true">单选框1</cp-radio>
       <cp-radio default-checked="false">单选框2</cp-radio>
       <cp-radio checked="false">单选框3</cp-radio>
       <cp-radio checked="false"></cp-radio>
     </li>
     <li>
+      <h4>禁用</h4>
+      <mark>目前禁用没有加样式,后期会设置默认的禁用样式,但是我们期望的是二次封装的时候,来封装样式</mark>
+      <br />
+      <cp-radio disabled="true">单选框1</cp-radio>
+    </li>
+    <li>
       <h4>组</h4>
       <cp-radio-group>
         <cp-radio checked="false" name="group" value="单选框1">单选框1</cp-radio>
-        <cp-radio default-checked="false" name="group">单选框2</cp-radio>
-        <cp-radio checked="false" name="group">单选框3</cp-radio>
-        <cp-radio checked="false" name="group">单选框3</cp-radio>
+        <cp-radio default-checked="false" name="group" value="单选框2">单选框2</cp-radio>
+        <cp-radio checked="false" name="group" value="单选框3">单选框3</cp-radio>
+        <cp-radio checked="false" name="group" value="单选框4">单选框4</cp-radio>
       </cp-radio-group>
 
     </li>
