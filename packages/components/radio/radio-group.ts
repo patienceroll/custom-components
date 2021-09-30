@@ -17,13 +17,5 @@ export default class CpRadioGroup extends HTMLElement implements CustomElement {
 			});
 			this.dispatchEvent(new CustomEvent('change', { detail: { value: currentRadio.getAttribute('value') } }));
 		});
-
-		this.addEventListener('change', (event) => {
-			console.log(event);
-		});
-	}
-
-	connectedCallback() {
-		console.dir(this);
 	}
 }
