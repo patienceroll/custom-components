@@ -2,54 +2,49 @@ import type { ButtonObservedAttributes } from './data';
 
 import CpButtonBase from './button-base';
 
-import { formatStyle, formatKeyframes } from '../../utils/style';
+import { style, keyframe } from '../../utils/decorators';
 
 import '../ripple';
 import '../circular-progress';
 
+@style({
+	'.cp-button-loading > rect': {
+		animation: 'loading 2s linear infinite',
+	},
+	'.cp-button-loading': {
+		display: 'none',
+		position: 'absolute',
+		left: '0',
+		top: '0',
+		width: '100%',
+		height: '100%',
+	},
+	'.cp-button-disabled': {
+		boxShadow: 'none',
+	},
+})
+@keyframe({
+	loading: {
+		'0%': {
+			strokeDasharray: '0% 400%',
+			strokeDashoffset: '0',
+		},
+		'100%': {
+			strokeDasharray: '400% 400%',
+			strokeDashoffset: '-400%',
+		},
+	},
+})
 export default class CpButton extends CpButtonBase {
 	/** 组件 loading(加载中动画) Dom元素  */
 	loading: SVGElement;
-	#styleSheet?: CSSStyleSheet;
-	#style: CSSStyleObject = {
-		'.cp-button-loading > rect': {
-			animation: 'loading 2s linear infinite',
-		},
-		'.cp-button-loading': {
-			display: 'none',
-			position: 'absolute',
-			left: '0',
-			top: '0',
-			width: '100%',
-			height: '100%',
-		},
-		'.cp-button-disabled': {
-			boxShadow: 'none',
-		},
-	};
-
-	#keyframes: KeyframeObject = {
-		loading: {
-			'0%': {
-				strokeDasharray: '0% 400%',
-				strokeDashoffset: '0',
-			},
-			'100%': {
-				strokeDasharray: '400% 400%',
-				strokeDashoffset: '-400%',
-			},
-		},
-	};
-	#keyframesSheet?: CSSStyleSheet;
+	static styleSheet: CSSStyleSheet;
+	static keyframesSheet: CSSStyleSheet;
 
 	constructor() {
 		super();
-
 		const { shadowRoot } = this as AttachedShadowRoot<CpButtonBase>;
-		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
-		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
-
-		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, this.#keyframesSheet, this.#styleSheet];
+		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, CpButton.keyframesSheet, CpButton.styleSheet];
 
 		const button = shadowRoot.firstElementChild as HTMLButtonElement;
 		const textWrapper = document.createElement('span');

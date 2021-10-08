@@ -1,54 +1,51 @@
 import { formatStyle, formatKeyframes } from '../../utils/style';
 
-export default class CpRipple extends HTMLElement {
-	#styleSheet?: CSSStyleSheet;
-	#style: CSSStyleObject = {
-		'.stable': {
-			opacity: '0',
-		},
-		'.spread': {
-			animation: 'spread 600ms forwards',
-			opacity: '0.3',
-		},
-		'.ripple': {
-			position: 'absolute',
-			borderRadius: '50%',
-			transition: 'opacity ease 450ms',
-			opacity: '0',
-		},
-		':host': {
-			width: '100%',
-			height: '100%',
-			overflow: 'hidden',
-			display: 'inline-block',
-			position: 'absolute',
-			top: '0',
-			left: '0',
-			zIndex: '0',
-			borderRadius: 'inherit',
-		},
-	};
+import { style, keyframe } from '../../utils/decorators';
 
-	#keyframes: KeyframeObject = {
-		spread: {
-			'0%': {
-				transform: 'scale(0)',
-			},
-			'100%': {
-				transform: 'scale(1)',
-			},
+@style({
+	'.stable': {
+		opacity: '0',
+	},
+	'.spread': {
+		animation: 'spread 600ms forwards',
+		opacity: '0.3',
+	},
+	'.ripple': {
+		position: 'absolute',
+		borderRadius: '50%',
+		transition: 'opacity ease 450ms',
+		opacity: '0',
+	},
+	':host': {
+		width: '100%',
+		height: '100%',
+		overflow: 'hidden',
+		display: 'inline-block',
+		position: 'absolute',
+		top: '0',
+		left: '0',
+		zIndex: '0',
+		borderRadius: 'inherit',
+	},
+})
+@keyframe({
+	spread: {
+		'0%': {
+			transform: 'scale(0)',
 		},
-	};
-	#keyframesSheet?: CSSStyleSheet;
+		'100%': {
+			transform: 'scale(1)',
+		},
+	},
+})
+export default class CpRipple extends HTMLElement {
+	static styleSheet: CSSStyleSheet;
+	static keyframesSheet: CSSStyleSheet;
 
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
-		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
-		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
-
-		shadowRoot.adoptedStyleSheets = [this.#keyframesSheet, this.#styleSheet];
-
+		shadowRoot.adoptedStyleSheets = [CpRipple.keyframesSheet, CpRipple.styleSheet];
 		const child = document.createElement('slot');
 		shadowRoot.appendChild(child);
 	}
