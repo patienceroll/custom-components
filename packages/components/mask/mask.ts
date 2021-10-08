@@ -1,5 +1,5 @@
-import { formatStyle, formatKeyframes } from '../../utils/style';
 import Stack from '../../utils/stack';
+import { style, keyframe } from '../../utils/decorators';
 
 const stack = new Stack<CpMask>();
 stack.finished = function (removeItem: CpMask) {
@@ -15,67 +15,65 @@ stack.finished = function (removeItem: CpMask) {
 	if (this.top) this.top.zIndex = len;
 };
 
+@style({
+	':host([open=true])': {
+		display: 'block',
+	},
+	':host': {
+		display: 'none',
+	},
+	'.cp-mask': {
+		position: 'fixed',
+		width: '100vw',
+		height: '100vh',
+		backgroundColor: 'rgba(0,0,0,.45)',
+		top: '0',
+		left: '0',
+		overflow: 'hidden',
+	},
+	'.cp-mask-content': {
+		position: 'fixed',
+		boxSizing: 'border-box',
+	},
+	'.cp-mask-show': {
+		opacity: '1',
+		animation: 'show 0.3s ease',
+	},
+	'.cp-mask-close': {
+		opacity: '0',
+		animation: 'close 0.3s ease',
+	},
+})
+@keyframe({
+	show: {
+		'0%': {
+			opacity: '0',
+		},
+		'100%': {
+			opacity: '1',
+		},
+	},
+	close: {
+		'0%': {
+			opacity: '1',
+		},
+		'100%': {
+			opacity: '0',
+		},
+	},
+})
 export default class CpMask extends HTMLElement implements CustomElement {
 	/** 层级 */
 	zIndex: number = 0;
 	/** 蒙层内容 */
 	maskContent: HTMLElement;
-	static index = 0;
 	#maskNode: HTMLElement;
-	#styleSheet?: CSSStyleSheet;
-	#keyframesSheet?: CSSStyleSheet;
-	#style: CSSStyleObject = {
-		':host([open=true])': {
-			display: 'block',
-		},
-		':host': {
-			display: 'none',
-		},
-		'.cp-mask': {
-			position: 'fixed',
-			width: '100vw',
-			height: '100vh',
-			backgroundColor: 'rgba(0,0,0,.45)',
-			top: '0',
-			left: '0',
-			overflow: 'hidden',
-		},
-		'.cp-mask-content': {
-			position: 'fixed',
-			boxSizing: 'border-box',
-		},
-		'.cp-mask-show': {
-			opacity: '1',
-			animation: 'show 0.3s ease',
-		},
-		'.cp-mask-close': {
-			opacity: '0',
-			animation: 'close 0.3s ease',
-		},
-	};
-	#keyframes: KeyframeObject = {
-		show: {
-			'0%': {
-				opacity: '0',
-			},
-			'100%': {
-				opacity: '1',
-			},
-		},
-		close: {
-			'0%': {
-				opacity: '1',
-			},
-			'100%': {
-				opacity: '0',
-			},
-		},
-	};
+	static index = 0;
+	static styleSheet: CSSStyleSheet;
+	static keyframesSheet: CSSStyleSheet;
 
 	constructor() {
 		super();
-		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
-		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		const closable = this.getAttribute('mask-closable');
 		const mask = document.createElement('div');
@@ -87,12 +85,12 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 		this.#disposeMaskClosable(closable as BooleanCharacter);
 		// 动画结束
-		this.#maskNode.addEventListener('animationend', this.onMaskAnimation);
-		shadowRoot.adoptedStyleSheets = [this.#styleSheet, this.#keyframesSheet];
+		this.#maskNode.addEventListener('animationend', this.#disposeMaskAnimation);
+		shadowRoot.adoptedStyleSheets = [CpMask.styleSheet, CpMask.keyframesSheet];
 		shadowRoot.append(mask, maskContent);
 	}
 
-	onMaskAnimation = (e: AnimationEvent) => {
+	#disposeMaskAnimation = (e: AnimationEvent) => {
 		switch (e.animationName) {
 			case 'close':
 				// 动画结束
@@ -107,7 +105,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	};
 
 	disconnectedCallback() {
-		this.#maskNode.removeEventListener('animationend', this.onMaskAnimation);
+		this.#maskNode.removeEventListener('animationend', this.#disposeMaskAnimation);
 		this.#maskNode.removeEventListener('click', this.close.bind(this), false);
 	}
 
