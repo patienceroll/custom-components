@@ -1,96 +1,93 @@
-import { formatStyle, formatKeyframes, disposeDomNodeStyle } from '../../utils/style';
+import { disposeDomNodeStyle } from '../../utils/style';
+import { style, keyframe } from '../../utils/decorators';
 import { DrawerHeaderProps } from '../drawer/data';
 import CpMask from '../mask/mask';
 
 const icon = `<svg  t="1632705635683" class="close-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%"><defs><style type="text/css"></style></defs><path width="100%" height="100%" d="M576 512l277.333333 277.333333-64 64-277.333333-277.333333L234.666667 853.333333 170.666667 789.333333l277.333333-277.333333L170.666667 234.666667 234.666667 170.666667l277.333333 277.333333L789.333333 170.666667 853.333333 234.666667 576 512z" fill="#444444" p-id="2364"></path></svg>`;
-
+@style({
+	'.cp-dialog-modal-content': {
+		top: '20%',
+		minWidth: '30%',
+		left: '50%',
+		transform: 'translateX(-50%)',
+		transition: 'all .3s ease-in-out',
+		backgroundColor: '#fff',
+	},
+	'.cp-dialog-header': {
+		display: 'flex',
+		justifyContent: 'space-between',
+		minHeight: '70px',
+		alignItems: 'center',
+		borderBottom: '1px solid #eee',
+		fontSize: '20px',
+		padding: '10px',
+		boxSizing: 'border-box',
+	},
+	'.cp-dialog-header .cp-dialog-header-close-icon': {
+		marginRight: '10px',
+		cursor: 'pointer',
+		width: '1em',
+		height: '1em',
+		transition: 'transform .3s ease-in-out',
+	},
+	'.cp-dialog-header .cp-dialog-header-close-icon:hover': {
+		transform: 'rotate(90deg)',
+	},
+	'.cp-dialog-header .cp-dialog-header-title': {
+		fontSize: '1em',
+	},
+	'.cp-dialog-content': {
+		padding: '10px',
+		minHeight: '200px',
+	},
+	'.cp-dialog-footer': {
+		height: '70px',
+		borderTop: '1px solid #eee',
+		padding: '10px',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'flex-end',
+		boxSizing: 'border-box',
+	},
+	'.cp-dialog-footer .cp-dialog-footer-cancel-button': {
+		marginRight: '10px',
+	},
+})
+@keyframe({
+	show: {
+		'0%': {
+			opacity: '0',
+		},
+		'100%': {
+			opacity: '1',
+		},
+	},
+	hiden: {
+		'0%': {
+			opacity: '1',
+		},
+		'100%': {
+			opacity: '0',
+		},
+	},
+})
 export default class CpDialog extends CpMask implements CustomElement {
 	#closeIcon?: HTMLElement;
 	// 鼠标位置
 	#mousePosition = { x: '', y: '' };
-	#styleSheet?: CSSStyleSheet;
-	#keyframesSheet?: CSSStyleSheet;
-	#style: CSSStyleObject = {
-		'.cp-dialog-modal-content': {
-			top: '20%',
-			minWidth: '30%',
-			left: '50%',
-			transform: 'translateX(-50%)',
-			transition: 'all .3s ease-in-out',
-			backgroundColor: '#fff',
-		},
-		'.cp-dialog-header': {
-			display: 'flex',
-			justifyContent: 'space-between',
-			minHeight: '70px',
-			alignItems: 'center',
-			borderBottom: '1px solid #eee',
-			fontSize: '20px',
-			padding: '10px',
-			boxSizing: 'border-box',
-		},
-		'.cp-dialog-header .cp-dialog-header-close-icon': {
-			marginRight: '10px',
-			cursor: 'pointer',
-			width: '1em',
-			height: '1em',
-			transition: 'transform .3s ease-in-out',
-		},
-		'.cp-dialog-header .cp-dialog-header-close-icon:hover': {
-			transform: 'rotate(90deg)',
-		},
-		'.cp-dialog-header .cp-dialog-header-title': {
-			fontSize: '1em',
-		},
-		'.cp-dialog-content': {
-			padding: '10px',
-			minHeight: '200px',
-		},
-		'.cp-dialog-footer': {
-			height: '70px',
-			borderTop: '1px solid #eee',
-			padding: '10px',
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'flex-end',
-			boxSizing: 'border-box',
-		},
-		'.cp-dialog-footer .cp-dialog-footer-cancel-button': {
-			marginRight: '10px',
-		},
-	};
-	#keyframes: KeyframeObject = {
-		show: {
-			'0%': {
-				opacity: '0',
-			},
-			'100%': {
-				opacity: '1',
-			},
-		},
-		hiden: {
-			'0%': {
-				opacity: '1',
-			},
-			'100%': {
-				opacity: '0',
-			},
-		},
-	};
+	static styleSheet: CSSStyleSheet;
+	static keyframesSheet: CSSStyleSheet;
 
 	constructor() {
 		super();
-
-		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
-		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
 		this.maskContent.classList.add('cp-dialog-modal-content');
 
 		this.maskContent.append(this.#renderHeader(), this.#renderContent(), this.#renderFooter());
 
 		(this.shadowRoot as ShadowRoot).adoptedStyleSheets = [
 			...(this.shadowRoot as ShadowRoot).adoptedStyleSheets,
-			this.#styleSheet,
-			this.#keyframesSheet,
+			CpDialog.styleSheet,
+			CpDialog.keyframesSheet,
 		];
 	}
 

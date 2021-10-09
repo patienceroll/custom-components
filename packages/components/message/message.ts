@@ -1,63 +1,62 @@
-import { formatKeyframes, formatStyle } from 'packages/utils/style';
+import { style, keyframe } from '../../utils/decorators';
 import CpMask from '../mask/mask';
 import { MessageInt } from './data';
 
-export default class CpMessage extends CpMask implements CustomElement {
-	#message: HTMLElement;
-	#style: CSSStyleObject = {
-		'.cp-message-content': {
-			top: '100px',
-			left: '50%',
-			height: '40px',
-			borderRadius: '10px',
-			transform: 'translateX(-50%)',
-			backgroundColor: 'pink',
-			color: '#fff',
-			overflow: 'hidden',
-			textAlign: 'ctenter',
-			padding: '10px 20px',
-			border: '1px solid #eee',
-			display: 'flex',
-			alignItems: 'center',
-		},
-		'.cp-message-show': {
-			animation: 'show-message .3s ease-in-out',
-			opacity: '1',
-		},
-		'.cp-message-close': {
-			animation: 'close-message .3s ease-in-out',
+@style({
+	'.cp-message-content': {
+		top: '100px',
+		left: '50%',
+		height: '40px',
+		borderRadius: '10px',
+		transform: 'translateX(-50%)',
+		backgroundColor: 'pink',
+		color: '#fff',
+		overflow: 'hidden',
+		textAlign: 'ctenter',
+		padding: '10px 20px',
+		border: '1px solid #eee',
+		display: 'flex',
+		alignItems: 'center',
+	},
+	'.cp-message-show': {
+		animation: 'show-message .3s ease-in-out',
+		opacity: '1',
+	},
+	'.cp-message-close': {
+		animation: 'close-message .3s ease-in-out',
+		opacity: '0',
+	},
+})
+@keyframe({
+	'show-message': {
+		'0%': {
+			transform: 'translate(-50%,-100px)',
 			opacity: '0',
 		},
-	};
-	#styleSheet?: CSSStyleSheet;
-	#keyframesSheet?: CSSStyleSheet;
-	#keyframes: KeyframeObject = {
-		'show-message': {
-			'0%': {
-				transform: 'translate(-50%,-100px)',
-				opacity: '0',
-			},
-			'100%': {
-				transform: 'translate(-50%,0)',
-				opacity: '1',
-			},
+		'100%': {
+			transform: 'translate(-50%,0)',
+			opacity: '1',
 		},
-		'close-message': {
-			'0%': {
-				transform: 'translate(-50%,0)',
-				opacity: '1',
-			},
-			'100%': {
-				transform: 'translate(-50%,-100px)',
-				opacity: '0',
-			},
+	},
+	'close-message': {
+		'0%': {
+			transform: 'translate(-50%,0)',
+			opacity: '1',
 		},
-	};
+		'100%': {
+			transform: 'translate(-50%,-100px)',
+			opacity: '0',
+		},
+	},
+})
+export default class CpMessage extends CpMask implements CustomElement {
+	#message: HTMLElement;
+	static styleSheet: CSSStyleSheet;
+	static keyframesSheet: CSSStyleSheet;
 
 	constructor() {
 		super();
-		if (this.#styleSheet === undefined) this.#styleSheet = formatStyle(this.#style);
-		if (this.#keyframesSheet === undefined) this.#keyframesSheet = formatKeyframes(this.#keyframes);
+
 		const message = document.createElement('div');
 		this.maskContent.classList.add('cp-message-content');
 		this.#message = message;
@@ -65,8 +64,8 @@ export default class CpMessage extends CpMask implements CustomElement {
 		if (this.shadowRoot) {
 			this.shadowRoot.adoptedStyleSheets = [
 				...this.shadowRoot.adoptedStyleSheets,
-				this.#styleSheet,
-				this.#keyframesSheet,
+				CpMessage.styleSheet,
+				CpMessage.keyframesSheet,
 			];
 		}
 	}
@@ -75,7 +74,7 @@ export default class CpMessage extends CpMask implements CustomElement {
 	showMessage({ message, duration = 3000 }: MessageInt) {
 		this.#message.innerHTML = message;
 		this.show();
-		clearInterval(this.#timer as number);
+		clearTimeout(this.#timer as number);
 		this.#timer = setTimeout(() => {
 			this.close();
 		}, duration);

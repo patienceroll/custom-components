@@ -122,7 +122,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	#onKeydown = (e: KeyboardEvent) => {
 		if (e.keyCode === 27) {
-			this.dispatchEvent(new CustomEvent('close', { detail: null, bubbles: false }));
+			this.dispatchEvent(new CustomEvent('close', { detail: null, bubbles: false }));``
 		}
 	};
 
@@ -162,7 +162,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	onMaskShow?() {}
 
 	/** 打开蒙层 */
-	async show() {
+	show() {
 		const isOpen = this.getAttribute('open') as BooleanCharacter;
 		if (isOpen === 'true') return;
 		stack.push(this);
@@ -172,7 +172,7 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	/** 关闭蒙层 */
-	async close() {
+	close() {
 		this.#disposeOpen('false');
 		this.onMaskClose?.();
 	}
