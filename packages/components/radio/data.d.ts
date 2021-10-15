@@ -21,4 +21,6 @@ export type CpRadioGroupProps = {
 	 * 会强制改变 dom 元素下所有 cp-radio 的 name 属性
 	 */
 	'name'?: string;
+	/** 单选框值变化事件 */
+	'onchange': (event: CustomEvent<{ value: string }>) => void;
 };
