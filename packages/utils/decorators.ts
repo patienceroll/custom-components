@@ -15,18 +15,12 @@ export function keyframe(param: KeyframeObject) {
 }
 
 /** 监听变化的属性值装饰器 */
-export function watchAttr<T extends string>(param: {
-	attr: T[];
-	callback: (attr: T, older: string | null, newer: string | null) => void;
-}) {
+export function watch<Attr extends string, Target extends HTMLElement = HTMLElement>(
+	attr: Attr[],
+	onAttrChange: (this: Target, attr: Attr, older: string | null, newer: string | null) => void;
+) {
 	return function (target: typeof CustomElement) {
-		target.observedAttributes = param.attr;
-		Object.defineProperty(target.prototype, 'attributeChangedCallback', {
-			get() {
-				return param.callback;
-			},
-		});
-		console.dir(target);
-		console.log((target as any).a);
+		target.observedAttributes = attr;
+		target.prototype.attributeChangedCallback = onAttrChange;
 	};
 }

@@ -1,6 +1,6 @@
 import type { CpRateItemObservedAttributes } from './data';
 
-import { style, watchAttr } from '../../utils/decorators';
+import { style, watch } from '../../utils/decorators';
 
 const svg = `<div class="cp-rate-item-base">
 	<svg viewBox="0 0 24 24">
@@ -38,16 +38,13 @@ const svg = `<div class="cp-rate-item-base">
 		left: '0',
 	},
 })
-@watchAttr<CpRateItemObservedAttributes>({
-	attr: ['value'],
-	callback(attr, older, newer) {
-		switch (attr) {
-			case 'value':
-				console.log(older, newer);
-			default:
-				break;
-		}
-	},
+@watch<CpRateItemObservedAttributes, CpRateItem>(['value'], function (attr, older, newer) {
+	switch (attr) {
+		case 'value':
+			console.log(older, newer);
+		default:
+			break;
+	}
 })
 export default class CpRateItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
@@ -61,13 +58,5 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 
 		container.innerHTML = svg;
 		shadowRoot.appendChild(container);
-	}
-	attributeChangedCallback(attr: any, older: any, newer: any) {
-		switch (attr) {
-			case 'value':
-				console.log(older, newer, '232');
-			default:
-				break;
-		}
 	}
 }
