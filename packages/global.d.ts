@@ -45,7 +45,7 @@ declare class CustomElement extends HTMLElement {
 	adoptedCallback?() {}
 
 	/** 需要监听的属性名称 */
-	static observedAttributes? = [];
+	static observedAttributes?: string[];
 
 	/** 当 custom element增加、删除、修改自身属性时，被调用 与 observedAttributes 配套使用 */
 	attributeChangedCallback?(name: string, oldValue: string, newValue: string) {}
