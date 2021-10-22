@@ -2,7 +2,7 @@ import type { ButtonObservedAttributes } from './data';
 
 import CpButtonBase from './button-base';
 
-import { style, keyframe } from '../../utils/decorators';
+import { style, keyframe, watch } from '../../utils/decorators';
 
 import '../ripple';
 import '../circular-progress';
@@ -35,6 +35,28 @@ import '../circular-progress';
 		},
 	},
 })
+@watch<ButtonObservedAttributes, CpButton>(['disable', 'loading', 'loading-color'], function (attr, older, newer) {
+	switch (attr) {
+		case 'disable':
+			if (newer === 'true') this.button.classList.add('cp-button-disabled');
+			else this.button.classList.remove('cp-button-disabled');
+			break;
+		case 'loading':
+			if (newer === 'true') {
+				this.style.setProperty('pointer-events', 'none');
+				this.loading.style.display = 'block';
+			} else {
+				this.style.removeProperty('pointer-events');
+				this.loading.style.display = 'none';
+			}
+			break;
+		case 'loading-color':
+			(this.loading.firstElementChild as SVGRectElement).setAttribute('stroke', newer || '#1976d2');
+			break;
+		default:
+			break;
+	}
+})
 export default class CpButton extends CpButtonBase {
 	/** 组件 loading(加载中动画) Dom元素  */
 	loading: SVGElement;
@@ -64,35 +86,6 @@ export default class CpButton extends CpButtonBase {
 
 		textWrapper.append(leftIcon, text, rightIcon);
 		button.append(textWrapper, loading);
-	}
-
-	static observedAttributes: ButtonObservedAttributes[] = ['disable', 'loading', 'loading-color'];
-	attributeChangedCallback(
-		this: AttachedShadowRoot<CpButton>,
-		attr: ButtonObservedAttributes,
-		older: string | null,
-		newer: string | null
-	) {
-		switch (attr) {
-			case 'disable':
-				if (newer === 'true') this.button.classList.add('cp-button-disabled');
-				else this.button.classList.remove('cp-button-disabled');
-				break;
-			case 'loading':
-				if (newer === 'true') {
-					this.style.setProperty('pointer-events', 'none');
-					this.loading.style.display = 'block';
-				} else {
-					this.style.removeProperty('pointer-events');
-					this.loading.style.display = 'none';
-				}
-				break;
-			case 'loading-color':
-				(this.loading.firstElementChild as SVGRectElement).setAttribute('stroke', newer || '#1976d2');
-				break;
-			default:
-				break;
-		}
 	}
 	connectedCallback() {}
 }

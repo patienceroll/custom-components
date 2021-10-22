@@ -1,6 +1,6 @@
 import type { CpSkeletonObservedAttributes } from './data';
 
-import { style, keyframe } from '../../utils/decorators';
+import { style, keyframe, watch } from '../../utils/decorators';
 
 @style({
 	'.cp-skeleton-wave': {
@@ -51,27 +51,9 @@ import { style, keyframe } from '../../utils/decorators';
 		},
 	},
 })
-export default class CpSkeleton extends HTMLElement implements CustomElement {
-	/** skeleton , html 为 span 元素 */
-	skeleton: HTMLSpanElement;
-	static styleSheet: CSSStyleSheet;
-	static keyframesSheet: CSSStyleSheet;
-
-	constructor() {
-		super();
-		const shadowRoot = this.attachShadow({ mode: 'open' });
-		shadowRoot.adoptedStyleSheets = [CpSkeleton.keyframesSheet, CpSkeleton.styleSheet];
-
-		const skeleton = document.createElement('span');
-
-		this.skeleton = skeleton;
-		skeleton.classList.add('cp-skeleton');
-
-		shadowRoot.appendChild(skeleton);
-	}
-
-	static observedAttributes: CpSkeletonObservedAttributes[] = ['width', 'variant', 'animation'];
-	attributeChangedCallback(
+@watch<CpSkeletonObservedAttributes, AttachedShadowRoot<CpSkeleton>>(
+	['width', 'variant', 'animation'],
+	function (
 		this: AttachedShadowRoot<CpSkeleton>,
 		attr: CpSkeletonObservedAttributes,
 		older: string | null,
@@ -111,5 +93,24 @@ export default class CpSkeleton extends HTMLElement implements CustomElement {
 			default:
 				break;
 		}
+	}
+)
+export default class CpSkeleton extends HTMLElement implements CustomElement {
+	/** skeleton , html 为 span 元素 */
+	skeleton: HTMLSpanElement;
+	static styleSheet: CSSStyleSheet;
+	static keyframesSheet: CSSStyleSheet;
+
+	constructor() {
+		super();
+		const shadowRoot = this.attachShadow({ mode: 'open' });
+		shadowRoot.adoptedStyleSheets = [CpSkeleton.keyframesSheet, CpSkeleton.styleSheet];
+
+		const skeleton = document.createElement('span');
+
+		this.skeleton = skeleton;
+		skeleton.classList.add('cp-skeleton');
+
+		shadowRoot.appendChild(skeleton);
 	}
 }

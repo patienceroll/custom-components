@@ -1,6 +1,6 @@
 import type { CircularProgressObservedAttributes } from './data';
 
-import { style, keyframe } from '../../utils/decorators';
+import { style, keyframe, watch } from '../../utils/decorators';
 
 const circle = `<circle cx="22" cy="22" r="20.2" stroke="#1976d2" stroke-width="3.6" fill="none">
 </circle>`;
@@ -59,25 +59,9 @@ const svg = `<svg class="cp-circular-svg" viewBox="0 0 44 44">
 		},
 	},
 })
-export default class CpCircularProgress extends HTMLElement implements CustomElement {
-	static styleSheet: CSSStyleSheet;
-
-	static keyframesSheet: CSSStyleSheet;
-
-	constructor() {
-		super();
-		const shadowRoot = this.attachShadow({ mode: 'open' });
-		shadowRoot.adoptedStyleSheets = [CpCircularProgress.keyframesSheet, CpCircularProgress.styleSheet];
-		shadowRoot.innerHTML = svg;
-	}
-
-	static observedAttributes: CircularProgressObservedAttributes[] = ['color', 'value', 'label'];
-	attributeChangedCallback(
-		this: AttachedShadowRoot<CpCircularProgress>,
-		attr: CircularProgressObservedAttributes,
-		older: string | null,
-		newer: string | null
-	) {
+@watch<CircularProgressObservedAttributes, AttachedShadowRoot<CpCircularProgress>>(
+	['color', 'value', 'label'],
+	function (attr, older, newer) {
 		const svg = this.shadowRoot.firstElementChild as SVGAElement;
 		const circle = svg.firstElementChild as SVGCircleElement;
 		const text = svg.lastElementChild as SVGTextElement;
@@ -108,5 +92,17 @@ export default class CpCircularProgress extends HTMLElement implements CustomEle
 			default:
 				break;
 		}
+	}
+)
+export default class CpCircularProgress extends HTMLElement implements CustomElement {
+	static styleSheet: CSSStyleSheet;
+
+	static keyframesSheet: CSSStyleSheet;
+
+	constructor() {
+		super();
+		const shadowRoot = this.attachShadow({ mode: 'open' });
+		shadowRoot.adoptedStyleSheets = [CpCircularProgress.keyframesSheet, CpCircularProgress.styleSheet];
+		shadowRoot.innerHTML = svg;
 	}
 }
