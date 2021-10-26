@@ -2,50 +2,59 @@ import type { CpRateItemObservedAttributes } from './data';
 
 import { style, watch } from '../../utils/decorators';
 
-const svg = `<div class="cp-rate-item-base">
-	<svg viewBox="0 0 24 24">
-		<path fill="currentcolor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-	</svg>
-</div>
-<div class="cp-rate-item-active">
-	<svg viewBox="0 0 24 24">
-		<path fill="currentcolor" stroke="currentcolor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-	</svg>
-</div>
-`;
+const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>`;
 
 @style({
-	':host': {
-		display: 'inline-block',
-		lineHeight: '1em',
-		fontSize: 'inherit',
-		verticalAlign: 'top',
+	'.light svg': {
+		stroke: 'currentcolor',
 	},
-	'.cp-rate-item': {
-		width: '1em',
-		height: '1em',
-		position: 'relative',
+	'.base svg,.light svg': {
+		width: '2em',
+		height: '2em',
 	},
-	'.cp-rate-item-base': {
-		color: '#7F8E9D',
-	},
-	'.cp-rate-item-active': {
-		color: '#faaf00',
-		position: 'absolute',
-		width: '1em',
-		height: '1em',
+
+	'.light': {
+		position: ' absolute',
+		overflow: 'hidden',
 		top: '0',
 		left: '0',
+		color: '#faaf00',
+	},
+	'.base,.light': {
+		width: '2em',
+		height: '2em',
+		color: '#bdbdbd',
+	},
+	':host': {
+		display: 'inline-block',
+		verticalAlign: 'top',
+		fontSize: '12px',
+		position: 'relative',
 	},
 })
-@watch<CpRateItemObservedAttributes, CpRateItem>(['value'], function (attr, older, newer) {
-	switch (attr) {
-		case 'value':
-			console.log(older, newer);
-		default:
-			break;
+@watch<CpRateItemObservedAttributes, AttachedShadowRoot<CpRateItem>>(
+	['value', 'base-color', 'light-color'],
+	function (attr, older, newer) {
+		const light = this.shadowRoot.querySelector('.light') as HTMLDivElement;
+		switch (attr) {
+			case 'value':
+				if (newer) light.style.width = `${newer}%`;
+				else light.style.removeProperty('width');
+				break;
+			case 'light-color':
+				if (newer) light.style.color = newer;
+				else light.style.removeProperty('color');
+				break;
+			case 'base-color':
+				const base = this.shadowRoot.querySelector('.base') as HTMLDivElement;
+				if (newer) base.style.color = newer;
+				else base.style.removeProperty('color');
+				break;
+			default:
+				break;
+		}
 	}
-})
+)
 export default class CpRateItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	constructor() {
@@ -53,10 +62,14 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpRateItem.styleSheet];
 
-		const container = document.createElement('div');
-		container.classList.add('cp-rate-item');
+		const Base = document.createElement('div');
+		const Light = document.createElement('div');
+		Base.classList.add('base');
+		Light.classList.add('light');
 
-		container.innerHTML = svg;
-		shadowRoot.appendChild(container);
+		Base.innerHTML = svg;
+		Light.innerHTML = svg;
+
+		shadowRoot.append(Base, Light);
 	}
 }

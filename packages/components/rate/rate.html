@@ -22,6 +22,10 @@
     span {
       color: #999;
     }
+
+    mark {
+      font-size: 12px;
+    }
   </style>
 </head>
 
@@ -29,10 +33,51 @@
   <h1>评分组件</h1>
   <ul>
     <li>
+      <h4>单个评分</h4>
+      <ul>
+        <li>
+          <mark>评分组件由多个 “单个评分” 组件构成</mark>
+          <br />
+          <cp-rate-item value="100"></cp-rate-item>
+        </li>
+        <li>
+          <mark>单个评分的值在 0 ~ 100之间</mark>
+          <br />
+          <cp-rate-item value="0"></cp-rate-item>
+          <cp-rate-item value="20"></cp-rate-item>
+          <cp-rate-item value="40"></cp-rate-item>
+          <cp-rate-item value="60"></cp-rate-item>
+          <cp-rate-item value="80"></cp-rate-item>
+          <cp-rate-item value="85"></cp-rate-item>
+          <cp-rate-item value="100"></cp-rate-item>
+        </li>
+        <li>
+          <mark>可以设置单个评分的背景</mark>
+          <br />
+          <cp-rate-item base-color="yellow" value="50"></cp-rate-item>
+          <cp-rate-item base-color="#f40" value="50"></cp-rate-item>
+          <cp-rate-item base-color="blue" value="50"></cp-rate-item>
+        </li>
+        <li>
+          <mark>可以设置单个评分的颜色</mark>
+          <br />
+          <cp-rate-item light-color="yellow" value="50"></cp-rate-item>
+          <cp-rate-item light-color="#f40" value="50"></cp-rate-item>
+          <cp-rate-item light-color="blue" value="50"></cp-rate-item>
+        </li>
+      </ul>
+
+
+    </li>
+    <li>
       <h4>默认</h4>
       <ul>
         <li>
           <cp-rate>
+            <cp-rate-item value="100"></cp-rate-item>
+            <cp-rate-item value="100"></cp-rate-item>
+            <cp-rate-item value="100"></cp-rate-item>
+            <cp-rate-item value="100"></cp-rate-item>
             <cp-rate-item value="33"></cp-rate-item>
           </cp-rate>
         </li>
