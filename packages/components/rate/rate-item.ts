@@ -12,7 +12,6 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 		width: '2em',
 		height: '2em',
 	},
-
 	'.light': {
 		position: ' absolute',
 		overflow: 'hidden',
@@ -25,11 +24,15 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 		height: '2em',
 		color: '#bdbdbd',
 	},
+	':host(:hover)': {
+		transform: 'scale(1.2)',
+	},
 	':host': {
 		display: 'inline-block',
 		verticalAlign: 'top',
 		fontSize: '12px',
 		position: 'relative',
+		transition: 'transform 300ms ease',
 	},
 })
 @watch<CpRateItemObservedAttributes, AttachedShadowRoot<CpRateItem>>(
@@ -69,6 +72,20 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 
 		Base.innerHTML = svg;
 		Light.innerHTML = svg;
+
+		this.addEventListener('click', (event) => {
+			const { offsetX } = event;
+			const { clientWidth } = event.target as HTMLElement;
+			this.dispatchEvent(
+				new CustomEvent('rate', {
+					detail: {
+						domEvent: event,
+						value: offsetX / clientWidth,
+					},
+					bubbles: true,
+				})
+			);
+		});
 
 		shadowRoot.append(Base, Light);
 	}

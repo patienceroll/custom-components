@@ -10,13 +10,30 @@ import { style, watch } from '../../utils/decorators';
 		verticalAlign: 'middle',
 	},
 })
-@watch<CpRateObservedAttributes, AttachedShadowRoot<CpRate>>(['value'], function () {})
+@watch<CpRateObservedAttributes, AttachedShadowRoot<CpRate>>(['value', 'precision'], function (attr, older, newer) {
+	switch (attr) {
+		case 'value':
+			break;
+		case 'precision':
+			break;
+	}
+})
 export default class CpRate extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpRate.styleSheet];
-		shadowRoot.appendChild(document.createElement('slot'));
+		const slot = document.createElement('slot');
+		this.addEventListener('rate', (event) => {
+			console.log(event);
+		});
+
+		shadowRoot.appendChild(slot);
+	}
+
+	get rateItems() {
+	
+		return this.querySelectorAll('cp-rate-item');
 	}
 }
