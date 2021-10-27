@@ -70,6 +70,10 @@ export default class CpRate extends HTMLElement implements CustomElement {
 			);
 		});
 
+		this.addEventListener('moverate', (event) => {
+			console.log(event);
+		});
+
 		shadowRoot.appendChild(slot);
 	}
 
@@ -88,5 +92,9 @@ export default class CpRate extends HTMLElement implements CustomElement {
 	get highest() {
 		const highest = Number(this.getAttribute('highest'));
 		return Number.isNaN(highest) ? highest : 100;
+	}
+
+	measureRate(){
+
 	}
 }

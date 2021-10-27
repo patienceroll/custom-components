@@ -1,6 +1,7 @@
 import type { CpRateItemObservedAttributes } from './data';
 
 import { style, watch } from '../../utils/decorators';
+import { useLatestCall } from 'packages/utils/common-functions';
 
 const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>`;
 
@@ -33,6 +34,7 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 		fontSize: '12px',
 		position: 'relative',
 		transition: 'transform 300ms ease',
+		cursor: 'pointer',
 	},
 })
 @watch<CpRateItemObservedAttributes, AttachedShadowRoot<CpRateItem>>(
@@ -86,6 +88,23 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 				})
 			);
 		});
+
+		this.addEventListener(
+			'mousemove',
+			useLatestCall((event) => {
+				const { offsetX } = event;
+				const { clientWidth } = event.target as HTMLElement;
+				this.dispatchEvent(
+					new CustomEvent('moverate', {
+						detail: {
+							domEvent: event,
+							value: offsetX / clientWidth,
+						},
+						bubbles: true,
+					})
+				);
+			})
+		);
 
 		shadowRoot.append(Base, Light);
 	}
