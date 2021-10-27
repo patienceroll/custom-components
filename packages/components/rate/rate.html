@@ -73,21 +73,32 @@
       <h4>默认</h4>
       <ul>
         <li>
-          <cp-rate>
+          <cp-rate id="cp-rate">
             <cp-rate-item value="100"></cp-rate-item>
             <cp-rate-item value="100"></cp-rate-item>
             <cp-rate-item value="100"></cp-rate-item>
             <cp-rate-item value="100"></cp-rate-item>
             <cp-rate-item value="33"></cp-rate-item>
           </cp-rate>
+          <label>
+            分数:
+            <span id="score"></span>
+          </label>
         </li>
+
       </ul>
     </li>
   </ul>
 
 
-  
+
   <script src="../index.js" type="module"></script>
+  <script>
+    document.getElementById('cp-rate').addEventListener('change', (event) => {
+      console.log('change', event)
+      document.getElementById('score').innerHTML = event.detail.value
+    })
+  </script>
 </body>
 
 </html>

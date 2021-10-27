@@ -30,18 +30,44 @@ export default class CpRate extends HTMLElement implements CustomElement {
 
 		this.addEventListener('rate', (event) => {
 			const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
-			const { value, domEvent } = detail;
+			const { value: rateItemValue, domEvent } = detail;
 			const rateItems = Array.from(this.rateItems.values());
 			const index = rateItems.findIndex((item) => item === domEvent.target);
+			const perRateItemValue = this.highest / rateItems.length;
+			/** 当前事件触发的评分value值 */
+			const eventValue = perRateItemValue * index + perRateItemValue * rateItemValue;
+			/** 计算出来的评分应该展示几个星 */
+			const measureIndex = Math.floor(eventValue / perRateItemValue);
+
+			/** 余下的需要分配到单个评分的值 */
+			const remaindEventValue = eventValue % perRateItemValue;
+			const precision = this.precision;
+			/** 余下的需要分配到单个评分的值按照精度的余数 */
+			const remaindRateItemValue = remaindEventValue % precision;
+			/** 精度不应该大于单个评分的值,不然会导致显示错误，程序不管这个问题,交由用户控制 */
+			const measureRateItemValue = parseInt(
+				`${
+					remaindRateItemValue < precision / 2
+						? remaindEventValue - remaindRateItemValue
+						: remaindEventValue + (precision - remaindRateItemValue)
+				}`
+			);
 			rateItems.forEach((item, i) => {
-				if (i < index) {
+				if (i < measureIndex) {
 					item.setAttribute('value', '100');
 				} else if (i === index) {
-					item.setAttribute('value', `${value * 100}`);
+					item.setAttribute('value', `${(measureRateItemValue / perRateItemValue) * 100}`);
 				} else {
 					item.setAttribute('value', '0');
 				}
 			});
+			this.dispatchEvent(
+				new CustomEvent('change', {
+					detail: {
+						value: measureIndex * perRateItemValue + measureRateItemValue,
+					},
+				})
+			);
 		});
 
 		shadowRoot.appendChild(slot);
