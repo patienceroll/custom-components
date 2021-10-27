@@ -11,10 +11,10 @@ export function useLatestCall<T extends unknown[], returnType = void>(
 	let count = 0;
 	return (...argInput: T) => {
 		const remaindCount = ++count;
-		return new Promise<ReturnType<typeof func>>((resolve, reject) => {
+		return new Promise<ReturnType<typeof func> | false>((resolve) => {
 			setTimeout(() => {
 				if (remaindCount === count) resolve(func(...argInput));
-				else reject('not latest call');
+				else resolve(false);
 			}, during);
 		});
 	};

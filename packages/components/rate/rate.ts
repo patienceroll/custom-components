@@ -1,6 +1,7 @@
 import type { CpRateObservedAttributes } from './data';
 
 import { style, watch } from '../../utils/decorators';
+import { useLatestCall } from 'packages/utils/common-functions';
 
 @style({
 	':host': {
@@ -30,49 +31,22 @@ export default class CpRate extends HTMLElement implements CustomElement {
 
 		this.addEventListener('rate', (event) => {
 			const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
-			const { value: rateItemValue, domEvent } = detail;
+			const { value, domEvent } = detail;
 			const rateItems = Array.from(this.rateItems.values());
 			const index = rateItems.findIndex((item) => item === domEvent.target);
-			const perRateItemValue = this.highest / rateItems.length;
-			/** 当前事件触发的评分value值 */
-			const eventValue = perRateItemValue * index + perRateItemValue * rateItemValue;
-			/** 计算出来的评分应该展示几个星 */
-			const measureIndex = Math.floor(eventValue / perRateItemValue);
-
-			/** 余下的需要分配到单个评分的值 */
-			const remaindEventValue = eventValue % perRateItemValue;
-			const precision = this.precision;
-			/** 余下的需要分配到单个评分的值按照精度的余数 */
-			const remaindRateItemValue = remaindEventValue % precision;
-			/** 精度不应该大于单个评分的值,不然会导致显示错误，程序不管这个问题,交由用户控制 */
-			const measureRateItemValue = parseInt(
-				`${
-					remaindRateItemValue < precision / 2
-						? remaindEventValue - remaindRateItemValue
-						: remaindEventValue + (precision - remaindRateItemValue)
-				}`
-			);
-			rateItems.forEach((item, i) => {
-				if (i < measureIndex) {
-					item.setAttribute('value', '100');
-				} else if (i === index) {
-					item.setAttribute('value', `${(measureRateItemValue / perRateItemValue) * 100}`);
-				} else {
-					item.setAttribute('value', '0');
-				}
-			});
-			this.dispatchEvent(
-				new CustomEvent('change', {
-					detail: {
-						value: measureIndex * perRateItemValue + measureRateItemValue,
-					},
-				})
-			);
+			if (index !== -1) this.renderRateItems(((index + value) * this.highest) / rateItems.length);
 		});
 
-		this.addEventListener('moverate', (event) => {
-			console.log(event);
-		});
+		this.addEventListener(
+			'moverate',
+			useLatestCall((event) => {
+				const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
+				const { value, domEvent } = detail;
+				const rateItems = Array.from(this.rateItems.values());
+				const index = rateItems.findIndex((item) => item === domEvent.target);
+				if (index !== -1) this.renderRateItems(((index + value) * this.highest) / rateItems.length);
+			})
+		);
 
 		shadowRoot.appendChild(slot);
 	}
@@ -94,7 +68,41 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		return Number.isNaN(highest) ? highest : 100;
 	}
 
-	measureRate(){
-
+	/** 根据当前分数绘制单个评分的颜色 */
+	renderRateItems(rate: number) {
+		const { precision, highest } = this;
+		const rateItems = Array.from(this.rateItems.values());
+		/** 每个星标识的评分值 */
+		const perRateItemValue = highest / rateItems.length;
+		/** 全部点亮的星个数 */
+		const lightRateItems = Math.floor(rate / perRateItemValue);
+		/** 计算部分点亮的单个评分所需要的值 */
+		const rateItemValue = rate % perRateItemValue;
+		/** 部分点亮的单个评分的值按照精度的余数 */
+		const remaindRateItemValue = rateItemValue % precision;
+		/** 精度不应该大于单个评分的值,不然会导致显示错误，程序不管这个问题,交由用户控制 */
+		const measureRateItemValue = parseInt(
+			`${
+				remaindRateItemValue < precision / 2
+					? rateItemValue - remaindRateItemValue
+					: rateItemValue + (precision - remaindRateItemValue)
+			}`
+		);
+		rateItems.forEach((item, i) => {
+			if (i < lightRateItems) {
+				item.setAttribute('value', '100');
+			} else if (i === lightRateItems) {
+				item.setAttribute('value', `${(measureRateItemValue / perRateItemValue) * 100}`);
+			} else {
+				item.setAttribute('value', '0');
+			}
+		});
+		this.dispatchEvent(
+			new CustomEvent('change', {
+				detail: {
+					value: lightRateItems * perRateItemValue + measureRateItemValue,
+				},
+			})
+		);
 	}
 }
