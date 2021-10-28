@@ -25,6 +25,9 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 		height: '2em',
 		color: '#bdbdbd',
 	},
+	':host([disable="true"])': {
+		pointerEvents: 'none',
+	},
 	':host(:hover)': {
 		transform: 'scale(1.2)',
 	},
@@ -82,7 +85,7 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 				new CustomEvent('rate', {
 					detail: {
 						domEvent: event,
-						value: offsetX / clientWidth,
+						value: Math.abs(offsetX / clientWidth),
 					},
 					bubbles: true,
 				})
@@ -98,7 +101,7 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 					new CustomEvent('moverate', {
 						detail: {
 							domEvent: event,
-							value: offsetX / clientWidth,
+							value: Math.abs(offsetX / clientWidth),
 						},
 						bubbles: true,
 					})

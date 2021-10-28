@@ -2,4 +2,4 @@
 export type CpRateItemObservedAttributes = 'value' | 'base-color' | 'light-color';
 
 /** rate 监听的属性 */
-export type CpRateObservedAttributes = 'value' | 'precision' | 'highest';
+export type CpRateObservedAttributes = 'value' | 'precision' | 'highest' | 'disable';
