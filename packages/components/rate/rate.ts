@@ -16,8 +16,7 @@ import { useLatestCall } from 'packages/utils/common-functions';
 		case 'value':
 			const value = Number(newer);
 			if (!Number.isNaN(value)) {
-				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(value);
-				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
+				this.realValue = value;
 			} else throw new Error('错误的value值');
 			break;
 		case 'precision':
@@ -32,6 +31,7 @@ import { useLatestCall } from 'packages/utils/common-functions';
 })
 export default class CpRate extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	public realValue = this.highest;
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
@@ -107,6 +107,10 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		return value && !Number.isNaN(value) ? Number(value) : this.highest;
 	}
 
+	setRealValue(value: number) {
+		this.realValue = value;
+	}
+
 	/** 根据当前分数计算渲染参数 */
 	calculateRenderParams(rate: number) {
 		const { precision, highest } = this;
@@ -157,5 +161,9 @@ export default class CpRate extends HTMLElement implements CustomElement {
 				},
 			})
 		);
+	}
+
+	connectedCallback() {
+		console.dir(this);
 	}
 }
