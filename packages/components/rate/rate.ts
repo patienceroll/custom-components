@@ -52,26 +52,33 @@ export default class CpRate extends HTMLElement implements CustomElement {
 			}
 		});
 
+		this.addEventListener('moverate', (event) => {
+			const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
+			const { value, domEvent } = detail;
+			const rateItems = Array.from(this.rateItems.values());
+			const index = rateItems.findIndex((item) => item === domEvent.target);
+			if (index !== -1) {
+				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(
+					((index + value) * this.highest) / rateItems.length
+				);
+				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
+				this.dispatchEvent(
+					new CustomEvent('changehover', {
+						detail: {
+							value: lightRateNum * perRateItemValue + partOfLightRateValue,
+						},
+					})
+				);
+			}
+		});
+
+		/** useLatestcall 的原因是,rateItem 的 moverate 也使用了 useLatestcall,
+		 * 保证 mouseleave 是在 moverate之后触发 */
 		this.addEventListener(
-			'moverate',
-			useLatestCall((event) => {
-				const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
-				const { value, domEvent } = detail;
-				const rateItems = Array.from(this.rateItems.values());
-				const index = rateItems.findIndex((item) => item === domEvent.target);
-				if (index !== -1) {
-					const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(
-						((index + value) * this.highest) / rateItems.length
-					);
-					this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
-					this.dispatchEvent(
-						new CustomEvent('changehover', {
-							detail: {
-								value: lightRateNum * perRateItemValue + partOfLightRateValue,
-							},
-						})
-					);
-				}
+			'mouseleave',
+			useLatestCall(() => {
+				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(this.value);
+				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
 			})
 		);
 
@@ -86,18 +93,18 @@ export default class CpRate extends HTMLElement implements CustomElement {
 	/** 评分的精度,默认为 5 */
 	get precision() {
 		const precision = this.getAttribute('precision');
-		return precision ? Number(precision) : 5;
+		return precision && !Number.isNaN(precision) ? Number(precision) : 5;
 	}
 	/** 评分的最高值,默认 100 */
 	get highest() {
 		const highest = this.getAttribute('highest');
-		return highest ? Number(highest) : 100;
+		return highest && !Number.isNaN(highest) ? Number(highest) : 100;
 	}
 
 	/** 当前组件的值 */
 	get value() {
 		const value = this.getAttribute('value');
-		return value ? Number(value) : this.highest;
+		return value && !Number.isNaN(value) ? Number(value) : this.highest;
 	}
 
 	/** 根据当前分数计算渲染参数 */

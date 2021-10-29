@@ -82,7 +82,12 @@
           </cp-rate>
           <label>
             分数:
-            <span id="score"></span>
+            <span id="score">80</span>
+          </label>
+          &emsp;&emsp;
+          <label>
+            分数(hover):
+            <span id="hover-score">80</span>
           </label>
         </li>
 
@@ -94,8 +99,12 @@
 
   <script src="../index.js" type="module"></script>
   <script>
-    document.getElementById('cp-rate').addEventListener('change', (event) => {
+    const rate = document.getElementById('cp-rate')
+    rate.addEventListener('change', (event) => {
       document.getElementById('score').innerHTML = event.detail.value
+    })
+    rate.addEventListener('changehover', (event) => {
+      document.getElementById('hover-score').innerHTML = `${event.detail.value}`
     })
   </script>
 </body>
