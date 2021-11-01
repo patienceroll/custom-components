@@ -1,8 +1,16 @@
 /** rate item 监听的属性值 */
-export type CpRateItemObservedAttributes = 'value' | 'base-color' | 'light-color' | 'disable' | 'readonly';
+export type CpRateItemObservedAttributes = 'value' | 'base-color' | 'light-color' | 'disable' | 'readonly' | 'custom';
 
 /** rate 监听的属性 */
-export type CpRateObservedAttributes = 'value' | 'precision' | 'highest' | 'disable' | 'readonly';
+export type CpRateObservedAttributes =
+	| 'value'
+	| 'precision'
+	| 'highest'
+	| 'disable'
+	| 'readonly'
+	| 'custom'
+	| 'base-color'
+	| 'light-color';
 
 export interface CpRateItemProps {
 	/** 值为 0 ~ 100 的字符串 */
@@ -15,9 +23,12 @@ export interface CpRateItemProps {
 	'disable': BooleanCharacter;
 	/** 是否是只读的评分 */
 	'readonly': BooleanCharacter;
+	/** 自定义图标的svg Xml字符串 */
+	'custom': string;
 }
 
-export interface CpRateProps extends Pick<CpRateItemProps, 'disable' | 'readonly'> {
+export interface CpRateProps
+	extends Pick<CpRateItemProps, 'disable' | 'readonly' | 'custom' | 'base-color' | 'light-color'> {
 	/** 值为数字的字符串 */
 	value: NumberCharacter;
 	/** 评分的精度,值不能大于单个评分所代表的值,不然会出现错误,默认5 */

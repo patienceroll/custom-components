@@ -12,15 +12,21 @@ import { useLatestCall } from 'packages/utils/common-functions';
 	},
 })
 @watch<CpRateObservedAttributes, AttachedShadowRoot<CpRate>>(
-	['value', 'precision', 'highest', 'disable', 'readonly'],
+	['value', 'precision', 'highest', 'disable', 'readonly', 'custom', 'base-color', 'light-color'],
 	function (attr, older, newer) {
 		switch (attr) {
 			case 'value':
 				if (newer && !Number.isNaN(Number(newer))) this.setRealValue(Number(newer));
 				break;
 			case 'precision':
+				this.renderRate();
 				break;
 			case 'highest':
+				this.renderRate();
+				break;
+			case 'custom':
+				if (newer) this.rateItems.forEach((item) => item.setAttribute('custom', newer));
+				else this.rateItems.forEach((item) => item.removeAttribute('custom'));
 				break;
 			case 'disable':
 				if (newer === 'true') this.rateItems.forEach((item) => item.setAttribute('disable', newer));
@@ -29,6 +35,14 @@ import { useLatestCall } from 'packages/utils/common-functions';
 			case 'readonly':
 				if (newer === 'true') this.rateItems.forEach((item) => item.setAttribute('readonly', newer));
 				else this.rateItems.forEach((item) => item.removeAttribute('readonly'));
+				break;
+			case 'base-color':
+				if (newer) this.rateItems.forEach((item) => item.setAttribute('base-color', newer));
+				else this.rateItems.forEach((item) => item.removeAttribute('base-color'));
+				break;
+			case 'light-color':
+				if (newer) this.rateItems.forEach((item) => item.setAttribute('light-color', newer));
+				else this.rateItems.forEach((item) => item.removeAttribute('light-color'));
 				break;
 		}
 	}
@@ -60,7 +74,13 @@ export default class CpRate extends HTMLElement implements CustomElement {
 					this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
 					this.realValue = newRealValue;
 				}
-				this.onChange(newRealValue);
+				this.dispatchEvent(
+					new CustomEvent('change', {
+						detail: {
+							value,
+						},
+					})
+				);
 			}
 		});
 
@@ -119,6 +139,7 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		return value && !Number.isNaN(value) ? Number(value) : this.highest;
 	}
 
+	/** 设置组件展示的真实值 */
 	setRealValue(value: number) {
 		this.realValue = value;
 		const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(value);
@@ -167,13 +188,9 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		});
 	}
 
-	onChange(value: number) {
-		this.dispatchEvent(
-			new CustomEvent('change', {
-				detail: {
-					value,
-				},
-			})
-		);
+	/** 渲染评分 */
+	renderRate() {
+		const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(this.realValue);
+		this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
 	}
 }

@@ -62,6 +62,9 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 				if (newer) base.style.color = newer;
 				else base.style.removeProperty('color');
 				break;
+			case 'custom':
+				this.setRateIcon(newer);
+				break;
 			case 'disable':
 				// 禁用状态通过css实现
 				break;
@@ -70,18 +73,20 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 )
 export default class CpRateItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	public Base: HTMLElement;
+	public Light: HTMLElement;
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpRateItem.styleSheet];
 
-		const Base = document.createElement('div');
-		const Light = document.createElement('div');
-		Base.classList.add('base');
-		Light.classList.add('light');
+		this.Base = document.createElement('div');
+		this.Light = document.createElement('div');
 
-		Base.innerHTML = svg;
-		Light.innerHTML = svg;
+		this.Base.classList.add('base');
+		this.Light.classList.add('light');
+
+		this.setRateIcon(this.getAttribute('custom'));
 
 		this.addEventListener('click', (event) => {
 			const { offsetX } = event;
@@ -114,6 +119,11 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 			})
 		);
 
-		shadowRoot.append(Base, Light);
+		shadowRoot.append(this.Base, this.Light);
+	}
+	/** 设置图标 */
+	setRateIcon(custom: string | null) {
+		this.Base.innerHTML = custom || svg;
+		this.Light.innerHTML = custom || svg;
 	}
 }
