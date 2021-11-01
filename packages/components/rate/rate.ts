@@ -77,7 +77,7 @@ export default class CpRate extends HTMLElement implements CustomElement {
 				this.dispatchEvent(
 					new CustomEvent('change', {
 						detail: {
-							value,
+							value: newRealValue,
 						},
 					})
 				);
