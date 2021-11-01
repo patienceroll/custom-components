@@ -11,26 +11,31 @@ import { useLatestCall } from 'packages/utils/common-functions';
 		verticalAlign: 'middle',
 	},
 })
-@watch<CpRateObservedAttributes, AttachedShadowRoot<CpRate>>(['value', 'precision'], function (attr, older, newer) {
-	switch (attr) {
-		case 'value':
-			const value = Number(newer);
-			if (!Number.isNaN(value)) {
-				this.realValue = value;
-			} else throw new Error('错误的value值');
-			break;
-		case 'precision':
-			break;
-		case 'highest':
-			break;
-		case 'disable':
-			if (newer) this.rateItems.forEach((item) => item.setAttribute('disable', newer));
-			else this.rateItems.forEach((item) => item.removeAttribute('disable'));
-			break;
+@watch<CpRateObservedAttributes, AttachedShadowRoot<CpRate>>(
+	['value', 'precision', 'highest', 'disable', 'readonly'],
+	function (attr, older, newer) {
+		switch (attr) {
+			case 'value':
+				if (newer && !Number.isNaN(Number(newer))) this.setRealValue(Number(newer));
+				break;
+			case 'precision':
+				break;
+			case 'highest':
+				break;
+			case 'disable':
+				if (newer === 'true') this.rateItems.forEach((item) => item.setAttribute('disable', newer));
+				else this.rateItems.forEach((item) => item.removeAttribute('disable'));
+				break;
+			case 'readonly':
+				if (newer === 'true') this.rateItems.forEach((item) => item.setAttribute('readonly', newer));
+				else this.rateItems.forEach((item) => item.removeAttribute('readonly'));
+				break;
+		}
 	}
-})
+)
 export default class CpRate extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	/** 如果是受控的评分,会把value的值同步过来,如果是非受控的,则在组件内部控制 */
 	public realValue = this.highest;
 	constructor() {
 		super();
@@ -47,8 +52,15 @@ export default class CpRate extends HTMLElement implements CustomElement {
 				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(
 					((index + value) * this.highest) / rateItems.length
 				);
-				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
-				this.onChange(lightRateNum * perRateItemValue + partOfLightRateValue);
+				const newRealValue = lightRateNum * perRateItemValue + partOfLightRateValue;
+
+				const valueAttr = this.getAttribute('value');
+				/** 如果是非受控的,才会去渲染评分 */
+				if (!valueAttr || Number.isNaN(Number(valueAttr))) {
+					this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
+					this.realValue = newRealValue;
+				}
+				this.onChange(newRealValue);
 			}
 		});
 
@@ -77,7 +89,7 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		this.addEventListener(
 			'mouseleave',
 			useLatestCall(() => {
-				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(this.value);
+				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(this.realValue);
 				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
 			})
 		);
@@ -109,6 +121,8 @@ export default class CpRate extends HTMLElement implements CustomElement {
 
 	setRealValue(value: number) {
 		this.realValue = value;
+		const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(value);
+		this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
 	}
 
 	/** 根据当前分数计算渲染参数 */
@@ -161,9 +175,5 @@ export default class CpRate extends HTMLElement implements CustomElement {
 				},
 			})
 		);
-	}
-
-	connectedCallback() {
-		console.dir(this);
 	}
 }

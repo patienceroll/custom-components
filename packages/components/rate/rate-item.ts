@@ -27,6 +27,10 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 	},
 	':host([disable="true"])': {
 		pointerEvents: 'none',
+		opacity: '0.7',
+	},
+	':host([readonly="true"])': {
+		pointerEvents: 'none',
 	},
 	':host(:hover)': {
 		transform: 'scale(1.2)',
@@ -41,7 +45,7 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 	},
 })
 @watch<CpRateItemObservedAttributes, AttachedShadowRoot<CpRateItem>>(
-	['value', 'base-color', 'light-color'],
+	['value', 'base-color', 'light-color', 'disable'],
 	function (attr, older, newer) {
 		const light = this.shadowRoot.querySelector('.light') as HTMLDivElement;
 		switch (attr) {
@@ -58,7 +62,8 @@ const svg = `<svg viewBox="0 0 24 24"><path fill="currentcolor" d="M12 17.27L18.
 				if (newer) base.style.color = newer;
 				else base.style.removeProperty('color');
 				break;
-			default:
+			case 'disable':
+				// 禁用状态通过css实现
 				break;
 		}
 	}

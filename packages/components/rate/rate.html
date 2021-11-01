@@ -65,6 +65,16 @@
           <cp-rate-item light-color="#f40" value="100"></cp-rate-item>
           <cp-rate-item light-color="blue" value="100"></cp-rate-item>
         </li>
+        <li>
+          <mark>可以设置为只读</mark>
+          <br />
+          <cp-rate-item value="80" readonly="true"></cp-rate-item>
+        </li>
+        <li>
+          <mark>禁用</mark>
+          <br />
+          <cp-rate-item value="80" disable="true"></cp-rate-item>
+        </li>
       </ul>
 
 
@@ -73,40 +83,136 @@
       <h4>默认</h4>
       <ul>
         <li>
-          <cp-rate id="cp-rate" value="80">
+          <cp-rate>
             <cp-rate-item></cp-rate-item>
             <cp-rate-item></cp-rate-item>
             <cp-rate-item></cp-rate-item>
             <cp-rate-item></cp-rate-item>
             <cp-rate-item></cp-rate-item>
           </cp-rate>
-          <label>
-            分数:
-            <span id="score">80</span>
-          </label>
-          &emsp;&emsp;
-          <label>
-            分数(hover):
-            <span id="hover-score">80</span>
-          </label>
         </li>
+      </ul>
+    </li>
+    <li>
+      <h4>受控的评分</h4>
+      <ul>
+        <li>
+          <cp-rate id="controlled-rate" value="80">
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+          </cp-rate>
 
+          <cp-button onclick="onClickControlRateAction('增加')">增加</cp-button>
+          <cp-button onclick="onClickControlRateAction('减少')">减少</cp-button>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <h4>评分的精度</h4>
+      <ul>
+        <mark>评分精度需要小于单个评分所代表的评分值</mark>
+        <li>
+          <cp-rate precision="1" id="precision-rate">
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+          </cp-rate>
+          <label>当前分数:<span id="precision">100</span></label>
+          <script>
+            const precisionRate = document.getElementById('precision-rate')
+            const precision = document.getElementById('precision')
+            precisionRate.addEventListener('change', (event) => {
+              precision.innerHTML = event.detail.value
+            })
+          </script>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <h4>悬停反馈</h4>
+      <ul>
+        <mark>鼠标悬停时让组件显示一个辅助标签来帮助用户选择正确的评分值</mark>
+        <li>
+          <cp-rate id="hover-rate">
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+          </cp-rate>
+          &nbsp;
+          <label>当前分数:<span id="hover-current">100</span></label>
+          &nbsp;
+          <label>悬停分数:<span id="hover-hover">--</span></label>
+          <script>
+            const hoverRate = document.getElementById('hover-rate')
+            const hoverCurrent = document.getElementById('hover-current')
+            const hoverHover = document.getElementById('hover-hover')
+            hoverRate.addEventListener('changehover', (event) => {
+              hoverHover.innerHTML = event.detail.value
+            })
+            hoverRate.addEventListener('change', (event) => {
+              hoverCurrent.innerHTML = event.detail.value
+            })
+          </script>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <h4>只读</h4>
+      <ul>
+        <li>
+          <cp-rate readonly="true" value="75">
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+          </cp-rate>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <h4>禁用</h4>
+      <ul>
+        <li>
+          <cp-rate disable="true" value="35">
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+            <cp-rate-item></cp-rate-item>
+          </cp-rate>
+        </li>
       </ul>
     </li>
   </ul>
 
 
-
-  <script src="../index.js" type="module"></script>
   <script>
-    const rate = document.getElementById('cp-rate')
-    rate.addEventListener('change', (event) => {
-      document.getElementById('score').innerHTML = event.detail.value
-    })
-    rate.addEventListener('changehover', (event) => {
-      document.getElementById('hover-score').innerHTML = `${event.detail.value}`
-    })
+    function onClickControlRateAction(type) {
+      const rate = document.getElementById('controlled-rate')
+      const value = Number(rate.getAttribute('value'))
+      switch (type) {
+        case '增加':
+          rate.setAttribute('value', value <= 95 ? value + 5 : 100)
+          break
+        case '减少':
+          rate.setAttribute('value', value >= 5 ? value - 5 : 0)
+          break
+      }
+    }
   </script>
+  <script src="../index.js" type="module">
+
+
+  </script>
+
 </body>
 
 </html>
