@@ -1,4 +1,4 @@
-import type { AccordionItemAttributes } from './data';
+import type { AccordionItemObservedAttributes } from './data';
 
 import { style, watch } from '../../utils/decorators';
 
@@ -9,7 +9,7 @@ const ArrowDownSvg =
 	'.cp-accordion-item-content-slot': {
 		display: 'block',
 		overflow: 'hidden',
-		padding: '0.5em 1em 1em',	
+		padding: '0.5em 1em 1em',
 	},
 	'.cp-accordion-item-content': {
 		height: '0',
@@ -45,20 +45,25 @@ const ArrowDownSvg =
 		boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%)',
 	},
 })
-@watch<AccordionItemAttributes, CpAccordionItem>(['disable', 'open'], function (attr, older, newer) {
+@watch<AccordionItemObservedAttributes, CpAccordionItem>(['disable', 'open', 'key'], function (attr, older, newer) {
 	switch (attr) {
 		case 'open':
 			if (newer === 'true')
 				this.content.style.height = `${(this.content.firstElementChild as HTMLSlotElement).clientHeight}px`;
 			else this.content.style.removeProperty('height');
 			break;
+		case 'key':
+			this.key = newer;
+			break;
 	}
 })
 export default class CpAccordionItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	public content: HTMLElement;
+	public key: string | null;
 	constructor() {
 		super();
+		this.key = null;
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpAccordionItem.styleSheet];
 		const title = document.createElement('div');
@@ -86,7 +91,12 @@ export default class CpAccordionItem extends HTMLElement implements CustomElemen
 	/** 切换是否展开的方法 */
 	toggleOpen() {
 		const open = this.getAttribute('open');
-		if (open === 'true') this.setAttribute('open', 'false');
-		else this.setAttribute('open', 'true');
+		if (open === 'true') {
+			this.setAttribute('open', 'false');
+			this.dispatchEvent(new CustomEvent('fold', { bubbles: true }));
+		} else {
+			this.setAttribute('open', 'true');
+			this.dispatchEvent(new CustomEvent('expand', { bubbles: true }));
+		}
 	}
 }
