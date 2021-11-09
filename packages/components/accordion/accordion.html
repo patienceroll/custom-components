@@ -11,10 +11,6 @@
       background-color: #EAEEF3;
       color: #333;
     }
-
-    div {
-      width: 60%;
-    }
   </style>
 </head>
 
@@ -22,16 +18,44 @@
 
   <h1>手风琴折叠面板</h1>
   <ul>
-    <cp-accordion>
-      <cp-accordion-item>
-        <div slot="title">标题</div>
-        <div>
-          <h1>123</h1>
-        </div>
-      </cp-accordion-item>
-      <cp-accordion-item></cp-accordion-item>
-      <cp-accordion-item></cp-accordion-item>
-    </cp-accordion>
+    <mark>手风琴折叠面板由&lt;cp-accordion-item /&gt;组成,由&lt;cp-accordion /&gt;控制</mark>
+    <br />
+    <br />
+    <cp-accordion-item>
+      <div slot="title">佳人醉·暮景萧萧雨霁</div>
+      <div>
+        暮景萧萧雨霁，云淡天高风细。<br>
+        正月华如水，金波银汉，潋滟无际。<br>
+        冷浸书惟梦断，却披衣重起临轩砌。
+        <br>
+        素光遥指，念翠娥杳隔，音尘何处？相望同千里。<br>
+        尽凝睇，厌厌无寐，渐晓雕阑独倚。
+      </div>
+    </cp-accordion-item>
+
+
+    <ul>
+      <li>默认手风琴折叠面板</li>
+      <cp-accordion>
+        <cp-accordion-item>
+          <div slot="title">题落星寺</div>
+          落星开士深结屋，龙阁老翁来赋诗。<br>
+          小雨藏山客坐久，长江接天帆到迟。<br>
+          宴寝清香与世隔，画图绝妙无人知。<br>
+          蜂房各自开户牖，处处煮茶藤一枝。
+        </cp-accordion-item>
+        <cp-accordion-item>
+          <div slot="title">声声慢·寻寻觅觅</div>
+          寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。<br>
+          三杯两盏淡酒，怎敌他、晚来风急！雁过也，正伤心，却是旧时相识。<br>
+          满地黄花堆积，憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑！<br>
+          梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！
+        </cp-accordion-item>
+      </cp-accordion>
+    </ul>
+
+
+
   </ul>
   <script src="../index.js" type="module"></script>
 

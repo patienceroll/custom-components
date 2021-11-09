@@ -2,27 +2,91 @@ import type { AccordionItemAttributes } from './data';
 
 import { style, watch } from '../../utils/decorators';
 
+const ArrowDownSvg =
+	'<svg class="cp-accordion-title-arrow" viewBox="0 0 24 24" width="1.5em" height="1.5em"><path fill="currentcolor" d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>';
+
 @style({
+	'.cp-accordion-item-content-slot': {
+		display: 'block',
+		overflow: 'hidden',
+		padding: '0.5em 1em 1em',	
+	},
+	'.cp-accordion-item-content': {
+		height: '0',
+		transition: 'height ease 400ms',
+		overflow: 'hidden',
+	},
+	":host([open='true']) .cp-accordion-title-arrow": {
+		transform: 'rotate(0)',
+	},
+	'.cp-accordion-title-arrow': {
+		transform: 'rotate(-180deg)',
+		transition: 'transform 400ms ease',
+	},
+	'.cp-accordion-item-title-arrow': {
+		display: 'flex',
+		alignItems: 'center',
+	},
+	":host([open='true']) .cp-accordion-item-title": {
+		padding: '1.25em 1em',
+	},
+	'.cp-accordion-item-title': {
+		display: 'flex',
+		padding: '0.75em 1em',
+		userSelect: 'none',
+		cursor: 'pointer',
+		justifyContent: 'space-between',
+		transition: 'padding ease 300ms',
+	},
 	':host': {
 		display: 'block',
+		fontSize: '16px',
+		backgroundColor: '#fff',
+		boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%)',
 	},
 })
-@watch<AccordionItemAttributes>(['disable', 'open'], function (attr, older, newer) {})
+@watch<AccordionItemAttributes, CpAccordionItem>(['disable', 'open'], function (attr, older, newer) {
+	switch (attr) {
+		case 'open':
+			if (newer === 'true')
+				this.content.style.height = `${(this.content.firstElementChild as HTMLSlotElement).clientHeight}px`;
+			else this.content.style.removeProperty('height');
+			break;
+	}
+})
 export default class CpAccordionItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	public content: HTMLElement;
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpAccordionItem.styleSheet];
-		const titleWrapper = document.createElement('div');
-		const title = document.createElement('slot');
-		const childrenWrapper = document.createElement('slot');
-		const children = document.createElement('slot');
+		const title = document.createElement('div');
+		const titleTextWrapper = document.createElement('div');
+		const titleSlot = document.createElement('slot');
+		const titleArrow = document.createElement('div');
+		this.content = document.createElement('div');
+		const contentSlot = document.createElement('slot');
 
-		title.name = 'title';
+		titleSlot.name = 'title';
+		title.classList.add('cp-accordion-item-title');
+		titleArrow.classList.add('cp-accordion-item-title-arrow');
+		this.content.classList.add('cp-accordion-item-content');
+		contentSlot.classList.add('cp-accordion-item-content-slot');
 
-		titleWrapper.appendChild(title);
-		childrenWrapper.appendChild(children);
-		shadowRoot.append(titleWrapper, childrenWrapper);
+		title.addEventListener('click', () => this.toggleOpen());
+
+		titleArrow.innerHTML = ArrowDownSvg;
+		titleTextWrapper.appendChild(titleSlot);
+		title.append(titleTextWrapper, titleArrow);
+		this.content.appendChild(contentSlot);
+		shadowRoot.append(title, this.content);
+	}
+
+	/** 切换是否展开的方法 */
+	toggleOpen() {
+		const open = this.getAttribute('open');
+		if (open === 'true') this.setAttribute('open', 'false');
+		else this.setAttribute('open', 'true');
 	}
 }
