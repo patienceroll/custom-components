@@ -1,5 +1,5 @@
 import CpInput from './text-filed';
 
-if (!customElements.get('cp-text-filed')) {
-	customElements.define('cp-text-filed', CpInput);
+if (!customElements.get('cp-text-field')) {
+	customElements.define('cp-text-field', CpInput);
 }
