@@ -10,5 +10,5 @@ import './components/drawer';
 import './components/message';
 import './components/radio';
 import './components/rate';
-import './components/input';
+import './components/text-filed';
 import './components/accordion'

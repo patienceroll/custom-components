@@ -1,10 +1,10 @@
 import { style } from '../../utils/decorators';
 
 @style({
-	'.cp-input-label': {
+	'.cp-text-filed-label': {
 		position: 'absolute',
 	},
-	'.cp-input-wrapper': {
+	'.cp-text-filed-wrapper': {
 		position: 'relative',
 	},
 	':host': {
@@ -23,8 +23,8 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		const label = document.createElement('label');
 		this.input = document.createElement('input');
 
-		wrapper.classList.add('cp-input-wrapper');
-		label.classList.add('cp-input-label');
+		wrapper.classList.add('cp-text-filed-wrapper');
+		label.classList.add('cp-text-filed-label');
 
 		wrapper.append(label, this.input);
 		shaowRoot.appendChild(wrapper);
