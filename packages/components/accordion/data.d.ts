@@ -1,5 +1,5 @@
 /** 单个手风琴折叠面板属性变化的值 */
-export type AccordionItemObservedAttributes = 'open' | 'disable' | 'key';
+export type AccordionItemObservedAttributes = 'open' | 'disable' | 'key' | 'first-item' | 'last-item';
 
 /** 手风琴折叠面班监听变化的属性值 */
 export type AccordionObservedAttributes = 'active-keys';

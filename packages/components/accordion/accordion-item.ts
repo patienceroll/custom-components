@@ -38,10 +38,24 @@ const ArrowDownSvg =
 		justifyContent: 'space-between',
 		transition: 'padding ease 300ms',
 	},
+	':host([last-item="true"])': {
+		borderRadius: '0 0 0.25em 0.25em',
+		marginBottom: '0',
+	},
+	':host([first-item="true"])': {
+		marginTop: '0',
+		borderRadius: '0.25em 0.25em 0 0',
+	},
+	':host([open="true"])': {
+		marginTop: '1em',
+		marginBottom: '1em',
+	},
 	':host': {
+		borderTop: '1px solid #e9e9e9',
 		display: 'block',
 		fontSize: '16px',
 		backgroundColor: '#fff',
+		transition: 'margin-bottom ease 300ms,margin-top ease 300ms',
 		boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%)',
 	},
 })
@@ -53,17 +67,15 @@ const ArrowDownSvg =
 			else this.content.style.removeProperty('height');
 			break;
 		case 'key':
-			this.key = newer;
 			break;
 	}
 })
 export default class CpAccordionItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	public content: HTMLElement;
-	public key: string | null;
 	constructor() {
 		super();
-		this.key = null;
+
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpAccordionItem.styleSheet];
 		const title = document.createElement('div');

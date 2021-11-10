@@ -2,63 +2,149 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>手风琴折叠面板</title>
   <style>
     body {
-      background-color: #EAEEF3;
+      background-color: #eaeef3;
       color: #333;
+    }
+
+    h6 {
+      margin: 0;
     }
   </style>
 </head>
 
 <body>
-
   <h1>手风琴折叠面板</h1>
+
   <ul>
-    <mark>手风琴折叠面板由&lt;cp-accordion-item /&gt;组成,由&lt;cp-accordion /&gt;控制</mark>
-    <br />
-    <br />
-    <cp-accordion-item>
-      <div slot="title">佳人醉·暮景萧萧雨霁</div>
-      <div>
-        暮景萧萧雨霁，云淡天高风细。<br>
-        正月华如水，金波银汉，潋滟无际。<br>
-        冷浸书惟梦断，却披衣重起临轩砌。
-        <br>
-        素光遥指，念翠娥杳隔，音尘何处？相望同千里。<br>
-        尽凝睇，厌厌无寐，渐晓雕阑独倚。
-      </div>
-    </cp-accordion-item>
-
-
-    <ul>
-      <li>默认手风琴折叠面板</li>
-      <cp-accordion>
-        <cp-accordion-item>
-          <div slot="title">题落星寺</div>
-          落星开士深结屋，龙阁老翁来赋诗。<br>
-          小雨藏山客坐久，长江接天帆到迟。<br>
-          宴寝清香与世隔，画图绝妙无人知。<br>
-          蜂房各自开户牖，处处煮茶藤一枝。
+    <li>
+      <h4>默认手风琴折叠面板</h4>
+      <mark>手风琴折叠面板由&lt;cp-accordion-item /&gt;组成,由&lt;cp-accordion /&gt;控制</mark>
+      <br />
+      <br />
+      <cp-accordion styled="true">
+        <cp-accordion-item key="1">
+          <h6 slot="title">题落星寺</h6>
+          落星开士深结屋，<br />
+          龙阁老翁来赋诗。<br />
+          小雨藏山客坐久，<br />
+          长江接天帆到迟。<br />
+          宴寝清香与世隔，<br />
+          画图绝妙无人知。<br />
+          蜂房各自开户牖，<br />
+          处处煮茶藤一枝。<br />
         </cp-accordion-item>
-        <cp-accordion-item>
-          <div slot="title">声声慢·寻寻觅觅</div>
-          寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。<br>
-          三杯两盏淡酒，怎敌他、晚来风急！雁过也，正伤心，却是旧时相识。<br>
-          满地黄花堆积，憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑！<br>
-          梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！
+        <cp-accordion-item key="2">
+          <h6 slot="title">佳人醉·暮景萧萧雨霁</h6>
+          <div>
+            暮景萧萧雨霁，<br />
+            云淡天高风细。<br />
+            正月华如水，<br />
+            金波银汉， <br />
+            潋滟无际。<br />
+            冷浸书惟梦断， <br />
+            却披衣重起临轩砌。 素光遥指， <br />
+            念翠娥杳隔， <br />
+            音尘何处？ <br />
+            相望同千里。<br />
+            尽凝睇， <br />
+            厌厌无寐， <br />
+            渐晓雕阑独倚。 <br />
+          </div>
+        </cp-accordion-item>
+        <cp-accordion-item key="3">
+          <h6 slot="title">声声慢·寻寻觅觅</h6>
+          寻寻觅觅，<br />
+          冷冷清清，<br />
+          凄凄惨惨戚戚。<br />
+          乍暖还寒时候，<br />
+          最难将息。<br />
+          三杯两盏淡酒，<br />
+          怎敌他、晚来风急！<br />
+          雁过也，<br />
+          正伤心，<br />
+          却是旧时相识。<br />
+          满地黄花堆积，<br />
+          憔悴损，如今有谁堪摘？<br />
+          守着窗儿，独自怎生得黑！<br />
+          梧桐更兼细雨，到黄昏、点点滴滴。<br />
+          这次第，怎一个愁字了得！<br />
         </cp-accordion-item>
       </cp-accordion>
-    </ul>
+    </li>
 
-
-
+    <li>
+      <h4>受控的折叠面板</h4>
+      <cp-button onclick="(()=>{
+         document.getElementById('cp-accordion').setAttribute('active-keys',JSON.stringify(['1']))
+      })()">打开《始闻秋风》</cp-button>
+      <cp-button onclick="(()=>{
+         document.getElementById('cp-accordion').setAttribute('active-keys',JSON.stringify(['2']))
+      })()">打开《茅屋为秋风所破歌》</cp-button>
+      <cp-button onclick="(()=>{
+         document.getElementById('cp-accordion').setAttribute('active-keys',JSON.stringify(['3']))
+      })()">打开《题乌江亭》</cp-button>
+      <br />
+      <br />
+      <cp-accordion active-keys='[]' id="cp-accordion">
+        <cp-accordion-item key="1">
+          <h6 slot="title">
+            始闻秋风
+          </h6>
+          <div>
+            昔看黄菊与君别，今听玄蝉我却回。<br />
+            五夜飕溜枕前觉，一夜颜妆镜中来。<br />
+            马思边草拳毛动，雕眄青云睡眼开。<br />
+            天地肃清堪开望，为君扶病上高台。<br />
+          </div>
+        </cp-accordion-item>
+        <cp-accordion-item key="2">
+          <h6 slot="title">
+            茅屋为秋风所破歌
+          </h6>
+          <div>
+            八月秋高风怒号，卷我屋上三重茅。<br />
+            茅飞渡江洒江郊，高者挂罥长林梢，下者飘转沉塘坳。<br />
+            <br />
+            南村群童欺我老无力，忍能对面为盗贼，公然抱茅入竹去。<br />
+            唇焦口燥呼不得，归来倚杖自叹息。<br />
+            <br />
+            俄顷风定云墨色，秋天漠漠向昏黑。<br />
+            布衾多年冷似铁，娇儿恶卧踏里裂。<br />
+            床头屋漏无干处，雨脚如麻未断绝。<br />
+            自经丧乱少睡眠，长夜沾湿何由彻？<br />
+            <br />
+            安得广厦千万间，大庇天下寒士俱欢颜，风雨不动安如山！<br />
+            呜呼！何时眼前突兀见此屋，吾庐独破受冻死亦足！<br />
+          </div>
+        </cp-accordion-item>
+        <cp-accordion-item key="3">
+          <h6 slot="title">
+            题乌江亭
+          </h6>
+          <div>
+            胜败兵家事不期，<br />
+            包羞忍耻是男儿。<br />
+            江东子弟多才俊，<br />
+            卷土重来未可知。<br />
+          </div>
+        </cp-accordion-item>
+      </cp-accordion>
+      <script>
+        const cpAccordion = document.getElementById('cp-accordion')
+        cpAccordion.addEventListener('change', (event) => {
+          if (event.detail['active-keys'].length === 0) cpAccordion.setAttribute('active-keys', JSON.stringify([]))
+          else cpAccordion.setAttribute('active-keys', JSON.stringify([event.detail.current]))
+        })
+      </script>
+    </li>
   </ul>
   <script src="../index.js" type="module"></script>
-
 </body>
 
 </html>

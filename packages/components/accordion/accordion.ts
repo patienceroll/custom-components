@@ -1,11 +1,31 @@
 import type CpAccordionItem from './accordion-item';
-import { style } from '../../utils/decorators';
+import type { AccordionObservedAttributes } from './data';
+
+import { style, watch } from '../../utils/decorators';
 
 @style({
 	':host': {
 		display: 'block',
 		fontSize: '16px',
 	},
+})
+@watch<AccordionObservedAttributes, CpAccordion>(['active-keys'], function (attr, older, newer) {
+	switch (attr) {
+		case 'active-keys':
+			if (newer) {
+				try {
+					const activeKeys = JSON.parse(newer);
+					if (Array.isArray(activeKeys)) {
+						this.realActiveKeys = activeKeys;
+						this.renderItem(activeKeys);
+					} else throw new Error();
+				} catch (err) {
+					throw new Error('active-keys 的值类型应该为数组形式的JSON字符串');
+				}
+			}
+
+			break;
+	}
 })
 export default class CpAccordion extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
@@ -15,7 +35,8 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 		super();
 		this.realActiveKeys = this.accordionItems
 			.map((i) => {
-				if (i.getAttribute('open') === 'true' && i.key) return i.key;
+				const key = i.getAttribute('key');
+				if (i.getAttribute('open') === 'true' && key) return key;
 				return '';
 			})
 			.filter((key) => key);
@@ -26,23 +47,87 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 
 		/** 监听单个折叠面板折叠 */
 		this.addEventListener('fold', (event) => {
-			const { key } = event.target as CpAccordionItem;
+			const key = (event.target as CpAccordionItem).getAttribute('key');
 			if (key) {
-				this.realActiveKeys = this.realActiveKeys.filter((k) => k !== key);
+				const newActiveKeys = this.realActiveKeys.filter((k) => k !== key);
+
+				/** 如果受控,单个折叠面板会变化,此时本组件要渲染它之前的状态,维持它不变化 */
+				if (this.activeKeys) this.renderItem(this.realActiveKeys);
+				// 如果不受控,渲染最近的展开列表
+				else {
+					this.renderItem(newActiveKeys);
+					this.realActiveKeys = newActiveKeys;
+				}
+				this.dispatchEvent(
+					new CustomEvent('change', {
+						detail: {
+							'active-keys': newActiveKeys,
+							'current': key,
+						},
+					})
+				);
 			}
 		});
 		/** 监听单个折叠面板展开 */
 		this.addEventListener('expand', (event) => {
-			console.log(event);
+			const key = (event.target as CpAccordionItem).getAttribute('key');
+			if (key) {
+				const newActiveKeys = this.realActiveKeys.concat(key);
+
+				/** 如果受控,单个折叠面板会变化,此时本组件要渲染它之前的状态,维持它不变化 */
+				if (this.activeKeys) this.renderItem(this.realActiveKeys);
+				// 如果不受控,渲染最近的展开列表
+				else {
+					this.renderItem(newActiveKeys);
+					this.realActiveKeys = newActiveKeys;
+				}
+
+				this.dispatchEvent(
+					new CustomEvent('change', {
+						detail: {
+							'active-keys': newActiveKeys,
+							'current': key,
+						},
+					})
+				);
+			}
 		});
 
 		shadowRoot.appendChild(slot);
 	}
 
-	/** 获取所有手风琴面板item  */
+	/** 所有手风琴面板item  */
 	get accordionItems() {
 		return Array.from(this.querySelectorAll<CpAccordionItem>('cp-accordion-item'));
 	}
 
-	setRealActiveKeys() {}
+	/** 所有激活的keys */
+	get activeKeys() {
+		return this.getAttribute('active-keys');
+	}
+
+	/** 渲染单个折叠面板是否展开 */
+	renderItem(keys: string[]) {
+		this.accordionItems.forEach((item, index) => {
+			const key = item.getAttribute('key');
+			if (key) {
+				if (keys.includes(key)) {
+					item.setAttribute('open', 'true');
+				} else {
+					item.setAttribute('open', 'false');
+				}
+			}
+		});
+	}
+
+	connectedCallback() {
+		this.accordionItems.forEach((item, index) => {
+			if (index === 0) {
+				item.setAttribute('first-item', 'true');
+			}
+			if (index === this.accordionItems.length - 1) {
+				item.setAttribute('last-item', 'true');
+			}
+		});
+	}
 }
