@@ -13,6 +13,7 @@ import { useLatestCall } from 'packages/utils/common-functions';
 })
 @watch<CpRateObservedAttributes, AttachedShadowRoot<CpRate>>(
 	['value', 'precision', 'highest', 'disable', 'readonly', 'custom', 'base-color', 'light-color'],
+
 	function (attr, older, newer) {
 		switch (attr) {
 			case 'value':

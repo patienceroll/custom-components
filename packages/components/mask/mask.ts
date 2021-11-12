@@ -122,7 +122,8 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	#onKeydown = (e: KeyboardEvent) => {
 		if (e.keyCode === 27) {
-			this.dispatchEvent(new CustomEvent('close', { detail: null, bubbles: false }));``
+			this.dispatchEvent(new CustomEvent('close', { detail: null, bubbles: false }));
+			``;
 		}
 	};
 
