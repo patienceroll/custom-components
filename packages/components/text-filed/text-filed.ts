@@ -6,12 +6,19 @@ import { style } from '../../utils/decorators';
 		padding: '1.03125em 0.875em',
 		border: 'none',
 		outline: 'none',
+		fontSize: '16px',
 	},
 	'.cp-text-field-label': {
 		position: 'absolute',
 	},
-	'.cp-text-field-wrapper': {
+	'.cp-text-field-fieldset': {
 		position: 'relative',
+		padding: '0',
+		margin: '0',
+		verticalAlign: 'top',
+		border: 'none',
+		borderRadius: '0.25em',
+		overflow: 'hidden',
 	},
 	':host': {
 		display: 'inline-block',
@@ -26,15 +33,17 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		const shaowRoot = this.attachShadow({ mode: 'open' });
 		shaowRoot.adoptedStyleSheets = [CpInput.styleSheet];
 
-		const wrapper = document.createElement('div');
+		const fieldset = document.createElement('fieldset');
+		const legend = document.createElement('legend');
+		legend.innerHTML = '23';
 		const label = document.createElement('label');
 		this.input = document.createElement('input');
 
-		wrapper.classList.add('cp-text-field-wrapper');
+		fieldset.classList.add('cp-text-field-fieldset');
 		label.classList.add('cp-text-field-label');
 		this.input.classList.add('cp-text-filed-input');
 
-		wrapper.append(label, this.input);
-		shaowRoot.appendChild(wrapper);
+		fieldset.append(legend, label, this.input);
+		shaowRoot.appendChild(fieldset);
 	}
 }
