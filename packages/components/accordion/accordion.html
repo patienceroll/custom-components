@@ -92,7 +92,7 @@
       <br />
       <br />
       <cp-accordion active-keys='[]' id="cp-accordion">
-        <cp-accordion-item key="1">
+        <cp-accordion-item key="1" >
           <h6 slot="title">
             始闻秋风
           </h6>
@@ -144,6 +144,13 @@
       </script>
     </li>
   </ul>
+
+  <h3>设计问题:</h3>
+  <mark>
+    &emsp;&emsp;由于web components 会在解析完 html 之后才会生成组件,导致在没有生成组件之前,手风琴折叠面板的内容会呈现在屏幕上，
+    等生成组件之后,该内容才会被隐藏在折叠面板内,这会导致屏幕闪烁一下。
+  </mark>
+  <p>&emsp;&emsp;为了保证组件样式的独立性,我们没有使用提供外部样式的方法来解决这个问题。初步暂定的方式是,各个组件插槽的内容,最开始是隐藏的,当组件初始化完成之后,我们会去给插槽添加显示的属性。(暂未实现)</p>
   <script src="../index.js" type="module"></script>
 </body>
 
