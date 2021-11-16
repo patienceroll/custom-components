@@ -7,5 +7,6 @@ export default class CpTab extends HTMLElement implements CustomElement {
 		shadowRoot.append(children);
 	}
 
+	connectedCallback() {}
 	/**  */
 }
