@@ -4,6 +4,8 @@ export interface TagProps {
 	'color'?: TagType | CSSStyleDeclaration['color'];
 	/** 是否可关闭 */
 	'closable'?: 'true';
+	/**尺寸 */
+	'size':string;
 	/** 受控状态下是否显示 */
 	'show'?: 'true' | 'false';
 	/** 是否展示纯色背景,默认false */
@@ -11,4 +13,10 @@ export interface TagProps {
 	'onclose'?: (event: CustomEvent<{ domEvent: MouseEvent; show?: boolean }>) => void;
 }
 
-export type TagObservedAttributes = 'show';
+export type TagObservedAttributes = 
+		| 'color'
+		| 'closable'
+		| 'show'
+		| 'pure-background'
+		| 'onclose'
+		| 'size'
