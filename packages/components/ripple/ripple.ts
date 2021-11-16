@@ -79,9 +79,9 @@ export default class CpRipple extends HTMLElement {
 			ripple.style.background = backgroundColor;
 			ripple.classList.add('ripple', 'spread');
 			this.shadowRoot.appendChild(ripple);
-
 			return {
 				dom: ripple,
+				/** 清除ripple */
 				stable: () => {
 					setTimeout(() => {
 						ripple.classList.add('stable');

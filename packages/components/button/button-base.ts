@@ -1,9 +1,8 @@
-import type Ripple from '../ripple/ripple';
+import Ripple from '../ripple/ripple';
 
 import { style } from '../../utils/decorators';
 
-import '../ripple';
-
+if (!customElements.get('cp-ripple')) customElements.define('cp-ripple', Ripple);
 @style({
 	'.cp-button:hover': {
 		backgroundColor: '#c0c0c0',
@@ -12,7 +11,7 @@ import '../ripple';
 	'.cp-button': {
 		display: 'flex',
 		alignItems: 'center',
-		padding: '6px 12px',
+		padding: '0.375em 0.75em',
 		border: 'none',
 		position: 'relative',
 		outline: '0',
@@ -29,15 +28,17 @@ import '../ripple';
 		pointerEvents: 'none',
 	},
 	':host': {
-		borderRadius: '4px',
+		borderRadius: '0.25em',
 		display: 'inline-block',
+		fontSize: '16px',
 	},
 })
 export default class CpButtonBase extends HTMLElement implements CustomElement {
-	private ripple?: ReturnType<Ripple['spread']>;
-	/** 组件 button Dom元素 */
-	button: HTMLButtonElement;
 	static styleSheet: CSSStyleSheet;
+	private ripple = new Set<ReturnType<Ripple['spread']>>();
+	private index: number = 0;
+	/** 组件 button Dom元素 */
+	public button: HTMLButtonElement;
 	constructor() {
 		super();
 
@@ -52,15 +53,12 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		button.setAttribute('part', 'button');
 
 		this.addEventListener('mousedown', (e) => {
-			if (this.ripple) this.ripple.stable();
-			this.ripple = ripple.spread({ top: e.offsetY, left: e.offsetX });
+			this.ripple.add(ripple.spread({ top: e.offsetY, left: e.offsetX }));
+			this.index += 1;
 		});
-		this.addEventListener('mouseup', () => {
-			if (this.ripple) {
-				this.ripple.stable();
-				this.ripple = undefined;
-			}
-		});
+		this.addEventListener('mouseup', this.stableRipples);
+		/** 如果点击之后,鼠标拖到其他元素去,则不会触发mouseup,此时也清除ripple */
+		this.addEventListener('mouseleave', this.stableRipples);
 		this.addEventListener(
 			'touchstart',
 			(e) => {
@@ -71,24 +69,28 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 						const [touch] = targetTouches;
 						const { pageX, pageY } = touch;
 						const { left, top } = (target as this).getBoundingClientRect();
-						if (this.ripple) this.ripple.stable();
-						this.ripple = ripple.spread({
-							top: pageY - top,
-							left: pageX - left,
-						});
+						this.ripple.add(
+							ripple.spread({
+								top: pageY - top,
+								left: pageX - left,
+							})
+						);
 					}
 				}
 			},
 			{ passive: true }
 		);
-		this.addEventListener('touchend', () => {
-			if (this.ripple) {
-				this.ripple.stable();
-				this.ripple = undefined;
-			}
-		});
+		this.addEventListener('touchend', this.stableRipples);
 
 		button.appendChild(ripple);
 		shadowRoot.appendChild(button);
+	}
+
+	/** 清除掉当前button点击产生的涟漪 */
+	stableRipples() {
+		this.ripple.forEach((ripple) => {
+			ripple.stable();
+		});
+		this.ripple.clear();
 	}
 }

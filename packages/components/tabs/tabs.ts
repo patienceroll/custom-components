@@ -6,6 +6,7 @@ import CpTab from './tab';
 	':host': {
 		display: 'flex',
 		wordSpacing: '0',
+		borderBottom: '1px solid rgba(0,0,0,0.12)',
 	},
 })
 export default class CpTabs extends HTMLElement implements CustomElement {
@@ -15,6 +16,7 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpTabs.styleSheet];
 		const children = document.createElement('slot');
+
 		shadowRoot.append(children);
 	}
 

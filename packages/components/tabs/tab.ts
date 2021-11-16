@@ -8,6 +8,7 @@ if (!customElements.get('cp-button')) customElements.define('cp-button', CpButto
 	'cp-button::part(button)': {
 		boxShadow: 'none',
 		backgroundColor: 'transparent',
+		padding: '0.75em 1em',
 	},
 	'cp-button': {
 		borderRadius: '0',
