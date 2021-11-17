@@ -35,13 +35,15 @@ export default class CpTab extends HTMLElement implements CustomElement {
 	public key: string | null;
 	constructor() {
 		super();
+		this.key = this.getAttribute('key');
+
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpTab.styleSheet];
 
 		const children = document.createElement('cp-button');
-		children.append(document.createElement('slot'));
+		children.setAttribute('ripple-color', '#007FFF');
 
-		this.key = this.getAttribute('key');
+		children.append(document.createElement('slot'));
 		shadowRoot.append(children);
 	}
 

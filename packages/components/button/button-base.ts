@@ -35,6 +35,7 @@ if (!customElements.get('cp-ripple')) customElements.define('cp-ripple', Ripple)
 })
 export default class CpButtonBase extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	/** 当前所有涟漪的集合 */
 	private ripple = new Set<ReturnType<Ripple['spread']>>();
 	/** 组件 button Dom元素 */
 	public button: HTMLButtonElement;
@@ -52,7 +53,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		button.setAttribute('part', 'button');
 
 		this.addEventListener('mousedown', (e) => {
-			this.ripple.add(ripple.spread({ top: e.offsetY, left: e.offsetX }));
+			this.ripple.add(ripple.spread({ top: e.offsetY, left: e.offsetX, backgroundColor: this.rippleColor }));
 		});
 		this.addEventListener('mouseup', this.stableRipples);
 		/** 如果点击之后,鼠标拖到其他元素去,则不会触发mouseup,此时也清除ripple */
@@ -71,6 +72,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 							ripple.spread({
 								top: pageY - top,
 								left: pageX - left,
+								backgroundColor: this.rippleColor,
 							})
 						);
 					}
@@ -84,11 +86,16 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		shadowRoot.appendChild(button);
 	}
 
-	/** 清除掉当前button点击产生的涟漪 */
+	/** 清除掉当前button产生的涟漪 */
 	stableRipples() {
 		this.ripple.forEach((ripple) => {
 			ripple.stable();
 		});
 		this.ripple.clear();
+	}
+
+	/** 涟漪的颜色 */
+	get rippleColor() {
+		return this.getAttribute('ripple-color') || undefined;
 	}
 }
