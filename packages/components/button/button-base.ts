@@ -36,7 +36,6 @@ if (!customElements.get('cp-ripple')) customElements.define('cp-ripple', Ripple)
 export default class CpButtonBase extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	private ripple = new Set<ReturnType<Ripple['spread']>>();
-	private index: number = 0;
 	/** 组件 button Dom元素 */
 	public button: HTMLButtonElement;
 	constructor() {
@@ -54,7 +53,6 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 
 		this.addEventListener('mousedown', (e) => {
 			this.ripple.add(ripple.spread({ top: e.offsetY, left: e.offsetX }));
-			this.index += 1;
 		});
 		this.addEventListener('mouseup', this.stableRipples);
 		/** 如果点击之后,鼠标拖到其他元素去,则不会触发mouseup,此时也清除ripple */

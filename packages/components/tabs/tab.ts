@@ -1,10 +1,15 @@
-import { style } from '../../utils/decorators';
+import { style, watch } from '../../utils/decorators';
+
+import type { CpTabObservedAttributes } from './data';
 
 import CpButton from '../button/button';
 
 if (!customElements.get('cp-button')) customElements.define('cp-button', CpButton);
 
 @style({
+	':host([active="true"]) cp-button::part(button)': {
+		color: '#007FFF',
+	},
 	'cp-button::part(button)': {
 		boxShadow: 'none',
 		backgroundColor: 'transparent',
@@ -18,8 +23,16 @@ if (!customElements.get('cp-button')) customElements.define('cp-button', CpButto
 		fontSize: '16px',
 	},
 })
+@watch<CpTabObservedAttributes, AttachedShadowRoot<CpTab>>(['key'], function (attr, older, newer) {
+	switch (attr) {
+		case 'key':
+			break;
+	}
+})
 export default class CpTab extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	/** 当前tab的key */
+	public key: string | null;
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
@@ -27,6 +40,8 @@ export default class CpTab extends HTMLElement implements CustomElement {
 
 		const children = document.createElement('cp-button');
 		children.append(document.createElement('slot'));
+
+		this.key = this.getAttribute('key');
 		shadowRoot.append(children);
 	}
 
