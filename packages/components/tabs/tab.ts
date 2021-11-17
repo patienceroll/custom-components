@@ -31,11 +31,9 @@ if (!customElements.get('cp-button')) customElements.define('cp-button', CpButto
 })
 export default class CpTab extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
-	/** 当前tab的key */
-	public key: string | null;
+
 	constructor() {
 		super();
-		this.key = this.getAttribute('key');
 
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpTab.styleSheet];
@@ -43,8 +41,35 @@ export default class CpTab extends HTMLElement implements CustomElement {
 		const children = document.createElement('cp-button');
 		children.setAttribute('ripple-color', '#007FFF');
 
+		this.addEventListener('click', (event) => {
+			this.dispatchEvent(
+				new CustomEvent('cp-tab-click', {
+					detail: {
+						domEvent: event,
+						key: this.key,
+					},
+					bubbles: true,
+				})
+			);
+		});
+
 		children.append(document.createElement('slot'));
 		shadowRoot.append(children);
+	}
+
+	/** 当前tab的key */
+	get key() {
+		return this.getAttribute('key');
+	}
+
+	/** 激活当前tab */
+	active() {
+		this.setAttribute('active', 'true');
+	}
+
+	/** 取消激活当前tab */
+	cancelAtive() {
+		this.setAttribute('active', 'false');
 	}
 
 	connectedCallback() {}

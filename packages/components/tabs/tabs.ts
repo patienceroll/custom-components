@@ -45,12 +45,13 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 	public wrapperBar: HTMLDivElement;
 	/** 当前组件激活的key,为组件实际显示的值,当为受控的时候,会同步属性 active-key 的值 */
 	public realActiveKey: string | null;
+
 	constructor() {
 		super();
 		this.realActiveKey = null;
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpTabs.styleSheet];
-		
+
 		this.wrapper = document.createElement('div');
 		this.wrapperBar = document.createElement('div');
 		const children = document.createElement('slot');
@@ -59,17 +60,30 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 		this.wrapperBar.classList.add('cp-tabs-weapper-bar');
 		children.classList.add('cp-tabs-children');
 
+		this.addEventListener('cp-tab-click', (event) => {
+			const { detail } = event as CustomEvent<{ domEvent: MouseEvent; key: string | null }>;
+			if (detail.key) this.activeTab(detail.key);
+		});
+
 		this.wrapper.append(children, this.wrapperBar);
 		shadowRoot.append(this.wrapper);
 	}
 
-	/** 当前tabs控制的tab节点(只期望) */
+	/** 当前tabs控制的tab节点 */
 	get tabNodes() {
 		return Array.from(this.children).filter((node) => node.localName === 'cp-tab') as CpTab[];
 	}
 
 	/** 生成tab选项 */
 	generateTab() {}
+
+	/** 激活某一个tab,其余tab应该被取消激活 */
+	activeTab(tabKey: string) {
+		this.tabNodes.forEach((tab) => {
+			if (tab.key === tabKey) tab.active();
+			else tab.cancelAtive();
+		});
+	}
 
 	connectedCallback() {}
 }
