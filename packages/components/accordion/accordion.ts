@@ -46,7 +46,7 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 		const slot = document.createElement('slot');
 
 		/** 监听单个折叠面板折叠 */
-		this.addEventListener('fold', (event) => {
+		this.addEventListener('cp-accordion-item-fold', (event) => {
 			const key = (event.target as CpAccordionItem).getAttribute('key');
 			if (key) {
 				const newActiveKeys = this.realActiveKeys.filter((k) => k !== key);
@@ -69,7 +69,7 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 			}
 		});
 		/** 监听单个折叠面板展开 */
-		this.addEventListener('expand', (event) => {
+		this.addEventListener('cp-accordion-item-expand', (event) => {
 			const key = (event.target as CpAccordionItem).getAttribute('key');
 			if (key) {
 				const newActiveKeys = this.realActiveKeys.concat(key);

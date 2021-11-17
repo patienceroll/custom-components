@@ -105,10 +105,10 @@ export default class CpAccordionItem extends HTMLElement implements CustomElemen
 		const open = this.getAttribute('open');
 		if (open === 'true') {
 			this.setAttribute('open', 'false');
-			this.dispatchEvent(new CustomEvent('fold', { bubbles: true }));
+			this.dispatchEvent(new CustomEvent('cp-accordion-item-fold', { bubbles: true }));
 		} else {
 			this.setAttribute('open', 'true');
-			this.dispatchEvent(new CustomEvent('expand', { bubbles: true }));
+			this.dispatchEvent(new CustomEvent('cp-accordion-item-expand', { bubbles: true }));
 		}
 	}
 }

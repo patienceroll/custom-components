@@ -58,7 +58,7 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		shadowRoot.adoptedStyleSheets = [CpRate.styleSheet];
 		const slot = document.createElement('slot');
 
-		this.addEventListener('rate', (event) => {
+		this.addEventListener('cp-rate-item-rate', (event) => {
 			const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
 			const { value, domEvent } = detail;
 			const rateItems = Array.from(this.rateItems.values());
@@ -85,7 +85,7 @@ export default class CpRate extends HTMLElement implements CustomElement {
 			}
 		});
 
-		this.addEventListener('moverate', (event) => {
+		this.addEventListener('cp-rate-item-moverate', (event) => {
 			const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
 			const { value, domEvent } = detail;
 			const rateItems = Array.from(this.rateItems.values());

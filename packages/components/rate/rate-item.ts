@@ -92,7 +92,7 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 			const { offsetX } = event;
 			const { clientWidth } = event.target as HTMLElement;
 			this.dispatchEvent(
-				new CustomEvent('rate', {
+				new CustomEvent('cp-rate-item-rate', {
 					detail: {
 						domEvent: event,
 						value: Math.abs(offsetX / clientWidth),
@@ -108,7 +108,7 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 				const { offsetX } = event;
 				const { clientWidth } = event.target as HTMLElement;
 				this.dispatchEvent(
-					new CustomEvent('moverate', {
+					new CustomEvent('cp-rate-item-moverate', {
 						detail: {
 							domEvent: event,
 							value: Math.abs(offsetX / clientWidth),
