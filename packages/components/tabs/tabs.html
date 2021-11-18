@@ -1,72 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>tab选项卡</title>
+		<style>
+			body {
+				background-color: #eaeef3;
+				color: #333;
+			}
+		</style>
+	</head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>tab选项卡</title>
-  <style>
-    body {
-      background-color: #EAEEF3;
-      color: #333;
-    }
-  </style>
-</head>
+	<body>
+		<h1>tab选项卡</h1>
 
-<body>
+		<ul>
+			<h4>tab选项卡的构成</h4>
+			<ul>
+				<li>&lt;cp-tab-context&gt;：控制整个tab,当tab切换时,控制内容的展示。</li>
+				<li>&lt;cp-tabs&gt;：控制 tab 选项的控件,当由&lt;cp-tab-context&gt;控制时,会变为受控状态</li>
+				<li>&lt;cp-tab&gt;：tab 选项卡的选项。</li>
+				<li>&lt;cp-tab-panel&gt;：tab选项卡的内容。</li>
+			</ul>
+		</ul>
 
-  <h1>tab选项卡</h1>
-  <ul>
-    <cp-paper style="padding:20px">
-      <cp-tab-context>
-        <cp-tabs>
-          <cp-tab key="tab1">《兰亭集序》</cp-tab>
-          <cp-tab key="tab2">《东皇太一》</cp-tab>
-          <cp-tab key="tab3">《渔父》</cp-tab>
-        </cp-tabs>
-        <cp-tab-panel key="tab1">
-          <h4>王羲之</h4>
-          <div>
-            <p>
-              &emsp;&emsp;永和九年，岁在癸丑，暮春之初，会于会稽山阴之兰亭，修禊事也。群贤毕至，少长咸集。此地有崇山峻岭，茂林修竹；又有清流激湍，映带左右，引以为流觞曲水，列坐其次。虽无丝竹管弦之盛，一觞一咏，亦足以畅叙幽情。
-            </p>
-            <p>&emsp;&emsp;是日也，天朗气清，惠风和畅，仰观宇宙之大，俯察品类之盛，所以游目骋怀，足以极视听之娱，信可乐也。</p>
-            <p>
-              &emsp;&emsp;夫人之相与，俯仰一世，或取诸怀抱，悟言一室之内；或因寄所托，放浪形骸之外。虽趣舍万殊，静躁不同，当其欣于所遇，暂得于己，快然自足，不知老之将至。及其所之既倦，情随事迁，感慨系之矣。向之所欣，俯仰之间，已为陈迹，犹不能不以之兴怀。况修短随化，终期于尽。古人云：“死生亦大矣。”岂不痛哉！(曾不知老之将至一作：不知老之将至)
-            </p>
-            <p>
-              &emsp;&emsp;每览昔人兴感之由，若合一契，未尝不临文嗟悼，不能喻之于怀。固知一死生为虚诞，齐彭殇为妄作。后之视今，亦犹今之视昔。悲夫！故列叙时人，录其所述，虽世殊事异，所以兴怀，其致一也。后之览者，亦将有感于斯文。
-            </p>
-          </div>
-        </cp-tab-panel>
-        <cp-tab-panel key="tab2">
-          <h4>屈原</h4>
-          <div>
-            <p>吉日兮辰良，穆将愉兮上皇；</p>
-            <p>抚长剑兮玉珥，璆锵鸣兮琳琅；</p>
-            <p>瑶席兮玉瑱，盍将把兮琼芳；</p>
-            <p>蕙肴蒸兮兰藉，奠桂酒兮椒浆；</p>
-            <p>扬枹兮拊鼓，疏缓节兮安歌；</p>
-            <p>陈竽瑟兮浩倡；</p>
-            <p>灵偃蹇兮姣服，芳菲菲兮满堂；</p>
-            <p>五音纷兮繁会，君欣欣兮乐康。</p>
-          </div>
-        </cp-tab-panel>
-        <cp-tab-panel key="tab3">
-          <h4>屈原</h4>
-          <div>
-            <p>&emsp;&emsp;屈原既放，游于江潭，行吟泽畔，颜色憔悴，形容枯槁。渔父见而问之曰：“子非三闾大夫与？何故至于斯？”屈原曰：“举世皆浊我独清，众人皆醉我独醒，是以见放。”</p>
-            <p>&emsp;&emsp;渔父曰：“圣人不凝滞于物，而能与世推移。世人皆浊，何不淈其泥而扬其波？众人皆醉，何不餔其糟而歠其醨？何故深思高举，自令放为？”</p>
-            <p>&emsp;&emsp;屈原曰：“吾闻之，新沐者必弹冠，新浴者必振衣；安能以身之察察，受物之汶汶者乎？宁赴湘流，葬于江鱼之腹中。安能以皓皓之白，而蒙世俗之尘埃乎?”</p>
-            <p>&emsp;&emsp;渔父莞尔而笑，鼓枻而去，乃歌曰：“沧浪之水清兮，可以濯吾缨；沧浪之水浊兮，可以濯吾足。”遂去，不复与言。</p>
-          </div>
-        </cp-tab-panel>
-      </cp-tab-context>
-    </cp-paper>
-  </ul>
-  <script src="../index.js" type="module"></script>
+		<ul>
+			<li>
+				<h4>默认的折叠面板</h4>
+				<cp-paper style="padding: 20px">
+					<cp-tab-context>
+						<cp-tabs>
+							<cp-tab key="tab1">《兰亭集序》</cp-tab>
+							<cp-tab key="tab2">《东皇太一》</cp-tab>
+							<cp-tab key="tab3">《渔父》</cp-tab>
+						</cp-tabs>
+						<cp-tab-panel key="tab1">
+							<h2>兰亭集序</h2>
+							<h4>王羲之</h4>
+							<div>
+								<p>
+									&emsp;&emsp;永和九年，岁在癸丑，暮春之初，会于会稽山阴之兰亭，修禊事也。群贤毕至，少长咸集。此地有崇山峻岭，茂林修竹；又有清流激湍，映带左右，引以为流觞曲水，列坐其次。虽无丝竹管弦之盛，一觞一咏，亦足以畅叙幽情。
+								</p>
+								<p>
+									&emsp;&emsp;是日也，天朗气清，惠风和畅，仰观宇宙之大，俯察品类之盛，所以游目骋怀，足以极视听之娱，信可乐也。
+								</p>
+								<p>
+									&emsp;&emsp;夫人之相与，俯仰一世，或取诸怀抱，悟言一室之内；或因寄所托，放浪形骸之外。虽趣舍万殊，静躁不同，当其欣于所遇，暂得于己，快然自足，不知老之将至。及其所之既倦，情随事迁，感慨系之矣。向之所欣，俯仰之间，已为陈迹，犹不能不以之兴怀。况修短随化，终期于尽。古人云：“死生亦大矣。”岂不痛哉！(曾不知老之将至一作：不知老之将至)
+								</p>
+								<p>
+									&emsp;&emsp;每览昔人兴感之由，若合一契，未尝不临文嗟悼，不能喻之于怀。固知一死生为虚诞，齐彭殇为妄作。后之视今，亦犹今之视昔。悲夫！故列叙时人，录其所述，虽世殊事异，所以兴怀，其致一也。后之览者，亦将有感于斯文。
+								</p>
+							</div>
+						</cp-tab-panel>
+						<cp-tab-panel key="tab2">
+							<h2>东皇太一</h2>
+							<h4>屈原</h4>
+							<div>
+								<p>吉日兮辰良，穆将愉兮上皇；</p>
+								<p>抚长剑兮玉珥，璆锵鸣兮琳琅；</p>
+								<p>瑶席兮玉瑱，盍将把兮琼芳；</p>
+								<p>蕙肴蒸兮兰藉，奠桂酒兮椒浆；</p>
+								<p>扬枹兮拊鼓，疏缓节兮安歌；</p>
+								<p>陈竽瑟兮浩倡；</p>
+								<p>灵偃蹇兮姣服，芳菲菲兮满堂；</p>
+								<p>五音纷兮繁会，君欣欣兮乐康。</p>
+							</div>
+						</cp-tab-panel>
+						<cp-tab-panel key="tab3">
+							<h2>渔父</h2>
+							<h4>屈原</h4>
+							<div>
+								<p>
+									&emsp;&emsp;屈原既放，游于江潭，行吟泽畔，颜色憔悴，形容枯槁。渔父见而问之曰：“子非三闾大夫与？何故至于斯？”屈原曰：“举世皆浊我独清，众人皆醉我独醒，是以见放。”
+								</p>
+								<p>
+									&emsp;&emsp;渔父曰：“圣人不凝滞于物，而能与世推移。世人皆浊，何不淈其泥而扬其波？众人皆醉，何不餔其糟而歠其醨？何故深思高举，自令放为？”
+								</p>
+								<p>
+									&emsp;&emsp;屈原曰：“吾闻之，新沐者必弹冠，新浴者必振衣；安能以身之察察，受物之汶汶者乎？宁赴湘流，葬于江鱼之腹中。安能以皓皓之白，而蒙世俗之尘埃乎?”
+								</p>
+								<p>
+									&emsp;&emsp;渔父莞尔而笑，鼓枻而去，乃歌曰：“沧浪之水清兮，可以濯吾缨；沧浪之水浊兮，可以濯吾足。”遂去，不复与言。
+								</p>
+							</div>
+						</cp-tab-panel>
+					</cp-tab-context>
+				</cp-paper>
+			</li>
 
-</body>
-
+			<li>
+				<h4>受控的折叠面板</h4>
+				<cp-button
+					onclick="(()=>{
+           document.getElementById('control-tab-context').setAttribute('active-key','水调歌头·明月几时有')
+        })()"
+					>《水调歌头·明月几时有》</cp-button
+				>
+				<cp-button
+					onclick="(()=>{
+          document.getElementById('control-tab-context').setAttribute('active-key','念奴娇·赤壁怀古')
+       })()"
+					>《念奴娇·赤壁怀古》</cp-button
+				>
+				<cp-button
+					onclick="(()=>{
+          document.getElementById('control-tab-context').setAttribute('active-key','沁园春·雪')
+       })()"
+					>《沁园春·雪》</cp-button
+				>
+				<br />
+				<br />
+				<cp-paper style="padding: 20px">
+					<cp-tab-context id="control-tab-context" active-key="水调歌头·明月几时有">
+						<cp-tabs>
+							<cp-tab key="水调歌头·明月几时有">《水调歌头·明月几时有》</cp-tab>
+							<cp-tab key="念奴娇·赤壁怀古">《念奴娇·赤壁怀古》</cp-tab>
+							<cp-tab key="沁园春·雪">《沁园春·雪》</cp-tab>
+						</cp-tabs>
+						<cp-tab-panel key="水调歌头·明月几时有">
+							<h2>水调歌头·明月几时有</h2>
+							<h4>苏轼 〔宋代〕</h4>
+							<div>
+								<p>&emsp;&emsp;丙辰中秋，欢饮达旦，大醉，作此篇，兼怀子由。</p>
+								<p>
+									&emsp;&emsp;明月几时有？把酒问青天。不知天上宫阙，今夕是何年。我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间。(何似
+									一作：何时；又恐 一作：惟 / 唯恐)<br />转朱阁，低绮户，照无眠。不应有恨，何事长向别时圆？人有悲欢离合，月有阴晴圆缺，此事古难全。但愿人长久，千里共婵娟。(长向
+									一作：偏向)
+								</p>
+							</div>
+						</cp-tab-panel>
+						<cp-tab-panel key="念奴娇·赤壁怀古">
+							<h2>念奴娇·赤壁怀古</h2>
+							<h4>苏轼 〔宋代〕</h4>
+							<div>
+								<p>
+									大江东去，浪淘尽，千古风流人物。<br />故垒西边，人道是，三国周郎赤壁。<br />乱石穿空，惊涛拍岸，卷起千堆雪。(穿空
+									一作：崩云)<br />江山如画，一时多少豪杰。
+								</p>
+								<p>
+									遥想公瑾当年，小乔初嫁了，雄姿英发。<br />羽扇纶巾，谈笑间，樯橹灰飞烟灭。(樯橹 一作：强虏)<br />故国神游，多情应笑我，早生华发。<br />人生如梦，一尊还酹江月。(人生
+									一作：人间；尊 同：樽)
+								</p>
+							</div>
+						</cp-tab-panel>
+						<cp-tab-panel key="沁园春·雪">
+							<h2>沁园春·雪</h2>
+							<h4>毛泽东 〔近现代〕</h4>
+							<div>
+								<p>北国风光，千里冰封，万里雪飘。</p>
+								<p>望长城内外，惟余莽莽；大河上下，顿失滔滔。(余 通：馀)</p>
+								<p>山舞银蛇，原驰蜡象，欲与天公试比高。(原驰 原作：原驱)</p>
+								<p>须晴日，看红装素裹，分外妖娆。(红装 一作：银装)</p>
+								<p>江山如此多娇，引无数英雄竞折腰。</p>
+								<p>惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚。</p>
+								<p>一代天骄，成吉思汗，只识弯弓射大雕。</p>
+								<p>俱往矣，数风流人物，还看今朝。</p>
+							</div>
+						</cp-tab-panel>
+					</cp-tab-context>
+				</cp-paper>
+			</li>
+		</ul>
+		<script src="../index.js" type="module"></script>
+		<script>
+			const CpTabContext = document.getElementById('control-tab-context');
+			CpTabContext.addEventListener('change', (event) => {
+				CpTabContext.setAttribute('active-key', event.detail.activeKey);
+			});
+		</script>
+	</body>
 </html>
