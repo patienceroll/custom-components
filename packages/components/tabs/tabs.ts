@@ -45,11 +45,11 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 	/** tabs 当前激活的tab 下的bar */
 	public wrapperBar: HTMLDivElement;
 	/** 当前组件激活的key,为组件实际显示的值,当为受控的时候,会同步属性 active-key 的值 */
-	public realActiveKey: string | null;
+	private realActiveKey: string;
 
 	constructor() {
 		super();
-		this.realActiveKey = null;
+		this.realActiveKey = '';
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpTabs.styleSheet];
 
@@ -63,7 +63,11 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 
 		this.addEventListener('cp-tab-click', (event) => {
 			const { detail } = event as CustomEvent<{ domEvent: MouseEvent; key: string | null }>;
-			if (detail.key) this.setRealActiveKey(detail.key);
+			if (detail.key) {
+				/** 如果是非受控的,更新内部维护的值,触发组件内部更新 */
+				if (!this.getAttribute('active-key')) this.setRealActiveKey(detail.key);
+				this.dispatchEvent(new CustomEvent('change', { detail: { activeKey: detail.key }, bubbles: true }));
+			}
 		});
 
 		this.wrapper.append(children, this.wrapperBar);
