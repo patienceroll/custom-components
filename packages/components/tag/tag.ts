@@ -12,9 +12,15 @@ import { style,watch } from '../../utils/decorators';
 		transform:'translate(-50%,-50%)'
 	},
 	'.color':{
-		
 		color:'red'
+	},
+	':host(:hover)':{
+		cursor:'pointer'
+	},
+	':host':{
+		borderRadius:'0.25em'
 	}
+	
 })
 @watch<TagObservedAttributes,AttachedShadowRoot<CpTag>>(
 	['color' ,'show', 'closable','pure-background' , 'onclose','size'],
@@ -26,7 +32,6 @@ import { style,watch } from '../../utils/decorators';
 				this.style.setProperty('background',attr)
 				this.style.setProperty('border',`1px solid ${newer}`)
 			case 'size':
-				console.log(newer)
 				if(newer == 'mini'){
 					this.style.setProperty('padding','0.1em')
 				}else if(newer == 'small'){
@@ -51,11 +56,12 @@ export default class CpTag extends HTMLElement implements CustomElement{
 
 		// 创建dom元素
 		//创建插槽
+		
 		const contentSlot = document.createElement('slot')
 		this.Tag = document.createElement('div')
 		this.Tag.style.setProperty('display','inline')
 		this.Tag.append(contentSlot)
-		console.log(shadowRoot)
+
 		shadowRoot.append(this.Tag);
 	}
 
