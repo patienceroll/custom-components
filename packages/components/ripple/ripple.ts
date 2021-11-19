@@ -64,7 +64,7 @@ export default class CpRipple extends HTMLElement {
 		) {
 			const { pow, sqrt, abs } = Math;
 			const { top, left, backgroundColor = '#999' } = options;
-			console.log(backgroundColor);
+
 
 			const { clientWidth, clientHeight } = this;
 			const ripple = document.createElement('div');
