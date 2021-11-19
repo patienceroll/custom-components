@@ -1,68 +1,64 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>单选组件</title>
+		<style>
+			body {
+				background-color: #eaeef3;
+				color: #333;
+			}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>单选组件</title>
-  <style>
-    body {
-      background-color: #EAEEF3;
-      color: #333;
-    }
+			cp-paper {
+				flex: 1;
+				margin-right: 15px;
+				max-width: 128px;
+				min-height: 128px;
+			}
 
-    cp-paper {
-      flex: 1;
-      margin-right: 15px;
-      max-width: 128px;
-      min-height: 128px;
-    }
+			span {
+				color: #999;
+			}
+		</style>
+	</head>
 
-    span {
-      color: #999;
-    }
-  </style>
-</head>
+	<body>
+		<h1>单选组件</h1>
+		<ul>
+			<li>
+				<h4>默认</h4>
+				<cp-radio default-checked="false">单选框2</cp-radio>
+				<cp-radio checked="false">单选框3</cp-radio>
+				<cp-radio checked="false"></cp-radio>
+			</li>
+			<li>
+				<h4>禁用</h4>
+				<mark>目前禁用没有加样式,后期会设置默认的禁用样式,但是我们期望的是二次封装的时候,来封装样式</mark>
+				<br />
+				<cp-radio disabled="true">单选框1</cp-radio>
+			</li>
+			<li>
+				<h4>组</h4>
+				<cp-radio-group>
+					<cp-radio checked="false" name="group" value="单选框1">单选框1</cp-radio>
+					<cp-radio default-checked="false" name="group" value="单选框2">单选框2</cp-radio>
+					<cp-radio checked="false" name="group" value="单选框3">单选框3</cp-radio>
+					<cp-radio checked="false" name="group" value="单选框4">单选框4</cp-radio>
+				</cp-radio-group>
+			</li>
+			<li>
+				<h4>组 (默认选中)</h4>
+				<cp-radio-group default-checked="2" name="group">
+					<cp-radio checked="false" value="1">单选框1</cp-radio>
+					<cp-radio default-checked="false" value="2">单选框2</cp-radio>
+					<cp-radio checked="true" value="3">单选框3</cp-radio>
+					<cp-radio checked="false" value="4">单选框4</cp-radio>
+				</cp-radio-group>
+			</li>
+		</ul>
 
-<body>
-  <h1>单选组件</h1>
-  <ul>
-
-    <li>
-      <h4>默认</h4>
-      <cp-radio default-checked="false">单选框2</cp-radio>
-      <cp-radio checked="false">单选框3</cp-radio>
-      <cp-radio checked="false"></cp-radio>
-    </li>
-    <li>
-      <h4>禁用</h4>
-      <mark>目前禁用没有加样式,后期会设置默认的禁用样式,但是我们期望的是二次封装的时候,来封装样式</mark>
-      <br />
-      <cp-radio disabled="true">单选框1</cp-radio>
-    </li>
-    <li>
-      <h4>组</h4>
-      <cp-radio-group>
-        <cp-radio checked="false" name="group" value="单选框1">单选框1</cp-radio>
-        <cp-radio default-checked="false" name="group" value="单选框2">单选框2</cp-radio>
-        <cp-radio checked="false" name="group" value="单选框3">单选框3</cp-radio>
-        <cp-radio checked="false" name="group" value="单选框4">单选框4</cp-radio>
-      </cp-radio-group>
-    </li>
-    <li>
-      <h4>组 (默认选中)</h4>
-      <cp-radio-group default-checked="2" name="group">
-        <cp-radio checked="false" value="1">单选框1</cp-radio>
-        <cp-radio default-checked="false" value="2">单选框2</cp-radio>
-        <cp-radio checked="true" value="3">单选框3</cp-radio>
-        <cp-radio checked="false" value="4">单选框4</cp-radio>
-      </cp-radio-group>
-    </li>
-  </ul>
-
-  <script src="../index.js" type="module"></script>
-
-</body>
-
+		<script src="../index.js" type="module"></script>
+	</body>
 </html>

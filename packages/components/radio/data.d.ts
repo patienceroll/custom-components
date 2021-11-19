@@ -1,5 +1,3 @@
-export type CpRadioObservedAttributes = 'checked' | 'name' | 'color';
-
 export type CpRadioProps = {
 	/** 是否选中 */
 	'checked'?: BooleanCharacter;
@@ -24,3 +22,5 @@ export type CpRadioGroupProps = {
 	/** 单选框值变化事件 */
 	'onchange': (event: CustomEvent<{ value: string }>) => void;
 };
+
+export type CpRadioObservedAttributes = 'checked' | 'name' | 'color';
