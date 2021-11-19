@@ -64,6 +64,8 @@ export default class CpRipple extends HTMLElement {
 		) {
 			const { pow, sqrt, abs } = Math;
 			const { top, left, backgroundColor = '#999' } = options;
+			console.log(backgroundColor);
+
 			const { clientWidth, clientHeight } = this;
 			const ripple = document.createElement('div');
 			// 计算涟漪半径,涟漪中心点到父元素四个点之中最远的一个点的距离为半径

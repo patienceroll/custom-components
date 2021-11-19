@@ -39,7 +39,7 @@ export default class CpTab extends HTMLElement implements CustomElement {
 		shadowRoot.adoptedStyleSheets = [CpTab.styleSheet];
 
 		const children = document.createElement('cp-button');
-		children.setAttribute('ripple-color', '#007FFF');
+		children.setAttribute('ripple-color', 'currentColor');
 
 		this.addEventListener('click', (event) => {
 			this.dispatchEvent(

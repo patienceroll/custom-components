@@ -30,5 +30,4 @@ export default class CpIconButton extends CpButtonBase {
 		button.classList.add('cp-icon-button');
 		button.append(IconSlot);
 	}
-
 }
