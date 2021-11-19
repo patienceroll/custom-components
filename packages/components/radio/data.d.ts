@@ -1,4 +1,4 @@
-export type CpRadioProps = {
+export interface CpRadioProps extends HTMLElement {
 	/** 是否选中 */
 	'checked'?: BooleanCharacter;
 	/** 是否默认选中 */
@@ -9,9 +9,9 @@ export type CpRadioProps = {
 	'color'?: string;
 	/** 单选框选中事件 (只能通过 addEventListener 监听) */
 	'oncheck': (event: CustomEvent<true>) => void;
-};
+}
 
-export type CpRadioGroupProps = {
+export interface CpRadioGroupProps extends HTMLElement {
 	/** 是否默认选中 */
 	'default-checked'?: string;
 	/**
@@ -21,6 +21,6 @@ export type CpRadioGroupProps = {
 	'name'?: string;
 	/** 单选框值变化事件 */
 	'onchange': (event: CustomEvent<{ value: string }>) => void;
-};
+}
 
 export type CpRadioObservedAttributes = 'checked' | 'name' | 'color';

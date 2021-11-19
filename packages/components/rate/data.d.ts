@@ -1,4 +1,4 @@
-export interface CpRateItemProps {
+export interface CpRateItemProps extends HTMLElement {
 	/** 值为 0 ~ 100 的字符串 */
 	'value'?: NumberCharacter;
 	/** 单个评分的基础颜色 */

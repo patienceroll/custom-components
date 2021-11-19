@@ -1,5 +1,5 @@
 /** button-base 属性 */
-export interface ButtonBaseProps {
+export interface ButtonBaseProps extends HTMLElement {
 	'ripple-color'?: CSSProperty['color'];
 	'disable'?: BooleanCharacter;
 }

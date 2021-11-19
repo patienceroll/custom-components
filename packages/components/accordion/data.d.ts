@@ -1,5 +1,5 @@
 /** 单个手风琴折叠面板props */
-export interface AccordionItemProps {
+export interface AccordionItemProps extends HTMLElement {
 	/** 是否展开 */
 	'open'?: BooleanCharacter;
 	/** 是否禁用 */
@@ -19,7 +19,7 @@ export interface AccordionItemProps {
 }
 
 /** 手风琴折叠面板props */
-export interface AccordionProps {
+export interface AccordionProps extends HTMLElement {
 	/** 受控状态,当前打开的折叠面板数组,值为JSON形式的数组字符串 */
 	'active-keys': string;
 }
