@@ -13,3 +13,4 @@ import './components/rate';
 import './components/text-filed';
 import './components/accordion';
 import './components/tabs';
+import './components/avatar';
