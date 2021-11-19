@@ -1,7 +1,7 @@
 import CpTabs from './tabs';
 import CpTab from './tab';
 import CpTabPanel from './tab-panel';
-import CpContext from './tab-context'
+import CpContext from './tab-context';
 
 if (!customElements.get('cp-tab')) customElements.define('cp-tab', CpTab);
 if (!customElements.get('cp-tabs')) customElements.define('cp-tabs', CpTabs);
