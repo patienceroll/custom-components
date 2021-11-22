@@ -9,6 +9,7 @@
 			body {
 				background-color: #eaeef3;
 				color: #333;
+				padding-bottom: 50vh;
 			}
 
 			li {
@@ -21,10 +22,11 @@
 				text-decoration: none;
 			}
 
-			h2 {
+			h4 {
 				margin: 0;
 			}
 		</style>
+		<script type="module" src="./index.js"></script>
 	</head>
 
 	<body>
@@ -32,7 +34,7 @@
 
 		<cp-accordion>
 			<cp-accordion-item open="true" key="基础组件">
-				<h2 slot="title">基础组件</h2>
+				<h4 slot="title">基础组件</h4>
 				<ul>
 					<li>
 						<div><a href="./html/ripple.html">涟漪效果</a></div>
@@ -43,7 +45,7 @@
 				</ul>
 			</cp-accordion-item>
 			<cp-accordion-item open="true" key="布局占位类组件">
-				<h2 slot="title">布局占位类组件</h2>
+				<h4 slot="title">布局占位类组件</h4>
 				<ul>
 					<li>
 						<div><a href="./html/skeleton.html">骨架屏</a></div>
@@ -60,7 +62,7 @@
 				</ul>
 			</cp-accordion-item>
 			<cp-accordion-item open="true" key="状态展示类组件">
-				<h2 slot="title">状态展示类组件</h2>
+				<h4 slot="title">状态展示类组件</h4>
 				<ul>
 					<li>
 						<div><a href="./html/tag.html">标签</a></div>
@@ -74,7 +76,7 @@
 				</ul>
 			</cp-accordion-item>
 			<cp-accordion-item open="true" key="操作交互类组件">
-				<h2 slot="title">操作交互类组件</h2>
+				<h4 slot="title">操作交互类组件</h4>
 				<ul>
 					<li>
 						<div><a href="./html/button.html">按钮</a></div>
@@ -91,7 +93,7 @@
 				</ul>
 			</cp-accordion-item>
 			<cp-accordion-item open="true" key="数据输入交互类组件">
-				<h2 slot="title">数据输入交互类组件</h2>
+				<h4 slot="title">数据输入交互类组件</h4>
 				<ul>
 					<li>
 						<div><a href="./html/radio.html">单选组件</a></div>
@@ -104,14 +106,20 @@
 					</li>
 				</ul>
 			</cp-accordion-item>
+			<cp-accordion-item open="true" key="成员">
+				<h4 slot="title">成员</h4>
+				<cp-avatar style="cursor: pointer" title="张显磊" onclick="window.open('https://github.com/patienceroll')">
+					<img style="width: 2.5em; height: 2.5em" src="../../../assets/images/patienceroll.jpg" />
+				</cp-avatar>
+
+				<cp-avatar style="cursor: pointer" title="李清龙" onclick="window.open('https://github.com/qinglongs')">
+					<img style="width: 2.5em; height: 2.5em" src="../../../assets/images/xiaolong.jpg" />
+				</cp-avatar>
+
+				<cp-avatar style="cursor: pointer" title="陈涛" onclick="window.open('https://github.com/hear-ct')">
+					<img style="width: 2.5em; height: 2.5em" src="../../../assets/images/hear-ct.jpg" />
+				</cp-avatar>
+			</cp-accordion-item>
 		</cp-accordion>
-
-		<h4>成员:</h4>
-		<li>
-			<a href="https://github.com/qinglongs" title="https://github.com/qinglongs">xiaolong</a>&emsp;
-			<a href="https://github.com/patienceroll" title="https://github.com/patienceroll">patienceroll</a>&emsp;
-		</li>
-
-		<script type="module" src="./index.js"></script>
 	</body>
 </html>
