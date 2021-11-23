@@ -1,5 +1,3 @@
-import { formatStyle, formatKeyframes } from '../../utils/style';
-
 import { style, keyframe } from '../../utils/decorators';
 
 @style({
@@ -64,7 +62,6 @@ export default class CpRipple extends HTMLElement {
 		) {
 			const { pow, sqrt, abs } = Math;
 			const { top, left, backgroundColor = '#999' } = options;
-
 
 			const { clientWidth, clientHeight } = this;
 			const ripple = document.createElement('div');
