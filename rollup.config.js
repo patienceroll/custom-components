@@ -26,7 +26,7 @@ export default defineConfig({
 				debugge: [
 					{ src: 'packages/**/*.html', dest: 'debugge/packages/html' },
 					{ src: 'packages/index.html', dest: 'debugge/packages' },
-					{ src: 'assets/**/*.*', dest: 'debugge/assets' },
+					{ src: 'assets/images/*.*', dest: 'debugge/assets/images' },
 				],
 				build: [{ src: 'packages/*', dest: 'dist/packages/lib', ignore: ['*.html'] }],
 			}[buildType],
