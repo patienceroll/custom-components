@@ -1,8 +1,44 @@
 import { style } from '../../utils/decorators';
 
 @style({
-	'.cp-slider-tracked': {
+	'.cp-slider-block:active .cp-slider-block-shadow': {
+		transform: 'translate(-50%,-50%) scale(1)',
+	},
+	'.cp-slider-block:hover .cp-slider-block-shadow': {
+		transform: 'translate(-50%,-50%) scale(0.77)',
+	},
+	'.cp-slider-block-shadow': {
 		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		width: 'inherit',
+		height: 'inherit',
+		transform: 'translate(-50%,-50%) scale(0)',
+		backgroundColor: 'currentColor',
+		opacity: '0.2',
+		transition: 'transform 200ms ease ',
+		borderRadius: '50%',
+	},
+	'.cp-slider-block-core': {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%,-50%)',
+		width: '1.25em',
+		height: '1.25em',
+		backgroundColor: 'currentColor',
+		borderRadius: '50%',
+	},
+	'.cp-slider-block': {
+		position: 'absolute',
+		top: '50%',
+		left: '0',
+		width: '2.625em',
+		height: '2.625em',
+		transform: 'translate(-50%,-50%)',
+		transition: 'left 300ms ease',
+	},
+	'.cp-slider-tracked': {
 		height: '0.375em',
 		width: '0',
 		opacity: '1',
@@ -12,7 +48,7 @@ import { style } from '../../utils/decorators';
 		position: 'absolute',
 		width: '100%',
 		height: '0.25em',
-		backgroundColor: '#1976d2',
+		backgroundColor: 'currentColor',
 		borderRadius: '0.25em',
 		left: '0',
 		top: '50%',
@@ -25,6 +61,7 @@ import { style } from '../../utils/decorators';
 		position: 'relative',
 		fontSize: '16px',
 		cursor: 'pointer',
+		color: '#1976d2',
 	},
 })
 export default class CpSlider extends HTMLElement implements CustomElement {
@@ -34,6 +71,8 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 	public sliderRail: HTMLSpanElement;
 	/** 滑块占有的轨道 */
 	public sliderTracked: HTMLSpanElement;
+	/** 滑块的操作块 */
+	public sliderBlock: HTMLSpanElement;
 
 	constructor() {
 		super();
@@ -42,14 +81,19 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 		this.sliderRail = document.createElement('span');
 		this.sliderTracked = document.createElement('span');
+		this.sliderBlock = document.createElement('span');
 
 		this.sliderRail.classList.add('cp-slider-rail');
 		this.sliderTracked.classList.add('cp-slider-tracked');
+		this.sliderBlock.classList.add('cp-slider-block');
+
+		this.sliderBlock.innerHTML = `<div class="cp-slider-block-shadow"></div><div class="cp-slider-block-core"></div>`;
 
 		this.addEventListener('click', (event) => {
 			this.sliderTracked.style.width = `${(event.offsetX / this.clientWidth) * 100}%`;
+			this.sliderBlock.style.left = `${event.offsetX}px`;
 		});
 
-		shadowRoot.append(this.sliderRail, this.sliderTracked);
+		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
 	}
 }
