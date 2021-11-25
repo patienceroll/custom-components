@@ -4,7 +4,7 @@ export interface CircularProgressProps extends HTMLElement {
 	color?: CSSProperty['color'];
 	/** 圆环状进度条百分比,值为0-100 */
 	value?: NumberCharacter;
-  /** 是否展示进度条文字进度label */
+	/** 是否展示进度条文字进度label */
 	label?: BooleanCharacter;
 }
 
