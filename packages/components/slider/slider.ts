@@ -94,6 +94,12 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			this.sliderBlock.style.left = `${event.offsetX}px`;
 		});
 
+		this.sliderBlock.draggable = true;
+
+		this.sliderBlock.addEventListener('drag', (event) => {
+			console.log('drag', event);
+		});
+
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
 	}
 }
