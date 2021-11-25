@@ -28,6 +28,7 @@ import { style } from '../../utils/decorators';
 		height: '1.25em',
 		backgroundColor: 'currentColor',
 		borderRadius: '50%',
+		boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
 	},
 	'.cp-slider-block': {
 		position: 'absolute',
@@ -66,7 +67,6 @@ import { style } from '../../utils/decorators';
 })
 export default class CpSlider extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
-
 	/** 滑块轨道 */
 	public sliderRail: HTMLSpanElement;
 	/** 滑块占有的轨道 */
@@ -76,6 +76,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 	constructor() {
 		super();
+
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpSlider.styleSheet];
 
@@ -94,10 +95,22 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			this.sliderBlock.style.left = `${event.offsetX}px`;
 		});
 
-		this.sliderBlock.draggable = true;
+		/** 当按住操作块之后鼠标移动事件 */
+		const onPressSliderBlockMoveEvent = (event: MouseEvent) => {
+			console.log(event);
+		};
 
-		this.sliderBlock.addEventListener('drag', (event) => {
-			console.log('drag', event);
+		/** 清除本元素添加到 owner document 的事件 */
+		const clearOwnerDocumentEvent = () => {
+			this.ownerDocument.removeEventListener('mousemove', onPressSliderBlockMoveEvent);
+			this.ownerDocument.removeEventListener('mouseup', clearOwnerDocumentEvent);
+		};
+
+		this.sliderBlock.addEventListener('mousedown', (event) => {
+			event.preventDefault();
+			event.stopPropagation();
+			this.ownerDocument.addEventListener('mousemove', onPressSliderBlockMoveEvent);
+			this.ownerDocument.addEventListener('mouseup', clearOwnerDocumentEvent);
 		});
 
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
