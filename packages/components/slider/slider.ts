@@ -97,11 +97,22 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 		/** 当按住操作块之后鼠标移动事件 */
 		const onPressSliderBlockMoveEvent = (event: MouseEvent) => {
-			console.log(event);
+			if (event.offsetX > this.clientWidth) {
+				this.sliderTracked.style.width = `100%`;
+				this.sliderBlock.style.left = `${this.clientWidth}px`;
+			} else if (event.offsetX < 0) {
+				this.sliderTracked.style.width = `0%`;
+				this.sliderBlock.style.left = `0px`;
+			} else {
+				this.sliderTracked.style.width = `${(event.offsetX / this.clientWidth) * 100}%`;
+				this.sliderBlock.style.left = `${event.offsetX}px`;
+			}
 		};
 
 		/** 清除本元素添加到 owner document 的事件 */
 		const clearOwnerDocumentEvent = () => {
+			this.sliderBlock.style.removeProperty('transition-duration');
+			this.sliderTracked.style.removeProperty('transition-duration');
 			this.ownerDocument.removeEventListener('mousemove', onPressSliderBlockMoveEvent);
 			this.ownerDocument.removeEventListener('mouseup', clearOwnerDocumentEvent);
 		};
@@ -109,6 +120,8 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		this.sliderBlock.addEventListener('mousedown', (event) => {
 			event.preventDefault();
 			event.stopPropagation();
+			this.sliderBlock.style.transitionDuration = '0ms';
+			this.sliderTracked.style.transitionDuration = '0ms';
 			this.ownerDocument.addEventListener('mousemove', onPressSliderBlockMoveEvent);
 			this.ownerDocument.addEventListener('mouseup', clearOwnerDocumentEvent);
 		});
