@@ -20,6 +20,17 @@
 				<h4>默认</h4>
 				<cp-slider style="width: 200px"></cp-slider>
 			</li>
+			<li>
+				<h4>受控的滑块组件</h4>
+				<cp-slider id="controledCpSlider" value="20" style="width: 200px"></cp-slider>
+				<script>
+					const dom = document.getElementById('controledCpSlider');
+
+					dom.addEventListener('change', (event) => {
+						dom.setAttribute('value', event.detail.value);
+					});
+				</script>
+			</li>
 		</ul>
 
 		<script src="../index.js" type="module"></script>

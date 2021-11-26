@@ -67,6 +67,13 @@ import { style } from '../../utils/decorators';
 })
 export default class CpSlider extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+
+	/** 当是单个值的滑块的时候保存的值 */
+	private realValue: number;
+
+	/** 当是范围滑块的时候,保存的值 */
+	private realValueRange: [number, number];
+
 	/** 滑块轨道 */
 	public sliderRail: HTMLSpanElement;
 	/** 滑块占有的轨道 */
@@ -76,7 +83,8 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 	constructor() {
 		super();
-
+		this.realValue = 0;
+		this.realValueRange = [0, 0];
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpSlider.styleSheet];
 
@@ -91,22 +99,44 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		this.sliderBlock.innerHTML = `<div class="cp-slider-block-shadow"></div><div class="cp-slider-block-core"></div>`;
 
 		this.addEventListener('click', (event) => {
-			this.sliderTracked.style.width = `${(event.offsetX / this.clientWidth) * 100}%`;
-			this.sliderBlock.style.left = `${event.offsetX}px`;
+			let value: number;
+			if (event.offsetX < 0) value = 0;
+			else if (event.offsetX > this.clientWidth) value = 100;
+			else value = event.offsetX / this.clientWidth;
+			if (this.value) {
+			} else {
+				this.realValue = value;
+				this.sliderChangeRender(event);
+			}
+			this.dispatchEvent(
+				new CustomEvent('change', {
+					detail: {
+						value,
+						domEvent: event,
+					},
+				})
+			);
 		});
 
 		/** 当按住操作块之后鼠标移动事件 */
 		const onPressSliderBlockMoveEvent = (event: MouseEvent) => {
-			if (event.offsetX > this.clientWidth) {
-				this.sliderTracked.style.width = `100%`;
-				this.sliderBlock.style.left = `${this.clientWidth}px`;
-			} else if (event.offsetX < 0) {
-				this.sliderTracked.style.width = `0%`;
-				this.sliderBlock.style.left = `0px`;
+			let value: number;
+			if (event.offsetX < 0) value = 0;
+			else if (event.offsetX > this.clientWidth) value = 100;
+			else value = event.offsetX / this.clientWidth;
+			if (this.value) {
 			} else {
-				this.sliderTracked.style.width = `${(event.offsetX / this.clientWidth) * 100}%`;
-				this.sliderBlock.style.left = `${event.offsetX}px`;
+				this.realValue = value;
+				this.sliderChangeRender(event);
 			}
+			this.dispatchEvent(
+				new CustomEvent('change', {
+					detail: {
+						value,
+						domEvent: event,
+					},
+				})
+			);
 		};
 
 		/** 清除本元素添加到 owner document 的事件 */
@@ -127,5 +157,34 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		});
 
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
+	}
+
+	/** 滑块值变化时渲染快和已使用的轨道 */
+	sliderChangeRender(event: MouseEvent) {
+		if (event.offsetX > this.clientWidth) {
+			this.sliderTracked.style.width = `100%`;
+			this.sliderBlock.style.left = `${this.clientWidth}px`;
+		} else if (event.offsetX < 0) {
+			this.sliderTracked.style.width = `0%`;
+			this.sliderBlock.style.left = `0px`;
+		} else {
+			this.sliderTracked.style.width = `${(event.offsetX / this.clientWidth) * 100}%`;
+			this.sliderBlock.style.left = `${event.offsetX}px`;
+		}
+	}
+
+	/** 属性值 prop */
+	get value() {
+		return this.getAttribute('value');
+	}
+
+	/** 最小value值 */
+	get min() {
+		return this.getAttribute('min') || 0;
+	}
+
+	/** 最大value值 */
+	get max() {
+		return this.getAttribute('max') || 100;
 	}
 }

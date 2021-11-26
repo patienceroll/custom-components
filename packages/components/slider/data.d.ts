@@ -1,3 +1,7 @@
-type a = '1' | '2';
-
-// 能不能把 通过 a 生成一个类型 ['1','2'] ?
+export interface CpSliderProps extends HTMLElement {
+	value: NumberCharacter;
+	/** 最小值,默认为 0 */
+	min?: NumberCharacter;
+	/** 最大值,默认为 100 */
+	max?: NumberCharacter;
+}
