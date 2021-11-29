@@ -1,7 +1,7 @@
 import type CpAccordionItem from './accordion-item';
 import type { AccordionObservedAttributes } from './data';
 
-import { style, watch } from '';
+import { style, watch } from '../../utils/index';
 
 @style({
 	':host': {

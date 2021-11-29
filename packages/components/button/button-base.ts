@@ -1,6 +1,6 @@
 import Ripple from '../ripple/ripple';
 
-import { style } from '';
+import { style } from '../../utils/index';
 
 if (!customElements.get('cp-ripple')) customElements.define('cp-ripple', Ripple);
 @style({

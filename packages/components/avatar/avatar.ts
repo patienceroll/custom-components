@@ -1,4 +1,4 @@
-import { style, watch } from '';
+import { style, watch } from '../../utils/index';
 import type { CpAvatarObservedAttributes } from './data';
 
 @style({
