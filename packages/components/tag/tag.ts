@@ -1,6 +1,6 @@
 import type { TagObservedAttributes } from './data';
 
-import { style, watch } from '../../utils/decorators';
+import { style, watch } from '../../utils/index';
 @style({
 	'.cp-tag-box': {
 		position: 'relactive',

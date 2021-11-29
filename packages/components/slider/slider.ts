@@ -1,4 +1,4 @@
-import { style, AttrToNumber } from '../../utils/index';
+import { style, AttrToNumber } from '';
 @style({
 	'.cp-slider-block:active .cp-slider-block-shadow': {
 		transform: 'translate(-50%,-50%) scale(1)',

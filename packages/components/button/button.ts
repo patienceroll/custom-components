@@ -2,7 +2,7 @@ import type { ButtonObservedAttributes } from './data';
 
 import CpButtonBase from './button-base';
 
-import { style, keyframe, watch } from '../../utils/decorators';
+import { style, keyframe, watch } from '../../utils/index';
 
 import '../ripple';
 import '../circular-progress';

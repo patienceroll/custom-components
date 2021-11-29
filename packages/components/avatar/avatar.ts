@@ -1,4 +1,4 @@
-import { style, watch } from '../../utils/decorators';
+import { style, watch } from '';
 import type { CpAvatarObservedAttributes } from './data';
 
 @style({

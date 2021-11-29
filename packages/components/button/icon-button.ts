@@ -1,6 +1,6 @@
 import CpButtonBase from './button-base';
 
-import { style } from '../../utils/decorators';
+import { style } from '../../utils/index';
 
 import '../ripple';
 

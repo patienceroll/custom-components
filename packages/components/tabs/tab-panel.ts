@@ -1,4 +1,4 @@
-import { style, watch } from '../../utils/decorators';
+import { style, watch } from '../../utils/index';
 
 import type { CpTabPanelObservedAttributes } from './data';
 

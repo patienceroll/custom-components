@@ -1,5 +1,4 @@
-import Stack from '../../utils/stack';
-import { style, keyframe } from '../../utils/decorators';
+import { style, keyframe, Stack } from '../../utils/index';
 
 const stack = new Stack<CpMask>();
 stack.finished = function (removeItem: CpMask) {

@@ -1,6 +1,6 @@
 import type { CpSkeletonObservedAttributes } from './data';
 
-import { style, keyframe, watch } from '../../utils/decorators';
+import { style, keyframe, watch } from '../../utils/index';
 
 @style({
 	'.cp-skeleton-wave': {
