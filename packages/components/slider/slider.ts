@@ -1,5 +1,4 @@
-import { style } from '../../utils/decorators';
-
+import { style, AttrToNumber } from '../../utils/index';
 @style({
 	'.cp-slider-block:active .cp-slider-block-shadow': {
 		transform: 'translate(-50%,-50%) scale(1)',
@@ -180,7 +179,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 	/** 最小value值 */
 	get min() {
-		return this.getAttribute('min') || 0;
+		return AttrToNumber(this, 'min', 0);
 	}
 
 	/** 最大value值 */
