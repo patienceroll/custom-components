@@ -99,8 +99,8 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 		this.addEventListener('click', (event) => {
 			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
-			if (this.value) {
-			} else {
+
+			if (!this.value) {
 				this.realValue = percent;
 				this.sliderChangeRender(event);
 			}
@@ -118,8 +118,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		const onPressSliderBlockMoveEvent = (event: MouseEvent) => {
 			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
 
-			if (this.value) {
-			} else {
+			if (!this.value) {
 				this.realValue = (this.max - this.min) * percent + this.min;
 				this.sliderChangeRender(event);
 			}
@@ -168,7 +167,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		return AttrToNumber(this, 'max', 100) as number;
 	}
 
-	/** 滑块儿的精度,默认 1 */
+	/** 滑块儿的精度,默认 1, */
 	get precision() {
 		return AttrToNumber(this, 'precision', 1) as number;
 	}

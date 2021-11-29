@@ -4,6 +4,6 @@ export interface CpSliderProps extends HTMLElement {
 	min?: NumberCharacter;
 	/** 最大值,默认为 100 */
 	max?: NumberCharacter;
-	/** 评分的精度,默认为 1 */
+	/** 评分的精度,默认为 1,值需要大于0 */
 	precision?: NumberCharacter;
 }
