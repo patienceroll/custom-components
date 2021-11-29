@@ -1,243 +1,239 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>评分组件</title>
+		<style>
+			body {
+				background-color: #eaeef3;
+				color: #333;
+			}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>评分组件</title>
-  <style>
-    body {
-      background-color: #EAEEF3;
-      color: #333;
-    }
+			cp-paper {
+				flex: 1;
+				margin-right: 15px;
+				max-width: 128px;
+				min-height: 128px;
+			}
 
-    cp-paper {
-      flex: 1;
-      margin-right: 15px;
-      max-width: 128px;
-      min-height: 128px;
-    }
+			span {
+				color: #999;
+			}
 
-    span {
-      color: #999;
-    }
+			mark {
+				font-size: 12px;
+			}
+		</style>
+	</head>
 
-    mark {
-      font-size: 12px;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>评分组件</h1>
-  <ul>
-    <li>
-      <h4>单个评分</h4>
-      <ul>
-        <li>
-          <mark>评分组件由多个 “单个评分” 组件构成</mark>
-          <br />
-          <cp-rate-item value="100"></cp-rate-item>
-        </li>
-        <li>
-          <mark>单个评分的值在 0 ~ 100之间</mark>
-          <br />
-          <cp-rate-item value="0"></cp-rate-item>
-          <cp-rate-item value="20"></cp-rate-item>
-          <cp-rate-item value="40"></cp-rate-item>
-          <cp-rate-item value="60"></cp-rate-item>
-          <cp-rate-item value="80"></cp-rate-item>
-          <cp-rate-item value="85"></cp-rate-item>
-          <cp-rate-item value="100"></cp-rate-item>
-        </li>
-        <li>
-          <mark>可以设置单个评分的背景</mark>
-          <br />
-          <cp-rate-item base-color="yellow" value="50"></cp-rate-item>
-          <cp-rate-item base-color="#f40" value="50"></cp-rate-item>
-          <cp-rate-item base-color="blue" value="50"></cp-rate-item>
-        </li>
-        <li>
-          <mark>可以设置单个评分的颜色</mark>
-          <br />
-          <cp-rate-item light-color="yellow" value="100"></cp-rate-item>
-          <cp-rate-item light-color="#f40" value="100"></cp-rate-item>
-          <cp-rate-item light-color="blue" value="100"></cp-rate-item>
-        </li>
-        <li>
-          <mark>可以设置为只读</mark>
-          <br />
-          <cp-rate-item value="80" readonly="true"></cp-rate-item>
-        </li>
-        <li>
-          <mark>禁用</mark>
-          <br />
-          <cp-rate-item value="80" disable="true"></cp-rate-item>
-        </li>
-        <li>
-          <mark>可以自定义图标</mark>
-          <br />
-          <cp-rate-item value="80" custom="<svg viewBox='0 0 1024 1024'><path fill='currentcolor' d='M667.786667 117.333333C832.864 117.333333 938.666667 249.706667 938.666667 427.861333c0 138.250667-125.098667 290.506667-371.573334 461.589334a96.768 96.768 0 0 1-110.186666 0C210.432 718.368 85.333333 566.112 85.333333 427.861333 85.333333 249.706667 191.136 117.333333 356.213333 117.333333c59.616 0 100.053333 20.832 155.786667 68.096C567.744 138.176 608.170667 117.333333 667.786667 117.333333z'>
+	<body>
+		<h1>评分组件</h1>
+		<ul>
+			<li>
+				<h4>单个评分</h4>
+				<ul>
+					<li>
+						<mark>评分组件由多个 “单个评分” 组件构成</mark>
+						<br />
+						<cp-rate-item value="100"></cp-rate-item>
+					</li>
+					<li>
+						<mark>单个评分的值在 0 ~ 100之间</mark>
+						<br />
+						<cp-rate-item value="0"></cp-rate-item>
+						<cp-rate-item value="20"></cp-rate-item>
+						<cp-rate-item value="40"></cp-rate-item>
+						<cp-rate-item value="60"></cp-rate-item>
+						<cp-rate-item value="80"></cp-rate-item>
+						<cp-rate-item value="85"></cp-rate-item>
+						<cp-rate-item value="100"></cp-rate-item>
+					</li>
+					<li>
+						<mark>可以设置单个评分的背景</mark>
+						<br />
+						<cp-rate-item base-color="yellow" value="50"></cp-rate-item>
+						<cp-rate-item base-color="#f40" value="50"></cp-rate-item>
+						<cp-rate-item base-color="blue" value="50"></cp-rate-item>
+					</li>
+					<li>
+						<mark>可以设置单个评分的颜色</mark>
+						<br />
+						<cp-rate-item light-color="yellow" value="100"></cp-rate-item>
+						<cp-rate-item light-color="#f40" value="100"></cp-rate-item>
+						<cp-rate-item light-color="blue" value="100"></cp-rate-item>
+					</li>
+					<li>
+						<mark>可以设置为只读</mark>
+						<br />
+						<cp-rate-item value="80" readonly="true"></cp-rate-item>
+					</li>
+					<li>
+						<mark>禁用</mark>
+						<br />
+						<cp-rate-item value="80" disable="true"></cp-rate-item>
+					</li>
+					<li>
+						<mark>可以自定义图标</mark>
+						<br />
+						<cp-rate-item
+							value="80"
+							custom="<svg viewBox='0 0 1024 1024'><path fill='currentcolor' d='M667.786667 117.333333C832.864 117.333333 938.666667 249.706667 938.666667 427.861333c0 138.250667-125.098667 290.506667-371.573334 461.589334a96.768 96.768 0 0 1-110.186666 0C210.432 718.368 85.333333 566.112 85.333333 427.861333 85.333333 249.706667 191.136 117.333333 356.213333 117.333333c59.616 0 100.053333 20.832 155.786667 68.096C567.744 138.176 608.170667 117.333333 667.786667 117.333333z'>
             </path>
-          </svg>">
-          </cp-rate-item>
-        </li>
-      </ul>
+          </svg>"
+						>
+						</cp-rate-item>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>默认</h4>
+				<ul>
+					<li>
+						<cp-rate>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+						</cp-rate>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>受控的评分</h4>
+				<ul>
+					<li>
+						<cp-rate id="controlled-rate" value="80">
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+						</cp-rate>
 
+						<cp-button onclick="onClickControlRateAction('增加')">增加</cp-button>
+						<cp-button onclick="onClickControlRateAction('减少')">减少</cp-button>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>评分的精度</h4>
+				<ul>
+					<mark>评分精度需要小于单个评分所代表的评分值</mark>
+					<li>
+						<cp-rate precision="1" id="precision-rate">
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+						</cp-rate>
+						<label>当前分数:<span id="precision">100</span></label>
+						<script>
+							const precisionRate = document.getElementById('precision-rate');
+							const precision = document.getElementById('precision');
+							precisionRate.addEventListener('change', (event) => {
+								precision.innerHTML = event.detail.value;
+							});
+						</script>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>悬停反馈</h4>
+				<ul>
+					<mark>鼠标悬停时让组件显示一个辅助标签来帮助用户选择正确的评分值</mark>
+					<li>
+						<cp-rate id="hover-rate">
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+						</cp-rate>
+						&nbsp;
+						<label>当前分数:<span id="hover-current">100</span></label>
+						&nbsp;
+						<label>悬停分数:<span id="hover-hover">--</span></label>
+						<script>
+							const hoverRate = document.getElementById('hover-rate');
+							const hoverCurrent = document.getElementById('hover-current');
+							const hoverHover = document.getElementById('hover-hover');
+							hoverRate.addEventListener('changehover', (event) => {
+								hoverHover.innerHTML = event.detail.value;
+							});
+							hoverRate.addEventListener('change', (event) => {
+								hoverCurrent.innerHTML = event.detail.value;
+							});
+						</script>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>只读</h4>
+				<ul>
+					<li>
+						<cp-rate readonly="true" value="75">
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+						</cp-rate>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>禁用</h4>
+				<ul>
+					<li>
+						<cp-rate disable="true" value="35">
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+						</cp-rate>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<h4>自定义图标</h4>
+				<ul>
+					<li>
+						<mark>只支持svg,且svg的颜色需要设置 currentcolor </mark>
+						<br />
+						<cp-rate
+							light-color="#d4237a"
+							custom="<svg  viewBox='0 0 1024 1024'><path fill='currentcolor' d='M841.7 615.2s79.2-9.6 87.5-25.6c4.9-9.5 13.5-60.5 2.4-82.1-9.6-18.7-94.2-28.4-94.2-28.4s36.9-13.2 44.7-33.6c7.8-20.3 4.6-63.3-31-89.3-18.9-13.9-33-10.3-33-10.3s-42.3 6.6-109.2 9.8c-55.8 2.7-84.8 2.2-84.8 2.2s-27.3-1-36-15.3c-7.8-12.7-11.3-27.1-10.5-38.8 0.8-11.7 10.6-17.8 14.6-39.4 0.8-4.1 2.3 13.4 0.1-52-1.8-54.3-16.1-125.1-55.2-141-35.7-14.5-88.7-2.8-88.7-2.8S423 81.4 414.6 111c-7.4 26.2 28.1 91.9-3.4 196.4-24.4 81.3-73.2 147.5-73.2 147.5s-21.7 12-32.8 34.7c-9.9 20.2-20.8 51.5-20.8 51.5s-17.3 58.6-17.3 109.9c0 60.2 13.1 114.5 13.1 114.5s14.2 47 34.4 71.8c21.4 26.3 64.5 30.3 64.5 30.3s112 57 228.8 51.9c230.9-10 230.1-22.3 255.1-39.8 42.8-29.9 40.3-73 38-79.4-7-19.5-63.8-47.8-63.8-47.8s79-8.7 87-24.7c9.8-19.6 14.9-59.9 7.8-77.2-8.1-19.5-90.3-35.4-90.3-35.4zM244.3 381.7c-22.3-19.9-64.3-8.8-86.5 28.2-94.4 157.4-94.4 354.8 0 512.1 22.2 37 64.1 48.1 86.5 28.3 22.5-19.8 23-56.3 6.6-84.1-73.8-123-73.8-277.5 0-400.5 16.4-27.7 15.9-64.2-6.6-84z'></path></svg>"
+						>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+							<cp-rate-item></cp-rate-item>
+						</cp-rate>
+					</li>
+				</ul>
+			</li>
+		</ul>
 
-    </li>
-    <li>
-      <h4>默认</h4>
-      <ul>
-        <li>
-          <cp-rate>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-          </cp-rate>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h4>受控的评分</h4>
-      <ul>
-        <li>
-          <cp-rate id="controlled-rate" value="80">
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-          </cp-rate>
-
-          <cp-button onclick="onClickControlRateAction('增加')">增加</cp-button>
-          <cp-button onclick="onClickControlRateAction('减少')">减少</cp-button>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h4>评分的精度</h4>
-      <ul>
-        <mark>评分精度需要小于单个评分所代表的评分值</mark>
-        <li>
-          <cp-rate precision="1" id="precision-rate">
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-          </cp-rate>
-          <label>当前分数:<span id="precision">100</span></label>
-          <script>
-            const precisionRate = document.getElementById('precision-rate')
-            const precision = document.getElementById('precision')
-            precisionRate.addEventListener('change', (event) => {
-              precision.innerHTML = event.detail.value
-            })
-          </script>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h4>悬停反馈</h4>
-      <ul>
-        <mark>鼠标悬停时让组件显示一个辅助标签来帮助用户选择正确的评分值</mark>
-        <li>
-          <cp-rate id="hover-rate">
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-          </cp-rate>
-          &nbsp;
-          <label>当前分数:<span id="hover-current">100</span></label>
-          &nbsp;
-          <label>悬停分数:<span id="hover-hover">--</span></label>
-          <script>
-            const hoverRate = document.getElementById('hover-rate')
-            const hoverCurrent = document.getElementById('hover-current')
-            const hoverHover = document.getElementById('hover-hover')
-            hoverRate.addEventListener('changehover', (event) => {
-              hoverHover.innerHTML = event.detail.value
-            })
-            hoverRate.addEventListener('change', (event) => {
-              hoverCurrent.innerHTML = event.detail.value
-            })
-          </script>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h4>只读</h4>
-      <ul>
-        <li>
-          <cp-rate readonly="true" value="75">
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-          </cp-rate>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h4>禁用</h4>
-      <ul>
-        <li>
-          <cp-rate disable="true" value="35">
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-          </cp-rate>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <h4>自定义图标</h4>
-      <ul>
-        <li>
-          <mark>只支持svg,且svg的颜色需要设置 currentcolor </mark>
-          <br />
-          <cp-rate light-color="#d4237a"
-            custom="<svg  viewBox='0 0 1024 1024'><path fill='currentcolor' d='M841.7 615.2s79.2-9.6 87.5-25.6c4.9-9.5 13.5-60.5 2.4-82.1-9.6-18.7-94.2-28.4-94.2-28.4s36.9-13.2 44.7-33.6c7.8-20.3 4.6-63.3-31-89.3-18.9-13.9-33-10.3-33-10.3s-42.3 6.6-109.2 9.8c-55.8 2.7-84.8 2.2-84.8 2.2s-27.3-1-36-15.3c-7.8-12.7-11.3-27.1-10.5-38.8 0.8-11.7 10.6-17.8 14.6-39.4 0.8-4.1 2.3 13.4 0.1-52-1.8-54.3-16.1-125.1-55.2-141-35.7-14.5-88.7-2.8-88.7-2.8S423 81.4 414.6 111c-7.4 26.2 28.1 91.9-3.4 196.4-24.4 81.3-73.2 147.5-73.2 147.5s-21.7 12-32.8 34.7c-9.9 20.2-20.8 51.5-20.8 51.5s-17.3 58.6-17.3 109.9c0 60.2 13.1 114.5 13.1 114.5s14.2 47 34.4 71.8c21.4 26.3 64.5 30.3 64.5 30.3s112 57 228.8 51.9c230.9-10 230.1-22.3 255.1-39.8 42.8-29.9 40.3-73 38-79.4-7-19.5-63.8-47.8-63.8-47.8s79-8.7 87-24.7c9.8-19.6 14.9-59.9 7.8-77.2-8.1-19.5-90.3-35.4-90.3-35.4zM244.3 381.7c-22.3-19.9-64.3-8.8-86.5 28.2-94.4 157.4-94.4 354.8 0 512.1 22.2 37 64.1 48.1 86.5 28.3 22.5-19.8 23-56.3 6.6-84.1-73.8-123-73.8-277.5 0-400.5 16.4-27.7 15.9-64.2-6.6-84z'></path></svg>">
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-            <cp-rate-item></cp-rate-item>
-          </cp-rate>
-        </li>
-      </ul>
-    </li>
-  </ul>
-
-
-  <script>
-    function onClickControlRateAction(type) {
-      const rate = document.getElementById('controlled-rate')
-      const value = Number(rate.getAttribute('value'))
-      switch (type) {
-        case '增加':
-          rate.setAttribute('value', value <= 95 ? value + 5 : 100)
-          break
-        case '减少':
-          rate.setAttribute('value', value >= 5 ? value - 5 : 0)
-          break
-      }
-    }
-  </script>
-  <script src="../index.js" type="module">
-
-
-  </script>
-
-</body>
-
+		<script>
+			function onClickControlRateAction(type) {
+				const rate = document.getElementById('controlled-rate');
+				const value = Number(rate.getAttribute('value'));
+				switch (type) {
+					case '增加':
+						rate.setAttribute('value', value <= 95 ? value + 5 : 100);
+						break;
+					case '减少':
+						rate.setAttribute('value', value >= 5 ? value - 5 : 0);
+						break;
+				}
+			}
+		</script>
+		<script src="../index.js" type="module"></script>
+	</body>
 </html>

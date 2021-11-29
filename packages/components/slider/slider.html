@@ -18,16 +18,22 @@
 		<ul>
 			<li>
 				<h4>默认</h4>
-				<cp-slider style="width: 200px"></cp-slider>
+				<cp-slider id="CpSlider" min="-100" max="100" style="width: 200px"></cp-slider>
+				<script>
+					const CpSlider = document.getElementById('CpSlider');
+					CpSlider.addEventListener('change', (event) => {
+						console.log(event.detail);
+					});
+				</script>
 			</li>
 			<li>
 				<h4>受控的滑块组件</h4>
 				<cp-slider id="controledCpSlider" value="20" style="width: 200px"></cp-slider>
 				<script>
-					const dom = document.getElementById('controledCpSlider');
+					const controledCpSlider = document.getElementById('controledCpSlider');
 
-					dom.addEventListener('change', (event) => {
-						dom.setAttribute('value', event.detail.value);
+					controledCpSlider.addEventListener('change', (event) => {
+						controledCpSlider.setAttribute('value', event.detail.value);
 					});
 				</script>
 			</li>

@@ -1,58 +1,55 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>纸张组件</title>
+		<style>
+			body {
+				background-color: #eaeef3;
+				color: #333;
+			}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>纸张组件</title>
-  <style>
-    body {
-      background-color: #EAEEF3;
-      color: #333;
-    }
+			cp-paper {
+				flex: 1;
+				margin-right: 15px;
+				max-width: 128px;
+				min-height: 128px;
+			}
 
-    cp-paper {
-      flex: 1;
-      margin-right: 15px;
-      max-width: 128px;
-      min-height: 128px;
-    }
+			span {
+				color: #999;
+			}
+		</style>
+	</head>
 
-    span {
-      color: #999;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>纸张组件</h1>
-  <ul>
-    <li>
-      <h4>默认</h4>
-      <div style="display: flex;">
-        <cp-paper>
-          <span>纸张</span>
-        </cp-paper>
-      </div>
-    </li>
-    <li>
-      <h4>变体</h4>
-      <div style="display: flex;">
-        <cp-paper variant="outlined">
-          <span>边框纸张</span>
-        </cp-paper>
-        <cp-paper square="true">
-          <span>直角纸张</span>
-        </cp-paper>
-        <cp-paper variant="outlined" square="true">
-          <span>边框且直角纸张</span>
-        </cp-paper>
-      </div>
-
-    </li>
-  </ul>
-  <script src="../index.js" type="module"></script>
-</body>
-
+	<body>
+		<h1>纸张组件</h1>
+		<ul>
+			<li>
+				<h4>默认</h4>
+				<div style="display: flex">
+					<cp-paper>
+						<span>纸张</span>
+					</cp-paper>
+				</div>
+			</li>
+			<li>
+				<h4>变体</h4>
+				<div style="display: flex">
+					<cp-paper variant="outlined">
+						<span>边框纸张</span>
+					</cp-paper>
+					<cp-paper square="true">
+						<span>直角纸张</span>
+					</cp-paper>
+					<cp-paper variant="outlined" square="true">
+						<span>边框且直角纸张</span>
+					</cp-paper>
+				</div>
+			</li>
+		</ul>
+		<script src="../index.js" type="module"></script>
+	</body>
 </html>

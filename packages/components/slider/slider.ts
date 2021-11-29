@@ -82,8 +82,8 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 	constructor() {
 		super();
-		this.realValue = 0;
-		this.realValueRange = [0, 0];
+		this.realValue = this.min;
+		this.realValueRange = [this.min, this.max];
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpSlider.styleSheet];
 
@@ -98,19 +98,16 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		this.sliderBlock.innerHTML = `<div class="cp-slider-block-shadow"></div><div class="cp-slider-block-core"></div>`;
 
 		this.addEventListener('click', (event) => {
-			let value: number;
-			if (event.offsetX < 0) value = 0;
-			else if (event.offsetX > this.clientWidth) value = 100;
-			else value = event.offsetX / this.clientWidth;
+			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
 			if (this.value) {
 			} else {
-				this.realValue = value;
+				this.realValue = percent;
 				this.sliderChangeRender(event);
 			}
 			this.dispatchEvent(
 				new CustomEvent('change', {
 					detail: {
-						value,
+						value: (this.max - this.min) * percent + this.min,
 						domEvent: event,
 					},
 				})
@@ -119,19 +116,17 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 		/** 当按住操作块之后鼠标移动事件 */
 		const onPressSliderBlockMoveEvent = (event: MouseEvent) => {
-			let value: number;
-			if (event.offsetX < 0) value = 0;
-			else if (event.offsetX > this.clientWidth) value = 100;
-			else value = event.offsetX / this.clientWidth;
+			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
+
 			if (this.value) {
 			} else {
-				this.realValue = value;
+				this.realValue = (this.max - this.min) * percent + this.min;
 				this.sliderChangeRender(event);
 			}
 			this.dispatchEvent(
 				new CustomEvent('change', {
 					detail: {
-						value,
+						value: (this.max - this.min) * percent + this.min,
 						domEvent: event,
 					},
 				})
@@ -158,7 +153,34 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
 	}
 
-	/** 滑块值变化时渲染快和已使用的轨道 */
+	/** 属性值 prop */
+	get value() {
+		return this.getAttribute('value');
+	}
+
+	/** 最小value值 默认 0 */
+	get min() {
+		return AttrToNumber(this, 'min', 0) as number;
+	}
+
+	/** 最大value值 默认 100 */
+	get max() {
+		return AttrToNumber(this, 'max', 100) as number;
+	}
+
+	/** 滑块儿的精度,默认 1 */
+	get precision() {
+		return AttrToNumber(this, 'precision', 1) as number;
+	}
+
+	/** 计算滑块所在位置在轨道长度上所占百分比,值为 0 ~ 1 */
+	calculatePercent(offsetX: number, xWidth: number) {
+		if (offsetX < 0) return 0;
+		if (offsetX > xWidth) return 1;
+		return offsetX / this.clientWidth;
+	}
+
+	/** 渲染渲染滑块位置和已使用的轨道长度 */
 	sliderChangeRender(event: MouseEvent) {
 		if (event.offsetX > this.clientWidth) {
 			this.sliderTracked.style.width = `100%`;
@@ -170,20 +192,5 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			this.sliderTracked.style.width = `${(event.offsetX / this.clientWidth) * 100}%`;
 			this.sliderBlock.style.left = `${event.offsetX}px`;
 		}
-	}
-
-	/** 属性值 prop */
-	get value() {
-		return this.getAttribute('value');
-	}
-
-	/** 最小value值 */
-	get min() {
-		return AttrToNumber(this, 'min', 0);
-	}
-
-	/** 最大value值 */
-	get max() {
-		return this.getAttribute('max') || 100;
 	}
 }
