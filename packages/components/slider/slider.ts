@@ -99,15 +99,16 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 		this.addEventListener('click', (event) => {
 			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
-
+			const realValue = this.calculateRealValue(percent);
 			if (!this.value) {
-				this.realValue = percent;
-				this.sliderChangeRender(event);
+				this.realValue = realValue;
+				this.sliderChangeRender(realValue);
 			}
+
 			this.dispatchEvent(
 				new CustomEvent('change', {
 					detail: {
-						value: (this.max - this.min) * percent + this.min,
+						value: realValue,
 						domEvent: event,
 					},
 				})
@@ -117,15 +118,15 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		/** 当按住操作块之后鼠标移动事件 */
 		const onPressSliderBlockMoveEvent = (event: MouseEvent) => {
 			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
-
+			const realValue = this.calculateRealValue(percent);
 			if (!this.value) {
-				this.realValue = (this.max - this.min) * percent + this.min;
-				this.sliderChangeRender(event);
+				this.realValue = realValue;
+				this.sliderChangeRender(realValue);
 			}
 			this.dispatchEvent(
 				new CustomEvent('change', {
 					detail: {
-						value: (this.max - this.min) * percent + this.min,
+						value: realValue,
 						domEvent: event,
 					},
 				})
@@ -179,17 +180,20 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		return offsetX / this.clientWidth;
 	}
 
+	/** 根据百分比、精度、最大值、最小值计算 realValue */
+	calculateRealValue(percent: number) {
+		/** 当前百分比代表的值 */
+		const value = (this.max - this.min) * percent + this.min;
+		/** 值范围除以精度的余数 */
+		const remainder = Math.abs(value) % this.precision;
+		if (remainder < this.precision / 2) return value < 0 ? value + remainder : value - remainder;
+		return value < 0 ? value - (this.precision - remainder) : value + (this.precision - remainder);
+	}
+
 	/** 渲染渲染滑块位置和已使用的轨道长度 */
-	sliderChangeRender(event: MouseEvent) {
-		if (event.offsetX > this.clientWidth) {
-			this.sliderTracked.style.width = `100%`;
-			this.sliderBlock.style.left = `${this.clientWidth}px`;
-		} else if (event.offsetX < 0) {
-			this.sliderTracked.style.width = `0%`;
-			this.sliderBlock.style.left = `0px`;
-		} else {
-			this.sliderTracked.style.width = `${(event.offsetX / this.clientWidth) * 100}%`;
-			this.sliderBlock.style.left = `${event.offsetX}px`;
-		}
+	sliderChangeRender(realValue: number) {
+		const realValuePencent = (realValue - this.min) / (this.max - this.min);
+		this.sliderTracked.style.width = `${realValuePencent * 100}%`;
+		this.sliderBlock.style.left = `${realValuePencent * this.clientWidth}px`;
 	}
 }
