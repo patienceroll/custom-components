@@ -10,6 +10,10 @@
 				background-color: #eaeef3;
 				color: #333;
 			}
+
+			cp-button {
+				vertical-align: top;
+			}
 		</style>
 	</head>
 
@@ -17,21 +21,32 @@
 		<h1>滑块控件</h1>
 		<ul>
 			<li>
-				<h4>默认</h4>
-				<cp-slider id="CpSlider" precision="1" min="-100" max="100" style="width: 200px"></cp-slider>
-				<script>
-					const CpSlider = document.getElementById('CpSlider');
-					CpSlider.addEventListener('change', (event) => {
-						console.log(event.detail);
-					});
-				</script>
+				<h4>默认的滑块组件</h4>
+				<cp-slider style="width: 200px"></cp-slider>
 			</li>
 			<li>
 				<h4>受控的滑块组件</h4>
-				<cp-slider id="controledCpSlider" value="20" style="width: 200px"></cp-slider>
+				<cp-slider id="controledCpSlider" value="20"  style="width: 200px"></cp-slider>&emsp;&emsp;
+				<cp-button
+					onclick="(()=>{
+					 const controledCpSlider = document.getElementById('controledCpSlider')
+					 const value = Number(controledCpSlider.getAttribute('value'))
+					 if(value === 100)controledCpSlider.setAttribute('value',100)
+					 else controledCpSlider.setAttribute('value',value + 1)
+				})()"
+					>增加</cp-button
+				>
+				<cp-button
+					onclick="(()=>{
+					const controledCpSlider = document.getElementById('controledCpSlider')
+					const value = Number(controledCpSlider.getAttribute('value'))
+					if(value === 0) controledCpSlider.setAttribute('value',0)
+					else controledCpSlider.setAttribute('value',value - 1)
+			 })()"
+					>减少</cp-button
+				>
 				<script>
 					const controledCpSlider = document.getElementById('controledCpSlider');
-
 					controledCpSlider.addEventListener('change', (event) => {
 						controledCpSlider.setAttribute('value', event.detail.value);
 					});

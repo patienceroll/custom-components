@@ -7,3 +7,6 @@ export interface CpSliderProps extends HTMLElement {
 	/** 评分的精度,默认为 1,值需要大于0 */
 	precision?: NumberCharacter;
 }
+
+
+export type CpSliderObservedAttributes = 'value' | 'precision' | 'min' | 'max';

@@ -1,4 +1,6 @@
-import { style, AttrToNumber } from '../../utils/index';
+import { style, AttrToNumber, watch } from '../../utils/index';
+
+import type { CpSliderObservedAttributes } from './data';
 @style({
 	'.cp-slider-block:active .cp-slider-block-shadow': {
 		transform: 'translate(-50%,-50%) scale(1)',
@@ -40,13 +42,15 @@ import { style, AttrToNumber } from '../../utils/index';
 	},
 	'.cp-slider-tracked': {
 		height: '0.375em',
-		width: '0',
+		width: '0px',
 		opacity: '1',
 		transition: 'width 300ms ease',
 	},
+	'.cp-slider-rail': {
+		width: '100%',
+	},
 	'.cp-slider-rail,.cp-slider-tracked': {
 		position: 'absolute',
-		width: '100%',
 		height: '0.25em',
 		backgroundColor: 'currentColor',
 		borderRadius: '0.25em',
@@ -62,8 +66,28 @@ import { style, AttrToNumber } from '../../utils/index';
 		fontSize: '16px',
 		cursor: 'pointer',
 		color: '#1976d2',
+		width: '100%',
 	},
 })
+@watch<CpSliderObservedAttributes, AttachedShadowRoot<CpSlider>>(
+	['max', 'min', 'precision', 'value'],
+	function (attr, older, newer) {
+		switch (attr) {
+			case 'value':
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
+			case 'min':
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
+			case 'precision':
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
+			case 'min':
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
+		}
+	}
+)
 export default class CpSlider extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 
@@ -193,7 +217,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 	/** 渲染渲染滑块位置和已使用的轨道长度 */
 	sliderChangeRender(realValue: number) {
 		const realValuePencent = (realValue - this.min) / (this.max - this.min);
-		this.sliderTracked.style.width = `${realValuePencent * 100}%`;
 		this.sliderBlock.style.left = `${realValuePencent * this.clientWidth}px`;
+		this.sliderTracked.style.width = `${realValuePencent * 100}%`;
 	}
 }
