@@ -15,4 +15,5 @@ import './components/accordion';
 import './components/tabs';
 import './components/avatar';
 import './components/slider';
-import './components/tooltip'
+import './components/popover';
+import './components/tooltip';
