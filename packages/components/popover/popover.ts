@@ -1,6 +1,12 @@
 import { style } from '../../utils/index';
 
 @style({
+	':host([placement="top"]) .cp-popover-context-wrapper': {
+		left: '50%',
+		top: '0',
+		bottom: 'unset',
+		transform: 'translate(-50%,calc(-100% - 0.625em))',
+	},
 	':host([placement="bottom-end"]) .cp-popover-context-wrapper': {
 		left: 'unset',
 		right: '0',

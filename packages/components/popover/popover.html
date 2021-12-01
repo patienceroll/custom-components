@@ -10,6 +10,9 @@
 				background-color: #eaeef3;
 				color: #333;
 			}
+			cp-button{
+				width: 100px;
+			}
 		</style>
 	</head>
 
@@ -17,18 +20,35 @@
 		<h1>悬浮泡泡</h1>
 		<ul>
 			<li>
-				<h4>默认</h4>
+				<h4>位置</h4>
 				<cp-paper style="padding: 40px">
-					<cp-popover>
-						<cp-button>点击展示悬浮泡泡</cp-button>
-						<span slot="popover-context">context</span>
-					</cp-popover>
 					<cp-popover placement="bottom-start">
 						<cp-button>bottom-start</cp-button>
 						<span slot="popover-context">context</span>
 					</cp-popover>
+
+					<cp-popover>
+						<cp-button>bottom</cp-button>
+						<span slot="popover-context">context</span>
+					</cp-popover>
+
 					<cp-popover placement="bottom-end">
 						<cp-button>bottom-end</cp-button>
+						<span slot="popover-context">context</span>
+					</cp-popover>
+
+					<cp-popover placement="top-start">
+						<cp-button>top-start</cp-button>
+						<span slot="popover-context">context</span>
+					</cp-popover>
+
+					<cp-popover placement="top">
+						<cp-button>top</cp-button>
+						<span slot="popover-context">context</span>
+					</cp-popover>
+
+					<cp-popover placement="top-end">
+						<cp-button>top-end</cp-button>
 						<span slot="popover-context">context</span>
 					</cp-popover>
 				</cp-paper>
