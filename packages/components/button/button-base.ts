@@ -11,6 +11,7 @@ if (!customElements.get('cp-ripple')) customElements.define('cp-ripple', Ripple)
 	'.cp-button': {
 		display: 'flex',
 		alignItems: 'center',
+		justifyContent: 'center',
 		padding: '0.375em 0.75em',
 		border: 'none',
 		position: 'relative',

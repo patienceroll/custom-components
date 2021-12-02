@@ -1,6 +1,6 @@
 export interface CpPopoverProps {
-	/** 悬浮气泡context位置,默认 bottom */
-	placement?:
+	/** 悬浮气泡context位置,默认 top */
+	'placement'?:
 		| 'top'
 		| 'left-start'
 		| 'left-end'
@@ -13,6 +13,12 @@ export interface CpPopoverProps {
 		| 'right-start'
 		| 'right'
 		| 'right-end';
+	/** 禁用hover触发 */
+	'disable-hover'?: BooleanCharacter;
+	/** 禁用点击触发 */
+	'disable-click'?: BooleanCharacter;
+	/** 禁用聚焦触发 */
+	'disable-focus'?: BooleanCharacter;
 }
 
 export type CpPopoverObservedAttributes = 'placement';

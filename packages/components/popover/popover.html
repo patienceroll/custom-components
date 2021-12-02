@@ -42,7 +42,7 @@
 					</div>
 
 					<div style="display: flex; justify-content: space-around">
-						<div style="padding: 60px 0">
+						<div style="padding: 20px 0">
 							<cp-popover placement="left-start">
 								<cp-button>left-start</cp-button>
 								<span slot="popover-context">context</span>
@@ -61,7 +61,7 @@
 								<span slot="popover-context">context</span>
 							</cp-popover>
 						</div>
-						<div style="padding: 60px 0">
+						<div style="padding: 20px 0">
 							<cp-popover placement="right-start">
 								<cp-button>right-start</cp-button>
 								<span slot="popover-context">context</span>
@@ -88,7 +88,7 @@
 								<span slot="popover-context">context</span>
 							</cp-popover>
 
-							<cp-popover>
+							<cp-popover placement="bottom">
 								<cp-button>bottom</cp-button>
 								<span slot="popover-context">context</span>
 							</cp-popover>
@@ -99,6 +99,27 @@
 							</cp-popover>
 						</div>
 					</div>
+				</cp-paper>
+			</li>
+
+			<li>
+				<h4>触发方式</h4>
+
+				<cp-paper style="padding: 40px">
+					<cp-popover disable-click="true" disable-focus="true">
+						<span slot="popover-context">hover</span>
+						<cp-button>hover触发</cp-button>
+					</cp-popover>
+
+					<cp-popover disable-hover="true" disable-click="true">
+						<span slot="popover-context">focus</span>
+						<input placeholder="focus触发" />
+					</cp-popover>
+
+					<cp-popover disable-focus="true" disable-hover="true">
+						<span slot="popover-context">click</span>
+						<cp-button>click触发</cp-button>
+					</cp-popover>
 				</cp-paper>
 			</li>
 		</ul>

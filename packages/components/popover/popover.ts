@@ -65,6 +65,7 @@ import type { CpPopoverObservedAttributes } from './data';
 	'.cp-popover-context-wrapper': {
 		position: 'absolute',
 		backgroundColor: '#6d6d6d',
+		visibility: 'hidden',
 	},
 	':host': {
 		display: 'inline-block',
@@ -78,7 +79,7 @@ import type { CpPopoverObservedAttributes } from './data';
 			if (newer) {
 				this.popoverContextWrapper.className = '';
 				this.popoverContextWrapper.classList.add(`cp-popover-context-wrapper`, `cp-popover-${newer}`);
-			} else this.popoverContextWrapper.className = `cp-popover-context-wrapper cp-popover-bottom`;
+			} else this.popoverContextWrapper.className = `cp-popover-context-wrapper cp-popover-top`;
 
 			break;
 	}
@@ -101,9 +102,51 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 
 		context.name = 'popover-context';
 
-		this.popoverContextWrapper.classList.add('cp-popover-context-wrapper', 'cp-popover-bottom');
+		this.popoverContextWrapper.classList.add('cp-popover-context-wrapper', 'cp-popover-top');
+
+		const hidePopOverContext = (event: Event) => {
+			const { type } = event;
+			if (type === 'mouseleave' && this.disableHover) return;
+			if (type === 'focusout' && this.disableFocus) return;
+			if (type === 'click' && this.disableClick) return;
+			this.popoverContextWrapper.style.removeProperty('visibility');
+		};
+
+		const showPopoverContext = (event: Event) => {
+			const { type } = event;
+			event.stopPropagation();
+			if (type === 'mouseenter' && this.disableHover) return;
+			if (type === 'click' && this.disableClick) return;
+			if (type === 'focusin' && this.disableFocus) return;
+
+			// 添加点击事件隐藏的方法
+			if (type === 'click') this.ownerDocument.addEventListener('click', hidePopOverContext, { once: true });
+			this.popoverContextWrapper.style.visibility = 'unset';
+		};
+
+		this.addEventListener('mouseenter', showPopoverContext);
+		this.addEventListener('focusin', showPopoverContext);
+		this.addEventListener('click', showPopoverContext);
+
+		this.addEventListener('mouseleave', hidePopOverContext);
+		this.addEventListener('focusout', hidePopOverContext);
 
 		this.popoverContextWrapper.appendChild(context);
 		shadowRoot.append(children, this.popoverContextWrapper);
+	}
+
+	/** 是否禁用hover触发 */
+	get disableHover() {
+		return this.getAttribute('disable-hover') === 'true';
+	}
+
+	/** 是否禁用点击触发 */
+	get disableClick() {
+		return this.getAttribute('disable-click') === 'true';
+	}
+
+	/** 是否禁用聚焦触发 */
+	get disableFocus() {
+		return this.getAttribute('disable-focus') === 'true';
 	}
 }
