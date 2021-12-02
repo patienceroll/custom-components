@@ -4,53 +4,101 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>悬浮泡泡</title>
+		<title>悬浮气泡</title>
 		<style>
 			body {
 				background-color: #eaeef3;
 				color: #333;
 			}
-			cp-button{
+			cp-button {
 				width: 100px;
 			}
 		</style>
 	</head>
 
 	<body>
-		<h1>悬浮泡泡</h1>
+		<h1>悬浮气泡</h1>
 		<ul>
 			<li>
 				<h4>位置</h4>
 				<cp-paper style="padding: 40px">
-					<cp-popover placement="bottom-start">
-						<cp-button>bottom-start</cp-button>
-						<span slot="popover-context">context</span>
-					</cp-popover>
+					<div style="display: flex; justify-content: center">
+						<div>
+							<cp-popover placement="top-start">
+								<cp-button>top-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
 
-					<cp-popover>
-						<cp-button>bottom</cp-button>
-						<span slot="popover-context">context</span>
-					</cp-popover>
+							<cp-popover placement="top">
+								<cp-button>top</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
 
-					<cp-popover placement="bottom-end">
-						<cp-button>bottom-end</cp-button>
-						<span slot="popover-context">context</span>
-					</cp-popover>
+							<cp-popover placement="top-end">
+								<cp-button>top-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+					</div>
 
-					<cp-popover placement="top-start">
-						<cp-button>top-start</cp-button>
-						<span slot="popover-context">context</span>
-					</cp-popover>
+					<div style="display: flex; justify-content: space-around">
+						<div style="padding: 60px 0">
+							<cp-popover placement="left-start">
+								<cp-button>left-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
 
-					<cp-popover placement="top">
-						<cp-button>top</cp-button>
-						<span slot="popover-context">context</span>
-					</cp-popover>
+							<cp-popover placement="left">
+								<cp-button>left</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
+							<cp-popover placement="left-end">
+								<cp-button>left-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+						<div style="padding: 60px 0">
+							<cp-popover placement="right-start">
+								<cp-button>right-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
+							<cp-popover placement="right">
+								<cp-button>right</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
+							<cp-popover placement="right-end">
+								<cp-button>right-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+					</div>
 
-					<cp-popover placement="top-end">
-						<cp-button>top-end</cp-button>
-						<span slot="popover-context">context</span>
-					</cp-popover>
+					<div style="display: flex; justify-content: center">
+						<div>
+							<cp-popover placement="bottom-start">
+								<cp-button>bottom-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+
+							<cp-popover>
+								<cp-button>bottom</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+
+							<cp-popover placement="bottom-end">
+								<cp-button>bottom-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+					</div>
 				</cp-paper>
 			</li>
 		</ul>

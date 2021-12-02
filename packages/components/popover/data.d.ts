@@ -1,5 +1,5 @@
 export interface CpPopoverProps {
-	/** 悬浮泡泡context位置,默认 bottom */
+	/** 悬浮气泡context位置,默认 bottom */
 	placement?:
 		| 'top'
 		| 'left-start'
@@ -14,3 +14,5 @@ export interface CpPopoverProps {
 		| 'right'
 		| 'right-end';
 }
+
+export type CpPopoverObservedAttributes = 'placement';

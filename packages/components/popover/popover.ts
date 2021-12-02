@@ -1,26 +1,69 @@
-import { style } from '../../utils/index';
+import { style, watch } from '../../utils/index';
+import type { CpPopoverObservedAttributes } from './data';
 
 @style({
-	':host([placement="top"]) .cp-popover-context-wrapper': {
+	'.cp-popover-right-end': {
+		right: '0',
+		bottom: '0',
+		transform: 'translate(calc(100% + 0.625em),0)',
+	},
+	'.cp-popover-right-start': {
+		right: '0',
+		top: '0',
+		transform: 'translate(calc(100% + 0.625em),0)',
+	},
+	'.cp-popover-right': {
+		right: '0',
+		top: '50%',
+		transform: 'translate(calc(100% + 0.625em),-50%)',
+	},
+	'.cp-popover-left-end': {
+		left: '0',
+		bottom: '0',
+		transform: 'translate(calc(-100% - 0.625em),0)',
+	},
+	'.cp-popover-left-start': {
+		left: '0',
+		top: '0',
+		transform: 'translate(calc(-100% - 0.625em),0)',
+	},
+	'.cp-popover-left': {
+		left: '0',
+		top: '50%',
+		transform: 'translate(calc(-100% - 0.625em),-50%)',
+	},
+	'.cp-popover-top-end': {
+		right: '0',
+		top: '0',
+		transform: 'translate(0,calc(-100% - 0.625em))',
+	},
+	'.cp-popover-top-start': {
+		left: '0',
+		top: '0',
+		transform: 'translate(0,calc(-100% - 0.625em))',
+	},
+	'.cp-popover-top': {
 		left: '50%',
 		top: '0',
-		bottom: 'unset',
 		transform: 'translate(-50%,calc(-100% - 0.625em))',
 	},
-	':host([placement="bottom-end"]) .cp-popover-context-wrapper': {
-		left: 'unset',
+	'.cp-popover-bottom-end': {
+		bottom: '0',
 		right: '0',
 		transform: 'translate(0,calc(100% + 0.625em))',
 	},
-	':host([placement="bottom-start"]) .cp-popover-context-wrapper': {
+	'.cp-popover-bottom-start': {
 		left: '0',
+		bottom: '0',
 		transform: 'translate(0,calc(100% + 0.625em))',
 	},
-	'.cp-popover-context-wrapper': {
-		position: 'absolute',
+	'.cp-popover-bottom': {
 		bottom: '0',
 		left: '50%',
 		transform: 'translate(-50%,calc(100% + 0.625em))',
+	},
+	'.cp-popover-context-wrapper': {
+		position: 'absolute',
 		backgroundColor: '#6d6d6d',
 	},
 	':host': {
@@ -29,11 +72,22 @@ import { style } from '../../utils/index';
 		fontSize: '16px',
 	},
 })
+@watch<CpPopoverObservedAttributes, AttachedShadowRoot<CpPopover>>(['placement'], function (attr, older, newer) {
+	switch (attr) {
+		case 'placement':
+			if (newer) {
+				this.popoverContextWrapper.className = '';
+				this.popoverContextWrapper.classList.add(`cp-popover-context-wrapper`, `cp-popover-${newer}`);
+			} else this.popoverContextWrapper.className = `cp-popover-context-wrapper cp-popover-bottom`;
+
+			break;
+	}
+})
 export default class CpPopover extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 
-	/** 悬浮泡泡内容容器 */
-	private popoverContextWrapper: HTMLDivElement;
+	/** 悬浮气泡内容容器 */
+	public popoverContextWrapper: HTMLDivElement;
 
 	constructor() {
 		super();
@@ -47,7 +101,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 
 		context.name = 'popover-context';
 
-		this.popoverContextWrapper.classList.add('cp-popover-context-wrapper');
+		this.popoverContextWrapper.classList.add('cp-popover-context-wrapper', 'cp-popover-bottom');
 
 		this.popoverContextWrapper.appendChild(context);
 		shadowRoot.append(children, this.popoverContextWrapper);
