@@ -1,5 +1,4 @@
-import { style, watch } from "../../utils/index";
-import type { CpAvatarObservedAttributes } from "./data";
+import { style } from "../../utils/index";
 
 @style({
 	".cp-avatar-children-slot": {
@@ -24,7 +23,6 @@ import type { CpAvatarObservedAttributes } from "./data";
 		fontWeight: "bold",
 	},
 })
-@watch<CpAvatarObservedAttributes, AttachedShadowRoot<CpAvatar>>([], function (attr, older, newer) {})
 export default class CpAvatar extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	/** 组件children 插槽 */

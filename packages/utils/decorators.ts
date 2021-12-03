@@ -21,6 +21,6 @@ export function watch<Attr extends string, Target extends HTMLElement = HTMLElem
 ) {
 	return function (target: typeof CustomElement) {
 		target.observedAttributes = attr;
-		target.prototype.attributeChangedCallback = onAttrChange;
+		target.prototype.attributeChangedCallback = onAttrChange as CustomElement["attributeChangedCallback"];
 	};
 }
