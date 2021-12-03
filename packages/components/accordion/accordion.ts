@@ -1,7 +1,7 @@
 import type CpAccordionItem from './accordion-item';
 import type { AccordionObservedAttributes } from './data';
 
-import { style, watch } from '../../utils/decorators';
+import { style, watch } from '../../utils/index';
 
 @style({
 	':host': {
@@ -108,7 +108,7 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 
 	/** 渲染单个折叠面板是否展开 */
 	renderItem(keys: string[]) {
-		this.accordionItems.forEach((item, index) => {
+		this.accordionItems.forEach((item) => {
 			const key = item.getAttribute('key');
 			if (key) {
 				if (keys.includes(key)) {

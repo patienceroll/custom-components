@@ -1,6 +1,6 @@
 import type { CircularProgressObservedAttributes } from './data';
 
-import { style, keyframe, watch } from '../../utils/decorators';
+import { style, keyframe, watch } from '../../utils/index';
 
 const circle = `<circle cx="22" cy="22" r="20.2" stroke="#1976d2" stroke-width="3.6" fill="none">
 </circle>`;

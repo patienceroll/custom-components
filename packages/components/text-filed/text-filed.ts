@@ -1,4 +1,4 @@
-import { style } from '../../utils/decorators';
+import { style } from '../../utils/index';
 
 @style({
 	'.cp-text-filed-input': {

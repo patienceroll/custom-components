@@ -1,21 +1,24 @@
 import type { TagObservedAttributes } from './data';
 
-import { style,watch } from '../../utils/decorators';
+import { style, watch } from '../../utils/index';
 @style({
-	'.cp-tag-box':{
-		position:'relactive',
+	'.cp-tag-box': {
+		position: 'relactive',
 	},
-	'.cp-tag-content':{
-		position:'absolute',
-		top:'50%',
-		left:'50%',
-		transform:'translate(-50%,-50%)'
+	'.cp-tag-content': {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%,-50%)',
 	},
-	'.color':{
-		color:'red'
+	'.color': {
+		color: 'red',
 	},
-	':host(:hover)':{
-		cursor:'pointer'
+	':host(:hover)': {
+		cursor: 'pointer',
+	},
+	':host': {
+		borderRadius: '0.25em',
 	},
 	':host':{
 		borderRadius:'0.25em',
@@ -40,12 +43,12 @@ import { style,watch } from '../../utils/decorators';
 				this.style.setProperty('border',`1px solid ${newer}`)
 				break;
 			case 'size':
-				if(newer == 'mini'){
-					this.style.setProperty('padding','0.1em')
-				}else if(newer == 'small'){
-					this.style.setProperty('padding','0.2em')
-				}else if(newer == 'medium'){
-					this.style.setProperty('padding','0.3em')
+				if (newer == 'mini') {
+					this.style.setProperty('padding', '0.1em');
+				} else if (newer == 'small') {
+					this.style.setProperty('padding', '0.2em');
+				} else if (newer == 'medium') {
+					this.style.setProperty('padding', '0.3em');
 				}
 				break;
 			case 'tagshow':
@@ -61,9 +64,9 @@ import { style,watch } from '../../utils/decorators';
 		}
 	}
 )
-export default class CpTag extends HTMLElement implements CustomElement{
+export default class CpTag extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
-	public Tag : HTMLElement;
+	public Tag: HTMLElement;
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({
@@ -99,6 +102,4 @@ export default class CpTag extends HTMLElement implements CustomElement{
 		}
 		shadowRoot.append(this.Tag);
 	}
-
-
 }

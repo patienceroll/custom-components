@@ -1,5 +1,4 @@
-import { disposeDomNodeStyle } from '../../utils/style';
-import { style, keyframe } from '../../utils/decorators';
+import { style, keyframe, disposeDomNodeStyle } from '../../utils/index';
 import { DrawerHeaderProps } from '../drawer/data';
 import CpMask from '../mask/mask';
 

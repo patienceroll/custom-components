@@ -1,7 +1,7 @@
 import type { CpRadioObservedAttributes } from './data';
 import type Ripple from '../ripple/ripple';
 
-import { style, watch } from '../../utils/decorators';
+import { style, watch } from '../../utils/index';
 
 import '../ripple';
 

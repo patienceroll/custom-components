@@ -1,6 +1,6 @@
 import CpButtonBase from './button-base';
 
-import { style } from '../../utils/decorators';
+import { style } from '../../utils/index';
 
 import '../ripple';
 
@@ -30,5 +30,4 @@ export default class CpIconButton extends CpButtonBase {
 		button.classList.add('cp-icon-button');
 		button.append(IconSlot);
 	}
-
 }

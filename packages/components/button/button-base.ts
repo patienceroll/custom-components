@@ -1,6 +1,6 @@
 import Ripple from '../ripple/ripple';
 
-import { style } from '../../utils/decorators';
+import { style } from '../../utils/index';
 
 if (!customElements.get('cp-ripple')) customElements.define('cp-ripple', Ripple);
 @style({
@@ -11,6 +11,7 @@ if (!customElements.get('cp-ripple')) customElements.define('cp-ripple', Ripple)
 	'.cp-button': {
 		display: 'flex',
 		alignItems: 'center',
+		justifyContent: 'center',
 		padding: '0.375em 0.75em',
 		border: 'none',
 		position: 'relative',

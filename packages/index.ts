@@ -12,4 +12,8 @@ import './components/radio';
 import './components/rate';
 import './components/text-filed';
 import './components/accordion';
-import './components/tabs'
+import './components/tabs';
+import './components/avatar';
+import './components/slider';
+import './components/popover';
+import './components/tooltip';

@@ -2,7 +2,7 @@ import type { ButtonObservedAttributes } from './data';
 
 import CpButtonBase from './button-base';
 
-import { style, keyframe, watch } from '../../utils/decorators';
+import { style, keyframe, watch } from '../../utils/index';
 
 import '../ripple';
 import '../circular-progress';
@@ -59,7 +59,7 @@ import '../circular-progress';
 })
 export default class CpButton extends CpButtonBase {
 	/** 组件 loading(加载中动画) Dom元素  */
-	loading: SVGElement;
+	private loading: SVGElement;
 	static styleSheet: CSSStyleSheet;
 	static keyframesSheet: CSSStyleSheet;
 

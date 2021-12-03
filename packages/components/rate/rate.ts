@@ -1,7 +1,6 @@
 import type { CpRateObservedAttributes } from './data';
 
-import { style, watch } from '../../utils/decorators';
-import { useLatestCall } from 'packages/utils/common-functions';
+import { style, watch, useLatestCall } from '../../utils/index';
 
 @style({
 	':host': {

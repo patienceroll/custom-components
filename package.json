@@ -3,7 +3,7 @@
     "debugge": "cross-env type=debugge rollup --config rollup.config.js --watch",
     "build": "cross-env type=build rollup --config rollup.config.js",
     "commit": "npx git-cz",
-    "prettier": "prettier --write  ./packages/**/*.ts"
+    "prettier": "prettier --write  ./packages/**/*.*"
   },
   "dependencies": {},
   "devDependencies": {

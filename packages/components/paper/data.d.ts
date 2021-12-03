@@ -2,7 +2,7 @@
 export type CpPaperObservedAttributes = '';
 
 /** 纸张 Props */
-export interface CpPaperProps {
+export interface CpPaperProps extends HTMLElement {
 	/**
 	 * 变体
 	 * 2. outlined  - 轮廓纸张

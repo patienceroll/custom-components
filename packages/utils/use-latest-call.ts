@@ -4,7 +4,7 @@
  * - 此函数只会执行最后一次调用,时间段内的调用都不会执行
  * - 默认时间段为 100ms
  */
-export function useLatestCall<T extends unknown[], returnType = void>(
+export default function useLatestCall<T extends unknown[], returnType = void>(
 	func: (...arg: T) => returnType,
 	during: number = 100
 ) {

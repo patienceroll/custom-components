@@ -1,6 +1,6 @@
 export type CpSkeletonObservedAttributes = 'width' | 'variant' | 'animation';
 
-export type CpSkeletonProps = {
+export interface CpSkeletonProps extends HTMLElement {
 	/** 骨架屏条幅的宽度 */
 	width?: string;
 	/**
@@ -16,4 +16,4 @@ export type CpSkeletonProps = {
 	 * 2. twinkle	-	闪烁
 	 */
 	animation?: 'wave' | 'twinkle';
-};
+}

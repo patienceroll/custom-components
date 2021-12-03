@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>悬浮气泡</title>
+		<style>
+			body {
+				background-color: #eaeef3;
+				color: #333;
+			}
+			cp-button {
+				width: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>悬浮气泡</h1>
+		<ul>
+			<li>
+				<h4>位置</h4>
+				<cp-paper style="padding: 40px">
+					<div style="display: flex; justify-content: center">
+						<div>
+							<cp-popover placement="top-start">
+								<cp-button>top-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+
+							<cp-popover placement="top">
+								<cp-button>top</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+
+							<cp-popover placement="top-end">
+								<cp-button>top-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+					</div>
+
+					<div style="display: flex; justify-content: space-around">
+						<div style="padding: 20px 0">
+							<cp-popover placement="left-start">
+								<cp-button>left-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
+
+							<cp-popover placement="left">
+								<cp-button>left</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
+							<cp-popover placement="left-end">
+								<cp-button>left-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+						<div style="padding: 20px 0">
+							<cp-popover placement="right-start">
+								<cp-button>right-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
+							<cp-popover placement="right">
+								<cp-button>right</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+							<br />
+							<br />
+							<cp-popover placement="right-end">
+								<cp-button>right-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+					</div>
+
+					<div style="display: flex; justify-content: center">
+						<div>
+							<cp-popover placement="bottom-start">
+								<cp-button>bottom-start</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+
+							<cp-popover placement="bottom">
+								<cp-button>bottom</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+
+							<cp-popover placement="bottom-end">
+								<cp-button>bottom-end</cp-button>
+								<span slot="popover-context">context</span>
+							</cp-popover>
+						</div>
+					</div>
+				</cp-paper>
+			</li>
+
+			<li>
+				<h4>触发方式</h4>
+
+				<cp-paper style="padding: 40px">
+					<cp-popover disable-click="true" disable-focus="true">
+						<span slot="popover-context">hover</span>
+						<cp-button>hover触发</cp-button>
+					</cp-popover>
+
+					<cp-popover disable-hover="true" disable-click="true">
+						<span slot="popover-context">focus</span>
+						<input placeholder="focus触发" />
+					</cp-popover>
+
+					<cp-popover disable-focus="true" disable-hover="true">
+						<span slot="popover-context">click</span>
+						<cp-button>click触发</cp-button>
+					</cp-popover>
+				</cp-paper>
+			</li>
+		</ul>
+
+		<script src="../index.js" type="module"></script>
+	</body>
+</html>
