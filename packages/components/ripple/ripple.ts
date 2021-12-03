@@ -92,6 +92,4 @@ export default class CpRipple extends HTMLElement {
 			};
 		};
 	}
-
-	connectedCallback(this: CpRipple) {}
 }

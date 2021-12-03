@@ -17,10 +17,10 @@ export function keyframe(param: KeyframeObject) {
 /** 监听变化的属性值装饰器 */
 export function watch<Attr extends string, Target extends HTMLElement = HTMLElement>(
 	attr: Attr[],
-	onAttrChange: (this: Target, attr: Attr, older: string | null, newer: string | null) => void
+	onAttrChange: <T extends string>(this: Target, attr: T, older: string | null, newer: string | null) => void
 ) {
 	return function (target: typeof CustomElement) {
 		target.observedAttributes = attr;
-		target.prototype.attributeChangedCallback = onAttrChange as CustomElement["attributeChangedCallback"];
+		target.prototype.attributeChangedCallback = onAttrChange;
 	};
 }

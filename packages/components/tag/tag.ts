@@ -36,31 +36,31 @@ import { style, watch } from "../../utils/index";
 	function(this: AttachedShadowRoot<CpTag>,attr,older,newer){
 		console.log(attr);
 		switch(attr){
-		case "color" :
-			this.style.setProperty("color",newer);
+			case "color" :
+				this.style.setProperty("color",newer);
 				
-			// this.style.setProperty('background',newer)
-			this.style.setProperty("border",`1px solid ${newer}`);
-			break;
-		case "size":
-			if (newer == "mini") {
-				this.style.setProperty("padding", "0.1em");
-			} else if (newer == "small") {
-				this.style.setProperty("padding", "0.2em");
-			} else if (newer == "medium") {
-				this.style.setProperty("padding", "0.3em");
-			}
-			break;
-		case "tagshow":
-			console.log(newer,111);
-			if(newer === "true"){
-				console.log("显示");
-				this.style.setProperty("display","inline");
-			} 
-			else{
-				console.log("隐藏");
-				this.style.setProperty("display","none");
-			} 
+				// this.style.setProperty('background',newer)
+				this.style.setProperty("border",`1px solid ${newer}`);
+				break;
+			case "size":
+				if (newer == "mini") {
+					this.style.setProperty("padding", "0.1em");
+				} else if (newer == "small") {
+					this.style.setProperty("padding", "0.2em");
+				} else if (newer == "medium") {
+					this.style.setProperty("padding", "0.3em");
+				}
+				break;
+			case "tagshow":
+				console.log(newer,111);
+				if(newer === "true"){
+					console.log("显示");
+					this.style.setProperty("display","inline");
+				} 
+				else{
+					console.log("隐藏");
+					this.style.setProperty("display","none");
+				} 
 		}
 	}
 )

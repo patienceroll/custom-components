@@ -15,35 +15,35 @@ import { style, watch, useLatestCall } from "../../utils/index";
 
 	function (attr, older, newer) {
 		switch (attr) {
-		case "value":
-			if (newer && !Number.isNaN(Number(newer))) this.setRealValue(Number(newer));
-			break;
-		case "precision":
-			this.renderRate();
-			break;
-		case "highest":
-			this.renderRate();
-			break;
-		case "custom":
-			if (newer) this.rateItems.forEach((item) => item.setAttribute("custom", newer));
-			else this.rateItems.forEach((item) => item.removeAttribute("custom"));
-			break;
-		case "disable":
-			if (newer === "true") this.rateItems.forEach((item) => item.setAttribute("disable", newer));
-			else this.rateItems.forEach((item) => item.removeAttribute("disable"));
-			break;
-		case "readonly":
-			if (newer === "true") this.rateItems.forEach((item) => item.setAttribute("readonly", newer));
-			else this.rateItems.forEach((item) => item.removeAttribute("readonly"));
-			break;
-		case "base-color":
-			if (newer) this.rateItems.forEach((item) => item.setAttribute("base-color", newer));
-			else this.rateItems.forEach((item) => item.removeAttribute("base-color"));
-			break;
-		case "light-color":
-			if (newer) this.rateItems.forEach((item) => item.setAttribute("light-color", newer));
-			else this.rateItems.forEach((item) => item.removeAttribute("light-color"));
-			break;
+			case "value":
+				if (newer && !Number.isNaN(Number(newer))) this.setRealValue(Number(newer));
+				break;
+			case "precision":
+				this.renderRate();
+				break;
+			case "highest":
+				this.renderRate();
+				break;
+			case "custom":
+				if (newer) this.rateItems.forEach((item) => item.setAttribute("custom", newer));
+				else this.rateItems.forEach((item) => item.removeAttribute("custom"));
+				break;
+			case "disable":
+				if (newer === "true") this.rateItems.forEach((item) => item.setAttribute("disable", newer));
+				else this.rateItems.forEach((item) => item.removeAttribute("disable"));
+				break;
+			case "readonly":
+				if (newer === "true") this.rateItems.forEach((item) => item.setAttribute("readonly", newer));
+				else this.rateItems.forEach((item) => item.removeAttribute("readonly"));
+				break;
+			case "base-color":
+				if (newer) this.rateItems.forEach((item) => item.setAttribute("base-color", newer));
+				else this.rateItems.forEach((item) => item.removeAttribute("base-color"));
+				break;
+			case "light-color":
+				if (newer) this.rateItems.forEach((item) => item.setAttribute("light-color", newer));
+				else this.rateItems.forEach((item) => item.removeAttribute("light-color"));
+				break;
 		}
 	}
 )

@@ -29,7 +29,8 @@ import type { CpSliderObservedAttributes } from "./data";
 		height: "1.25em",
 		backgroundColor: "currentColor",
 		borderRadius: "50%",
-		boxShadow: "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
+		boxShadow:
+			"0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
 	},
 	".cp-slider-block": {
 		position: "absolute",
@@ -73,18 +74,18 @@ import type { CpSliderObservedAttributes } from "./data";
 	["max", "min", "precision", "value"],
 	function (attr, older, newer) {
 		switch (attr) {
-		case "value":
-			if (newer) this.sliderChangeRender(Number(newer));
-			break;
-		case "min":
-			if (newer) this.sliderChangeRender(Number(newer));
-			break;
-		case "precision":
-			if (newer) this.sliderChangeRender(Number(newer));
-			break;
-		case "min":
-			if (newer) this.sliderChangeRender(Number(newer));
-			break;
+			case "value":
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
+			case "min":
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
+			case "precision":
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
+			case "max":
+				if (newer) this.sliderChangeRender(Number(newer));
+				break;
 		}
 	}
 )

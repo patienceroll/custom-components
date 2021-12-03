@@ -60,38 +60,38 @@ import { style, keyframe, watch } from "../../utils/index";
 		newer: string | null
 	) {
 		switch (attr) {
-		case "width":
-			if (newer) this.skeleton.style.setProperty("width", newer);
-			else this.skeleton.style.removeProperty("width");
-			break;
-		case "variant":
-			if (newer === "circular") {
-				this.skeleton.style.setProperty("height", `${this.skeleton.clientWidth}px`);
-				this.skeleton.classList.remove("cp-skeleton-rectangular");
-				this.skeleton.classList.add("cp-skeleton-circular");
-			} else if (newer === "rectangular") {
-				this.skeleton.style.removeProperty("height");
-				this.skeleton.classList.remove("cp-skeleton-circular");
-				this.skeleton.classList.add("cp-skeleton-rectangular");
-			} else {
+			case "width":
+				if (newer) this.skeleton.style.setProperty("width", newer);
+				else this.skeleton.style.removeProperty("width");
+				break;
+			case "variant":
+				if (newer === "circular") {
+					this.skeleton.style.setProperty("height", `${this.skeleton.clientWidth}px`);
+					this.skeleton.classList.remove("cp-skeleton-rectangular");
+					this.skeleton.classList.add("cp-skeleton-circular");
+				} else if (newer === "rectangular") {
+					this.skeleton.style.removeProperty("height");
+					this.skeleton.classList.remove("cp-skeleton-circular");
+					this.skeleton.classList.add("cp-skeleton-rectangular");
+				} else {
 				// 默认为 text
-				this.skeleton.style.removeProperty("height");
-				this.skeleton.classList.remove("cp-skeleton-circular", "cp-skeleton-rectangular");
-			}
-			break;
-		case "animation":
-			if (newer === "wave") {
-				this.skeleton.classList.remove("cp-skeleton-twinkle");
-				this.skeleton.classList.add("cp-skeleton-wave");
-			} else if (newer === "twinkle") {
-				this.skeleton.classList.remove("cp-skeleton-wave");
-				this.skeleton.classList.add("cp-skeleton-twinkle");
-			} else {
-				this.skeleton.classList.remove("cp-skeleton-wave cp-skeleton-twinkle");
-			}
-			break;
-		default:
-			break;
+					this.skeleton.style.removeProperty("height");
+					this.skeleton.classList.remove("cp-skeleton-circular", "cp-skeleton-rectangular");
+				}
+				break;
+			case "animation":
+				if (newer === "wave") {
+					this.skeleton.classList.remove("cp-skeleton-twinkle");
+					this.skeleton.classList.add("cp-skeleton-wave");
+				} else if (newer === "twinkle") {
+					this.skeleton.classList.remove("cp-skeleton-wave");
+					this.skeleton.classList.add("cp-skeleton-twinkle");
+				} else {
+					this.skeleton.classList.remove("cp-skeleton-wave cp-skeleton-twinkle");
+				}
+				break;
+			default:
+				break;
 		}
 	}
 )

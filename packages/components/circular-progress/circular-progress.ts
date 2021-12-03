@@ -66,31 +66,31 @@ const svg = `<svg class="cp-circular-svg" viewBox="0 0 44 44">
 		const circle = svg.firstElementChild as SVGCircleElement;
 		const text = svg.lastElementChild as SVGTextElement;
 		switch (attr) {
-		case "color":
-			circle.setAttribute("stroke", newer || "#1976d2");
-			break;
-		case "value":
-			if (newer) {
-				svg.style.setProperty("animation", "none");
-				circle.style.setProperty("animation", "none");
-				let value = Number(newer);
-				if (Number.isNaN(value)) value = 0;
-				else if (value < 0) value = 0;
-				else if (value > 100) value = 100;
-				text.innerHTML = `${value}%`;
-				circle.style.setProperty("stroke-dasharray", `${(value / 100) * 127}px 127px`);
-			} else {
-				text.innerHTML = "";
-				svg.style.removeProperty("animation");
-				circle.style.removeProperty("animation");
-			}
-			break;
-		case "label":
-			if (newer === "true") text.removeAttribute("display");
-			else text.setAttribute("display", "none");
-			break;
-		default:
-			break;
+			case "color":
+				circle.setAttribute("stroke", newer || "#1976d2");
+				break;
+			case "value":
+				if (newer) {
+					svg.style.setProperty("animation", "none");
+					circle.style.setProperty("animation", "none");
+					let value = Number(newer);
+					if (Number.isNaN(value)) value = 0;
+					else if (value < 0) value = 0;
+					else if (value > 100) value = 100;
+					text.innerHTML = `${value}%`;
+					circle.style.setProperty("stroke-dasharray", `${(value / 100) * 127}px 127px`);
+				} else {
+					text.innerHTML = "";
+					svg.style.removeProperty("animation");
+					circle.style.removeProperty("animation");
+				}
+				break;
+			case "label":
+				if (newer === "true") text.removeAttribute("display");
+				else text.setAttribute("display", "none");
+				break;
+			default:
+				break;
 		}
 	}
 )

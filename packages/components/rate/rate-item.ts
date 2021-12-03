@@ -2,7 +2,8 @@ import type { CpRateItemObservedAttributes } from "./data";
 
 import { style, watch, useLatestCall } from "../../utils/index";
 
-const svg = "<svg viewBox=\"0 0 24 24\"><path fill=\"currentcolor\" d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\" /></svg>";
+const svg =
+	"<svg viewBox='0 0 24 24'><path fill='currentcolor' d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z' /></svg>";
 
 @style({
 	".light svg": {
@@ -24,11 +25,11 @@ const svg = "<svg viewBox=\"0 0 24 24\"><path fill=\"currentcolor\" d=\"M12 17.2
 		height: "2em",
 		color: "#bdbdbd",
 	},
-	":host([disable=\"true\"])": {
+	":host([disable='true'])": {
 		pointerEvents: "none",
 		opacity: "0.7",
 	},
-	":host([readonly=\"true\"])": {
+	":host([readonly='true'])": {
 		pointerEvents: "none",
 	},
 	":host(:hover)": {
@@ -48,25 +49,25 @@ const svg = "<svg viewBox=\"0 0 24 24\"><path fill=\"currentcolor\" d=\"M12 17.2
 	function (attr, older, newer) {
 		const light = this.shadowRoot.querySelector(".light") as HTMLDivElement;
 		switch (attr) {
-		case "value":
-			if (newer) light.style.width = `${newer}%`;
-			else light.style.removeProperty("width");
-			break;
-		case "light-color":
-			if (newer) light.style.color = newer;
-			else light.style.removeProperty("color");
-			break;
-		case "base-color":
-			const base = this.shadowRoot.querySelector(".base") as HTMLDivElement;
-			if (newer) base.style.color = newer;
-			else base.style.removeProperty("color");
-			break;
-		case "custom":
-			this.setRateIcon(newer);
-			break;
-		case "disable":
-			// 禁用状态通过css实现
-			break;
+			case "value":
+				if (newer) light.style.width = `${newer}%`;
+				else light.style.removeProperty("width");
+				break;
+			case "light-color":
+				if (newer) light.style.color = newer;
+				else light.style.removeProperty("color");
+				break;
+			case "base-color":
+				const base = this.shadowRoot.querySelector(".base") as HTMLDivElement;
+				if (newer) base.style.color = newer;
+				else base.style.removeProperty("color");
+				break;
+			case "custom":
+				this.setRateIcon(newer);
+				break;
+			case "disable":
+				// 禁用状态通过css实现
+				break;
 		}
 	}
 )

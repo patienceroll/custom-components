@@ -77,14 +77,14 @@ import type { CpPopoverCustomEventDetail, CpPopoverObservedAttributes } from "./
 	["placement", "open"],
 	function (attr, older, newer) {
 		switch (attr) {
-		case "placement":
-			if (newer) {
-				this.popoverContextWrapper.className = "";
-				this.popoverContextWrapper.classList.add("cp-popover-context-wrapper", `cp-popover-${newer}`);
-			} else this.popoverContextWrapper.className = "cp-popover-context-wrapper cp-popover-top";
-			break;
-		case "open":
-			break;
+			case "placement":
+				if (newer) {
+					this.popoverContextWrapper.className = "";
+					this.popoverContextWrapper.classList.add("cp-popover-context-wrapper", `cp-popover-${newer}`);
+				} else this.popoverContextWrapper.className = "cp-popover-context-wrapper cp-popover-top";
+				break;
+			case "open":
+				break;
 		}
 	}
 )

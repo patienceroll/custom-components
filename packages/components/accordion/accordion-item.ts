@@ -61,13 +61,13 @@ const ArrowDownSvg =
 })
 @watch<AccordionItemObservedAttributes, CpAccordionItem>(["disable", "open", "key"], function (attr, older, newer) {
 	switch (attr) {
-	case "open":
-		if (newer === "true")
-			this.content.style.height = `${(this.content.firstElementChild as HTMLSlotElement).clientHeight}px`;
-		else this.content.style.removeProperty("height");
-		break;
-	case "key":
-		break;
+		case "open":
+			if (newer === "true")
+				this.content.style.height = `${(this.content.firstElementChild as HTMLSlotElement).clientHeight}px`;
+			else this.content.style.removeProperty("height");
+			break;
+		case "key":
+			break;
 	}
 })
 export default class CpAccordionItem extends HTMLElement implements CustomElement {

@@ -14,9 +14,9 @@ import type { CpTabPanelObservedAttributes } from "./data";
 })
 @watch<CpTabPanelObservedAttributes, AttachedShadowRoot<CpTabPanel>>(["active"], function (attr, older, newer) {
 	switch (attr) {
-	case "active":
+		case "active":
 		// 先交由css控制吧
-		break;
+			break;
 	}
 })
 export default class CpTabPanel extends HTMLElement implements CustomElement {

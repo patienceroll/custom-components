@@ -76,33 +76,33 @@ import "../ripple";
 		older: string | null,
 		newer: string | null
 	) {
+		const { firstElementChild: outerCircle, lastElementChild: innerCircle } = this.radioIcon as unknown as {
+			firstElementChild: SVGCircleElement;
+			lastElementChild: SVGCircleElement;
+		};
 		switch (attr) {
-		case "checked":
-			const { firstElementChild: outerCircle, lastElementChild: innerCircle } = this.radioIcon as unknown as {
-					firstElementChild: SVGCircleElement;
-					lastElementChild: SVGCircleElement;
-				};
-			if (newer === "true") {
-				this.radio.checked = true;
-				outerCircle.classList.add("outer-checked");
-				innerCircle.classList.add("inner-checked");
+			case "checked":
+				if (newer === "true") {
+					this.radio.checked = true;
+					outerCircle.classList.add("outer-checked");
+					innerCircle.classList.add("inner-checked");
 
-				if (older !== "true") {
-					const event = new CustomEvent<{ checked: true }>("check", { detail: { checked: true }, bubbles: true });
-					this.dispatchEvent(event);
+					if (older !== "true") {
+						const event = new CustomEvent<{ checked: true }>("check", { detail: { checked: true }, bubbles: true });
+						this.dispatchEvent(event);
+					}
+				} else {
+					this.radio.checked = false;
+					outerCircle.classList.remove("outer-checked");
+					innerCircle.classList.remove("inner-checked");
 				}
-			} else {
-				this.radio.checked = false;
-				outerCircle.classList.remove("outer-checked");
-				innerCircle.classList.remove("inner-checked");
-			}
-			break;
-		case "name":
-			if (newer) this.radio.name = newer;
-			else this.radio.removeAttribute("name");
-			break;
-		default:
-			break;
+				break;
+			case "name":
+				if (newer) this.radio.name = newer;
+				else this.radio.removeAttribute("name");
+				break;
+			default:
+				break;
 		}
 	}
 )

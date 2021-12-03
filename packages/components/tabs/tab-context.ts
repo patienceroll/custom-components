@@ -12,9 +12,9 @@ import CpTabPanel from "./tab-panel";
 })
 @watch<CpTabContextObservedAttributes, AttachedShadowRoot<TabContext>>(["active-key"], function (attr, older, newer) {
 	switch (attr) {
-	case "active-key":
-		if (newer) this.setRealActiveKey(newer);
-		break;
+		case "active-key":
+			if (newer) this.setRealActiveKey(newer);
+			break;
 	}
 })
 export default class TabContext extends HTMLElement implements CustomElement {

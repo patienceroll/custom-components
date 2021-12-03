@@ -29,13 +29,13 @@ import CpTab from "./tab";
 })
 @watch<CpTabsObservedAttributes, AttachedShadowRoot<CpTabs>>(["center", "active-key"], function (attr, older, newer) {
 	switch (attr) {
-	case "center":
-		if (newer === "true") this.wrapper.style.justifyContent = "center";
-		else this.wrapper.style.removeProperty("justifyContent");
-		break;
-	case "active-key":
-		if (newer) this.setRealActiveKey(newer);
-		break;
+		case "center":
+			if (newer === "true") this.wrapper.style.justifyContent = "center";
+			else this.wrapper.style.removeProperty("justifyContent");
+			break;
+		case "active-key":
+			if (newer) this.setRealActiveKey(newer);
+			break;
 	}
 })
 export default class CpTabs extends HTMLElement implements CustomElement {

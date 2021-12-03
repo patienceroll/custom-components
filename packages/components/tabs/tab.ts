@@ -25,8 +25,8 @@ if (!customElements.get("cp-button")) customElements.define("cp-button", CpButto
 })
 @watch<CpTabObservedAttributes, AttachedShadowRoot<CpTab>>(["key"], function (attr, older, newer) {
 	switch (attr) {
-	case "key":
-		break;
+		case "key":
+			break;
 	}
 })
 export default class CpTab extends HTMLElement implements CustomElement {

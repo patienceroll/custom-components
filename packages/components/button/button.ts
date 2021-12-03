@@ -37,24 +37,24 @@ import "../circular-progress";
 })
 @watch<ButtonObservedAttributes, CpButton>(["disable", "loading", "loading-color"], function (attr, older, newer) {
 	switch (attr) {
-	case "disable":
-		if (newer === "true") this.button.classList.add("cp-button-disabled");
-		else this.button.classList.remove("cp-button-disabled");
-		break;
-	case "loading":
-		if (newer === "true") {
-			this.style.setProperty("pointer-events", "none");
-			this.loading.style.display = "block";
-		} else {
-			this.style.removeProperty("pointer-events");
-			this.loading.style.display = "none";
-		}
-		break;
-	case "loading-color":
-		(this.loading.firstElementChild as SVGRectElement).setAttribute("stroke", newer || "#1976d2");
-		break;
-	default:
-		break;
+		case "disable":
+			if (newer === "true") this.button.classList.add("cp-button-disabled");
+			else this.button.classList.remove("cp-button-disabled");
+			break;
+		case "loading":
+			if (newer === "true") {
+				this.style.setProperty("pointer-events", "none");
+				this.loading.style.display = "block";
+			} else {
+				this.style.removeProperty("pointer-events");
+				this.loading.style.display = "none";
+			}
+			break;
+		case "loading-color":
+			(this.loading.firstElementChild as SVGRectElement).setAttribute("stroke", newer || "#1976d2");
+			break;
+		default:
+			break;
 	}
 })
 export default class CpButton extends CpButtonBase {
@@ -87,5 +87,4 @@ export default class CpButton extends CpButtonBase {
 		textWrapper.append(leftIcon, text, rightIcon);
 		button.append(textWrapper, loading);
 	}
-	connectedCallback() {}
 }

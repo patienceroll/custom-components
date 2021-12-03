@@ -91,15 +91,15 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	#disposeMaskAnimation = (e: AnimationEvent) => {
 		switch (e.animationName) {
-		case "close":
-			// 动画结束
-			if ([...this.#maskNode.classList].includes("cp-mask-close")) {
-				this.setAttribute("open", "false");
-				stack.remove(this);
-			}
-			break;
-		default:
-			break;
+			case "close":
+				// 动画结束
+				if ([...this.#maskNode.classList].includes("cp-mask-close")) {
+					this.setAttribute("open", "false");
+					stack.remove(this);
+				}
+				break;
+			default:
+				break;
 		}
 	};
 
@@ -109,20 +109,20 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	static observedAttributes = ["mask-closable"];
-	attributeChangedCallback(name: "mask-closable", _: string, newValue: string) {
-		switch (name) {
-		case "mask-closable":
-			this.#disposeMaskClosable(newValue as BooleanCharacter);
-			break;
-		default:
-			break;
+	attributeChangedCallback(name: string, _: string | null, newValue: string | null) {
+		switch (name as "mask-closable") {
+			case "mask-closable":
+				this.#disposeMaskClosable(newValue as BooleanCharacter);
+				break;
+			default:
+				break;
 		}
 	}
 
 	#onKeydown = (e: KeyboardEvent) => {
 		if (e.keyCode === 27) {
 			this.dispatchEvent(new CustomEvent("close", { detail: null, bubbles: false }));
-			"";
+			("");
 		}
 	};
 
