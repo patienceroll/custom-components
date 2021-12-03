@@ -6,6 +6,10 @@ export interface TagProps {
 	'closable'?: 'true';
 	/**尺寸 */
 	'size':string;
+	/**是否显示 */
+	'tagshow':'true'|'false';
+	/** 图标标签 */
+	'closeicon'?:'true'|'false'
 	/** 受控状态下是否显示 */
 	'show'?: 'true' | 'false';
 	/** 是否展示纯色背景,默认false */
@@ -20,3 +24,5 @@ export type TagObservedAttributes =
 		| 'pure-background'
 		| 'onclose'
 		| 'size'
+		| 'closeicon'
+		| 'tagshow'
