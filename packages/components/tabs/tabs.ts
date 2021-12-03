@@ -62,7 +62,7 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 		children.classList.add('cp-tabs-children');
 
 		this.addEventListener('cp-tab-click', (event) => {
-			const { detail } = event as CustomEvent<{ domEvent: MouseEvent; key: string | null }>;
+			const { detail } = event as CustomEvent<{ nativeEvent: MouseEvent; key: string | null }>;
 			if (detail.key) {
 				/** 如果是非受控的,更新内部维护的值,触发组件内部更新 */
 				if (!this.getAttribute('active-key')) this.setRealActiveKey(detail.key);

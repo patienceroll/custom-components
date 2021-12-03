@@ -93,7 +93,7 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 			this.dispatchEvent(
 				new CustomEvent('cp-rate-item-rate', {
 					detail: {
-						domEvent: event,
+						nativeEvent: event,
 						value: Math.abs(offsetX / clientWidth),
 					},
 					bubbles: true,
@@ -109,7 +109,7 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 				this.dispatchEvent(
 					new CustomEvent('cp-rate-item-moverate', {
 						detail: {
-							domEvent: event,
+							nativeEvent: event,
 							value: Math.abs(offsetX / clientWidth),
 						},
 						bubbles: true,

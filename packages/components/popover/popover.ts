@@ -1,5 +1,5 @@
 import { style, watch } from '../../utils/index';
-import type { CpPopoverObservedAttributes } from './data';
+import type { CpPopoverCustomEventDetail, CpPopoverObservedAttributes } from './data';
 
 @style({
 	'.cp-popover-right-end': {
@@ -73,26 +73,31 @@ import type { CpPopoverObservedAttributes } from './data';
 		fontSize: '16px',
 	},
 })
-@watch<CpPopoverObservedAttributes, AttachedShadowRoot<CpPopover>>(['placement'], function (attr, older, newer) {
-	switch (attr) {
-		case 'placement':
-			if (newer) {
-				this.popoverContextWrapper.className = '';
-				this.popoverContextWrapper.classList.add(`cp-popover-context-wrapper`, `cp-popover-${newer}`);
-			} else this.popoverContextWrapper.className = `cp-popover-context-wrapper cp-popover-top`;
-
-			break;
+@watch<CpPopoverObservedAttributes, AttachedShadowRoot<CpPopover>>(
+	['placement', 'open'],
+	function (attr, older, newer) {
+		switch (attr) {
+			case 'placement':
+				if (newer) {
+					this.popoverContextWrapper.className = '';
+					this.popoverContextWrapper.classList.add(`cp-popover-context-wrapper`, `cp-popover-${newer}`);
+				} else this.popoverContextWrapper.className = `cp-popover-context-wrapper cp-popover-top`;
+				break;
+			case 'open':
+				break;
+		}
 	}
-})
+)
 export default class CpPopover extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
-
+	/** 控制悬浮气泡是否展示气泡 */
+	private realOpen: boolean;
 	/** 悬浮气泡内容容器 */
 	public popoverContextWrapper: HTMLDivElement;
 
 	constructor() {
 		super();
-
+		this.realOpen = false;
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpPopover.styleSheet];
 
@@ -109,7 +114,15 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 			if (type === 'mouseleave' && this.disableHover) return;
 			if (type === 'focusout' && this.disableFocus) return;
 			if (type === 'click' && this.disableClick) return;
-			this.popoverContextWrapper.style.removeProperty('visibility');
+			if (!this.getAttribute('open')) this.popoverContextWrapper.style.removeProperty('visibility');
+			this.dispatchEvent(
+				new CustomEvent<CpPopoverCustomEventDetail['close']>('close', {
+					detail: {
+						nativeEvent: event,
+						open: false,
+					},
+				})
+			);
 		};
 
 		const showPopoverContext = (event: Event) => {
@@ -121,7 +134,10 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 
 			// 添加点击事件隐藏的方法
 			if (type === 'click') this.ownerDocument.addEventListener('click', hidePopOverContext, { once: true });
-			this.popoverContextWrapper.style.visibility = 'unset';
+			if (!this.getAttribute('open')) this.popoverContextWrapper.style.visibility = 'unset';
+			this.dispatchEvent(
+				new CustomEvent<CpPopoverCustomEventDetail['open']>('open', { detail: { nativeEvent: event, open: true } })
+			);
 		};
 
 		this.addEventListener('mouseenter', showPopoverContext);
@@ -148,5 +164,10 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 	/** 是否禁用聚焦触发 */
 	get disableFocus() {
 		return this.getAttribute('disable-focus') === 'true';
+	}
+
+	showContext() {
+		this.realOpen = true;
+		this.popoverContextWrapper.style.visibility = 'unset';
 	}
 }

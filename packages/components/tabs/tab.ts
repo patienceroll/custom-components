@@ -45,7 +45,7 @@ export default class CpTab extends HTMLElement implements CustomElement {
 			this.dispatchEvent(
 				new CustomEvent('cp-tab-click', {
 					detail: {
-						domEvent: event,
+						nativeEvent: event,
 						key: this.key,
 					},
 					bubbles: true,

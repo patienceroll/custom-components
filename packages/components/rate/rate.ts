@@ -58,10 +58,10 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		const slot = document.createElement('slot');
 
 		this.addEventListener('cp-rate-item-rate', (event) => {
-			const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
-			const { value, domEvent } = detail;
+			const { detail } = event as CustomEvent<{ value: number; nativeEvent: MouseEvent }>;
+			const { value, nativeEvent } = detail;
 			const rateItems = Array.from(this.rateItems.values());
-			const index = rateItems.findIndex((item) => item === domEvent.target);
+			const index = rateItems.findIndex((item) => item === nativeEvent.target);
 			if (index !== -1) {
 				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(
 					((index + value) * this.highest) / rateItems.length
@@ -85,10 +85,10 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		});
 
 		this.addEventListener('cp-rate-item-moverate', (event) => {
-			const { detail } = event as CustomEvent<{ value: number; domEvent: MouseEvent }>;
-			const { value, domEvent } = detail;
+			const { detail } = event as CustomEvent<{ value: number; nativeEvent: MouseEvent }>;
+			const { value, nativeEvent } = detail;
 			const rateItems = Array.from(this.rateItems.values());
-			const index = rateItems.findIndex((item) => item === domEvent.target);
+			const index = rateItems.findIndex((item) => item === nativeEvent.target);
 			if (index !== -1) {
 				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(
 					((index + value) * this.highest) / rateItems.length

@@ -10,7 +10,7 @@ export interface TagProps {
 	'show'?: 'true' | 'false';
 	/** 是否展示纯色背景,默认false */
 	'pure-background'?: 'true' | 'false';
-	'onclose'?: (event: CustomEvent<{ domEvent: MouseEvent; show?: boolean }>) => void;
+	'onclose'?: (event: CustomEvent<{ nativeEvent: MouseEvent; show?: boolean }>) => void;
 }
 
 export type TagObservedAttributes = 'color' | 'closable' | 'show' | 'pure-background' | 'onclose' | 'size';

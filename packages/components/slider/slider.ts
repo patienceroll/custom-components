@@ -133,7 +133,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 				new CustomEvent('change', {
 					detail: {
 						value: realValue,
-						domEvent: event,
+						nativeEvent: event,
 					},
 				})
 			);
@@ -151,7 +151,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 				new CustomEvent('change', {
 					detail: {
 						value: realValue,
-						domEvent: event,
+						nativeEvent: event,
 					},
 				})
 			);

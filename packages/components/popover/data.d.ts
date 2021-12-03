@@ -19,6 +19,20 @@ export interface CpPopoverProps {
 	'disable-click'?: BooleanCharacter;
 	/** 禁用聚焦触发 */
 	'disable-focus'?: BooleanCharacter;
+	/** 是否显示 */
+	'open'?: BooleanCharacter;
 }
 
-export type CpPopoverObservedAttributes = 'placement';
+/** 悬浮泡泡自定义事件detail */
+export interface CpPopoverCustomEventDetail {
+	open: {
+		nativeEvent: Event;
+		open: true;
+	};
+	close: {
+		nativeEvent: Event;
+		open: false;
+	};
+}
+
+export type CpPopoverObservedAttributes = 'placement' | 'open';
