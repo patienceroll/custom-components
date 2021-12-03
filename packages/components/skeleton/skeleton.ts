@@ -74,7 +74,7 @@ import { style, keyframe, watch } from "../../utils/index";
 					this.skeleton.classList.remove("cp-skeleton-circular");
 					this.skeleton.classList.add("cp-skeleton-rectangular");
 				} else {
-				// 默认为 text
+					// 默认为 text
 					this.skeleton.style.removeProperty("height");
 					this.skeleton.classList.remove("cp-skeleton-circular", "cp-skeleton-rectangular");
 				}

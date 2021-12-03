@@ -58,16 +58,16 @@
 		<script src="../index.js" type="module"></script>
 		<script>
 			const changeValue = (dom) => {
-				const value = dom.getAttribute('value');
+				const value = dom.getAttribute("value");
 				setTimeout(() => {
 					if (Object.is(null, value) || Number.isNaN(Number(value)) || Number(value) > 90)
-						dom.setAttribute('value', '0');
-					else dom.setAttribute('value', `${Number(value) + 10}`);
+						dom.setAttribute("value", "0");
+					else dom.setAttribute("value", `${Number(value) + 10}`);
 					changeValue(dom);
 				}, 1000);
 			};
-			changeValue(document.querySelector('#value-change'));
-			changeValue(document.querySelector('#value-change-with-label'));
+			changeValue(document.querySelector("#value-change"));
+			changeValue(document.querySelector("#value-change-with-label"));
 		</script>
 	</body>
 </html>

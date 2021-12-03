@@ -76,7 +76,8 @@ export default class CpButton extends CpButtonBase {
 		const loading = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
 		this.loading = loading;
-		loading.innerHTML = "<rect x=\"1\"  y=\"1\" rx=\"4\" ry=\"4\"  width=\"calc(100% - 2px)\" height=\"calc(100% - 2px)\" stroke-width=\"2\" stroke=\"#1976d2\" fill=\"none\" />";
+		loading.innerHTML =
+			"<rect x=\"1\"  y=\"1\" rx=\"4\" ry=\"4\"  width=\"calc(100% - 2px)\" height=\"calc(100% - 2px)\" stroke-width=\"2\" stroke=\"#1976d2\" fill=\"none\" />";
 		loading.classList.add("cp-button-loading");
 		leftIcon.setAttribute("part", "left-icon");
 		rightIcon.setAttribute("part", "right-icon");

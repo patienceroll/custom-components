@@ -8,5 +8,4 @@ export interface CpSliderProps extends HTMLElement {
 	precision?: NumberCharacter;
 }
 
-
 export type CpSliderObservedAttributes = "value" | "precision" | "min" | "max";

@@ -5,7 +5,7 @@ export interface ButtonBaseProps extends HTMLElement {
 }
 
 /** icon-button 属性 */
-export type IconButtonProps = ButtonBaseProps
+export type IconButtonProps = ButtonBaseProps;
 
 /** button 属性 */
 export interface ButtonProps extends ButtonBaseProps {

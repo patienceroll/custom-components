@@ -139,10 +139,10 @@
 			</cp-accordion-item>
 		</cp-accordion>
 		<script>
-			const cpAccordion = document.getElementById('cp-accordion');
-			cpAccordion.addEventListener('change', (event) => {
-				if (event.detail['active-keys'].length === 0) cpAccordion.setAttribute('active-keys', JSON.stringify([]));
-				else cpAccordion.setAttribute('active-keys', JSON.stringify([event.detail.current]));
+			const cpAccordion = document.getElementById("cp-accordion");
+			cpAccordion.addEventListener("change", (event) => {
+				if (event.detail["active-keys"].length === 0) cpAccordion.setAttribute("active-keys", JSON.stringify([]));
+				else cpAccordion.setAttribute("active-keys", JSON.stringify([event.detail.current]));
 			});
 		</script>
 	</body>
