@@ -5,7 +5,11 @@ export interface TagProps {
 	/** 是否可关闭 */
 	'closable'?: 'true';
 	/**尺寸 */
-	'size': string;
+	'size':string;
+	/**是否显示 */
+	'tagshow':'true'|'false';
+	/** 图标标签 */
+	'closeicon'?:'true'|'false'
 	/** 受控状态下是否显示 */
 	'show'?: 'true' | 'false';
 	/** 是否展示纯色背景,默认false */
@@ -13,4 +17,12 @@ export interface TagProps {
 	'onclose'?: (event: CustomEvent<{ nativeEvent: MouseEvent; show?: boolean }>) => void;
 }
 
-export type TagObservedAttributes = 'color' | 'closable' | 'show' | 'pure-background' | 'onclose' | 'size';
+export type TagObservedAttributes = 
+		| 'color'
+		| 'closable'
+		| 'show'
+		| 'pure-background'
+		| 'onclose'
+		| 'size'
+		| 'closeicon'
+		| 'tagshow'
