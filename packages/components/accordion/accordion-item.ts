@@ -3,7 +3,7 @@ import type { AccordionItemObservedAttributes } from "./data";
 import { style, watch } from "../../utils/index";
 
 const ArrowDownSvg =
-	"<svg class=\"cp-accordion-title-arrow\" viewBox=\"0 0 24 24\" width=\"1.5em\" height=\"1.5em\"><path fill=\"currentcolor\" d=\"M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z\"></path></svg>";
+	"<svg class='cp-accordion-title-arrow' viewBox='0 0 24 24' width='1.5em' height='1.5em'><path fill='currentcolor' d='M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z'></path></svg>";
 
 @style({
 	".cp-accordion-item-content-slot": {
@@ -38,15 +38,15 @@ const ArrowDownSvg =
 		justifyContent: "space-between",
 		transition: "padding ease 300ms",
 	},
-	":host([last-item=\"true\"])": {
+	":host([last-item='true'])": {
 		borderRadius: "0 0 0.25em 0.25em",
 		marginBottom: "0",
 	},
-	":host([first-item=\"true\"])": {
+	":host([first-item='true'])": {
 		marginTop: "0",
 		borderRadius: "0.25em 0.25em 0 0",
 	},
-	":host([open=\"true\"])": {
+	":host([open='true'])": {
 		marginTop: "1em",
 		marginBottom: "1em",
 	},

@@ -61,7 +61,7 @@ import "../ripple";
 		display: "inline-block",
 		cursor: "pointer",
 	},
-	":host([disabled=\"true\"])": {
+	":host([disabled='true'])": {
 		pointerEvents: "none",
 	},
 	":host": {

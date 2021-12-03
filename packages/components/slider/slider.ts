@@ -119,7 +119,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		this.sliderTracked.classList.add("cp-slider-tracked");
 		this.sliderBlock.classList.add("cp-slider-block");
 
-		this.sliderBlock.innerHTML = "<div class=\"cp-slider-block-shadow\"></div><div class=\"cp-slider-block-core\"></div>";
+		this.sliderBlock.innerHTML = "<div class='cp-slider-block-shadow'></div><div class='cp-slider-block-core'></div>";
 
 		this.addEventListener("click", (event) => {
 			const percent = this.calculatePercent(event.offsetX, this.clientWidth);

@@ -7,7 +7,7 @@ import CpButton from "../button/button";
 if (!customElements.get("cp-button")) customElements.define("cp-button", CpButton);
 
 @style({
-	":host([active=\"true\"]) cp-button::part(button)": {
+	":host([active='true']) cp-button::part(button)": {
 		color: "#007FFF",
 	},
 	"cp-button::part(button)": {

@@ -1,10 +1,10 @@
 import { style } from "../../utils/index";
 
 @style({
-	":host([square=\"true\"])": {
+	":host([square='true'])": {
 		borderRadius: "0",
 	},
-	":host([variant=\"outlined\"])": {
+	":host([variant='outlined'])": {
 		boxShadow: "none",
 		border: "1px solid rgba(0,0,0,0.120)",
 	},
