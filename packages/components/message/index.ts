@@ -1,3 +1,3 @@
-import CpMessage from './message';
+import CpMessage from "./message";
 
-window.customElements.define('cp-message', CpMessage);
+window.customElements.define("cp-message", CpMessage);

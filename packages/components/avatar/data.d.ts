@@ -1,3 +1,3 @@
-export interface CpAvatarProps extends HTMLElement {}
+export type CpAvatarProps = HTMLElement
 
-export type CpAvatarObservedAttributes = '';
+export type CpAvatarObservedAttributes = "";

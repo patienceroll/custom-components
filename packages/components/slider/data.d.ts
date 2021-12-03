@@ -9,4 +9,4 @@ export interface CpSliderProps extends HTMLElement {
 }
 
 
-export type CpSliderObservedAttributes = 'value' | 'precision' | 'min' | 'max';
+export type CpSliderObservedAttributes = "value" | "precision" | "min" | "max";

@@ -1,3 +1,3 @@
-import CpMask from './mask';
+import CpMask from "./mask";
 
-window.customElements.define('cp-mask', CpMask);
+window.customElements.define("cp-mask", CpMask);

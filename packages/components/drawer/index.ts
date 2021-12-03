@@ -1,3 +1,3 @@
-import CpDrawer from './drawer';
+import CpDrawer from "./drawer";
 
-customElements.define('cp-drawer', CpDrawer);
+customElements.define("cp-drawer", CpDrawer);

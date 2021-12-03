@@ -1,4 +1,4 @@
-import { formatKeyframes, formatStyle } from '../utils/style';
+import { formatKeyframes, formatStyle } from "../utils/style";
 
 /** 自定义组件样式装饰器 */
 export function style(param: CSSStyleObject) {

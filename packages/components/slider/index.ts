@@ -1,3 +1,3 @@
-import CpSlider from './slider';
+import CpSlider from "./slider";
 
-if (!customElements.get('cp-slider')) customElements.define('cp-slider', CpSlider);
+if (!customElements.get("cp-slider")) customElements.define("cp-slider", CpSlider);

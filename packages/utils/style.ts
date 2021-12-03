@@ -2,7 +2,7 @@
  * @method 驼峰转中划线
  * @param str 需要转换的字符串
  */
-const humpToOverline = (str: keyof CSSProperty | string) => str.replace(/([A-Z])/g, '-$1').toLowerCase();
+const humpToOverline = (str: keyof CSSProperty | string) => str.replace(/([A-Z])/g, "-$1").toLowerCase();
 
 /**
  * @method 转换对象属性名为css类名
@@ -17,7 +17,7 @@ const transitionStyle = (selector: string, style: CSSProperty) => {
 		str += `${transitionKey}:${style[key as keyof CSSProperty]};`;
 	});
 
-	return str + '}';
+	return str + "}";
 };
 
 /**
@@ -39,7 +39,7 @@ const formatKeyframes = (keyframes: KeyframeObject) => {
 	const styleSheet = new CSSStyleSheet();
 	const keyframeNames = Object.keys(keyframes);
 	keyframeNames.forEach((name) => {
-		let keyframeStepStr = '';
+		let keyframeStepStr = "";
 		Object.keys(keyframes[name]).forEach((step) => {
 			keyframeStepStr += transitionStyle(step, keyframes[name][step]);
 		});

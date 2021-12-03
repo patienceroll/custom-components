@@ -1,16 +1,16 @@
-import { style } from '../../utils/index';
+import { style } from "../../utils/index";
 
 @style({
-	'.cp-tooltip-tip-wrapper': {
-		left: '0',
-		top: '0',
-		position: 'absolute',
-		backgroundColor: '#6d6d6d',
+	".cp-tooltip-tip-wrapper": {
+		left: "0",
+		top: "0",
+		position: "absolute",
+		backgroundColor: "#6d6d6d",
 	},
-	':host': {
-		display: 'inline-block',
-		position: 'relative',
-		fontSize: '16px',
+	":host": {
+		display: "inline-block",
+		position: "relative",
+		fontSize: "16px",
 	},
 })
 export default class CpTooltip extends HTMLElement implements CustomElement {
@@ -24,17 +24,17 @@ export default class CpTooltip extends HTMLElement implements CustomElement {
 		super();
 		this.realOpen = false;
 
-		const shadowRoot = this.attachShadow({ mode: 'open' });
+		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpTooltip.styleSheet];
 
-		const children = document.createElement('slot');
+		const children = document.createElement("slot");
 
-		this.tipWrapper = document.createElement('span');
-		const tip = document.createElement('slot');
+		this.tipWrapper = document.createElement("span");
+		const tip = document.createElement("slot");
 
-		this.tipWrapper.classList.add('cp-tooltip-tip-wrapper');
+		this.tipWrapper.classList.add("cp-tooltip-tip-wrapper");
 
-		tip.name = 'tip';
+		tip.name = "tip";
 
 		this.tipWrapper.appendChild(tip);
 		shadowRoot.append(children, this.tipWrapper);

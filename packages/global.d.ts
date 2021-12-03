@@ -9,16 +9,16 @@ declare type CSSProperty = Partial<
 		CSSStyleDeclaration,
 		| typeof Symbol.iterator
 		| number
-		| 'getPropertyPriority'
-		| 'getPropertyValue'
-		| 'item'
-		| 'removeProperty'
-		| 'setProperty'
+		| "getPropertyPriority"
+		| "getPropertyValue"
+		| "item"
+		| "removeProperty"
+		| "setProperty"
 	>
 >;
 
 /** 布尔值 html属性字符串形式的值 */
-declare type BooleanCharacter = 'true' | 'false';
+declare type BooleanCharacter = "true" | "false";
 
 /** 字符串形式的数字 */
 declare type NumberCharacter = string;
@@ -30,7 +30,7 @@ declare type CSSStyleObject = Record<string, CSSProperty>;
 declare type KeyframeObject = Record<string, Record<string, CSSProperty>>;
 
 /** 开启了shadowRoot的元素 */
-declare type AttachedShadowRoot<T> = Omit<T, 'shadowRoot'> & {
+declare type AttachedShadowRoot<T> = Omit<T, "shadowRoot"> & {
 	shadowRoot: ShadowRoot;
 };
 

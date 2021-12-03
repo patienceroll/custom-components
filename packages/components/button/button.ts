@@ -1,60 +1,60 @@
-import type { ButtonObservedAttributes } from './data';
+import type { ButtonObservedAttributes } from "./data";
 
-import CpButtonBase from './button-base';
+import CpButtonBase from "./button-base";
 
-import { style, keyframe, watch } from '../../utils/index';
+import { style, keyframe, watch } from "../../utils/index";
 
-import '../ripple';
-import '../circular-progress';
+import "../ripple";
+import "../circular-progress";
 
 @style({
-	'.cp-button-loading > rect': {
-		animation: 'loading 2s linear infinite',
+	".cp-button-loading > rect": {
+		animation: "loading 2s linear infinite",
 	},
-	'.cp-button-loading': {
-		display: 'none',
-		position: 'absolute',
-		left: '0',
-		top: '0',
-		width: '100%',
-		height: '100%',
+	".cp-button-loading": {
+		display: "none",
+		position: "absolute",
+		left: "0",
+		top: "0",
+		width: "100%",
+		height: "100%",
 	},
-	'.cp-button-disabled': {
-		boxShadow: 'none',
+	".cp-button-disabled": {
+		boxShadow: "none",
 	},
 })
 @keyframe({
 	loading: {
-		'0%': {
-			strokeDasharray: '0% 400%',
-			strokeDashoffset: '0',
+		"0%": {
+			strokeDasharray: "0% 400%",
+			strokeDashoffset: "0",
 		},
-		'100%': {
-			strokeDasharray: '400% 400%',
-			strokeDashoffset: '-400%',
+		"100%": {
+			strokeDasharray: "400% 400%",
+			strokeDashoffset: "-400%",
 		},
 	},
 })
-@watch<ButtonObservedAttributes, CpButton>(['disable', 'loading', 'loading-color'], function (attr, older, newer) {
+@watch<ButtonObservedAttributes, CpButton>(["disable", "loading", "loading-color"], function (attr, older, newer) {
 	switch (attr) {
-		case 'disable':
-			if (newer === 'true') this.button.classList.add('cp-button-disabled');
-			else this.button.classList.remove('cp-button-disabled');
-			break;
-		case 'loading':
-			if (newer === 'true') {
-				this.style.setProperty('pointer-events', 'none');
-				this.loading.style.display = 'block';
-			} else {
-				this.style.removeProperty('pointer-events');
-				this.loading.style.display = 'none';
-			}
-			break;
-		case 'loading-color':
-			(this.loading.firstElementChild as SVGRectElement).setAttribute('stroke', newer || '#1976d2');
-			break;
-		default:
-			break;
+	case "disable":
+		if (newer === "true") this.button.classList.add("cp-button-disabled");
+		else this.button.classList.remove("cp-button-disabled");
+		break;
+	case "loading":
+		if (newer === "true") {
+			this.style.setProperty("pointer-events", "none");
+			this.loading.style.display = "block";
+		} else {
+			this.style.removeProperty("pointer-events");
+			this.loading.style.display = "none";
+		}
+		break;
+	case "loading-color":
+		(this.loading.firstElementChild as SVGRectElement).setAttribute("stroke", newer || "#1976d2");
+		break;
+	default:
+		break;
 	}
 })
 export default class CpButton extends CpButtonBase {
@@ -69,20 +69,20 @@ export default class CpButton extends CpButtonBase {
 		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, CpButton.keyframesSheet, CpButton.styleSheet];
 
 		const button = shadowRoot.firstElementChild as HTMLButtonElement;
-		const textWrapper = document.createElement('span');
-		const text = document.createElement('slot');
-		const leftIcon = document.createElement('slot');
-		const rightIcon = document.createElement('slot');
-		const loading = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+		const textWrapper = document.createElement("span");
+		const text = document.createElement("slot");
+		const leftIcon = document.createElement("slot");
+		const rightIcon = document.createElement("slot");
+		const loading = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
 		this.loading = loading;
-		loading.innerHTML = `<rect x="1"  y="1" rx="4" ry="4"  width="calc(100% - 2px)" height="calc(100% - 2px)" stroke-width="2" stroke="#1976d2" fill="none" />`;
-		loading.classList.add('cp-button-loading');
-		leftIcon.setAttribute('part', 'left-icon');
-		rightIcon.setAttribute('part', 'right-icon');
-		loading.setAttribute('part', 'loading');
-		leftIcon.name = 'left-icon';
-		rightIcon.name = 'right-icon';
+		loading.innerHTML = "<rect x=\"1\"  y=\"1\" rx=\"4\" ry=\"4\"  width=\"calc(100% - 2px)\" height=\"calc(100% - 2px)\" stroke-width=\"2\" stroke=\"#1976d2\" fill=\"none\" />";
+		loading.classList.add("cp-button-loading");
+		leftIcon.setAttribute("part", "left-icon");
+		rightIcon.setAttribute("part", "right-icon");
+		loading.setAttribute("part", "loading");
+		leftIcon.name = "left-icon";
+		rightIcon.name = "right-icon";
 
 		textWrapper.append(leftIcon, text, rightIcon);
 		button.append(textWrapper, loading);

@@ -3,12 +3,16 @@
     "debugge": "cross-env type=debugge rollup --config rollup.config.js --watch",
     "build": "cross-env type=build rollup --config rollup.config.js",
     "commit": "npx git-cz",
-    "prettier": "prettier --write  ./packages/**/*.*"
+    "prettier": "prettier --write  ./packages/**/*.*",
+    "lint": "eslint packages/**/*.ts --fix"
   },
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
     "cross-env": "^7.0.3",
+    "eslint": "^8.3.0",
     "postcss": "^8.3.6",
     "prettier": "2.4.1",
     "rollup": "^2.56.0",

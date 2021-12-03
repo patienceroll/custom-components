@@ -1,90 +1,90 @@
-import { style, AttrToNumber, watch } from '../../utils/index';
+import { style, AttrToNumber, watch } from "../../utils/index";
 
-import type { CpSliderObservedAttributes } from './data';
+import type { CpSliderObservedAttributes } from "./data";
 @style({
-	'.cp-slider-block:active .cp-slider-block-shadow': {
-		transform: 'translate(-50%,-50%) scale(1)',
+	".cp-slider-block:active .cp-slider-block-shadow": {
+		transform: "translate(-50%,-50%) scale(1)",
 	},
-	'.cp-slider-block:hover .cp-slider-block-shadow': {
-		transform: 'translate(-50%,-50%) scale(0.77)',
+	".cp-slider-block:hover .cp-slider-block-shadow": {
+		transform: "translate(-50%,-50%) scale(0.77)",
 	},
-	'.cp-slider-block-shadow': {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		width: 'inherit',
-		height: 'inherit',
-		transform: 'translate(-50%,-50%) scale(0)',
-		backgroundColor: 'currentColor',
-		opacity: '0.2',
-		transition: 'transform 200ms ease ',
-		borderRadius: '50%',
+	".cp-slider-block-shadow": {
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		width: "inherit",
+		height: "inherit",
+		transform: "translate(-50%,-50%) scale(0)",
+		backgroundColor: "currentColor",
+		opacity: "0.2",
+		transition: "transform 200ms ease ",
+		borderRadius: "50%",
 	},
-	'.cp-slider-block-core': {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%,-50%)',
-		width: '1.25em',
-		height: '1.25em',
-		backgroundColor: 'currentColor',
-		borderRadius: '50%',
-		boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
+	".cp-slider-block-core": {
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		transform: "translate(-50%,-50%)",
+		width: "1.25em",
+		height: "1.25em",
+		backgroundColor: "currentColor",
+		borderRadius: "50%",
+		boxShadow: "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
 	},
-	'.cp-slider-block': {
-		position: 'absolute',
-		top: '50%',
-		left: '0',
-		width: '2.625em',
-		height: '2.625em',
-		transform: 'translate(-50%,-50%)',
-		transition: 'left 300ms ease',
+	".cp-slider-block": {
+		position: "absolute",
+		top: "50%",
+		left: "0",
+		width: "2.625em",
+		height: "2.625em",
+		transform: "translate(-50%,-50%)",
+		transition: "left 300ms ease",
 	},
-	'.cp-slider-tracked': {
-		height: '0.375em',
-		width: '0px',
-		opacity: '1',
-		transition: 'width 300ms ease',
+	".cp-slider-tracked": {
+		height: "0.375em",
+		width: "0px",
+		opacity: "1",
+		transition: "width 300ms ease",
 	},
-	'.cp-slider-rail': {
-		width: '100%',
+	".cp-slider-rail": {
+		width: "100%",
 	},
-	'.cp-slider-rail,.cp-slider-tracked': {
-		position: 'absolute',
-		height: '0.25em',
-		backgroundColor: 'currentColor',
-		borderRadius: '0.25em',
-		left: '0',
-		top: '50%',
-		transform: 'translateY(-50%)',
-		opacity: '0.38',
+	".cp-slider-rail,.cp-slider-tracked": {
+		position: "absolute",
+		height: "0.25em",
+		backgroundColor: "currentColor",
+		borderRadius: "0.25em",
+		left: "0",
+		top: "50%",
+		transform: "translateY(-50%)",
+		opacity: "0.38",
 	},
-	':host': {
-		display: 'inline-block',
-		height: '1.875em',
-		position: 'relative',
-		fontSize: '16px',
-		cursor: 'pointer',
-		color: '#1976d2',
-		width: '100%',
+	":host": {
+		display: "inline-block",
+		height: "1.875em",
+		position: "relative",
+		fontSize: "16px",
+		cursor: "pointer",
+		color: "#1976d2",
+		width: "100%",
 	},
 })
 @watch<CpSliderObservedAttributes, AttachedShadowRoot<CpSlider>>(
-	['max', 'min', 'precision', 'value'],
+	["max", "min", "precision", "value"],
 	function (attr, older, newer) {
 		switch (attr) {
-			case 'value':
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
-			case 'min':
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
-			case 'precision':
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
-			case 'min':
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
+		case "value":
+			if (newer) this.sliderChangeRender(Number(newer));
+			break;
+		case "min":
+			if (newer) this.sliderChangeRender(Number(newer));
+			break;
+		case "precision":
+			if (newer) this.sliderChangeRender(Number(newer));
+			break;
+		case "min":
+			if (newer) this.sliderChangeRender(Number(newer));
+			break;
 		}
 	}
 )
@@ -108,20 +108,20 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		super();
 		this.realValue = this.min;
 		this.realValueRange = [this.min, this.max];
-		const shadowRoot = this.attachShadow({ mode: 'open' });
+		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpSlider.styleSheet];
 
-		this.sliderRail = document.createElement('span');
-		this.sliderTracked = document.createElement('span');
-		this.sliderBlock = document.createElement('span');
+		this.sliderRail = document.createElement("span");
+		this.sliderTracked = document.createElement("span");
+		this.sliderBlock = document.createElement("span");
 
-		this.sliderRail.classList.add('cp-slider-rail');
-		this.sliderTracked.classList.add('cp-slider-tracked');
-		this.sliderBlock.classList.add('cp-slider-block');
+		this.sliderRail.classList.add("cp-slider-rail");
+		this.sliderTracked.classList.add("cp-slider-tracked");
+		this.sliderBlock.classList.add("cp-slider-block");
 
-		this.sliderBlock.innerHTML = `<div class="cp-slider-block-shadow"></div><div class="cp-slider-block-core"></div>`;
+		this.sliderBlock.innerHTML = "<div class=\"cp-slider-block-shadow\"></div><div class=\"cp-slider-block-core\"></div>";
 
-		this.addEventListener('click', (event) => {
+		this.addEventListener("click", (event) => {
 			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
 			const realValue = this.calculateRealValue(percent);
 			if (!this.value) {
@@ -130,7 +130,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			}
 
 			this.dispatchEvent(
-				new CustomEvent('change', {
+				new CustomEvent("change", {
 					detail: {
 						value: realValue,
 						nativeEvent: event,
@@ -148,7 +148,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 				this.sliderChangeRender(realValue);
 			}
 			this.dispatchEvent(
-				new CustomEvent('change', {
+				new CustomEvent("change", {
 					detail: {
 						value: realValue,
 						nativeEvent: event,
@@ -159,19 +159,19 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 		/** 清除本元素添加到 owner document 的事件 */
 		const clearOwnerDocumentEvent = () => {
-			this.sliderBlock.style.removeProperty('transition-duration');
-			this.sliderTracked.style.removeProperty('transition-duration');
-			this.ownerDocument.removeEventListener('mousemove', onPressSliderBlockMoveEvent);
-			this.ownerDocument.removeEventListener('mouseup', clearOwnerDocumentEvent);
+			this.sliderBlock.style.removeProperty("transition-duration");
+			this.sliderTracked.style.removeProperty("transition-duration");
+			this.ownerDocument.removeEventListener("mousemove", onPressSliderBlockMoveEvent);
+			this.ownerDocument.removeEventListener("mouseup", clearOwnerDocumentEvent);
 		};
 
-		this.sliderBlock.addEventListener('mousedown', (event) => {
+		this.sliderBlock.addEventListener("mousedown", (event) => {
 			event.preventDefault();
 			event.stopPropagation();
-			this.sliderBlock.style.transitionDuration = '0ms';
-			this.sliderTracked.style.transitionDuration = '0ms';
-			this.ownerDocument.addEventListener('mousemove', onPressSliderBlockMoveEvent);
-			this.ownerDocument.addEventListener('mouseup', clearOwnerDocumentEvent);
+			this.sliderBlock.style.transitionDuration = "0ms";
+			this.sliderTracked.style.transitionDuration = "0ms";
+			this.ownerDocument.addEventListener("mousemove", onPressSliderBlockMoveEvent);
+			this.ownerDocument.addEventListener("mouseup", clearOwnerDocumentEvent);
 		});
 
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
@@ -179,22 +179,22 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 	/** 属性值 prop */
 	get value() {
-		return this.getAttribute('value');
+		return this.getAttribute("value");
 	}
 
 	/** 最小value值 默认 0 */
 	get min() {
-		return AttrToNumber(this, 'min', 0) as number;
+		return AttrToNumber(this, "min", 0) as number;
 	}
 
 	/** 最大value值 默认 100 */
 	get max() {
-		return AttrToNumber(this, 'max', 100) as number;
+		return AttrToNumber(this, "max", 100) as number;
 	}
 
 	/** 滑块儿的精度,默认 1, */
 	get precision() {
-		return AttrToNumber(this, 'precision', 1) as number;
+		return AttrToNumber(this, "precision", 1) as number;
 	}
 
 	/** 计算滑块所在位置在轨道长度上所占百分比,值为 0 ~ 1 */
