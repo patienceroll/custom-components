@@ -44,47 +44,39 @@ const svg =
 		cursor: "pointer",
 	},
 })
-@watch<CpRateItemObservedAttributes, AttachedShadowRoot<CpRateItem>>(
-	["value", "base-color", "light-color", "disable"],
-	function (attr, older, newer) {
-		const light = this.shadowRoot.querySelector(".light") as HTMLDivElement;
-		switch (attr) {
-			case "value":
-				if (newer) light.style.width = `${newer}%`;
-				else light.style.removeProperty("width");
-				break;
-			case "light-color":
-				if (newer) light.style.color = newer;
-				else light.style.removeProperty("color");
-				break;
-			case "base-color":
-				const base = this.shadowRoot.querySelector(".base") as HTMLDivElement;
-				if (newer) base.style.color = newer;
-				else base.style.removeProperty("color");
-				break;
-			case "custom":
-				this.setRateIcon(newer);
-				break;
-			case "disable":
-				// 禁用状态通过css实现
-				break;
-		}
-	}
-)
+@watch<AttachedShadowRoot<CpRateItem>>({
+	"value"(newer) {
+		if (newer) this.cpLight.style.width = `${newer}%`;
+		else this.cpLight.style.removeProperty("width");
+	},
+	"light-color"(newer) {
+		if (newer) this.cpLight.style.color = newer;
+		else this.cpLight.style.removeProperty("color");
+	},
+	"base-color"(newer) {
+		if (newer) this.cpBase.style.color = newer;
+		else this.cpBase.style.removeProperty("color");
+	},
+	"custom"(newer) {
+		this.setRateIcon(newer);
+	},
+})
 export default class CpRateItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
-	public Base: HTMLElement;
-	public Light: HTMLElement;
+	/** 评分背景层 */
+	public cpBase: HTMLElement;
+	/** 评分点亮层 */
+	public cpLight: HTMLElement;
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpRateItem.styleSheet];
 
-		this.Base = document.createElement("div");
-		this.Light = document.createElement("div");
+		this.cpBase = document.createElement("div");
+		this.cpLight = document.createElement("div");
 
-		this.Base.classList.add("base");
-		this.Light.classList.add("light");
+		this.cpBase.classList.add("base");
+		this.cpLight.classList.add("light");
 
 		this.setRateIcon(this.getAttribute("custom"));
 
@@ -119,11 +111,11 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 			})
 		);
 
-		shadowRoot.append(this.Base, this.Light);
+		shadowRoot.append(this.cpBase, this.cpLight);
 	}
 	/** 设置图标 */
 	setRateIcon(custom: string | null) {
-		this.Base.innerHTML = custom || svg;
-		this.Light.innerHTML = custom || svg;
+		this.cpBase.innerHTML = custom || svg;
+		this.cpLight.innerHTML = custom || svg;
 	}
 }

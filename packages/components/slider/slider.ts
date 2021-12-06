@@ -1,6 +1,4 @@
 import { style, AttrToNumber, watch } from "../../utils/index";
-
-import type { CpSliderObservedAttributes } from "./data";
 @style({
 	".cp-slider-block:active .cp-slider-block-shadow": {
 		transform: "translate(-50%,-50%) scale(1)",
@@ -29,7 +27,8 @@ import type { CpSliderObservedAttributes } from "./data";
 		height: "1.25em",
 		backgroundColor: "currentColor",
 		borderRadius: "50%",
-		boxShadow: "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
+		boxShadow:
+			"0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
 	},
 	".cp-slider-block": {
 		position: "absolute",
@@ -69,25 +68,20 @@ import type { CpSliderObservedAttributes } from "./data";
 		width: "100%",
 	},
 })
-@watch<CpSliderObservedAttributes, AttachedShadowRoot<CpSlider>>(
-	["max", "min", "precision", "value"],
-	function (attr, older, newer) {
-		switch (attr) {
-			case "value":
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
-			case "min":
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
-			case "precision":
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
-			case "max":
-				if (newer) this.sliderChangeRender(Number(newer));
-				break;
-		}
-	}
-)
+@watch<AttachedShadowRoot<CpSlider>>({
+	value(newer) {
+		this.sliderChangeRender(Number(newer));
+	},
+	min(newer) {
+		this.sliderChangeRender(Number(newer));
+	},
+	precision(newer) {
+		this.sliderChangeRender(Number(newer));
+	},
+	max(newer) {
+		this.sliderChangeRender(Number(newer));
+	},
+})
 export default class CpSlider extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 

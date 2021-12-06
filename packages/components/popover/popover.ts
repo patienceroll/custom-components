@@ -1,5 +1,5 @@
 import { style, watch } from "../../utils/index";
-import type { CpPopoverCustomEventDetail, CpPopoverObservedAttributes } from "./data";
+import type { CpPopoverCustomEventDetail } from "./data";
 
 @style({
 	".cp-popover-right-end": {
@@ -73,21 +73,15 @@ import type { CpPopoverCustomEventDetail, CpPopoverObservedAttributes } from "./
 		fontSize: "16px",
 	},
 })
-@watch<CpPopoverObservedAttributes, AttachedShadowRoot<CpPopover>>(
-	["placement", "open"],
-	function (attr, older, newer) {
-		switch (attr) {
-			case "placement":
-				if (newer) {
-					this.popoverContextWrapper.className = "";
-					this.popoverContextWrapper.classList.add("cp-popover-context-wrapper", `cp-popover-${newer}`);
-				} else this.popoverContextWrapper.className = "cp-popover-context-wrapper cp-popover-top";
-				break;
-			case "open":
-				break;
-		}
-	}
-)
+@watch<AttachedShadowRoot<CpPopover>>({
+	placement(newer) {
+		if (newer) {
+			this.popoverContextWrapper.className = "";
+			this.popoverContextWrapper.classList.add("cp-popover-context-wrapper", `cp-popover-${newer}`);
+		} else this.popoverContextWrapper.className = "cp-popover-context-wrapper cp-popover-top";
+	},
+	open() {},
+})
 export default class CpPopover extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	/** 控制悬浮气泡是否展示气泡 */

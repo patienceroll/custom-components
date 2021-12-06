@@ -15,12 +15,13 @@ export function keyframe(param: KeyframeObject) {
 }
 
 /** 监听变化的属性值装饰器 */
-export function watch<Attr extends string, Target extends HTMLElement = HTMLElement>(
-	attr: Attr[],
-	onAttrChange: <T extends string>(this: Target, attr: T, older: string | null, newer: string | null) => void
+export function watch<Target extends HTMLElement = HTMLElement>(
+	watcher: Record<string, (this: Target, newer: string | null, older: string | null) => void>
 ) {
-	return function (target: typeof CustomElement) {
-		target.observedAttributes = attr;
-		target.prototype.attributeChangedCallback = onAttrChange;
+	return function (targetClass: typeof CustomElement) {
+		targetClass.observedAttributes = Object.keys(watcher);
+		targetClass.prototype.attributeChangedCallback = function (this: Target, attr, older, newer) {
+			if (typeof watcher[attr] === "function") watcher[attr].apply(this, [newer, older]);
+		};
 	};
 }

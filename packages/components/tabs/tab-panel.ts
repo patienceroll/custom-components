@@ -1,6 +1,4 @@
-import { style, watch } from "../../utils/index";
-
-import type { CpTabPanelObservedAttributes } from "./data";
+import { style } from "../../utils/index";
 
 @style({
 	":host([active='true'])": {
@@ -11,13 +9,6 @@ import type { CpTabPanelObservedAttributes } from "./data";
 		fontSize: "16px",
 		padding: "1.5em",
 	},
-})
-@watch<CpTabPanelObservedAttributes, AttachedShadowRoot<CpTabPanel>>(["active"], function (attr, older, newer) {
-	switch (attr) {
-		case "active":
-			// 先交由css控制吧
-			break;
-	}
 })
 export default class CpTabPanel extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;

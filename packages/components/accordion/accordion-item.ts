@@ -1,4 +1,3 @@
-import type { AccordionItemObservedAttributes } from "./data";
 
 import { style, watch } from "../../utils/index";
 
@@ -59,16 +58,12 @@ const ArrowDownSvg =
 		boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%)",
 	},
 })
-@watch<AccordionItemObservedAttributes, CpAccordionItem>(["disable", "open", "key"], function (attr, older, newer) {
-	switch (attr) {
-		case "open":
-			if (newer === "true")
-				this.content.style.height = `${(this.content.firstElementChild as HTMLSlotElement).clientHeight}px`;
-			else this.content.style.removeProperty("height");
-			break;
-		case "key":
-			break;
-	}
+@watch<AttachedShadowRoot<CpAccordionItem>>({
+	open(newer) {
+		if (newer === "true")
+			this.content.style.height = `${(this.content.firstElementChild as HTMLSlotElement).clientHeight}px`;
+		else this.content.style.removeProperty("height");
+	},
 })
 export default class CpAccordionItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;

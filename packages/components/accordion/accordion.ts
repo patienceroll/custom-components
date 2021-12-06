@@ -1,5 +1,4 @@
 import type CpAccordionItem from "./accordion-item";
-import type { AccordionObservedAttributes } from "./data";
 
 import { style, watch } from "../../utils/index";
 
@@ -9,23 +8,20 @@ import { style, watch } from "../../utils/index";
 		fontSize: "16px",
 	},
 })
-@watch<AccordionObservedAttributes, CpAccordion>(["active-keys"], function (attr, older, newer) {
-	switch (attr) {
-		case "active-keys":
-			if (newer) {
-				try {
-					const activeKeys = JSON.parse(newer);
-					if (Array.isArray(activeKeys)) {
-						this.realActiveKeys = activeKeys;
-						this.renderItem(activeKeys);
-					} else throw new Error();
-				} catch (err) {
-					throw new Error("active-keys 的值类型应该为数组形式的JSON字符串");
-				}
+@watch<AttachedShadowRoot<CpAccordion>>({
+	"active-keys"(newer) {
+		if (newer) {
+			try {
+				const activeKeys = JSON.parse(newer);
+				if (Array.isArray(activeKeys)) {
+					this.realActiveKeys = activeKeys;
+					this.renderItem(activeKeys);
+				} else throw new Error();
+			} catch (err) {
+				throw new Error("active-keys 的值类型应该为数组形式的JSON字符串");
 			}
-
-			break;
-	}
+		}
+	},
 })
 export default class CpAccordion extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;

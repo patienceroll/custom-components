@@ -1,7 +1,5 @@
 import { style, watch } from "../../utils/index";
 
-import { CpTabContextObservedAttributes } from "./data";
-
 import CpTabs from "./tabs";
 import CpTabPanel from "./tab-panel";
 
@@ -10,12 +8,10 @@ import CpTabPanel from "./tab-panel";
 		display: "block",
 	},
 })
-@watch<CpTabContextObservedAttributes, AttachedShadowRoot<TabContext>>(["active-key"], function (attr, older, newer) {
-	switch (attr) {
-		case "active-key":
-			if (newer) this.setRealActiveKey(newer);
-			break;
-	}
+@watch<AttachedShadowRoot<TabContext>>({
+	"active-key"(newer) {
+		if (newer) this.setRealActiveKey(newer);
+	},
 })
 export default class TabContext extends HTMLElement implements CustomElement {
 	/**

@@ -1,7 +1,5 @@
 import { style, watch } from "../../utils/index";
 
-import type { CpTabsObservedAttributes } from "./data";
-
 import CpTab from "./tab";
 
 @style({
@@ -27,16 +25,14 @@ import CpTab from "./tab";
 		borderBottom: "1px solid rgba(0,0,0,0.12)",
 	},
 })
-@watch<CpTabsObservedAttributes, AttachedShadowRoot<CpTabs>>(["center", "active-key"], function (attr, older, newer) {
-	switch (attr) {
-		case "center":
-			if (newer === "true") this.wrapper.style.justifyContent = "center";
-			else this.wrapper.style.removeProperty("justifyContent");
-			break;
-		case "active-key":
-			if (newer) this.setRealActiveKey(newer);
-			break;
-	}
+@watch<AttachedShadowRoot<CpTabs>>({
+	"center"(newer) {
+		if (newer === "true") this.wrapper.style.justifyContent = "center";
+		else this.wrapper.style.removeProperty("justifyContent");
+	},
+	"active-key"(newer) {
+		if (newer) this.setRealActiveKey(newer);
+	},
 })
 export default class CpTabs extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
@@ -72,6 +68,7 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 
 		this.wrapper.append(children, this.wrapperBar);
 		shadowRoot.append(this.wrapper);
+		console.dir(this);
 	}
 
 	/** 当前tabs控制的tab节点 */
@@ -107,3 +104,5 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 
 	connectedCallback() {}
 }
+
+console.dir(CpTabs);

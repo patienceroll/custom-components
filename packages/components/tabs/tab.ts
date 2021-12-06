@@ -1,6 +1,4 @@
-import { style, watch } from "../../utils/index";
-
-import type { CpTabObservedAttributes } from "./data";
+import { style } from "../../utils/index";
 
 import CpButton from "../button/button";
 
@@ -22,12 +20,6 @@ if (!customElements.get("cp-button")) customElements.define("cp-button", CpButto
 		display: "block",
 		fontSize: "16px",
 	},
-})
-@watch<CpTabObservedAttributes, AttachedShadowRoot<CpTab>>(["key"], function (attr, older, newer) {
-	switch (attr) {
-		case "key":
-			break;
-	}
 })
 export default class CpTab extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
