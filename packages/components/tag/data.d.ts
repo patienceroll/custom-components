@@ -26,3 +26,7 @@ export type TagObservedAttributes =
 		| 'size'
 		| 'closeicon'
 		| 'tagshow'
+
+
+export type TagCheckableObservedAttributes = 
+		| 'color'

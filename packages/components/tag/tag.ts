@@ -19,14 +19,13 @@ import { style, watch } from '../../utils/index';
 	},
 	':host': {
 		borderRadius: '0.25em',
-	},
-	':host':{
-		borderRadius:'0.25em',
 		border:'1px solid red',
 		padding:'0.1em'
 	},
 	'.cp-icon-center':{
-		verticalAlign:'middle'
+		verticalAlign:'middle',
+		width:'22px',
+		height:'22px'
 	}
 	
 	
@@ -54,11 +53,9 @@ import { style, watch } from '../../utils/index';
 			case 'tagshow':
 				console.log(newer,111)
 				if(newer === 'true'){
-					console.log('显示')
 					this.style.setProperty('display','inline')
 				} 
 				else{
-					console.log('隐藏')
 					this.style.setProperty('display','none')
 				} 
 		}
@@ -80,7 +77,8 @@ export default class CpTag extends HTMLElement implements CustomElement {
 		
 		const contentSlot = document.createElement('slot')
 		const rightSlot = document.createElement('slot')
-		const rightDiv = document.createElement('i')
+		const rightDiv = document.createElement('div')
+		rightDiv.style.display = 'inline-block'
 		rightDiv.classList.add('cp-icon-center')
 		rightDiv.style.paddingLeft = '3px'
 		rightDiv.innerHTML = '<svg t="1637291848053" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2626" width="20" height="20"><path d="M825.76 246.496L560.256 512l265.504 265.504-48.256 48.256-265.536-265.504-265.472 265.504-48.256-48.256 265.472-265.536-265.472-265.472 48.256-48.256L512 463.744l265.504-265.504z" fill="#bfbfbf" p-id="2627"></path></svg>'
