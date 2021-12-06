@@ -107,7 +107,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 			if (type === "mouseleave" && this.disableHover) return;
 			if (type === "focusout" && this.disableFocus) return;
 			if (type === "click" && this.disableClick) return;
-			if (!this.getAttribute("open")) this.popoverContextWrapper.style.removeProperty("visibility");
+			if (!this.getAttribute("open")) this.hideContext();
 			this.dispatchEvent(
 				new CustomEvent<CpPopoverCustomEventDetail["close"]>("close", {
 					detail: {
@@ -127,7 +127,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 
 			// 添加点击事件隐藏的方法
 			if (type === "click") this.ownerDocument.addEventListener("click", hidePopOverContext, { once: true });
-			if (!this.getAttribute("open")) this.popoverContextWrapper.style.visibility = "unset";
+			if (!this.getAttribute("open")) this.showContext();
 			this.dispatchEvent(
 				new CustomEvent<CpPopoverCustomEventDetail["open"]>("open", { detail: { nativeEvent: event, open: true } })
 			);
@@ -159,8 +159,15 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 		return this.getAttribute("disable-focus") === "true";
 	}
 
+	/** 展示悬浮泡泡 */
 	showContext() {
 		this.realOpen = true;
 		this.popoverContextWrapper.style.visibility = "unset";
+		requestAnimationFrame(() => {});
+	}
+	/** 隐藏悬浮泡泡 */
+	hideContext() {
+		this.realOpen = false;
+		this.popoverContextWrapper.style.visibility = "hidden";
 	}
 }
