@@ -1,5 +1,3 @@
-import type { CpSkeletonObservedAttributes } from "./data";
-
 import { style, keyframe, watch } from "../../utils/index";
 
 @style({

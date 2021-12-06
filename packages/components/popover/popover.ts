@@ -80,7 +80,6 @@ import type { CpPopoverCustomEventDetail } from "./data";
 			this.popoverContextWrapper.classList.add("cp-popover-context-wrapper", `cp-popover-${newer}`);
 		} else this.popoverContextWrapper.className = "cp-popover-context-wrapper cp-popover-top";
 	},
-	open() {},
 })
 export default class CpPopover extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;

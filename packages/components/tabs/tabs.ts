@@ -101,8 +101,4 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 		this.activeTab(activeKey);
 		this.renderBar(activeKey);
 	}
-
-	connectedCallback() {}
 }
-
-console.dir(CpTabs);

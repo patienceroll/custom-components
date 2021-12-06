@@ -1,5 +1,3 @@
-import type { CpRateItemObservedAttributes } from "./data";
-
 import { style, watch, useLatestCall } from "../../utils/index";
 
 const svg =

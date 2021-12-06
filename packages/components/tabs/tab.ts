@@ -63,7 +63,4 @@ export default class CpTab extends HTMLElement implements CustomElement {
 	cancelAtive() {
 		this.setAttribute("active", "false");
 	}
-
-	connectedCallback() {}
-	/**  */
 }

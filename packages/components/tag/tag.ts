@@ -1,5 +1,3 @@
-import type { TagObservedAttributes } from "./data";
-
 import { style, watch } from "../../utils/index";
 @style({
 	".cp-tag-box": {
@@ -72,7 +70,7 @@ export default class CpTag extends HTMLElement implements CustomElement {
 		rightDiv.classList.add("cp-icon-center");
 		rightDiv.style.paddingLeft = "3px";
 		rightDiv.innerHTML =
-			'<svg t="1637291848053" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2626" width="20" height="20"><path d="M825.76 246.496L560.256 512l265.504 265.504-48.256 48.256-265.536-265.504-265.472 265.504-48.256-48.256 265.472-265.536-265.472-265.472 48.256-48.256L512 463.744l265.504-265.504z" fill="#bfbfbf" p-id="2627"></path></svg>';
+			"<svg t='1637291848053' class='icon' viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='2626' width='20' height='20'><path d='M825.76 246.496L560.256 512l265.504 265.504-48.256 48.256-265.536-265.504-265.472 265.504-48.256-48.256 265.472-265.536-265.472-265.472 48.256-48.256L512 463.744l265.504-265.504z' fill='#bfbfbf' p-id='2627'></path></svg>";
 		rightSlot.append(rightDiv);
 		this.Tag = document.createElement("div");
 		this.Tag.style.setProperty("display", "inline");
