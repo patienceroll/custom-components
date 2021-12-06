@@ -53,12 +53,7 @@ import { style, keyframe, watch } from "../../utils/index";
 })
 @watch<CpSkeletonObservedAttributes, AttachedShadowRoot<CpSkeleton>>(
 	["width", "variant", "animation"],
-	function (
-		this: AttachedShadowRoot<CpSkeleton>,
-		attr: CpSkeletonObservedAttributes,
-		older: string | null,
-		newer: string | null
-	) {
+	function (attr, older, newer) {
 		switch (attr) {
 			case "width":
 				if (newer) this.skeleton.style.setProperty("width", newer);

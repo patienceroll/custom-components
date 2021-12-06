@@ -68,44 +68,39 @@ import "../ripple";
 		display: "inline-block",
 	},
 })
-@watch<CpRadioObservedAttributes, AttachedShadowRoot<CpRadio>>(
-	["checked", "name"],
-	function (
-		this: AttachedShadowRoot<CpRadio>,
-		attr: CpRadioObservedAttributes,
-		older: string | null,
-		newer: string | null
-	) {
-		const { firstElementChild: outerCircle, lastElementChild: innerCircle } = this.radioIcon as unknown as {
-			firstElementChild: SVGCircleElement;
-			lastElementChild: SVGCircleElement;
-		};
-		switch (attr) {
-			case "checked":
-				if (newer === "true") {
-					this.radio.checked = true;
-					outerCircle.classList.add("outer-checked");
-					innerCircle.classList.add("inner-checked");
+@watch<CpRadioObservedAttributes, AttachedShadowRoot<CpRadio>>(["checked", "name"], function (attr, older, newer) {
+	const { firstElementChild: outerCircle, lastElementChild: innerCircle } = this.radioIcon as unknown as {
+		firstElementChild: SVGCircleElement;
+		lastElementChild: SVGCircleElement;
+	};
+	switch (attr) {
+		case "checked":
+			if (newer === "true") {
+				this.radio.checked = true;
+				outerCircle.classList.add("outer-checked");
+				innerCircle.classList.add("inner-checked");
 
-					if (older !== "true") {
-						const event = new CustomEvent<{ checked: true }>("check", { detail: { checked: true }, bubbles: true });
-						this.dispatchEvent(event);
-					}
-				} else {
-					this.radio.checked = false;
-					outerCircle.classList.remove("outer-checked");
-					innerCircle.classList.remove("inner-checked");
+				if (older !== "true") {
+					const event = new CustomEvent<{ checked: true }>("check", {
+						detail: { checked: true },
+						bubbles: true,
+					});
+					this.dispatchEvent(event);
 				}
-				break;
-			case "name":
-				if (newer) this.radio.name = newer;
-				else this.radio.removeAttribute("name");
-				break;
-			default:
-				break;
-		}
+			} else {
+				this.radio.checked = false;
+				outerCircle.classList.remove("outer-checked");
+				innerCircle.classList.remove("inner-checked");
+			}
+			break;
+		case "name":
+			if (newer) this.radio.name = newer;
+			else this.radio.removeAttribute("name");
+			break;
+		default:
+			break;
 	}
-)
+})
 export default class CpRadio extends HTMLElement implements CustomElement {
 	/** 组件实例 input 元素 */
 	radio: HTMLInputElement;

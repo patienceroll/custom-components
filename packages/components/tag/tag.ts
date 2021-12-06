@@ -19,9 +19,6 @@ import { style, watch } from "../../utils/index";
 	},
 	":host": {
 		borderRadius: "0.25em",
-	},
-	":host": {
-		borderRadius: "0.25em",
 		border: "1px solid red",
 		padding: "0.1em",
 	},
