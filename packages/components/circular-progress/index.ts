@@ -1,5 +1,5 @@
-import CpCircularProgress from './circular-progress';
+import CpCircularProgress from "./circular-progress";
 
-if (typeof customElements.get('cp-circular-progress') === 'undefined') {
-	customElements.define('cp-circular-progress', CpCircularProgress);
+if (typeof customElements.get("cp-circular-progress") === "undefined") {
+	customElements.define("cp-circular-progress", CpCircularProgress);
 }

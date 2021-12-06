@@ -9,16 +9,16 @@ declare type CSSProperty = Partial<
 		CSSStyleDeclaration,
 		| typeof Symbol.iterator
 		| number
-		| 'getPropertyPriority'
-		| 'getPropertyValue'
-		| 'item'
-		| 'removeProperty'
-		| 'setProperty'
+		| "getPropertyPriority"
+		| "getPropertyValue"
+		| "item"
+		| "removeProperty"
+		| "setProperty"
 	>
 >;
 
 /** 布尔值 html属性字符串形式的值 */
-declare type BooleanCharacter = 'true' | 'false';
+declare type BooleanCharacter = "true" | "false";
 
 /** 字符串形式的数字 */
 declare type NumberCharacter = string;
@@ -30,7 +30,7 @@ declare type CSSStyleObject = Record<string, CSSProperty>;
 declare type KeyframeObject = Record<string, Record<string, CSSProperty>>;
 
 /** 开启了shadowRoot的元素 */
-declare type AttachedShadowRoot<T> = Omit<T, 'shadowRoot'> & {
+declare type AttachedShadowRoot<T> = Omit<T, "shadowRoot"> & {
 	shadowRoot: ShadowRoot;
 };
 
@@ -39,17 +39,17 @@ declare class CustomElement extends HTMLElement {
 	static styleSheet?: CSSStyleSheet;
 	static keyframesSheet?: CSSStyleSheet;
 	/** 当 custom element首次被插入文档DOM时，被调用 */
-	connectedCallback?() {}
+	connectedCallback?: VoidFunction;
 
 	/** 当 custom element从文档DOM中删除时，被调用 */
-	disconnectedCallback?() {}
+	disconnectedCallback?: VoidFunction;
 
 	/** 当 custom element被移动到新的文档时，被调用 */
-	adoptedCallback?() {}
+	adoptedCallback?: VoidFunction;
 
 	/** 需要监听的属性名称 */
 	static observedAttributes?: string[];
 
 	/** 当 custom element增加、删除、修改自身属性时，被调用 与 observedAttributes 配套使用 */
-	attributeChangedCallback?(name: string, oldValue: string, newValue: string) {}
+	attributeChangedCallback?: (name: string, oldValue: string | null, newValue: string | null) => void;
 }

@@ -1,21 +1,21 @@
-import type { TagObservedAttributes } from './data';
+import type { TagObservedAttributes } from "./data";
 
-import { style, watch } from '../../utils/index';
+import { style, watch } from "../../utils/index";
 @style({
-	'.cp-tag-box': {
-		position: 'relactive',
+	".cp-tag-box": {
+		position: "relactive",
 	},
-	'.cp-tag-content': {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%,-50%)',
+	".cp-tag-content": {
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		transform: "translate(-50%,-50%)",
 	},
-	'.color': {
-		color: 'red',
+	".color": {
+		color: "red",
 	},
-	':host(:hover)': {
-		cursor: 'pointer',
+	":host(:hover)": {
+		cursor: "pointer",
 	},
 	':host': {
 		borderRadius: '0.25em',
@@ -30,24 +30,24 @@ import { style, watch } from '../../utils/index';
 	
 	
 })
-@watch<TagObservedAttributes,AttachedShadowRoot<CpTag>>(
-	['color' ,'show', 'closable','pure-background' , 'onclose','size','closeicon','tagshow'],
-	function(this: AttachedShadowRoot<CpTag>,attr,older,newer){
-		console.log(attr)
-		switch(attr){
-			case 'color' :
-				this.style.setProperty('color',newer)
-				
+@watch<TagObservedAttributes, AttachedShadowRoot<CpTag>>(
+	["color", "show", "closable", "pure-background", "onclose", "size", "closeicon", "tagshow"],
+	function (this: AttachedShadowRoot<CpTag>, attr, older, newer) {
+		console.log(attr);
+		switch (attr) {
+			case "color":
+				this.style.setProperty("color", newer);
+
 				// this.style.setProperty('background',newer)
-				this.style.setProperty('border',`1px solid ${newer}`)
+				this.style.setProperty("border", `1px solid ${newer}`);
 				break;
-			case 'size':
-				if (newer == 'mini') {
-					this.style.setProperty('padding', '0.1em');
-				} else if (newer == 'small') {
-					this.style.setProperty('padding', '0.2em');
-				} else if (newer == 'medium') {
-					this.style.setProperty('padding', '0.3em');
+			case "size":
+				if (newer == "mini") {
+					this.style.setProperty("padding", "0.1em");
+				} else if (newer == "small") {
+					this.style.setProperty("padding", "0.2em");
+				} else if (newer == "medium") {
+					this.style.setProperty("padding", "0.3em");
 				}
 				break;
 			case 'tagshow':
@@ -67,7 +67,7 @@ export default class CpTag extends HTMLElement implements CustomElement {
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({
-			mode: 'open',
+			mode: "open",
 		});
 		// 挂载唯一样式表
 		shadowRoot.adoptedStyleSheets = [CpTag.styleSheet];
@@ -92,11 +92,11 @@ export default class CpTag extends HTMLElement implements CustomElement {
 				}else{
 					this.setAttribute('tagshow', 'false');
 				}
-			})
+			});
 
-			this.Tag.append(contentSlot,rightSlot)
-		}else{
-			this.Tag.append(contentSlot)
+			this.Tag.append(contentSlot, rightSlot);
+		} else {
+			this.Tag.append(contentSlot);
 		}
 		shadowRoot.append(this.Tag);
 	}

@@ -1,3 +1,3 @@
-import CpTooltip from './tooltip';
+import CpTooltip from "./tooltip";
 
-if (!customElements.get('cp-tooltip')) customElements.define('cp-tooltip', CpTooltip);
+if (!customElements.get("cp-tooltip")) customElements.define("cp-tooltip", CpTooltip);

@@ -1,17 +1,17 @@
-import type CpAccordionItem from './accordion-item';
-import type { AccordionObservedAttributes } from './data';
+import type CpAccordionItem from "./accordion-item";
+import type { AccordionObservedAttributes } from "./data";
 
-import { style, watch } from '../../utils/index';
+import { style, watch } from "../../utils/index";
 
 @style({
-	':host': {
-		display: 'block',
-		fontSize: '16px',
+	":host": {
+		display: "block",
+		fontSize: "16px",
 	},
 })
-@watch<AccordionObservedAttributes, CpAccordion>(['active-keys'], function (attr, older, newer) {
+@watch<AccordionObservedAttributes, CpAccordion>(["active-keys"], function (attr, older, newer) {
 	switch (attr) {
-		case 'active-keys':
+		case "active-keys":
 			if (newer) {
 				try {
 					const activeKeys = JSON.parse(newer);
@@ -20,7 +20,7 @@ import { style, watch } from '../../utils/index';
 						this.renderItem(activeKeys);
 					} else throw new Error();
 				} catch (err) {
-					throw new Error('active-keys 的值类型应该为数组形式的JSON字符串');
+					throw new Error("active-keys 的值类型应该为数组形式的JSON字符串");
 				}
 			}
 
@@ -35,19 +35,19 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 		super();
 		this.realActiveKeys = this.accordionItems
 			.map((i) => {
-				const key = i.getAttribute('key');
-				if (i.getAttribute('open') === 'true' && key) return key;
-				return '';
+				const key = i.getAttribute("key");
+				if (i.getAttribute("open") === "true" && key) return key;
+				return "";
 			})
 			.filter((key) => key);
-		const shadowRoot = this.attachShadow({ mode: 'open' });
+		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpAccordion.styleSheet];
 
-		const slot = document.createElement('slot');
+		const slot = document.createElement("slot");
 
 		/** 监听单个折叠面板折叠 */
-		this.addEventListener('cp-accordion-item-fold', (event) => {
-			const key = (event.target as CpAccordionItem).getAttribute('key');
+		this.addEventListener("cp-accordion-item-fold", (event) => {
+			const key = (event.target as CpAccordionItem).getAttribute("key");
 			if (key) {
 				const newActiveKeys = this.realActiveKeys.filter((k) => k !== key);
 
@@ -59,18 +59,18 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 					this.realActiveKeys = newActiveKeys;
 				}
 				this.dispatchEvent(
-					new CustomEvent('change', {
+					new CustomEvent("change", {
 						detail: {
-							'active-keys': newActiveKeys,
-							'current': key,
+							"active-keys": newActiveKeys,
+							"current": key,
 						},
 					})
 				);
 			}
 		});
 		/** 监听单个折叠面板展开 */
-		this.addEventListener('cp-accordion-item-expand', (event) => {
-			const key = (event.target as CpAccordionItem).getAttribute('key');
+		this.addEventListener("cp-accordion-item-expand", (event) => {
+			const key = (event.target as CpAccordionItem).getAttribute("key");
 			if (key) {
 				const newActiveKeys = this.realActiveKeys.concat(key);
 
@@ -83,10 +83,10 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 				}
 
 				this.dispatchEvent(
-					new CustomEvent('change', {
+					new CustomEvent("change", {
 						detail: {
-							'active-keys': newActiveKeys,
-							'current': key,
+							"active-keys": newActiveKeys,
+							"current": key,
 						},
 					})
 				);
@@ -98,23 +98,23 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 
 	/** 所有手风琴面板item  */
 	get accordionItems() {
-		return Array.from(this.querySelectorAll<CpAccordionItem>('cp-accordion-item'));
+		return Array.from(this.querySelectorAll<CpAccordionItem>("cp-accordion-item"));
 	}
 
 	/** 所有激活的keys */
 	get activeKeys() {
-		return this.getAttribute('active-keys');
+		return this.getAttribute("active-keys");
 	}
 
 	/** 渲染单个折叠面板是否展开 */
 	renderItem(keys: string[]) {
 		this.accordionItems.forEach((item) => {
-			const key = item.getAttribute('key');
+			const key = item.getAttribute("key");
 			if (key) {
 				if (keys.includes(key)) {
-					item.setAttribute('open', 'true');
+					item.setAttribute("open", "true");
 				} else {
-					item.setAttribute('open', 'false');
+					item.setAttribute("open", "false");
 				}
 			}
 		});
@@ -123,10 +123,10 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 	connectedCallback() {
 		this.accordionItems.forEach((item, index) => {
 			if (index === 0) {
-				item.setAttribute('first-item', 'true');
+				item.setAttribute("first-item", "true");
 			}
 			if (index === this.accordionItems.length - 1) {
-				item.setAttribute('last-item', 'true');
+				item.setAttribute("last-item", "true");
 			}
 		});
 	}

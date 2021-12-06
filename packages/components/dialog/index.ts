@@ -1,3 +1,3 @@
-import CpDialog from './dialog';
+import CpDialog from "./dialog";
 
-customElements.define('cp-dialog', CpDialog);
+customElements.define("cp-dialog", CpDialog);

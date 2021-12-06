@@ -6,14 +6,14 @@
 
 #### 事件处理
 
-1. 组件的自定义方法(如: Tag 组件的 close 方法),需要把触发方法的 DOM 事件通过 Detail 传递出去,字段为 domEvent。
+1. 组件的自定义方法(如: Tag 组件的 close 方法),需要把触发方法的 DOM 事件通过 Detail 传递出去,字段为 nativeEvent。
 2. 自定义事件的 type 分为两种情况,如果是暴露给外部使用的,直接暴露名字,如果是组件之间通信用到的,名为 组件名 + 事件, Tag 组件的 close 方法命名为 close,而折叠面板与父组件通信的事件,名为 cp-accordion-item-expand
 
 ```javascript
 closeIcon.onclick = (event) => {
 	const customEvent = new CustomEvent('cp-tag-close', {
 		detail: {
-			domEvent: event,
+			nativeEvent: event,
 		},
 	});
 	this.dispatchEvent(customEvent);

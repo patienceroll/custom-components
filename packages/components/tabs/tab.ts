@@ -1,31 +1,31 @@
-import { style, watch } from '../../utils/index';
+import { style, watch } from "../../utils/index";
 
-import type { CpTabObservedAttributes } from './data';
+import type { CpTabObservedAttributes } from "./data";
 
-import CpButton from '../button/button';
+import CpButton from "../button/button";
 
-if (!customElements.get('cp-button')) customElements.define('cp-button', CpButton);
+if (!customElements.get("cp-button")) customElements.define("cp-button", CpButton);
 
 @style({
-	':host([active="true"]) cp-button::part(button)': {
-		color: '#007FFF',
+	":host([active='true']) cp-button::part(button)": {
+		color: "#007FFF",
 	},
-	'cp-button::part(button)': {
-		boxShadow: 'none',
-		backgroundColor: 'transparent',
-		padding: '0.75em 1em',
+	"cp-button::part(button)": {
+		boxShadow: "none",
+		backgroundColor: "transparent",
+		padding: "0.75em 1em",
 	},
-	'cp-button': {
-		borderRadius: '0',
+	"cp-button": {
+		borderRadius: "0",
 	},
-	':host': {
-		display: 'block',
-		fontSize: '16px',
+	":host": {
+		display: "block",
+		fontSize: "16px",
 	},
 })
-@watch<CpTabObservedAttributes, AttachedShadowRoot<CpTab>>(['key'], function (attr, older, newer) {
+@watch<CpTabObservedAttributes, AttachedShadowRoot<CpTab>>(["key"], function (attr, older, newer) {
 	switch (attr) {
-		case 'key':
+		case "key":
 			break;
 	}
 })
@@ -35,17 +35,17 @@ export default class CpTab extends HTMLElement implements CustomElement {
 	constructor() {
 		super();
 
-		const shadowRoot = this.attachShadow({ mode: 'open' });
+		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpTab.styleSheet];
 
-		const children = document.createElement('cp-button');
-		children.setAttribute('ripple-color', 'currentColor');
+		const children = document.createElement("cp-button");
+		children.setAttribute("ripple-color", "currentColor");
 
-		this.addEventListener('click', (event) => {
+		this.addEventListener("click", (event) => {
 			this.dispatchEvent(
-				new CustomEvent('cp-tab-click', {
+				new CustomEvent("cp-tab-click", {
 					detail: {
-						domEvent: event,
+						nativeEvent: event,
 						key: this.key,
 					},
 					bubbles: true,
@@ -53,23 +53,23 @@ export default class CpTab extends HTMLElement implements CustomElement {
 			);
 		});
 
-		children.append(document.createElement('slot'));
+		children.append(document.createElement("slot"));
 		shadowRoot.append(children);
 	}
 
 	/** 当前tab的key */
 	get key() {
-		return this.getAttribute('key');
+		return this.getAttribute("key");
 	}
 
 	/** 激活当前tab */
 	active() {
-		this.setAttribute('active', 'true');
+		this.setAttribute("active", "true");
 	}
 
 	/** 取消激活当前tab */
 	cancelAtive() {
-		this.setAttribute('active', 'false');
+		this.setAttribute("active", "false");
 	}
 
 	connectedCallback() {}

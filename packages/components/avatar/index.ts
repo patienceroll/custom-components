@@ -1,3 +1,3 @@
-import CpAvatar from './avatar';
+import CpAvatar from "./avatar";
 
-if (!customElements.get('cp-avatar')) customElements.define('cp-avatar', CpAvatar);
+if (!customElements.get("cp-avatar")) customElements.define("cp-avatar", CpAvatar);

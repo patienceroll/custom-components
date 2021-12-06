@@ -6,7 +6,7 @@
  */
 export default function useLatestCall<T extends unknown[], returnType = void>(
 	func: (...arg: T) => returnType,
-	during: number = 100
+	during = 100
 ) {
 	let count = 0;
 	return (...argInput: T) => {

@@ -132,9 +132,9 @@
 						</cp-rate>
 						<label>当前分数:<span id="precision">100</span></label>
 						<script>
-							const precisionRate = document.getElementById('precision-rate');
-							const precision = document.getElementById('precision');
-							precisionRate.addEventListener('change', (event) => {
+							const precisionRate = document.getElementById("precision-rate");
+							const precision = document.getElementById("precision");
+							precisionRate.addEventListener("change", (event) => {
 								precision.innerHTML = event.detail.value;
 							});
 						</script>
@@ -158,13 +158,13 @@
 						&nbsp;
 						<label>悬停分数:<span id="hover-hover">--</span></label>
 						<script>
-							const hoverRate = document.getElementById('hover-rate');
-							const hoverCurrent = document.getElementById('hover-current');
-							const hoverHover = document.getElementById('hover-hover');
-							hoverRate.addEventListener('changehover', (event) => {
+							const hoverRate = document.getElementById("hover-rate");
+							const hoverCurrent = document.getElementById("hover-current");
+							const hoverHover = document.getElementById("hover-hover");
+							hoverRate.addEventListener("changehover", (event) => {
 								hoverHover.innerHTML = event.detail.value;
 							});
-							hoverRate.addEventListener('change', (event) => {
+							hoverRate.addEventListener("change", (event) => {
 								hoverCurrent.innerHTML = event.detail.value;
 							});
 						</script>
@@ -222,14 +222,14 @@
 
 		<script>
 			function onClickControlRateAction(type) {
-				const rate = document.getElementById('controlled-rate');
-				const value = Number(rate.getAttribute('value'));
+				const rate = document.getElementById("controlled-rate");
+				const value = Number(rate.getAttribute("value"));
 				switch (type) {
-					case '增加':
-						rate.setAttribute('value', value <= 95 ? value + 5 : 100);
+					case "增加":
+						rate.setAttribute("value", value <= 95 ? value + 5 : 100);
 						break;
-					case '减少':
-						rate.setAttribute('value', value >= 5 ? value - 5 : 0);
+					case "减少":
+						rate.setAttribute("value", value >= 5 ? value - 5 : 0);
 						break;
 				}
 			}

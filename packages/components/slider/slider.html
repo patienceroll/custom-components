@@ -26,7 +26,7 @@
 			</li>
 			<li>
 				<h4>受控的滑块组件</h4>
-				<cp-slider id="controledCpSlider" value="20"  style="width: 200px"></cp-slider>&emsp;&emsp;
+				<cp-slider id="controledCpSlider" value="20" style="width: 200px"></cp-slider>&emsp;&emsp;
 				<cp-button
 					onclick="(()=>{
 					 const controledCpSlider = document.getElementById('controledCpSlider')
@@ -46,9 +46,9 @@
 					>减少</cp-button
 				>
 				<script>
-					const controledCpSlider = document.getElementById('controledCpSlider');
-					controledCpSlider.addEventListener('change', (event) => {
-						controledCpSlider.setAttribute('value', event.detail.value);
+					const controledCpSlider = document.getElementById("controledCpSlider");
+					controledCpSlider.addEventListener("change", (event) => {
+						controledCpSlider.setAttribute("value", event.detail.value);
 					});
 				</script>
 			</li>
