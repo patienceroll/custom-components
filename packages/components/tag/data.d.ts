@@ -17,16 +17,14 @@ export interface TagProps {
 	"onclose"?: (event: CustomEvent<{ nativeEvent: MouseEvent; show?: boolean }>) => void;
 }
 
-export type TagObservedAttributes = 
-		| 'color'
-		| 'closable'
-		| 'show'
-		| 'pure-background'
-		| 'onclose'
-		| 'size'
-		| 'closeicon'
-		| 'tagshow'
+export type TagObservedAttributes =
+	| "color"
+	| "closable"
+	| "show"
+	| "pure-background"
+	| "onclose"
+	| "size"
+	| "closeicon"
+	| "tagshow";
 
-
-export type TagCheckableObservedAttributes = 
-		| 'color'
+export type TagCheckableObservedAttributes = "color";

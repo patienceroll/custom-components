@@ -67,7 +67,6 @@ import "../ripple";
 		display: "inline-block",
 	},
 })
-
 @watch<AttachedShadowRoot<CpRadio>>({
 	checked(newer, older) {
 		if (newer === "true") {
