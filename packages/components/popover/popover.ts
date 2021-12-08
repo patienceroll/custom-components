@@ -1,70 +1,9 @@
-import { style, watch } from "../../utils/index";
-import type { CpPopoverCustomEventDetail } from "./data";
+import { style, watch, keyframe } from "../../utils/index";
+import type { CpPopoverCustomEventDetail, CpPopoverProps } from "./data";
 
 @style({
-	".cp-popover-right-end": {
-		right: "0",
-		bottom: "0",
-		transform: "translate(calc(100% + 0.625em),0)",
-	},
-	".cp-popover-right-start": {
-		right: "0",
-		top: "0",
-		transform: "translate(calc(100% + 0.625em),0)",
-	},
-	".cp-popover-right": {
-		right: "0",
-		top: "50%",
-		transform: "translate(calc(100% + 0.625em),-50%)",
-	},
-	".cp-popover-left-end": {
-		left: "0",
-		bottom: "0",
-		transform: "translate(calc(-100% - 0.625em),0)",
-	},
-	".cp-popover-left-start": {
-		left: "0",
-		top: "0",
-		transform: "translate(calc(-100% - 0.625em),0)",
-	},
-	".cp-popover-left": {
-		left: "0",
-		top: "50%",
-		transform: "translate(calc(-100% - 0.625em),-50%)",
-	},
-	".cp-popover-top-end": {
-		right: "0",
-		top: "0",
-		transform: "translate(0,calc(-100% - 0.625em))",
-	},
-	".cp-popover-top-start": {
-		left: "0",
-		top: "0",
-		transform: "translate(0,calc(-100% - 0.625em))",
-	},
-	".cp-popover-top": {
-		left: "50%",
-		top: "0",
-		transform: "translate(-50%,calc(-100% - 0.625em))",
-	},
-	".cp-popover-bottom-end": {
-		bottom: "0",
-		right: "0",
-		transform: "translate(0,calc(100% + 0.625em))",
-	},
-	".cp-popover-bottom-start": {
-		left: "0",
-		bottom: "0",
-		transform: "translate(0,calc(100% + 0.625em))",
-	},
-	".cp-popover-bottom": {
-		bottom: "0",
-		left: "50%",
-		transform: "translate(-50%,calc(100% + 0.625em))",
-	},
 	".cp-popover-context-wrapper": {
 		position: "absolute",
-		backgroundColor: "#6d6d6d",
 		visibility: "hidden",
 	},
 	":host": {
@@ -73,26 +12,84 @@ import type { CpPopoverCustomEventDetail } from "./data";
 		fontSize: "16px",
 	},
 })
+@keyframe({
+	"grow-in": {
+		from: {
+			transform: "scale(0.8)",
+			opacity: "0.8",
+		},
+		to: {
+			transform: "scale(1)",
+			opacity: "1",
+		},
+	},
+	"grow-out": {
+		from: {
+			transform: "scale(1)",
+			opacity: "1",
+		},
+		to: {
+			transform: "scale(0.8)",
+			opacity: "0",
+		},
+	},
+	"fade-in": {
+		from: {
+			opacity: "0",
+		},
+		to: {
+			opacity: "1",
+		},
+	},
+	"fade-out": {
+		from: {
+			opacity: "1",
+		},
+		to: {
+			opacity: "0",
+		},
+	},
+	"zoom-in": {
+		from: {
+			transform: "scale(0)",
+		},
+		to: {
+			transform: "scale(1)",
+		},
+	},
+	"zoom-out": {
+		from: {
+			transform: "scale(1)",
+		},
+		to: {
+			transform: "scale(0)",
+		},
+	},
+})
 @watch<AttachedShadowRoot<CpPopover>>({
 	placement(newer) {
-		if (newer) {
-			this.popoverContextWrapper.className = "";
-			this.popoverContextWrapper.classList.add("cp-popover-context-wrapper", `cp-popover-${newer}`);
-		} else this.popoverContextWrapper.className = "cp-popover-context-wrapper cp-popover-top";
+		this.setPopoverContextWrapperPositon((newer || "top") as CpPopover["placement"]);
 	},
 })
 export default class CpPopover extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
-	/** 控制悬浮气泡是否展示气泡 */
+	static keyframesSheet: CSSStyleSheet;
+	/** 悬浮气泡是否展示气泡的真实值 */
 	private realOpen: boolean;
 	/** 悬浮气泡内容容器 */
 	public popoverContextWrapper: HTMLDivElement;
 
+	/** 隐藏动画播放完成之后的事件 */
+	private animationendListener: VoidFunction;
+
 	constructor() {
 		super();
 		this.realOpen = false;
+		this.animationendListener = () => {
+			this.popoverContextWrapper.style.visibility = "hidden";
+		};
 		const shadowRoot = this.attachShadow({ mode: "open" });
-		shadowRoot.adoptedStyleSheets = [CpPopover.styleSheet];
+		shadowRoot.adoptedStyleSheets = [CpPopover.styleSheet, CpPopover.keyframesSheet];
 
 		const children = document.createElement("slot");
 		this.popoverContextWrapper = document.createElement("div");
@@ -100,7 +97,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 
 		context.name = "popover-context";
 
-		this.popoverContextWrapper.classList.add("cp-popover-context-wrapper", "cp-popover-top");
+		this.popoverContextWrapper.classList.add("cp-popover-context-wrapper");
 
 		const hidePopOverContext = (event: Event) => {
 			const { type } = event;
@@ -159,15 +156,154 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 		return this.getAttribute("disable-focus") === "true";
 	}
 
+	/** 悬浮泡泡 context 位置,默认是 top */
+	get placement() {
+		return (this.getAttribute("placement") || "top") as NonNullable<CpPopoverProps["placement"]>;
+	}
+
+	/** 过渡动画,默认是 grow */
+	get transition() {
+		return (this.getAttribute("transition") || "grow") as NonNullable<CpPopoverProps["transition"]>;
+	}
+
+	/** 根据 placement 获取悬浮泡泡的 position 定位值 */
+	private getPopoverPositionByPlacement(placement: CpPopover["placement"]) {
+		const { clientHeight, clientWidth } = this.popoverContextWrapper;
+		const postion = { top: "unset", left: "unset" };
+		switch (placement) {
+			case "top":
+				postion.top = `calc(${-clientHeight}px - 1em)`;
+				postion.left = `calc(50% - ${clientWidth / 2}px)`;
+				break;
+			case "top-start":
+				postion.top = `calc(${-clientHeight}px - 1em)`;
+				postion.left = "0";
+				break;
+			case "top-end":
+				postion.top = `calc(${-clientHeight}px - 1em)`;
+				postion.left = `calc(100% - ${clientWidth}px)`;
+				break;
+			case "left":
+				postion.top = `calc(50% - ${clientHeight / 2}px)`;
+				postion.left = `calc(${-clientWidth}px - 1em)`;
+				break;
+			case "left-start":
+				postion.top = "0";
+				postion.left = `calc(${-clientWidth}px - 1em)`;
+				break;
+			case "left-end":
+				postion.top = `calc(100% - ${clientHeight}px)`;
+				postion.left = `calc(${-clientWidth}px - 1em)`;
+				break;
+			case "right":
+				postion.top = `calc(50% - ${clientHeight / 2}px)`;
+				postion.left = "calc(100% + 1em)";
+				break;
+			case "right-start":
+				postion.top = "0";
+				postion.left = "calc(100% + 1em)";
+				break;
+			case "right-end":
+				postion.top = `calc(100% - ${clientHeight}px)`;
+				postion.left = "calc(100% + 1em)";
+				break;
+			case "bottom":
+				postion.top = "calc(100% + 1em)";
+				postion.left = `calc(50% - ${clientWidth / 2}px)`;
+				break;
+			case "bottom-start":
+				postion.top = "calc(100% + 1em)";
+				postion.left = "0";
+				break;
+			case "bottom-end":
+				postion.top = "calc(100% + 1em)";
+				postion.left = `calc(100% - ${clientWidth}px)`;
+				break;
+			// 默认是和 top 一样的
+			default:
+				postion.top = `calc(${-clientHeight}px - 1em)`;
+				postion.left = `calc(50% - ${clientWidth / 2}px)`;
+		}
+		return postion;
+	}
+
+	/** 根据placement获取transfrom origin */
+	private getPopoverTransformOriginByPlacement(placement: CpPopover["placement"]) {
+		return {
+			"top": "bottom center",
+			"top-start": "bottom left",
+			"top-end": "bottom right",
+			"left": "center right",
+			"left-start": "top right",
+			"left-end": "bottom right",
+			"right": "center left",
+			"right-start": "top left",
+			"right-end": "bottom left",
+			"bottom": "top center",
+			"bottom-start": "top left",
+			"bottom-end": "top right",
+		}[placement];
+	}
+
+	/** 设置悬浮泡泡的位置 */
+	setPopoverContextWrapperPositon(placement: CpPopover["placement"]) {
+		const { top, left } = this.getPopoverPositionByPlacement(placement);
+		this.popoverContextWrapper.style.top = top;
+		this.popoverContextWrapper.style.left = left;
+	}
+
+	/** 悬浮气泡出现时的动画,默认 grow */
+	private comingAnimate(transition: CpPopover["transition"]) {
+		switch (transition) {
+			case "grow":
+				this.popoverContextWrapper.style.animation = "grow-in ease 300ms";
+				break;
+			case "fade":
+				this.popoverContextWrapper.style.animation = "fade-in ease 500ms";
+				break;
+			case "zoom":
+				this.popoverContextWrapper.style.animation = "zoom-in ease 300ms";
+				break;
+			default:
+				this.popoverContextWrapper.style.animation = "grow-in ease 300ms";
+		}
+	}
+
+	/** 悬浮气泡出消失的动画 */
+	private goingAnimate(transition: CpPopover["transition"]) {
+		switch (transition) {
+			case "grow":
+				this.popoverContextWrapper.style.animation = "grow-out ease 300ms";
+				break;
+			case "fade":
+				this.popoverContextWrapper.style.animation = "fade-out ease 500ms";
+				break;
+			case "zoom":
+				this.popoverContextWrapper.style.animation = "zoom-out ease 300ms";
+				break;
+			default:
+				this.popoverContextWrapper.style.animation = "grow-out ease 300ms";
+		}
+	}
+
 	/** 展示悬浮泡泡 */
-	showContext() {
+	private showContext() {
 		this.realOpen = true;
 		this.popoverContextWrapper.style.visibility = "unset";
-		requestAnimationFrame(() => {});
+		this.setPopoverContextWrapperPositon(this.placement);
+		this.popoverContextWrapper.removeEventListener("animationend", this.animationendListener);
+		this.popoverContextWrapper.style.transformOrigin = this.getPopoverTransformOriginByPlacement(this.placement);
+		this.comingAnimate(this.transition);
 	}
+
 	/** 隐藏悬浮泡泡 */
 	hideContext() {
 		this.realOpen = false;
-		this.popoverContextWrapper.style.visibility = "hidden";
+		this.goingAnimate(this.transition);
+		this.popoverContextWrapper.addEventListener("animationend", this.animationendListener, { once: true });
+	}
+
+	connectedCallback() {
+		this.setPopoverContextWrapperPositon(this.placement);
 	}
 }

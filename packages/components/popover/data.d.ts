@@ -2,8 +2,8 @@ export interface CpPopoverProps {
 	/** 悬浮气泡context位置,默认 top */
 	"placement"?:
 		| "top"
-		| "left-start"
-		| "left-end"
+		| "top-start"
+		| "top-end"
 		| "bottom"
 		| "bottom-start"
 		| "bottom-end"
@@ -21,6 +21,8 @@ export interface CpPopoverProps {
 	"disable-focus"?: BooleanCharacter;
 	/** 是否显示 */
 	"open"?: BooleanCharacter;
+	/** 过渡动画,默认 grow */
+	"transition"?: "grow" | "fade" | "zoom";
 }
 
 /** 悬浮泡泡自定义事件detail */

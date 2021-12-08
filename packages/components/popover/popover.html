@@ -13,6 +13,14 @@
 			cp-button {
 				width: 100px;
 			}
+			span[slot="popover-context"] {
+				display: block;
+				background-color: #eee;
+				padding: 20px;
+				border-radius: 4px;
+				box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px, rgb(0 0 0 / 14%) 0px 1px 1px 0px,
+					rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+			}
 		</style>
 	</head>
 
@@ -21,6 +29,12 @@
 		<ul>
 			<li>
 				<h4>位置</h4>
+				<mark
+					>悬浮气泡会根据context的内容的高度计算位置,需要保证 context
+					内容有高度(如inline元素的时候,就不能正确计算高度)</mark
+				>
+				<br />
+				<br />
 				<cp-paper style="padding: 40px">
 					<div style="display: flex; justify-content: center">
 						<div>
@@ -119,6 +133,27 @@
 					<cp-popover disable-focus="true" disable-hover="true">
 						<span slot="popover-context">click</span>
 						<cp-button>click触发</cp-button>
+					</cp-popover>
+				</cp-paper>
+			</li>
+
+			<li>
+				<h4>不同的过渡动画</h4>
+
+				<cp-paper style="padding: 40px">
+					<cp-popover transition="grow">
+						<span slot="popover-context">grow</span>
+						<cp-button>grow</cp-button>
+					</cp-popover>
+
+					<cp-popover transition="fade">
+						<span slot="popover-context">fade</span>
+						<cp-button>fade</cp-button>
+					</cp-popover>
+
+					<cp-popover transition="zoom">
+						<span slot="popover-context">zoom</span>
+						<cp-button>zoom</cp-button>
 					</cp-popover>
 				</cp-paper>
 			</li>
