@@ -1,5 +1,3 @@
-import type { ButtonObservedAttributes } from "./data";
-
 import CpButtonBase from "./button-base";
 
 import { style, keyframe, watch } from "../../utils";

@@ -20,7 +20,7 @@
 				<h4>默认的文字提示</h4>
 				<cp-paper style="padding: 40px">
 					<cp-tooltip>
-						<span slot="tip">微博</span>
+						<span slot="tooltip-context">微博</span>
 						<cp-icon-button>
 							<svg style="width: 18px; height: 18px; display: block" viewBox="0 0 1024 1024">
 								<path
@@ -29,6 +29,85 @@
 							</svg>
 						</cp-icon-button>
 					</cp-tooltip>
+				</cp-paper>
+			</li>
+			<li>
+				<h4>文字提示位置</h4>
+				<cp-paper style="padding: 40px">
+					<div style="display: flex; justify-content: center">
+						<div>
+							<cp-tooltip arrow="true" placement="top-start">
+								<span slot="tooltip-context">top start</span>
+								<cp-button ripple-color="#007FFF">top-start</cp-button>
+							</cp-tooltip>
+							<cp-tooltip arrow="true" placement="top">
+								<span slot="tooltip-context">top</span>
+								<cp-button ripple-color="#007FFF">top</cp-button>
+							</cp-tooltip>
+							<cp-tooltip arrow="true" placement="top-end">
+								<span slot="tooltip-context">top-end</span>
+								<cp-button ripple-color="#007FFF">top-end</cp-button>
+							</cp-tooltip>
+						</div>
+					</div>
+					<div style="display: flex">
+						<div style="flex: 1; display: flex; justify-content: center">
+							<div>
+								<cp-tooltip arrow="true" placement="left-start">
+									<span slot="tooltip-context">left start</span>
+									<cp-button ripple-color="#007FFF">left-start</cp-button>
+								</cp-tooltip>
+								<br />
+								<br />
+								<cp-tooltip arrow="true" placement="left">
+									<span slot="tooltip-context">left</span>
+									<cp-button ripple-color="#007FFF">left</cp-button>
+								</cp-tooltip>
+								<br />
+								<br />
+								<cp-tooltip arrow="true" placement="left-end">
+									<span slot="tooltip-context">left end</span>
+									<cp-button ripple-color="#007FFF">left-end</cp-button>
+								</cp-tooltip>
+							</div>
+						</div>
+						<div style="flex: 1; display: flex; justify-content: center">
+							<div>
+								<cp-tooltip arrow="true" placement="right-start">
+									<span slot="tooltip-context">right start</span>
+									<cp-button ripple-color="#007FFF">right-start</cp-button>
+								</cp-tooltip>
+								<br />
+								<br />
+								<cp-tooltip arrow="true" placement="right">
+									<span slot="tooltip-context">right</span>
+									<cp-button ripple-color="#007FFF">right</cp-button>
+								</cp-tooltip>
+								<br />
+								<br />
+								<cp-tooltip arrow="true" placement="right-end">
+									<span slot="tooltip-context">right end</span>
+									<cp-button ripple-color="#007FFF">right-end</cp-button>
+								</cp-tooltip>
+							</div>
+						</div>
+					</div>
+					<div style="display: flex; justify-content: center">
+						<div>
+							<cp-tooltip arrow="true" placement="bottom-start">
+								<span slot="tooltip-context">bottom start</span>
+								<cp-button ripple-color="#007FFF">bottom-start</cp-button>
+							</cp-tooltip>
+							<cp-tooltip arrow="true" placement="bottom">
+								<span slot="tooltip-context">bottom</span>
+								<cp-button ripple-color="#007FFF">bottom</cp-button>
+							</cp-tooltip>
+							<cp-tooltip arrow="true" placement="bottom-end">
+								<span slot="tooltip-context">bottom-end</span>
+								<cp-button ripple-color="#007FFF">bottom-end</cp-button>
+							</cp-tooltip>
+						</div>
+					</div>
 				</cp-paper>
 			</li>
 		</ul>

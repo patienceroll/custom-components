@@ -1,11 +1,30 @@
-import { style } from "../../utils";
+import { style, defineCustomComponents, watch } from "../../utils";
 
+import CpPopover from "../popover/popover";
+import { CpTooltipProps } from "./data";
+
+defineCustomComponents("cp-popover", CpPopover);
+
+const Path =
+	"<path fill='currentColor' d='M512 69.479l442.498 442.498-442.498 442.498-442.498-442.498 442.498-442.498z'></path>";
 @style({
-	".cp-tooltip-tip-wrapper": {
-		left: "0",
-		top: "0",
+	".cp-tooltip-arrow": {
+		color: "#6d6d6d",
+		width: "1em",
+		height: "1em",
 		position: "absolute",
+		fontSize: "16px",
+		display: "none",
+	},
+	".cp-tooltip-context-wrapper": {
 		backgroundColor: "#6d6d6d",
+		display: "block",
+		color: "#fff",
+		padding: "0.25em 0.5em",
+		fontSize: "0.875em",
+		whiteSpace: "nowrap",
+		borderRadius: "0.25em",
+		position: "relative",
 	},
 	":host": {
 		display: "inline-block",
@@ -13,30 +32,145 @@ import { style } from "../../utils";
 		fontSize: "16px",
 	},
 })
+@watch<AttachedShadowRoot<CpTooltip>>({
+	"placement"(newer) {
+		if (newer) {
+			this.CpPopover.setAttribute("placement", newer);
+			this.setTootipArrowPositon(newer as NonNullable<CpTooltipProps["placement"]>);
+		} else {
+			this.CpPopover.setAttribute("placement", "top");
+			this.setTootipArrowPositon("top");
+		}
+	},
+	"disable-hover"(newer) {
+		if (newer === "true") this.CpPopover.setAttribute("disable-hover", newer);
+		else this.CpPopover.setAttribute("disable-hover", "false");
+	},
+	"disable-click"(newer) {
+		if (newer === "true") this.CpPopover.setAttribute("disable-click", newer);
+		else this.CpPopover.setAttribute("disable-click", "false");
+	},
+	"disable-focus"(newer) {
+		if (newer === "true") this.CpPopover.setAttribute("disable-focus", newer);
+		else this.CpPopover.setAttribute("disable-focus", "false");
+	},
+	"transition"(newer) {
+		if (newer === "true") this.CpPopover.setAttribute("transition", newer);
+		else this.CpPopover.setAttribute("transition", "grow");
+	},
+	"no-style"(newer) {
+		if (newer === "true") this.cpContextWrapper.classList.remove("cp-tooltip-context-wrapper");
+		else this.cpContextWrapper.classList.add("cp-tooltip-context-wrapper");
+	},
+	"arrow"(newer) {
+		if (newer === "true") this.cpTooltipArrow.style.display = "block";
+		else this.cpTooltipArrow.style.display = "none";
+	},
+})
 export default class CpTooltip extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
-	/** 是否展开 */
-	private realOpen: boolean;
-	/** tip的包裹器 */
-	private tipWrapper: HTMLSpanElement;
+	/**
+	 * ## 悬浮气泡
+	 * - tooltip 相当于对悬浮气泡二次封装 */
+	CpPopover: CpPopover;
+	/** tooltip 内容包裹器 */
+	cpContextWrapper: HTMLElement;
+	/** tooltip 的箭头 */
+	cpTooltipArrow: SVGSVGElement;
 
 	constructor() {
 		super();
-		this.realOpen = false;
-
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpTooltip.styleSheet];
 
+		this.CpPopover = document.createElement("cp-popover") as CpPopover;
 		const children = document.createElement("slot");
+		this.cpContextWrapper = document.createElement("mark");
+		const context = document.createElement("slot");
+		this.cpTooltipArrow = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
-		this.tipWrapper = document.createElement("span");
-		const tip = document.createElement("slot");
+		this.cpTooltipArrow.setAttribute("viewBox", "0 0 1024 1024");
+		this.cpTooltipArrow.classList.add("cp-tooltip-arrow");
+		this.cpTooltipArrow.innerHTML = Path;
 
-		this.tipWrapper.classList.add("cp-tooltip-tip-wrapper");
+		this.cpContextWrapper.slot = "popover-context";
+		this.cpContextWrapper.classList.add("cp-tooltip-context-wrapper");
+		context.name = "tooltip-context";
 
-		tip.name = "tip";
+		this.cpContextWrapper.append(context, this.cpTooltipArrow);
+		this.CpPopover.append(children, this.cpContextWrapper);
 
-		this.tipWrapper.appendChild(tip);
-		shadowRoot.append(children, this.tipWrapper);
+		shadowRoot.append(this.CpPopover);
+	}
+
+	/** 根据 placement 获取 tooltip箭头位置 */
+	getTooltipArrowPosition(placement: NonNullable<CpTooltipProps["placement"]>) {
+		const positon = { top: "unset", left: "unset" };
+		switch (placement) {
+			case "top":
+				positon.top = "calc(100% - 0.5em)";
+				positon.left = "calc(50% - 0.5em)";
+				break;
+			case "top-start":
+				positon.top = "calc(100% - 0.5em)";
+				positon.left = "0.25em";
+				break;
+			case "top-end":
+				positon.top = "calc(100% - 0.5em)";
+				positon.left = "calc(100% - 1.25em)";
+				break;
+			case "left":
+				positon.top = "calc(50% - 0.5em)";
+				positon.left = "calc(100% - 0.5em)";
+				break;
+			case "left-start":
+				positon.top = "0.25em";
+				positon.left = "calc(100% - 0.5em)";
+				break;
+			case "left-end":
+				positon.top = "calc(100% - 1.25em)";
+				positon.left = "calc(100% - 0.5em)";
+				break;
+			case "right":
+				positon.top = "calc(50% - 0.5em)";
+				positon.left = "-0.5em";
+				break;
+			case "right-start":
+				positon.top = "0.25em";
+				positon.left = "-0.5em";
+				break;
+			case "right-end":
+				positon.top = "calc(100% - 1.25em)";
+				positon.left = "-0.5em";
+				break;
+			case "bottom":
+				positon.top = "-0.5em";
+				positon.left = "calc(50% - 0.5em)";
+				break;
+			case "bottom-start":
+				positon.top = "-0.5em";
+				positon.left = "0.25em";
+				break;
+			case "bottom-end":
+				positon.top = "-0.5em";
+				positon.left = "calc(100% - 1.25em)";
+				break;
+			// 默认是top
+			default:
+				positon.top = "calc(100% - 0.5em)";
+				positon.left = "calc(50% - 0.5em)";
+		}
+		return positon;
+	}
+
+	/** 根据 placement 设置箭头位置   */
+	setTootipArrowPositon(placement: NonNullable<CpTooltipProps["placement"]>) {
+		const { top, left } = this.getTooltipArrowPosition(placement);
+		this.cpTooltipArrow.style.left = left;
+		this.cpTooltipArrow.style.top = top;
+	}
+
+	connectedCallback() {
+		if (!this.getAttribute("placement")) this.setTootipArrowPositon("top");
 	}
 }
