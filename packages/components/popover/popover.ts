@@ -70,6 +70,10 @@ import type { CpPopoverCustomEventDetail, CpPopoverProps } from "./data";
 	placement(newer) {
 		this.setPopoverContextWrapperPositon((newer || "top") as CpPopover["placement"]);
 	},
+	open(newer) {
+		if (newer === "true") this.showContext();
+		else this.hideContext();
+	},
 })
 export default class CpPopover extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
@@ -287,7 +291,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 	}
 
 	/** 展示悬浮泡泡 */
-	private showContext() {
+	showContext() {
 		this.realOpen = true;
 		this.popoverContextWrapper.style.visibility = "unset";
 		this.setPopoverContextWrapperPositon(this.placement);

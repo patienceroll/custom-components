@@ -28,6 +28,33 @@
 		<h1>悬浮气泡</h1>
 		<ul>
 			<li>
+				<h4>受控的悬浮气泡</h4>
+				<cp-paper style="padding: 40px">
+					<cp-popover id="cp-popover">
+						<span slot="popover-context">受控的context</span>
+						<span>受控的悬浮气泡</span>
+					</cp-popover>
+
+					<br />
+					<br />
+
+					<cp-button id="cp-popover-show"> 显示悬浮气泡 </cp-button>
+					<cp-button id="cp-popover-hide"> 隐藏悬浮气泡 </cp-button>
+				</cp-paper>
+				<script>
+					const cpPopover = document.getElementById("cp-popover");
+					const show = document.getElementById("cp-popover-show");
+					const hide = document.getElementById("cp-popover-hide");
+
+					show.addEventListener("click", () => {
+						cpPopover.setAttribute("open", "true");
+					});
+					hide.addEventListener("click", () => {
+						cpPopover.setAttribute("open", "false");
+					});
+				</script>
+			</li>
+			<li>
 				<h4>位置</h4>
 				<mark
 					>悬浮气泡会根据context的内容的高度计算位置,需要保证 context
