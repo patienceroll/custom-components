@@ -97,7 +97,7 @@ export default class CpTooltip extends HTMLElement implements CustomElement {
 		this.cpContextWrapper.classList.add("cp-tooltip-context-wrapper");
 		context.name = "tooltip-context";
 
-		this.cpContextWrapper.append(context, this.cpTooltipArrow);
+		this.cpContextWrapper.append(this.cpTooltipArrow, context);
 		this.CpPopover.append(children, this.cpContextWrapper);
 
 		shadowRoot.append(this.CpPopover);
