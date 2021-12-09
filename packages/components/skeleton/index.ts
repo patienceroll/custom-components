@@ -1,5 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpSkeleton from "./skeleton";
 
-if (typeof customElements.get("cp-skeleton") === "undefined") {
-	defineCustomComponents("cp-skeleton", CpSkeleton);
-}
+defineCustomComponents("cp-skeleton", CpSkeleton);

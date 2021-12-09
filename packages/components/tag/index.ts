@@ -1,3 +1,4 @@
+import { defineCustomComponents } from "../../utils";
 import CpTag from "./tag";
 
-if (!customElements.get("cp-tag")) defineCustomComponents("cp-tag", CpTag);
+defineCustomComponents("cp-tag", CpTag);
