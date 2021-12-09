@@ -3,6 +3,7 @@ import { formatStyle, formatKeyframes, disposeDomNodeStyle } from "./style";
 import { style, keyframe, watch } from "./decorators";
 import Stack from "./stack";
 import useLatestCall from "./use-latest-call";
+import defineCustomComponents from "./define-custom-components";
 
 const __default = {
 	AttrToNumber,
@@ -14,6 +15,7 @@ const __default = {
 	watch,
 	Stack,
 	useLatestCall,
+	defineCustomComponents,
 };
 
 export {
@@ -26,6 +28,7 @@ export {
 	watch,
 	Stack,
 	useLatestCall,
+	defineCustomComponents,
 };
 
 export default __default;

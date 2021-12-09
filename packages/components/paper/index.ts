@@ -1,5 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpPaper from "./paper";
 
-if (typeof customElements.get("cp-paper") === "undefined") {
-	customElements.define("cp-paper", CpPaper);
-}
+defineCustomComponents("cp-paper", CpPaper);

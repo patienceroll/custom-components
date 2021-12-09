@@ -1,3 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpDialog from "./dialog";
 
-customElements.define("cp-dialog", CpDialog);
+defineCustomComponents("cp-dialog", CpDialog);

@@ -1,6 +1,6 @@
 import type CpAccordionItem from "./accordion-item";
 
-import { style, watch } from "../../utils/index";
+import { style, watch } from "../../utils";
 
 @style({
 	":host": {

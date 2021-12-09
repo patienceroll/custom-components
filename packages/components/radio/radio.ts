@@ -1,6 +1,6 @@
 import type Ripple from "../ripple/ripple";
 
-import { style, watch } from "../../utils/index";
+import { style, watch } from "../../utils";
 
 import "../ripple";
 

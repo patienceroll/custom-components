@@ -1,4 +1,4 @@
-import { style, keyframe } from "../../utils/index";
+import { style, keyframe } from "../../utils";
 
 @style({
 	".stable": {

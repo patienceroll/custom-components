@@ -1,4 +1,4 @@
-import { style } from "../../utils/index";
+import { style } from "../../utils";
 
 @style({
 	".cp-avatar-children-slot": {

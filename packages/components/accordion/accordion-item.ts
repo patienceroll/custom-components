@@ -1,4 +1,4 @@
-import { style, watch } from "../../utils/index";
+import { style, watch } from "../../utils";
 
 const ArrowDownSvg =
 	"<svg class='cp-accordion-title-arrow' viewBox='0 0 24 24' width='1.5em' height='1.5em'><path fill='currentcolor' d='M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z'></path></svg>";

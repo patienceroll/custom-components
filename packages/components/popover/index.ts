@@ -1,3 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpPopover from "./popover";
 
-if (!customElements.get("cp-popover")) customElements.define("cp-popover", CpPopover);
+defineCustomComponents("cp-popover", CpPopover);

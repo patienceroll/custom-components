@@ -1,5 +1,4 @@
+import { defineCustomComponents } from "../../utils";
 import CpCircularProgress from "./circular-progress";
 
-if (typeof customElements.get("cp-circular-progress") === "undefined") {
-	customElements.define("cp-circular-progress", CpCircularProgress);
-}
+defineCustomComponents("cp-circular-progress", CpCircularProgress);

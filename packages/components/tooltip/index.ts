@@ -1,3 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpTooltip from "./tooltip";
 
-if (!customElements.get("cp-tooltip")) customElements.define("cp-tooltip", CpTooltip);
+defineCustomComponents("cp-tooltip", CpTooltip);

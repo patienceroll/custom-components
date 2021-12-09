@@ -1,3 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpDrawer from "./drawer";
 
-customElements.define("cp-drawer", CpDrawer);
+defineCustomComponents("cp-drawer", CpDrawer);

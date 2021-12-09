@@ -1,5 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpInput from "./text-filed";
 
-if (!customElements.get("cp-text-field")) {
-	customElements.define("cp-text-field", CpInput);
-}
+defineCustomComponents("cp-text-field", CpInput);

@@ -1,3 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpMessage from "./message";
 
-window.customElements.define("cp-message", CpMessage);
+defineCustomComponents("cp-message", CpMessage);

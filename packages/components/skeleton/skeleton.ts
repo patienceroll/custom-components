@@ -1,4 +1,4 @@
-import { style, keyframe, watch } from "../../utils/index";
+import { style, keyframe, watch } from "../../utils";
 
 @style({
 	".cp-skeleton-wave": {

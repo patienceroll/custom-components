@@ -1,3 +1,5 @@
+import { defineCustomComponents } from "../../utils";
+
 import CpMask from "./mask";
 
-window.customElements.define("cp-mask", CpMask);
+defineCustomComponents("cp-mask", CpMask);

@@ -1,8 +1,8 @@
-import { style } from "../../utils/index";
+import { style } from "../../utils";
 
 import CpButton from "../button/button";
 
-if (!customElements.get("cp-button")) customElements.define("cp-button", CpButton);
+if (!customElements.get("cp-button")) defineCustomComponents("cp-button", CpButton);
 
 @style({
 	":host([active='true']) cp-button::part(button)": {

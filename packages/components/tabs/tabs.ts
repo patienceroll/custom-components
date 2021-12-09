@@ -1,4 +1,4 @@
-import { style, watch } from "../../utils/index";
+import { style, watch } from "../../utils";
 
 import CpTab from "./tab";
 

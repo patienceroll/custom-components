@@ -1,4 +1,4 @@
-import { style, watch } from "../../utils/index";
+import { style, watch } from "../../utils";
 @style({
 	".cp-tag-box": {
 		position: "relactive",

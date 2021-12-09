@@ -1,8 +1,9 @@
-import Ripple from "../ripple/ripple";
+import CpRipple from "../ripple/ripple";
 
-import { style } from "../../utils/index";
+import { style, defineCustomComponents } from "../../utils";
 
-if (!customElements.get("cp-ripple")) customElements.define("cp-ripple", Ripple);
+defineCustomComponents("cp-ripple", CpRipple);
+
 @style({
 	".cp-button:hover": {
 		backgroundColor: "#c0c0c0",
@@ -37,7 +38,7 @@ if (!customElements.get("cp-ripple")) customElements.define("cp-ripple", Ripple)
 export default class CpButtonBase extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	/** 当前所有涟漪的集合 */
-	private ripple = new Set<ReturnType<Ripple["spread"]>>();
+	private ripple = new Set<ReturnType<CpRipple["spread"]>>();
 	/** 组件 button Dom元素 */
 	public button: HTMLButtonElement;
 	constructor() {
@@ -47,7 +48,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		shadowRoot.adoptedStyleSheets = [CpButtonBase.styleSheet];
 
 		const button = document.createElement("button");
-		const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<Ripple>;
+		const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<CpRipple>;
 
 		this.button = button;
 		button.classList.add("cp-button");

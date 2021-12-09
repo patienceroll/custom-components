@@ -1,4 +1,4 @@
-import { style, watch, keyframe } from "../../utils/index";
+import { style, watch, keyframe } from "../../utils";
 import type { CpPopoverCustomEventDetail, CpPopoverProps } from "./data";
 
 @style({
