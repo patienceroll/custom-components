@@ -47,12 +47,11 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpButtonBase.styleSheet];
 
-		const button = document.createElement("button");
+		this.button = document.createElement("button");
 		const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<CpRipple>;
 
-		this.button = button;
-		button.classList.add("cp-button");
-		button.setAttribute("part", "button");
+		this.button.classList.add("cp-button");
+		this.button.setAttribute("part", "button");
 
 		this.addEventListener("mousedown", (e) => {
 			this.ripple.add(ripple.spread({ top: e.offsetY, left: e.offsetX, backgroundColor: this.rippleColor }));
@@ -84,8 +83,8 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		);
 		this.addEventListener("touchend", this.stableRipples);
 
-		button.appendChild(ripple);
-		shadowRoot.appendChild(button);
+		this.button.appendChild(ripple);
+		shadowRoot.appendChild(this.button);
 	}
 
 	/** 清除掉当前button产生的涟漪 */

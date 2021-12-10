@@ -62,7 +62,6 @@ export default class CpButton extends CpButtonBase {
 		const { shadowRoot } = this as AttachedShadowRoot<CpButtonBase>;
 		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, CpButton.keyframesSheet, CpButton.styleSheet];
 
-		const button = shadowRoot.firstElementChild as HTMLButtonElement;
 		const textWrapper = document.createElement("span");
 		const text = document.createElement("slot");
 		const leftIcon = document.createElement("slot");
@@ -80,6 +79,6 @@ export default class CpButton extends CpButtonBase {
 		rightIcon.name = "right-icon";
 
 		textWrapper.append(leftIcon, text, rightIcon);
-		button.append(textWrapper, loading);
+		this.button.append(textWrapper, loading);
 	}
 }
