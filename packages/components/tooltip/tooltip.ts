@@ -55,7 +55,7 @@ const Path =
 		else this.CpPopover.setAttribute("disable-focus", "false");
 	},
 	"transition"(newer) {
-		if (newer === "true") this.CpPopover.setAttribute("transition", newer);
+		if (newer) this.CpPopover.setAttribute("transition", newer);
 		else this.CpPopover.setAttribute("transition", "grow");
 	},
 	"no-style"(newer) {
@@ -65,6 +65,11 @@ const Path =
 	"arrow"(newer) {
 		if (newer === "true") this.cpTooltipArrow.style.display = "block";
 		else this.cpTooltipArrow.style.display = "none";
+	},
+	"open"(newer) {
+		if (newer === "true") this.open = true;
+		else if (newer) this.open = false;
+		else this.CpPopover.removeAttribute("open");
 	},
 })
 export default class CpTooltip extends HTMLElement implements CustomElement {
@@ -101,6 +106,17 @@ export default class CpTooltip extends HTMLElement implements CustomElement {
 		this.CpPopover.append(children, this.cpContextWrapper);
 
 		shadowRoot.append(this.CpPopover);
+	}
+
+	/** 是否展示tooltip */
+	get open() {
+		return this.CpPopover.getAttribute("open") === "true";
+	}
+
+	/**  是否展示tooltip */
+	set open(open: boolean) {
+		if (open) this.CpPopover.setAttribute("open", "true");
+		else this.CpPopover.setAttribute("open", "false");
 	}
 
 	/** 根据 placement 获取 tooltip箭头位置 */
