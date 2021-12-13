@@ -126,10 +126,10 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 		this.cpRadioOuterCircle.setAttribute("r", "42");
 
 		this.cpRadioInnerCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		this.cpRadioOuterCircle.setAttribute("class", "inner");
-		this.cpRadioOuterCircle.setAttribute("cx", "50");
-		this.cpRadioOuterCircle.setAttribute("cy", "50");
-		this.cpRadioOuterCircle.setAttribute("r", "28");
+		this.cpRadioInnerCircle.setAttribute("class", "inner");
+		this.cpRadioInnerCircle.setAttribute("cx", "50");
+		this.cpRadioInnerCircle.setAttribute("cy", "50");
+		this.cpRadioInnerCircle.setAttribute("r", "28");
 
 		label.classList.add("cp-radio-label");
 		radioWrap.classList.add("cp-radio-radio-wrap");
@@ -150,6 +150,7 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 			stable();
 		});
 
+		this.cpRadioIcon.append(this.cpRadioInnerCircle, this.cpRadioOuterCircle);
 		radioWrap.append(this.radio, ripple, this.cpRadioIcon);
 		label.append(radioWrap, textSlot);
 		shadowRoot.append(label);
