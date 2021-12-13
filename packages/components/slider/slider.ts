@@ -1,4 +1,7 @@
-import { style, AttrToNumber, watch } from "../../utils";
+import { style, AttrToNumber, watch, defineCustomComponents, setAttributes, createHtmlElement } from "../../utils";
+import CpTooltip from "../tooltip/tooltip";
+
+defineCustomComponents("cp-tooltip", CpTooltip);
 @style({
 	".cp-slider-block:active .cp-slider-block-shadow": {
 		transform: "translate(-50%,-50%) scale(1)",
@@ -96,6 +99,10 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 	public sliderTracked: HTMLSpanElement;
 	/** 滑块的操作块 */
 	public sliderBlock: HTMLSpanElement;
+	/** 滑块值的toolTip */
+	public cpTooltip: CpTooltip;
+	/** 滑块tip的value值容器 */
+	public cpToolTipContext: HTMLSpanElement;
 
 	constructor() {
 		super();
@@ -104,14 +111,20 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpSlider.styleSheet];
 
-		this.sliderRail = document.createElement("span");
-		this.sliderTracked = document.createElement("span");
-		this.sliderBlock = document.createElement("span");
+		this.sliderRail = createHtmlElement("span");
+		this.sliderTracked = createHtmlElement("span");
+		this.sliderBlock = createHtmlElement("span");
+		this.cpTooltip = createHtmlElement("cp-tooltip");
+		this.cpToolTipContext = createHtmlElement("span");
 
 		this.sliderRail.classList.add("cp-slider-rail");
 		this.sliderTracked.classList.add("cp-slider-tracked");
 		this.sliderBlock.classList.add("cp-slider-block");
+		this.cpTooltip.classList.add("cp-tooltip");
 
+		setAttributes(this.cpTooltip, { open: "false", arrow: "true" });
+
+		this.cpTooltip.innerHTML = "<div slot='tooltip-context'>value</div><div style='width: 2.625em'></div>";
 		this.sliderBlock.innerHTML = "<div class='cp-slider-block-shadow'></div><div class='cp-slider-block-core'></div>";
 
 		this.addEventListener("click", (event) => {
@@ -154,6 +167,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		const clearOwnerDocumentEvent = () => {
 			this.sliderBlock.style.removeProperty("transition-duration");
 			this.sliderTracked.style.removeProperty("transition-duration");
+			this.cpTooltip.setAttribute("open", "false");
 			this.ownerDocument.removeEventListener("mousemove", onPressSliderBlockMoveEvent);
 			this.ownerDocument.removeEventListener("mouseup", clearOwnerDocumentEvent);
 		};
@@ -163,10 +177,12 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			event.stopPropagation();
 			this.sliderBlock.style.transitionDuration = "0ms";
 			this.sliderTracked.style.transitionDuration = "0ms";
+			this.cpTooltip.setAttribute("open", "true");
 			this.ownerDocument.addEventListener("mousemove", onPressSliderBlockMoveEvent);
 			this.ownerDocument.addEventListener("mouseup", clearOwnerDocumentEvent);
 		});
 
+		this.sliderBlock.appendChild(this.cpTooltip);
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
 	}
 

@@ -1,6 +1,6 @@
-import CpRipple from "../ripple/ripple";
+import { style, defineCustomComponents, setAttributes } from "../../utils";
 
-import { style, defineCustomComponents } from "../../utils";
+import CpRipple from "../ripple/ripple";
 
 defineCustomComponents("cp-ripple", CpRipple);
 
@@ -53,7 +53,7 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		this.cpRipple = document.createElement("cp-ripple") as AttachedShadowRoot<CpRipple>;
 
 		this.button.classList.add("cp-button");
-		this.button.setAttribute("part", "button");
+		setAttributes(this.button, { part: "button" });
 
 		this.addEventListener("mousedown", (e) => {
 			this.ripples.add(this.cpRipple.spread({ top: e.offsetY, left: e.offsetX }));

@@ -10,9 +10,17 @@
 				background-color: #eaeef3;
 				color: #333;
 			}
-
+			cp-paper {
+				padding: 20px;
+			}
+			cp-slider {
+				vertical-align: middle;
+			}
+			label {
+				vertical-align: middle;
+			}
 			cp-button {
-				vertical-align: top;
+				vertical-align: middle;
 			}
 		</style>
 	</head>
@@ -21,36 +29,45 @@
 		<h1>滑块控件</h1>
 		<ul>
 			<li>
-				<h4>默认的滑块组件</h4>
-				<cp-slider style="width: 200px"></cp-slider>
-			</li>
-			<li>
-				<h4>受控的滑块组件</h4>
-				<cp-slider id="controledCpSlider" value="20" style="width: 200px"></cp-slider>&emsp;&emsp;
-				<cp-button
-					onclick="(()=>{
-					 const controledCpSlider = document.getElementById('controledCpSlider')
-					 const value = Number(controledCpSlider.getAttribute('value'))
-					 if(value === 100)controledCpSlider.setAttribute('value',100)
-					 else controledCpSlider.setAttribute('value',value + 1)
-				})()"
-					>增加</cp-button
-				>
-				<cp-button
-					onclick="(()=>{
-					const controledCpSlider = document.getElementById('controledCpSlider')
-					const value = Number(controledCpSlider.getAttribute('value'))
-					if(value === 0) controledCpSlider.setAttribute('value',0)
-					else controledCpSlider.setAttribute('value',value - 1)
-			 })()"
-					>减少</cp-button
-				>
-				<script>
-					const controledCpSlider = document.getElementById("controledCpSlider");
-					controledCpSlider.addEventListener("change", (event) => {
-						controledCpSlider.setAttribute("value", event.detail.value);
-					});
-				</script>
+				<h4>滑块组件</h4>
+				<cp-paper>
+					<ul>
+						<li>
+							<label>默认滑块</label>
+							&emsp;&emsp;
+							<cp-slider style="width: 200px"></cp-slider>
+						</li>
+						<li>
+							<label>受控的滑块</label>
+							&emsp;
+							<cp-slider id="controledCpSlider" value="20" style="width: 200px"></cp-slider>&emsp;&emsp;
+							<cp-button
+								onclick="(()=>{
+								 const controledCpSlider = document.getElementById('controledCpSlider')
+								 const value = Number(controledCpSlider.getAttribute('value'))
+								 if(value === 100)controledCpSlider.setAttribute('value',100)
+								 else controledCpSlider.setAttribute('value',value + 1)
+							})()"
+								>增加</cp-button
+							>
+							<cp-button
+								onclick="(()=>{
+								const controledCpSlider = document.getElementById('controledCpSlider')
+								const value = Number(controledCpSlider.getAttribute('value'))
+								if(value === 0) controledCpSlider.setAttribute('value',0)
+								else controledCpSlider.setAttribute('value',value - 1)
+						 })()"
+								>减少</cp-button
+							>
+							<script>
+								const controledCpSlider = document.getElementById("controledCpSlider");
+								controledCpSlider.addEventListener("change", (event) => {
+									controledCpSlider.setAttribute("value", event.detail.value);
+								});
+							</script>
+						</li>
+					</ul>
+				</cp-paper>
 			</li>
 		</ul>
 

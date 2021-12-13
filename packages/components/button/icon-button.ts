@@ -1,6 +1,6 @@
 import CpButtonBase from "./button-base";
 
-import { style } from "../../utils";
+import { createHtmlElement, style } from "../../utils";
 
 import "../ripple";
 
@@ -25,7 +25,7 @@ export default class CpIconButton extends CpButtonBase {
 		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, CpIconButton.styleSheet];
 
 		const button = shadowRoot.firstElementChild as HTMLButtonElement;
-		const IconSlot = document.createElement("slot");
+		const IconSlot = createHtmlElement("slot");
 
 		button.classList.add("cp-icon-button");
 		button.append(IconSlot);

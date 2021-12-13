@@ -1,6 +1,6 @@
-import CpButtonBase from "./button-base";
+import { style, keyframe, watch, setAttributes, createHtmlElement, createSvgElement } from "../../utils";
 
-import { style, keyframe, watch } from "../../utils";
+import CpButtonBase from "./button-base";
 
 import "../ripple";
 import "../circular-progress";
@@ -62,23 +62,21 @@ export default class CpButton extends CpButtonBase {
 		const { shadowRoot } = this as AttachedShadowRoot<CpButtonBase>;
 		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, CpButton.keyframesSheet, CpButton.styleSheet];
 
-		const textWrapper = document.createElement("span");
-		const text = document.createElement("slot");
-		const leftIcon = document.createElement("slot");
-		const rightIcon = document.createElement("slot");
-		const loading = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		const textWrapper = createHtmlElement("span");
+		const text = createHtmlElement("slot");
+		const leftIcon = createHtmlElement("slot");
+		const rightIcon = createHtmlElement("slot");
+		this.loading = createSvgElement("svg");
 
-		this.loading = loading;
-		loading.innerHTML =
+		this.loading.innerHTML =
 			"<rect x='1'  y='1' rx='4' ry='4'  width='calc(100% - 2px)' height='calc(100% - 2px)' stroke-width='2' stroke='#1976d2' fill='none' />";
-		loading.classList.add("cp-button-loading");
-		leftIcon.setAttribute("part", "left-icon");
-		rightIcon.setAttribute("part", "right-icon");
-		loading.setAttribute("part", "loading");
-		leftIcon.name = "left-icon";
-		rightIcon.name = "right-icon";
+		this.loading.classList.add("cp-button-loading");
+
+		setAttributes(leftIcon, { part: "left-icon", name: "left-icon" });
+		setAttributes(rightIcon, { part: "right-icon", name: "right-icon" });
+		setAttributes(this.loading, { part: "loading" });
 
 		textWrapper.append(leftIcon, text, rightIcon);
-		this.button.append(textWrapper, loading);
+		this.button.append(textWrapper, this.loading);
 	}
 }

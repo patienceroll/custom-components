@@ -1,4 +1,4 @@
-import { style, keyframe, watch } from "../../utils";
+import { style, keyframe, watch, setAttributes, createSvgElement } from "../../utils";
 
 @style({
 	".cp-circular-svg > text": {
@@ -91,26 +91,28 @@ export default class CpCircularProgress extends HTMLElement implements CustomEle
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpCircularProgress.keyframesSheet, CpCircularProgress.styleSheet];
 
+		this.cpSvg = createSvgElement("svg");
 		/** 字符串形式为: <text x="22" display="none" y="22" font-size="12" color="#fff"></text> */
-		this.cpText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-		this.cpText.setAttribute("x", "22");
-		this.cpText.setAttribute("y", "22");
-		this.cpText.setAttribute("display", "none");
-		this.cpText.setAttribute("font-size", "12");
-		this.cpText.setAttribute("color", "#fff");
-
+		this.cpText = createSvgElement("text");
 		/** 字符串形式为: <circle cx="22" cy="22" r="20.2" stroke="#1976d2" stroke-width="3.6" fill="none"></circle> */
-		this.cpCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		this.cpCircle.setAttribute("cx", "22");
-		this.cpCircle.setAttribute("cy", "22");
-		this.cpCircle.setAttribute("r", "20.2");
-		this.cpCircle.setAttribute("stroke", "#1976d2");
-		this.cpCircle.setAttribute("stroke-width", "3.6");
-		this.cpCircle.setAttribute("fill", "none");
+		this.cpCircle = createSvgElement("circle");
 
-		this.cpSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-		this.cpSvg.setAttribute("class", "cp-circular-svg");
-		this.cpSvg.setAttribute("viewBox", "0 0 44 44");
+		setAttributes(this.cpText, {
+			"x": "22",
+			"y": "22",
+			"display": "none",
+			"color": "#fff",
+			"font-size": "12",
+		});
+		setAttributes(this.cpCircle, {
+			"cx": "22",
+			"cy": "22",
+			"r": "20.2",
+			"stroke": "#1976d2",
+			"fill": "none",
+			"stroke-width": "3.6",
+		});
+		setAttributes(this.cpSvg, { class: "cp-circular-svg", viewBox: "0 0 44 44" });
 
 		this.cpSvg.append(this.cpCircle, this.cpText);
 		shadowRoot.appendChild(this.cpSvg);

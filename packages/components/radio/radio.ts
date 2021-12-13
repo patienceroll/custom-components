@@ -1,6 +1,6 @@
 import type Ripple from "../ripple/ripple";
 
-import { style, watch } from "../../utils";
+import { createHtmlElement, createSvgElement, setAttributes, style, watch } from "../../utils";
 
 import "../ripple";
 
@@ -108,31 +108,21 @@ export default class CpRadio extends HTMLElement implements CustomElement {
 
 		shadowRoot.adoptedStyleSheets = [CpRadio.styleSheet];
 
-		const label = document.createElement("label");
-		const radioWrap = document.createElement("span");
-		this.radio = document.createElement("input");
-		const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<Ripple>;
+		const label = createHtmlElement("label");
+		const radioWrap = createHtmlElement("span");
+		this.radio = createHtmlElement("input");
+		const ripple = createHtmlElement("cp-ripple");
+		const textSlot = createHtmlElement("slot");
 
-		const textSlot = document.createElement("slot");
+		this.cpRadioIcon = createSvgElement("svg");
+		this.cpRadioOuterCircle = createSvgElement("circle");
+		this.cpRadioInnerCircle = createSvgElement("circle");
 
-		this.cpRadioIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-		this.cpRadioIcon.setAttribute("viewBox", "0 0 100 100");
-		this.cpRadioIcon.classList.add("cp-radio-icon");
-
-		this.cpRadioOuterCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		this.cpRadioOuterCircle.setAttribute("class", "outer");
-		this.cpRadioOuterCircle.setAttribute("cx", "50");
-		this.cpRadioOuterCircle.setAttribute("cy", "50");
-		this.cpRadioOuterCircle.setAttribute("r", "42");
-
-		this.cpRadioInnerCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		this.cpRadioInnerCircle.setAttribute("class", "inner");
-		this.cpRadioInnerCircle.setAttribute("cx", "50");
-		this.cpRadioInnerCircle.setAttribute("cy", "50");
-		this.cpRadioInnerCircle.setAttribute("r", "28");
-
-		label.classList.add("cp-radio-label");
-		radioWrap.classList.add("cp-radio-radio-wrap");
+		setAttributes(this.cpRadioIcon, { class: "cp-radio-icon", viewBox: "0 0 100 100" });
+		setAttributes(this.cpRadioOuterCircle, { class: "outer", cx: "50", cy: "50", r: "42" });
+		setAttributes(this.cpRadioInnerCircle, { class: "inner", cx: "50", cy: "50", r: "28" });
+		setAttributes(label, { class: "cp-radio-label" });
+		setAttributes(radioWrap, { class: "cp-radio-radio-wrap" });
 
 		this.radio.type = "radio";
 

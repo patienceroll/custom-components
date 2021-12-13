@@ -1,6 +1,6 @@
 import type CpAccordionItem from "./accordion-item";
 
-import { style, watch } from "../../utils";
+import { createHtmlElement, style, watch } from "../../utils";
 
 @style({
 	":host": {
@@ -39,7 +39,7 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpAccordion.styleSheet];
 
-		const slot = document.createElement("slot");
+		const slot = createHtmlElement("slot");
 
 		/** 监听单个折叠面板折叠 */
 		this.addEventListener("cp-accordion-item-fold", (event) => {

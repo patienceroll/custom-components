@@ -8,12 +8,12 @@ import CpTabPanel from "./tab-panel";
 		display: "block",
 	},
 })
-@watch<AttachedShadowRoot<TabContext>>({
+@watch<AttachedShadowRoot<CpTabContext>>({
 	"active-key"(newer) {
 		if (newer) this.setRealActiveKey(newer);
 	},
 })
-export default class TabContext extends HTMLElement implements CustomElement {
+export default class CpTabContext extends HTMLElement implements CustomElement {
 	/**
 	 * 维护在组件内部的当前激活的tab key
 	 * - 组件的实际显示都依靠这个值

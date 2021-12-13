@@ -4,6 +4,8 @@ import { style, keyframe, watch } from "./decorators";
 import Stack from "./stack";
 import useLatestCall from "./use-latest-call";
 import defineCustomComponents from "./define-custom-components";
+import setAttributes from "./set-attributes";
+import { createHtmlElement, createSvgElement } from "./element";
 
 const __default = {
 	AttrToNumber,
@@ -16,6 +18,9 @@ const __default = {
 	Stack,
 	useLatestCall,
 	defineCustomComponents,
+	setAttributes,
+	createHtmlElement,
+	createSvgElement,
 };
 
 export {
@@ -29,6 +34,9 @@ export {
 	Stack,
 	useLatestCall,
 	defineCustomComponents,
+	setAttributes,
+	createHtmlElement,
+	createSvgElement,
 };
 
 export default __default;

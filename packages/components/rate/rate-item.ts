@@ -1,4 +1,4 @@
-import { style, watch, useLatestCall } from "../../utils";
+import { style, watch, useLatestCall, createHtmlElement } from "../../utils";
 
 const svg =
 	"<svg viewBox='0 0 24 24'><path fill='currentcolor' d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z' /></svg>";
@@ -70,8 +70,8 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpRateItem.styleSheet];
 
-		this.cpBase = document.createElement("div");
-		this.cpLight = document.createElement("div");
+		this.cpBase = createHtmlElement("div");
+		this.cpLight = createHtmlElement("div");
 
 		this.cpBase.classList.add("base");
 		this.cpLight.classList.add("light");

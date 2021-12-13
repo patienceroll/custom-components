@@ -1,4 +1,4 @@
-import { style, defineCustomComponents, watch } from "../../utils";
+import { style, defineCustomComponents, watch, createHtmlElement, createSvgElement } from "../../utils";
 
 import CpPopover from "../popover/popover";
 import { CpTooltipProps } from "./data";
@@ -77,7 +77,7 @@ export default class CpTooltip extends HTMLElement implements CustomElement {
 	/**
 	 * ## 悬浮气泡
 	 * - tooltip 相当于对悬浮气泡二次封装 */
-	CpPopover: CpPopover;
+	CpPopover: AttachedShadowRoot<CpPopover>;
 	/** tooltip 内容包裹器 */
 	cpContextWrapper: HTMLElement;
 	/** tooltip 的箭头 */
@@ -88,11 +88,11 @@ export default class CpTooltip extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpTooltip.styleSheet];
 
-		this.CpPopover = document.createElement("cp-popover") as CpPopover;
-		const children = document.createElement("slot");
-		this.cpContextWrapper = document.createElement("mark");
-		const context = document.createElement("slot");
-		this.cpTooltipArrow = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		this.CpPopover = createHtmlElement("cp-popover");
+		const children = createHtmlElement("slot");
+		this.cpContextWrapper = createHtmlElement("mark");
+		const context = createHtmlElement("slot");
+		this.cpTooltipArrow = createSvgElement("svg");
 
 		this.cpTooltipArrow.setAttribute("viewBox", "0 0 1024 1024");
 		this.cpTooltipArrow.classList.add("cp-tooltip-arrow");

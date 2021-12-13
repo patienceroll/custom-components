@@ -1,4 +1,4 @@
-import { style, watch, keyframe } from "../../utils";
+import { style, watch, keyframe, createHtmlElement } from "../../utils";
 import type { CpPopoverCustomEventDetail, CpPopoverProps } from "./data";
 
 @style({
@@ -95,9 +95,9 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpPopover.styleSheet, CpPopover.keyframesSheet];
 
-		const children = document.createElement("slot");
-		this.popoverContextWrapper = document.createElement("div");
-		const context = document.createElement("slot");
+		const children = createHtmlElement("slot");
+		this.popoverContextWrapper = createHtmlElement("div");
+		const context = createHtmlElement("slot");
 
 		context.name = "popover-context";
 

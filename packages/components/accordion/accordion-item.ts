@@ -1,4 +1,4 @@
-import { style, watch } from "../../utils";
+import { createHtmlElement, setAttributes, style, watch } from "../../utils";
 
 const ArrowDownSvg =
 	"<svg class='cp-accordion-title-arrow' viewBox='0 0 24 24' width='1.5em' height='1.5em'><path fill='currentcolor' d='M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z'></path></svg>";
@@ -72,18 +72,18 @@ export default class CpAccordionItem extends HTMLElement implements CustomElemen
 
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpAccordionItem.styleSheet];
-		const title = document.createElement("div");
-		const titleTextWrapper = document.createElement("div");
-		const titleSlot = document.createElement("slot");
-		const titleArrow = document.createElement("div");
-		this.content = document.createElement("div");
-		const contentSlot = document.createElement("slot");
 
-		titleSlot.name = "title";
-		title.classList.add("cp-accordion-item-title");
-		titleArrow.classList.add("cp-accordion-item-title-arrow");
-		this.content.classList.add("cp-accordion-item-content");
-		contentSlot.classList.add("cp-accordion-item-content-slot");
+		const title = createHtmlElement("div");
+		const titleTextWrapper = createHtmlElement("div");
+		const titleSlot = createHtmlElement("slot");
+		const titleArrow = createHtmlElement("div");
+		this.content = createHtmlElement("div");
+		const contentSlot = createHtmlElement("slot");
+
+		setAttributes(titleSlot, { name: "title", class: "cp-accordion-item-title" });
+		setAttributes(titleArrow, { class: "cp-accordion-item-title-arrow" });
+		setAttributes(this.content, { class: "cp-accordion-item-content" });
+		setAttributes(contentSlot, { class: "cp-accordion-item-content-slot" });
 
 		title.addEventListener("click", () => this.toggleOpen());
 
