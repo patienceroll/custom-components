@@ -37,8 +37,10 @@ defineCustomComponents("cp-ripple", CpRipple);
 })
 export default class CpButtonBase extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	/** 当前button里的ripple组件 */
+	private cpRipple: AttachedShadowRoot<CpRipple>;
 	/** 当前所有涟漪的集合 */
-	private ripple = new Set<ReturnType<CpRipple["spread"]>>();
+	private ripples = new Set<ReturnType<CpRipple["spread"]>>();
 	/** 组件 button Dom元素 */
 	public button: HTMLButtonElement;
 	constructor() {
@@ -48,13 +50,13 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		shadowRoot.adoptedStyleSheets = [CpButtonBase.styleSheet];
 
 		this.button = document.createElement("button");
-		const ripple = document.createElement("cp-ripple") as AttachedShadowRoot<CpRipple>;
+		this.cpRipple = document.createElement("cp-ripple") as AttachedShadowRoot<CpRipple>;
 
 		this.button.classList.add("cp-button");
 		this.button.setAttribute("part", "button");
 
 		this.addEventListener("mousedown", (e) => {
-			this.ripple.add(ripple.spread({ top: e.offsetY, left: e.offsetX, backgroundColor: this.rippleColor }));
+			this.ripples.add(this.cpRipple.spread({ top: e.offsetY, left: e.offsetX }));
 		});
 		this.addEventListener("mouseup", this.stableRipples);
 		/** 如果点击之后,鼠标拖到其他元素去,则不会触发mouseup,此时也清除ripple */
@@ -69,11 +71,10 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 						const [touch] = targetTouches;
 						const { pageX, pageY } = touch;
 						const { left, top } = (target as this).getBoundingClientRect();
-						this.ripple.add(
-							ripple.spread({
+						this.ripples.add(
+							this.cpRipple.spread({
 								top: pageY - top,
 								left: pageX - left,
-								backgroundColor: this.rippleColor,
 							})
 						);
 					}
@@ -83,16 +84,16 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		);
 		this.addEventListener("touchend", this.stableRipples);
 
-		this.button.appendChild(ripple);
+		this.button.appendChild(this.cpRipple);
 		shadowRoot.appendChild(this.button);
 	}
 
 	/** 清除掉当前button产生的涟漪 */
 	stableRipples() {
-		this.ripple.forEach((ripple) => {
+		this.ripples.forEach((ripple) => {
 			ripple.stable();
 		});
-		this.ripple.clear();
+		this.ripples.clear();
 	}
 
 	/** 涟漪的颜色 */

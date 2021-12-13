@@ -43,25 +43,25 @@
 				<h4>点击效果</h4>
 				<div class="ripple-wrapper" style="background-color: rgb(220, 0, 78)">
 					<cp-ripple></cp-ripple>
-					<div class="ripple-mask" onclick="onClickRipple()(event)">点击效果</div>
+					<div class="ripple-mask" onclick="onClickRipple(event)">点击效果</div>
 				</div>
 			</li>
 
 			<li>
 				<h4>不同颜色</h4>
 				<div class="ripple-wrapper">
-					<cp-ripple style="background-color: #faad14"></cp-ripple>
-					<div class="ripple-mask" onclick="onClickRipple('yellow')(event)">yellow</div>
+					<cp-ripple style="background-color: #faad14" ripple-color="yellow"></cp-ripple>
+					<div class="ripple-mask" onclick="onClickRipple(event)">yellow</div>
 				</div>
 
 				<div class="ripple-wrapper">
-					<cp-ripple style="background-color: #1890ff"></cp-ripple>
-					<div class="ripple-mask" onclick="onClickRipple('blue')(event)">blue</div>
+					<cp-ripple style="background-color: #1890ff" ripple-color="blue"></cp-ripple>
+					<div class="ripple-mask" onclick="onClickRipple(event)">blue</div>
 				</div>
 
 				<div class="ripple-wrapper">
-					<cp-ripple style="background-color: #1890ff"></cp-ripple>
-					<div class="ripple-mask" onclick="onClickRipple('#fff')(event)">white</div>
+					<cp-ripple style="background-color: #1890ff" ripple-color="white"></cp-ripple>
+					<div class="ripple-mask" onclick="onClickRipple(event)">white</div>
 				</div>
 			</li>
 
@@ -76,22 +76,19 @@
 
 		<script src="../index.js" type="module"></script>
 		<script>
-			function onClickRipple(backgroundColor) {
-				return function onClickClickEffect(e) {
-					const {
-						offsetX,
-						offsetY,
-						target: { previousElementSibling: ripple },
-					} = e;
+			function onClickRipple(e) {
+				const {
+					offsetX,
+					offsetY,
+					target: { previousElementSibling: ripple },
+				} = e;
 
-					const { stable } = ripple.spread({
-						top: offsetY,
-						left: offsetX,
-						backgroundColor,
-					});
+				const { stable } = ripple.spread({
+					top: offsetY,
+					left: offsetX,
+				});
 
-					stable();
-				};
+				stable();
 			}
 
 			function onClickDelay(e) {

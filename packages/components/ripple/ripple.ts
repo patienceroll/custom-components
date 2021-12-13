@@ -48,6 +48,12 @@ export default class CpRipple extends HTMLElement {
 		shadowRoot.appendChild(child);
 	}
 
+	/** 涟漪颜色,默认 #fff  */
+	get rippleColor() {
+		return this.getAttribute("ripple-color") || "#fff";
+	}
+
+	/** ### 触发涟漪扩散 */
 	get spread() {
 		return function (
 			this: AttachedShadowRoot<CpRipple>,
@@ -56,12 +62,15 @@ export default class CpRipple extends HTMLElement {
 				top: number;
 				/** 涟漪中心点相对父级左侧距离 */
 				left: number;
-				/** 涟漪颜色,默认 #999 */
-				backgroundColor?: CSSProperty["backgroundColor"];
 			}
-		) {
+		): {
+			/** ### 当前涟漪的Html元素 */
+			dom: HTMLDivElement;
+			/** ### 触发涟漪的消失 */
+			stable: VoidFunction;
+		} {
 			const { pow, sqrt, abs } = Math;
-			const { top, left, backgroundColor = "#999" } = options;
+			const { top, left } = options;
 
 			const { clientWidth, clientHeight } = this;
 			const ripple = document.createElement("div");
@@ -75,7 +84,7 @@ export default class CpRipple extends HTMLElement {
 			ripple.style.left = `${left - radius}px`;
 			ripple.style.width = `${2 * radius}px`;
 			ripple.style.height = `${2 * radius}px`;
-			ripple.style.background = backgroundColor;
+			ripple.style.background = this.rippleColor;
 			ripple.classList.add("ripple", "spread");
 			this.shadowRoot.appendChild(ripple);
 			return {
