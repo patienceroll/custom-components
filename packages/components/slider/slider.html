@@ -14,6 +14,7 @@
 				padding: 20px;
 			}
 			cp-slider {
+				width: 250px;
 				vertical-align: middle;
 			}
 			label {
@@ -35,12 +36,22 @@
 						<li>
 							<label>默认滑块</label>
 							&emsp;&emsp;
-							<cp-slider style="width: 200px"></cp-slider>
+							<cp-slider></cp-slider>
+						</li>
+						<li>
+							<label>默认值</label>
+							&emsp;&emsp;&emsp;
+							<cp-slider default-value="25"></cp-slider>
+						</li>
+						<li>
+							<label>显示标签</label>
+							&emsp;&emsp;
+							<cp-slider default-value="25" show-label="true"></cp-slider>
 						</li>
 						<li>
 							<label>受控的滑块</label>
 							&emsp;
-							<cp-slider id="controledCpSlider" value="20" style="width: 200px"></cp-slider>&emsp;&emsp;
+							<cp-slider id="controledCpSlider" value="20"></cp-slider>&emsp;&emsp;
 							<cp-button
 								onclick="(()=>{
 								 const controledCpSlider = document.getElementById('controledCpSlider')
@@ -76,17 +87,19 @@
 						<li>
 							<label>最大值</label>
 							&emsp;&emsp;&emsp;
-							<cp-slider style="width: 200px" max="10000"></cp-slider>
+							<cp-slider max="10000" show-label="true"></cp-slider>
 						</li>
 						<li>
 							<label>最小值</label>
 							&emsp;&emsp;&emsp;
-							<cp-slider style="width: 200px" min="-400"></cp-slider>
+							<cp-slider min="-400" show-label="true"></cp-slider>
 						</li>
 						<li>
 							<label>精度</label>
 							&emsp;&emsp;&emsp;&emsp;
-							<cp-slider style="width: 200px" precision="200" min="-1000" max="1000"></cp-slider>
+							<cp-slider precision="200" min="-1000" max="1000" show-label="true"></cp-slider>
+							<br />
+							<mark>当滑块的长度过于短或者精度设置的过于小,会导致鼠标的最小偏移值不能表示精度。</mark>
 						</li>
 					</ul>
 				</cp-paper>

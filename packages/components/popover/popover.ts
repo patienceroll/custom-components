@@ -177,7 +177,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 		switch (placement) {
 			case "top":
 				postion.top = `calc(${-clientHeight}px - 1em)`;
-				postion.left = `calc(50% - ${clientWidth / 2}px)`;
+				postion.left = `calc(50% - ${Math.floor(clientWidth / 2)}px)`;
 				break;
 			case "top-start":
 				postion.top = `calc(${-clientHeight}px - 1em)`;
@@ -188,7 +188,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 				postion.left = `calc(100% - ${clientWidth}px)`;
 				break;
 			case "left":
-				postion.top = `calc(50% - ${clientHeight / 2}px)`;
+				postion.top = `calc(50% - ${Math.floor(clientHeight / 2)}px)`;
 				postion.left = `calc(${-clientWidth}px - 1em)`;
 				break;
 			case "left-start":
@@ -200,7 +200,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 				postion.left = `calc(${-clientWidth}px - 1em)`;
 				break;
 			case "right":
-				postion.top = `calc(50% - ${clientHeight / 2}px)`;
+				postion.top = `calc(50% - ${Math.floor(clientHeight / 2)}px)`;
 				postion.left = "calc(100% + 1em)";
 				break;
 			case "right-start":
@@ -213,7 +213,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 				break;
 			case "bottom":
 				postion.top = "calc(100% + 1em)";
-				postion.left = `calc(50% - ${clientWidth / 2}px)`;
+				postion.left = `calc(50% - ${Math.floor(clientWidth / 2)}px)`;
 				break;
 			case "bottom-start":
 				postion.top = "calc(100% + 1em)";
@@ -226,7 +226,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 			// 默认是和 top 一样的
 			default:
 				postion.top = `calc(${-clientHeight}px - 1em)`;
-				postion.left = `calc(50% - ${clientWidth / 2}px)`;
+				postion.left = `calc(50% - ${Math.floor(clientWidth / 2)}px)`;
 		}
 		return postion;
 	}
@@ -297,7 +297,9 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 		this.popoverContextWrapper.removeEventListener("animationend", this.animationendListener);
 		this.setPopoverContextWrapperPositon(this.placement);
 		this.popoverContextWrapper.style.transformOrigin = this.getPopoverTransformOriginByPlacement(this.placement);
-		this.comingAnimate(this.transition);
+		requestAnimationFrame(() => {
+			this.comingAnimate(this.transition);
+		});
 	}
 
 	/** 隐藏悬浮泡泡 */

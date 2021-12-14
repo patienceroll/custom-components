@@ -118,7 +118,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 	constructor() {
 		super();
-		this.realValue = this.min;
+		this.realValue = this.defaultValue ? Number(this.defaultValue) : this.min;
 		this.realValueRange = [this.min, this.max];
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpSlider.styleSheet];
@@ -190,7 +190,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			event.stopPropagation();
 			this.sliderBlock.style.transitionDuration = "0ms";
 			this.sliderTracked.style.transitionDuration = "0ms";
-			this.cpTooltip.setAttribute("open", "true");
+			if (this.showLable) this.cpTooltip.setAttribute("open", "true");
 			this.ownerDocument.addEventListener("mousemove", onPressSliderBlockMoveEvent);
 			this.ownerDocument.addEventListener("mouseup", clearOwnerDocumentEvent);
 		});
@@ -198,6 +198,10 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		this.cpTooltip.appendChild(this.cpToolTipContext);
 		this.sliderBlock.appendChild(this.cpTooltip);
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
+	}
+
+	get defaultValue() {
+		return this.getAttribute("default-value");
 	}
 
 	/** 属性值 prop */
@@ -218,6 +222,11 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 	/** 滑块儿的精度,默认 1, */
 	get precision() {
 		return AttrToNumber(this, "precision", 1) as number;
+	}
+
+	/** 是否展示标签 */
+	get showLable() {
+		return this.getAttribute("show-label") === "true";
 	}
 
 	/** 计算滑块所在位置在轨道长度上所占百分比,值为 0 ~ 1 */
@@ -242,10 +251,12 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		const realValuePencent = (realValue - this.min) / (this.max - this.min);
 		this.sliderBlock.style.left = `${realValuePencent * this.clientWidth}px`;
 		this.sliderTracked.style.width = `${realValuePencent * 100}%`;
-		this.cpToolTipContext.innerHTML = `${realValue}`;
-		requestAnimationFrame(() => {
-			this.cpTooltip.CpPopover.setPopoverContextWrapperPositon("top");
-		});
+		if (this.showLable) {
+			this.cpToolTipContext.innerHTML = `${realValue}`;
+			requestAnimationFrame(() => {
+				this.cpTooltip.CpPopover.setPopoverContextWrapperPositon("top");
+			});
+		}
 	}
 
 	connectedCallback() {
