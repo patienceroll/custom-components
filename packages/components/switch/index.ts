@@ -1,8 +1,5 @@
 import { defineCustomComponents } from "../../utils";
+import CpSwitch from "./switch";
 
-class CpSwitch extends HTMLElement implements CustomElement {
-	constructor() {
-		super();
-	}
-}
+
 defineCustomComponents("cp-switch", CpSwitch);

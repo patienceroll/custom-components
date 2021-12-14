@@ -17,11 +17,13 @@ import CpRateItem from "packages/components/rate/rate-item";
 import CpRipple from "packages/components/ripple/ripple";
 import CpSkeleton from "packages/components/skeleton/skeleton";
 import CpSlider from "packages/components/slider/slider";
+import CpSwitch from "packages/components/switch/switch";
 import CpTab from "packages/components/tabs/tab";
 import CpTabContext from "packages/components/tabs/tab-context";
 import CpTabPanel from "packages/components/tabs/tab-panel";
 import CpTabs from "packages/components/tabs/tabs";
 import CpTag from "packages/components/tag/tag";
+import CpInput from "packages/components/text-filed/text-filed";
 import CpTooltip from "packages/components/tooltip/tooltip";
 
 interface HTMLS extends HTMLElementTagNameMap {
@@ -37,7 +39,7 @@ interface HTMLS extends HTMLElementTagNameMap {
 	"cp-message": AttachedShadowRoot<CpMessage>;
 	"cp-paper": AttachedShadowRoot<CpPaper>;
 	"cp-radio": AttachedShadowRoot<CpRadio>;
-	"cp-radio-item": AttachedShadowRoot<CpRadioGroup>;
+	"cp-radio-group": AttachedShadowRoot<CpRadioGroup>;
 	"cp-rate": AttachedShadowRoot<CpRate>;
 	"cp-rate-item": AttachedShadowRoot<CpRateItem>;
 	"cp-ripple": AttachedShadowRoot<CpRipple>;
@@ -50,6 +52,9 @@ interface HTMLS extends HTMLElementTagNameMap {
 	"cp-tag": AttachedShadowRoot<CpTag>;
 	"cp-tooltip": AttachedShadowRoot<CpTooltip>;
 	"cp-popover": AttachedShadowRoot<CpPopover>;
+	"cp-text-field": AttachedShadowRoot<CpInput>;
+	"cp-switch": AttachedShadowRoot<CpSwitch>;
+	"cp-skeleton": AttachedShadowRoot<CpSkeleton>;
 }
 
 /** ### 创建html元素（包括自定义组件）
