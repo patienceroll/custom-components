@@ -243,6 +243,9 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		this.sliderBlock.style.left = `${realValuePencent * this.clientWidth}px`;
 		this.sliderTracked.style.width = `${realValuePencent * 100}%`;
 		this.cpToolTipContext.innerHTML = `${realValue}`;
+		requestAnimationFrame(() => {
+			this.cpTooltip.CpPopover.setPopoverContextWrapperPositon("top");
+		});
 	}
 
 	connectedCallback() {

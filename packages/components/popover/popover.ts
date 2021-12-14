@@ -15,7 +15,7 @@ import type { CpPopoverCustomEventDetail, CpPopoverProps } from "./data";
 @keyframe({
 	"grow-in": {
 		from: {
-			transform: "scale(0.8)",
+			transform: "scale(0.85)",
 			opacity: "0.8",
 		},
 		to: {
@@ -294,8 +294,8 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 	showContext() {
 		this.realOpen = true;
 		this.popoverContextWrapper.style.visibility = "unset";
-		this.setPopoverContextWrapperPositon(this.placement);
 		this.popoverContextWrapper.removeEventListener("animationend", this.animationendListener);
+		this.setPopoverContextWrapperPositon(this.placement);
 		this.popoverContextWrapper.style.transformOrigin = this.getPopoverTransformOriginByPlacement(this.placement);
 		this.comingAnimate(this.transition);
 	}
