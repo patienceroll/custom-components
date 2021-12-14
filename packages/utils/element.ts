@@ -63,3 +63,11 @@ export function createHtmlElement<TagName extends keyof HTMLS>(tagName: TagName)
 export function createSvgElement<TagName extends keyof SVGElementTagNameMap>(tagName: TagName) {
 	return document.createElementNS("http://www.w3.org/2000/svg", tagName);
 }
+
+/** ## 向html定义 custom components */
+export function defineCustomComponents(
+	name: Exclude<keyof HTMLS, keyof HTMLElementTagNameMap>,
+	componentsClass: CustomElementConstructor
+) {
+	if (!customElements.get(name)) customElements.define(name, componentsClass);
+}

@@ -3,9 +3,9 @@ import { formatStyle, formatKeyframes, disposeDomNodeStyle } from "./style";
 import { style, keyframe, watch } from "./decorators";
 import Stack from "./stack";
 import useLatestCall from "./use-latest-call";
-import defineCustomComponents from "./define-custom-components";
+
 import setAttributes from "./set-attributes";
-import { createHtmlElement, createSvgElement } from "./element";
+import { createHtmlElement, createSvgElement, defineCustomComponents } from "./element";
 import { getOffsetLeft } from "./offset";
 
 const __default = {
