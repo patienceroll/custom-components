@@ -1,4 +1,12 @@
-import { style, AttrToNumber, watch, defineCustomComponents, setAttributes, createHtmlElement } from "../../utils";
+import {
+	style,
+	AttrToNumber,
+	watch,
+	defineCustomComponents,
+	setAttributes,
+	createHtmlElement,
+	getOffsetLeft,
+} from "../../utils";
 import CpTooltip from "../tooltip/tooltip";
 
 defineCustomComponents("cp-tooltip", CpTooltip);
@@ -86,6 +94,10 @@ defineCustomComponents("cp-tooltip", CpTooltip);
 })
 export default class CpSlider extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
+	/** 滑块tooltip context的 html */
+	static cpToolTipInnerHtml = "<div style='width: 2.625em'></div>";
+	/** 滑块的控件 innerHtml */
+	static cpSliderBlockInnerHtml = "<div class='cp-slider-block-shadow'></div><div class='cp-slider-block-core'></div>";
 
 	/** 当是单个值的滑块的时候保存的值 */
 	private realValue: number;
@@ -117,15 +129,15 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		this.cpTooltip = createHtmlElement("cp-tooltip");
 		this.cpToolTipContext = createHtmlElement("span");
 
-		this.sliderRail.classList.add("cp-slider-rail");
-		this.sliderTracked.classList.add("cp-slider-tracked");
-		this.sliderBlock.classList.add("cp-slider-block");
-		this.cpTooltip.classList.add("cp-tooltip");
+		setAttributes(this.sliderRail, { class: "cp-slider-rail" });
+		setAttributes(this.sliderTracked, { class: "cp-slider-tracked" });
+		setAttributes(this.sliderBlock, { class: "cp-slider-block" });
+		setAttributes(this.cpTooltip, { class: "cp-tooltip", open: "false", arrow: "true" });
+		setAttributes(this.cpToolTipContext, { slot: "tooltip-context" });
 
-		setAttributes(this.cpTooltip, { open: "false", arrow: "true" });
-
-		this.cpTooltip.innerHTML = "<div slot='tooltip-context'>value</div><div style='width: 2.625em'></div>";
-		this.sliderBlock.innerHTML = "<div class='cp-slider-block-shadow'></div><div class='cp-slider-block-core'></div>";
+		this.cpTooltip.innerHTML = CpSlider.cpToolTipInnerHtml;
+		this.sliderBlock.innerHTML = CpSlider.cpSliderBlockInnerHtml;
+		this.cpToolTipContext.innerHTML = `${this.realValue}`;
 
 		this.addEventListener("click", (event) => {
 			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
@@ -147,8 +159,9 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 
 		/** 当按住操作块之后鼠标移动事件 */
 		const onPressSliderBlockMoveEvent = (event: MouseEvent) => {
-			const percent = this.calculatePercent(event.offsetX, this.clientWidth);
+			const percent = this.calculatePercent(event.pageX - getOffsetLeft(this), this.clientWidth);
 			const realValue = this.calculateRealValue(percent);
+
 			if (!this.value) {
 				this.realValue = realValue;
 				this.sliderChangeRender(realValue);
@@ -182,6 +195,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			this.ownerDocument.addEventListener("mouseup", clearOwnerDocumentEvent);
 		});
 
+		this.cpTooltip.appendChild(this.cpToolTipContext);
 		this.sliderBlock.appendChild(this.cpTooltip);
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
 	}
@@ -228,5 +242,10 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		const realValuePencent = (realValue - this.min) / (this.max - this.min);
 		this.sliderBlock.style.left = `${realValuePencent * this.clientWidth}px`;
 		this.sliderTracked.style.width = `${realValuePencent * 100}%`;
+		this.cpToolTipContext.innerHTML = `${realValue}`;
+	}
+
+	connectedCallback() {
+		if (!this.getAttribute("value")) this.sliderChangeRender(this.realValue);
 	}
 }

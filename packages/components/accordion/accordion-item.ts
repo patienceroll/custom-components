@@ -80,7 +80,8 @@ export default class CpAccordionItem extends HTMLElement implements CustomElemen
 		this.content = createHtmlElement("div");
 		const contentSlot = createHtmlElement("slot");
 
-		setAttributes(titleSlot, { name: "title", class: "cp-accordion-item-title" });
+		setAttributes(title, { class: "cp-accordion-item-title" });
+		setAttributes(titleSlot, { name: "title" });
 		setAttributes(titleArrow, { class: "cp-accordion-item-title-arrow" });
 		setAttributes(this.content, { class: "cp-accordion-item-content" });
 		setAttributes(contentSlot, { class: "cp-accordion-item-content-slot" });

@@ -6,6 +6,7 @@ import useLatestCall from "./use-latest-call";
 import defineCustomComponents from "./define-custom-components";
 import setAttributes from "./set-attributes";
 import { createHtmlElement, createSvgElement } from "./element";
+import { getOffsetLeft } from "./offset";
 
 const __default = {
 	AttrToNumber,
@@ -21,6 +22,7 @@ const __default = {
 	setAttributes,
 	createHtmlElement,
 	createSvgElement,
+	getOffsetLeft,
 };
 
 export {
@@ -37,6 +39,7 @@ export {
 	setAttributes,
 	createHtmlElement,
 	createSvgElement,
+	getOffsetLeft,
 };
 
 export default __default;
