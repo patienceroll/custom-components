@@ -190,7 +190,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 			event.stopPropagation();
 			this.sliderBlock.style.transitionDuration = "0ms";
 			this.sliderTracked.style.transitionDuration = "0ms";
-			if (this.showLable) this.cpTooltip.setAttribute("open", "true");
+			if (this.showLabel) this.cpTooltip.setAttribute("open", "true");
 			this.ownerDocument.addEventListener("mousemove", onPressSliderBlockMoveEvent);
 			this.ownerDocument.addEventListener("mouseup", clearOwnerDocumentEvent);
 		});
@@ -200,6 +200,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		shadowRoot.append(this.sliderRail, this.sliderTracked, this.sliderBlock);
 	}
 
+	/** 非受控下的初始值 */
 	get defaultValue() {
 		return this.getAttribute("default-value");
 	}
@@ -225,7 +226,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 	}
 
 	/** 是否展示标签 */
-	get showLable() {
+	get showLabel() {
 		return this.getAttribute("show-label") === "true";
 	}
 
@@ -251,7 +252,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 		const realValuePencent = (realValue - this.min) / (this.max - this.min);
 		this.sliderBlock.style.left = `${realValuePencent * this.clientWidth}px`;
 		this.sliderTracked.style.width = `${realValuePencent * 100}%`;
-		if (this.showLable) {
+		if (this.showLabel) {
 			this.cpToolTipContext.innerHTML = `${realValue}`;
 			requestAnimationFrame(() => {
 				this.cpTooltip.CpPopover.setPopoverContextWrapperPositon("top");
