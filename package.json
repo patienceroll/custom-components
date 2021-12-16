@@ -1,4 +1,6 @@
 {
+  "name": "custom-components",
+  "license": "MIT",
   "scripts": {
     "debugge": "cross-env type=debugge rollup --config rollup.config.js --watch",
     "build": "cross-env type=build rollup --config rollup.config.js",

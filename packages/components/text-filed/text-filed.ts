@@ -1,24 +1,8 @@
-import { style } from "../../utils";
+import { createHtmlElement, setAttributes, style } from "../../utils";
 
 @style({
-	".cp-text-filed-input": {
-		verticalAlign: "top",
-		padding: "1.03125em 0.875em",
+	".cp-fieldset": {
 		border: "none",
-		outline: "none",
-		fontSize: "16px",
-	},
-	".cp-text-field-label": {
-		position: "absolute",
-	},
-	".cp-text-field-fieldset": {
-		position: "relative",
-		padding: "0",
-		margin: "0",
-		verticalAlign: "top",
-		border: "none",
-		borderRadius: "0.25em",
-		overflow: "hidden",
 	},
 	":host": {
 		display: "inline-block",
@@ -26,24 +10,29 @@ import { style } from "../../utils";
 	},
 })
 export default class CpInput extends HTMLElement implements CustomElement {
-	public input: HTMLInputElement;
 	static styleSheet: CSSStyleSheet;
+	/** 输入框 fieldset DOM */
+	public cpInputFieldset: HTMLFieldSetElement;
+	/** 输入框 legend DOM */
+	public cpInputLegend: HTMLLegendElement;
+	/** 输入框 input DOM */
+	public cpInputInput: HTMLInputElement;
+
 	constructor() {
 		super();
-		const shaowRoot = this.attachShadow({ mode: "open" });
-		shaowRoot.adoptedStyleSheets = [CpInput.styleSheet];
+		const shadowRoot = this.attachShadow({ mode: "open" });
+		shadowRoot.adoptedStyleSheets = [CpInput.styleSheet];
 
-		const fieldset = document.createElement("fieldset");
-		const legend = document.createElement("legend");
-		legend.innerHTML = "23";
-		const label = document.createElement("label");
-		this.input = document.createElement("input");
+		this.cpInputFieldset = createHtmlElement("fieldset");
+		this.cpInputLegend = createHtmlElement("legend");
+		this.cpInputInput = createHtmlElement("input");
+		const legendContext = createHtmlElement("slot");
 
-		fieldset.classList.add("cp-text-field-fieldset");
-		label.classList.add("cp-text-field-label");
-		this.input.classList.add("cp-text-filed-input");
+		setAttributes(this.cpInputFieldset, { class: "cp-fieldset" });
+		setAttributes(legendContext, { name: "legend-context" });
 
-		fieldset.append(legend, label, this.input);
-		shaowRoot.appendChild(fieldset);
+		this.cpInputLegend.append(legendContext);
+		this.cpInputFieldset.append(this.cpInputLegend, this.cpInputInput);
+		shadowRoot.append(this.cpInputFieldset);
 	}
 }
