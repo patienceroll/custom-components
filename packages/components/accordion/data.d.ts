@@ -24,6 +24,24 @@ export interface AccordionProps extends HTMLElement {
 	"active-keys": string;
 }
 
+/** 单个折叠面板自定义事件 */
+export interface AccordionItemEventDetail {
+	/** 单个折叠面板折叠事件 */
+	"cp-accordion-item-fold": undefined;
+	/** 单个折叠面板展开事件 */
+	"cp-accordion-item-expand": undefined;
+}
+
+/** 折叠面板自定义事件 */
+export interface AccordionEventDetail {
+	change: {
+		/** 当前展开的折叠面板 */
+		"active-keys": string[];
+		/** 当前操作的key */
+		"current": string;
+	};
+}
+
 /** 单个手风琴折叠面板属性变化的值 */
 export type AccordionItemObservedAttributes = "open" | "disable" | "key" | "first-item" | "last-item";
 

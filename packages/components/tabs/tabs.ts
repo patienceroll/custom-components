@@ -1,4 +1,5 @@
-import { style, watch } from "../../utils";
+import { dispatchCustomEvent, style, watch } from "../../utils";
+import { TabsEventDetail } from "./data";
 
 import CpTab from "./tab";
 
@@ -62,7 +63,7 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 			if (detail.key) {
 				/** 如果是非受控的,更新内部维护的值,触发组件内部更新 */
 				if (!this.getAttribute("active-key")) this.setRealActiveKey(detail.key);
-				this.dispatchEvent(new CustomEvent("change", { detail: { activeKey: detail.key }, bubbles: true }));
+				dispatchCustomEvent<TabsEventDetail>(this, "change", { activeKey: detail.key, nativeEvent: event });
 			}
 		});
 

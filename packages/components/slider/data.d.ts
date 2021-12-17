@@ -12,4 +12,11 @@ export interface CpSliderProps extends HTMLElement {
 	"show-label"?: BooleanCharacter;
 }
 
+export interface CpSliderEventDetail {
+	change: {
+		value: number;
+		nativeEvent: Event;
+	};
+}
+
 export type CpSliderObservedAttributes = "value" | "precision" | "min" | "max";

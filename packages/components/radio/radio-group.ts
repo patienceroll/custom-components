@@ -1,4 +1,7 @@
+import type { CpRadioGroupEventDetail } from "./data";
 import type CpRadio from "./radio";
+
+import { dispatchCustomEvent } from "packages/utils";
 
 export default class CpRadioGroup extends HTMLElement implements CustomElement {
 	constructor() {
@@ -15,7 +18,10 @@ export default class CpRadioGroup extends HTMLElement implements CustomElement {
 			this.radioOptions(currentRadio.getAttribute("name")).forEach((radio) => {
 				if (event.target !== radio) radio.setAttribute("checked", "false");
 			});
-			this.dispatchEvent(new CustomEvent("change", { detail: { value: currentRadio.getAttribute("value") } }));
+			dispatchCustomEvent<CpRadioGroupEventDetail>(this, "change", {
+				nativeEvent: event,
+				value: currentRadio.getAttribute("value"),
+			});
 		});
 	}
 

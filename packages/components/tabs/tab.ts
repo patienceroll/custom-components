@@ -1,6 +1,7 @@
-import { style, defineCustomComponents, createHtmlElement } from "../../utils";
+import { style, defineCustomComponents, createHtmlElement, dispatchCustomEvent } from "../../utils";
 
 import CpButton from "../button/button";
+import { TabEventDetail } from "./data";
 
 defineCustomComponents("cp-button", CpButton);
 
@@ -34,14 +35,11 @@ export default class CpTab extends HTMLElement implements CustomElement {
 		children.setAttribute("ripple-color", "currentColor");
 
 		this.addEventListener("click", (event) => {
-			this.dispatchEvent(
-				new CustomEvent("cp-tab-click", {
-					detail: {
-						nativeEvent: event,
-						key: this.key,
-					},
-					bubbles: true,
-				})
+			dispatchCustomEvent<TabEventDetail>(
+				this,
+				"cp-tab-click",
+				{ nativeEvent: event, key: this.key },
+				{ bubbles: true }
 			);
 		});
 

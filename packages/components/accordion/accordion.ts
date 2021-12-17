@@ -1,6 +1,7 @@
 import type CpAccordionItem from "./accordion-item";
+import type { AccordionEventDetail } from "./data";
 
-import { createHtmlElement, style, watch } from "../../utils";
+import { createHtmlElement, dispatchCustomEvent, style, watch } from "../../utils";
 
 @style({
 	":host": {
@@ -54,14 +55,10 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 					this.renderItem(newActiveKeys);
 					this.realActiveKeys = newActiveKeys;
 				}
-				this.dispatchEvent(
-					new CustomEvent("change", {
-						detail: {
-							"active-keys": newActiveKeys,
-							"current": key,
-						},
-					})
-				);
+				dispatchCustomEvent<AccordionEventDetail>(this, "change", {
+					"active-keys": newActiveKeys,
+					"current": key,
+				});
 			}
 		});
 		/** 监听单个折叠面板展开 */
@@ -77,15 +74,10 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 					this.renderItem(newActiveKeys);
 					this.realActiveKeys = newActiveKeys;
 				}
-
-				this.dispatchEvent(
-					new CustomEvent("change", {
-						detail: {
-							"active-keys": newActiveKeys,
-							"current": key,
-						},
-					})
-				);
+				dispatchCustomEvent<AccordionEventDetail>(this, "change", {
+					"active-keys": newActiveKeys,
+					"current": key,
+				});
 			}
 		});
 

@@ -6,8 +6,10 @@ import {
 	setAttributes,
 	createHtmlElement,
 	getOffsetLeft,
+	dispatchCustomEvent,
 } from "../../utils";
 import CpTooltip from "../tooltip/tooltip";
+import { CpSliderEventDetail } from "./data";
 
 defineCustomComponents("cp-tooltip", CpTooltip);
 @style({
@@ -147,14 +149,7 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 				this.sliderChangeRender(realValue);
 			}
 
-			this.dispatchEvent(
-				new CustomEvent("change", {
-					detail: {
-						value: realValue,
-						nativeEvent: event,
-					},
-				})
-			);
+			dispatchCustomEvent<CpSliderEventDetail>(this, "change", { value: realValue, nativeEvent: event });
 		});
 
 		/** 当按住操作块之后鼠标移动事件 */
@@ -166,14 +161,8 @@ export default class CpSlider extends HTMLElement implements CustomElement {
 				this.realValue = realValue;
 				this.sliderChangeRender(realValue);
 			}
-			this.dispatchEvent(
-				new CustomEvent("change", {
-					detail: {
-						value: realValue,
-						nativeEvent: event,
-					},
-				})
-			);
+
+			dispatchCustomEvent<CpSliderEventDetail>(this, "change", { value: realValue, nativeEvent: event });
 		};
 
 		/** 清除本元素添加到 owner document 的事件 */

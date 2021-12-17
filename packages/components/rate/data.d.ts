@@ -23,6 +23,17 @@ export interface CpRateItemEventDetail {
 	};
 }
 
+export interface CpRateEventDetail {
+	change: {
+		value: number;
+		nativeEvent: Event;
+	};
+	changehover: {
+		value: number;
+		nativeEvent: Event;
+	};
+}
+
 export interface CpRateProps extends Pick<CpRateItemProps, "disable" | "readonly" | "base-color" | "light-color"> {
 	/** 值为数字的字符串 */
 	value?: NumberCharacter;

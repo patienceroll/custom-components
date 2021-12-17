@@ -1,4 +1,4 @@
-import { style, keyframe, Stack } from "../../utils";
+import { style, keyframe, Stack, dispatchCustomEvent } from "../../utils";
 
 const stack = new Stack<CpMask>();
 stack.finished = function (removeItem: CpMask) {
@@ -121,8 +121,8 @@ export default class CpMask extends HTMLElement implements CustomElement {
 
 	#onKeydown = (e: KeyboardEvent) => {
 		if (e.keyCode === 27) {
-			this.dispatchEvent(new CustomEvent("close", { detail: null, bubbles: false }));
-			("");
+			// this.dispatchEvent(new CustomEvent("close", { detail: null, bubbles: false }));
+			dispatchCustomEvent(this, "close", undefined, { bubbles: false });
 		}
 	};
 

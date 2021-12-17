@@ -1,4 +1,4 @@
-import { style, watch, keyframe, createHtmlElement } from "../../utils";
+import { style, watch, keyframe, createHtmlElement, dispatchCustomEvent } from "../../utils";
 import type { CpPopoverCustomEventDetail, CpPopoverProps } from "./data";
 
 @style({
@@ -109,14 +109,10 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 			if (type === "focusout" && this.disableFocus) return;
 			if (type === "click" && this.disableClick) return;
 			if (!this.getAttribute("open")) this.hideContext();
-			this.dispatchEvent(
-				new CustomEvent<CpPopoverCustomEventDetail["close"]>("close", {
-					detail: {
-						nativeEvent: event,
-						open: false,
-					},
-				})
-			);
+			dispatchCustomEvent<CpPopoverCustomEventDetail>(this, "close", {
+				nativeEvent: event,
+				open: false,
+			});
 		};
 
 		const showPopoverContext = (event: Event) => {
@@ -129,9 +125,7 @@ export default class CpPopover extends HTMLElement implements CustomElement {
 			// 添加点击事件隐藏的方法
 			if (type === "click") this.ownerDocument.addEventListener("click", hidePopOverContext, { once: true });
 			if (!this.getAttribute("open")) this.showContext();
-			this.dispatchEvent(
-				new CustomEvent<CpPopoverCustomEventDetail["open"]>("open", { detail: { nativeEvent: event, open: true } })
-			);
+			dispatchCustomEvent<CpPopoverCustomEventDetail>(this, "open", { nativeEvent: event, open: true });
 		};
 
 		this.addEventListener("mouseenter", showPopoverContext);

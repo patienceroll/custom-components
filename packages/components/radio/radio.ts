@@ -1,8 +1,17 @@
-import type Ripple from "../ripple/ripple";
+import Ripple from "../ripple/ripple";
 
-import { createHtmlElement, createSvgElement, setAttributes, style, watch } from "../../utils";
+import {
+	createHtmlElement,
+	createSvgElement,
+	defineCustomComponents,
+	dispatchCustomEvent,
+	setAttributes,
+	style,
+	watch,
+} from "../../utils";
+import { CpRadioEventDetail } from "./data";
 
-import "../ripple";
+defineCustomComponents("cp-ripple", Ripple);
 
 @style({
 	".inner-checked": {
@@ -74,11 +83,7 @@ import "../ripple";
 			this.cpRadioOuterCircle.classList.add("outer-checked");
 			this.cpRadioInnerCircle.classList.add("inner-checked");
 			if (older !== "true") {
-				const event = new CustomEvent<{ checked: true }>("check", {
-					detail: { checked: true },
-					bubbles: true,
-				});
-				this.dispatchEvent(event);
+				dispatchCustomEvent<CpRadioEventDetail>(this, "check", { checked: true }, { bubbles: true });
 			}
 		} else {
 			this.radio.checked = false;

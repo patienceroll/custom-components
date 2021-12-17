@@ -38,6 +38,10 @@
         "@typescript-eslint/no-empty-function": [
             "warn"
         ],
-        "no-case-declarations": "off"
+        "@typescript-eslint/consistent-type-imports": [
+            "warn"
+        ],
+        "no-case-declarations": "off",
+        "no-debugger": "warn"
     }
 }

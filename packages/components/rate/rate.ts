@@ -1,5 +1,5 @@
-import { style, watch, useLatestCall } from "../../utils";
-import type { CpRateItemEventDetail } from "./data";
+import { style, watch, useLatestCall, dispatchCustomEvent } from "../../utils";
+import type { CpRateEventDetail, CpRateItemEventDetail } from "./data";
 
 @style({
 	":host": {
@@ -64,13 +64,10 @@ export default class CpRate extends HTMLElement implements CustomElement {
 					this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
 					this.realValue = newRealValue;
 				}
-				this.dispatchEvent(
-					new CustomEvent("change", {
-						detail: {
-							value: newRealValue,
-						},
-					})
-				);
+				dispatchCustomEvent<CpRateEventDetail>(this, "change", {
+					value: newRealValue,
+					nativeEvent: event,
+				});
 			}
 		});
 
@@ -84,13 +81,11 @@ export default class CpRate extends HTMLElement implements CustomElement {
 					((index + value) * this.highest) / rateItems.length
 				);
 				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
-				this.dispatchEvent(
-					new CustomEvent("changehover", {
-						detail: {
-							value: lightRateNum * perRateItemValue + partOfLightRateValue,
-						},
-					})
-				);
+
+				dispatchCustomEvent<CpRateEventDetail>(this, "changehover", {
+					value: lightRateNum * perRateItemValue + partOfLightRateValue,
+					nativeEvent: event,
+				});
 			}
 		});
 

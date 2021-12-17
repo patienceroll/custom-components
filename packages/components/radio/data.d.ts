@@ -23,4 +23,18 @@ export interface CpRadioGroupProps extends HTMLElement {
 	"onchange": (event: CustomEvent<{ value: string }>) => void;
 }
 
+export interface CpRadioGroupEventDetail {
+	change: {
+		nativeEvent: Event;
+		value: string | null;
+	};
+}
+
+export interface CpRadioEventDetail {
+	check: {
+		checked: boolean;
+		nativeEvent?: Event;
+	};
+}
+
 export type CpRadioObservedAttributes = "checked" | "name" | "color";

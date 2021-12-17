@@ -28,6 +28,19 @@ export interface TabContext extends HTMLElement {
 	"active-key"?: string;
 }
 
+export interface TabEventDetail {
+	"cp-tab-click": {
+		nativeEvent: Event;
+		key: string | null;
+	};
+}
+export interface TabsEventDetail {
+	change: {
+		activeKey: string;
+		nativeEvent: Event;
+	};
+}
+
 export type CpTabContextObservedAttributes = "active-key";
 
 export type CpTabsObservedAttributes = "center" | "active-key";
