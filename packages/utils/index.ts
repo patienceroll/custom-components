@@ -8,8 +8,6 @@ import { createHtmlElement, createSvgElement, defineCustomComponents } from "./e
 import { getOffsetLeft } from "./offset";
 import { addCustomEventListener, dispatchCustomEvent } from "./event";
 
-
-
 export {
 	AttrToNumber,
 	formatStyle,

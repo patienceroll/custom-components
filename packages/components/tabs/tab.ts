@@ -1,7 +1,7 @@
 import { style, defineCustomComponents, createHtmlElement, dispatchCustomEvent } from "../../utils";
 
 import CpButton from "../button/button";
-import { TabEventDetail } from "./data";
+import type { TabEventDetail } from "./data";
 
 defineCustomComponents("cp-button", CpButton);
 

@@ -9,7 +9,7 @@ import {
 	style,
 	watch,
 } from "../../utils";
-import { CpRadioEventDetail } from "./data";
+import type { CpRadioEventDetail } from "./data";
 
 defineCustomComponents("cp-ripple", Ripple);
 

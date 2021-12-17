@@ -1,7 +1,7 @@
 import { style, watch } from "../../utils";
 
-import CpTabs from "./tabs";
-import CpTabPanel from "./tab-panel";
+import type CpTabs from "./tabs";
+import type CpTabPanel from "./tab-panel";
 
 @style({
 	":host": {

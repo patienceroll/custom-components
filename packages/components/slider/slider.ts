@@ -9,7 +9,7 @@ import {
 	dispatchCustomEvent,
 } from "../../utils";
 import CpTooltip from "../tooltip/tooltip";
-import { CpSliderEventDetail } from "./data";
+import type { CpSliderEventDetail } from "./data";
 
 defineCustomComponents("cp-tooltip", CpTooltip);
 @style({

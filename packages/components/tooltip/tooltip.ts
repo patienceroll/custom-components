@@ -1,7 +1,7 @@
 import { style, defineCustomComponents, watch, createHtmlElement, createSvgElement } from "../../utils";
 
 import CpPopover from "../popover/popover";
-import { CpTooltipProps } from "./data";
+import type { CpTooltipProps } from "./data";
 
 defineCustomComponents("cp-popover", CpPopover);
 

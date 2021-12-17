@@ -1,7 +1,7 @@
 import { dispatchCustomEvent, style, watch } from "../../utils";
-import { TabsEventDetail } from "./data";
+import type { TabsEventDetail } from "./data";
 
-import CpTab from "./tab";
+import type CpTab from "./tab";
 
 @style({
 	".cp-tabs-children": {

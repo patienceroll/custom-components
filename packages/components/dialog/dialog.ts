@@ -1,5 +1,5 @@
 import { style, keyframe, disposeDomNodeStyle } from "../../utils";
-import { DrawerHeaderProps } from "../drawer/data";
+import type { DrawerHeaderProps } from "../drawer/data";
 import CpMask from "../mask/mask";
 
 const icon =

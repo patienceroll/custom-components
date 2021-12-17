@@ -1,6 +1,6 @@
 import { style, keyframe } from "../../utils";
 import CpMask from "../mask/mask";
-import { MessageInt } from "./data";
+import type { MessageInt } from "./data";
 
 @style({
 	".cp-message-content": {
