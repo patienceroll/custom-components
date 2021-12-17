@@ -1,4 +1,4 @@
-import { style, defineCustomComponents, setAttributes } from "../../utils";
+import { style, defineCustomComponents, setAttributes, createHtmlElement } from "../../utils";
 
 import CpRipple from "../ripple/ripple";
 
@@ -38,7 +38,7 @@ defineCustomComponents("cp-ripple", CpRipple);
 export default class CpButtonBase extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	/** 当前button里的ripple组件 */
-	private cpRipple: AttachedShadowRoot<CpRipple>;
+	public cpRipple: AttachedShadowRoot<CpRipple>;
 	/** 当前所有涟漪的集合 */
 	private ripples = new Set<ReturnType<CpRipple["spread"]>>();
 	/** 组件 button Dom元素 */
@@ -49,8 +49,8 @@ export default class CpButtonBase extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpButtonBase.styleSheet];
 
-		this.button = document.createElement("button");
-		this.cpRipple = document.createElement("cp-ripple") as AttachedShadowRoot<CpRipple>;
+		this.button = createHtmlElement("button");
+		this.cpRipple = createHtmlElement("cp-ripple");
 
 		this.button.classList.add("cp-button");
 		setAttributes(this.button, { part: "button" });

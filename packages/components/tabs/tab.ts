@@ -1,4 +1,4 @@
-import { style, defineCustomComponents } from "../../utils";
+import { style, defineCustomComponents, createHtmlElement } from "../../utils";
 
 import CpButton from "../button/button";
 
@@ -30,7 +30,7 @@ export default class CpTab extends HTMLElement implements CustomElement {
 		const shadowRoot = this.attachShadow({ mode: "open" });
 		shadowRoot.adoptedStyleSheets = [CpTab.styleSheet];
 
-		const children = document.createElement("cp-button");
+		const children = createHtmlElement("cp-button");
 		children.setAttribute("ripple-color", "currentColor");
 
 		this.addEventListener("click", (event) => {
@@ -45,7 +45,7 @@ export default class CpTab extends HTMLElement implements CustomElement {
 			);
 		});
 
-		children.append(document.createElement("slot"));
+		children.append(createHtmlElement("slot"));
 		shadowRoot.append(children);
 	}
 

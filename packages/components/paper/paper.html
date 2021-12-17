@@ -12,6 +12,10 @@
 			}
 
 			cp-paper {
+				padding: 20px;
+			}
+
+			.cp-paper {
 				flex: 1;
 				margin-right: 15px;
 				max-width: 128px;
@@ -29,24 +33,28 @@
 		<ul>
 			<li>
 				<h4>默认</h4>
-				<div style="display: flex">
-					<cp-paper>
-						<span>纸张</span>
-					</cp-paper>
-				</div>
+				<cp-paper>
+					<div style="display: flex">
+						<cp-paper class=".cp-paper">
+							<span>纸张</span>
+						</cp-paper>
+					</div>
+				</cp-paper>
 			</li>
 			<li>
 				<h4>变体</h4>
+				<cp-paper>
 				<div style="display: flex">
-					<cp-paper variant="outlined">
+					<cp-paper class="cp-paper" variant="outlined">
 						<span>边框纸张</span>
 					</cp-paper>
-					<cp-paper square="true">
+					<cp-paper class="cp-paper" square="true">
 						<span>直角纸张</span>
 					</cp-paper>
-					<cp-paper variant="outlined" square="true">
+					<cp-paper class="cp-paper" variant="outlined" square="true">
 						<span>边框且直角纸张</span>
 					</cp-paper>
+				</cp-paper>
 				</div>
 			</li>
 		</ul>

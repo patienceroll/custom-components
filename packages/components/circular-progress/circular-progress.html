@@ -11,6 +11,10 @@
 				color: #333;
 			}
 
+			cp-paper {
+				padding: 20px;
+			}
+
 			cp-circular-progress {
 				width: 40px;
 				height: 40px;
@@ -24,35 +28,39 @@
 		<h1>圆环状进度组件</h1>
 		<ul>
 			<li>
-				<h4>默认</h4>
-				<cp-circular-progress></cp-circular-progress>
-			</li>
-			<li>
-				<h4>不同颜色</h4>
-				<div style="display: flex">
+				<h4>圆环状进度组件</h4>
+				<cp-paper>
 					<cp-circular-progress></cp-circular-progress>
-					<cp-circular-progress color="#DC004E"></cp-circular-progress>
-					<cp-circular-progress color="#f50"></cp-circular-progress>
-				</div>
+					<h6>不同颜色</h6>
+					<div style="display: flex">
+						<cp-circular-progress></cp-circular-progress>
+						<cp-circular-progress color="#DC004E"></cp-circular-progress>
+						<cp-circular-progress color="#f50"></cp-circular-progress>
+					</div>
+				</cp-paper>
 			</li>
 			<li>
 				<h4>定量的环形进度条</h4>
-				<div style="display: flex">
-					<cp-circular-progress value="99"></cp-circular-progress>
-					<cp-circular-progress value="25" color="#f50"></cp-circular-progress>
-					<cp-circular-progress value="50" color="#c41d7f"></cp-circular-progress>
-					<cp-circular-progress value="75" color="#7cb305"></cp-circular-progress>
-					<cp-circular-progress id="value-change" color="#08979c"> </cp-circular-progress>
-				</div>
+				<cp-paper>
+					<div style="display: flex">
+						<cp-circular-progress value="99"></cp-circular-progress>
+						<cp-circular-progress value="25" color="#f50"></cp-circular-progress>
+						<cp-circular-progress value="50" color="#c41d7f"></cp-circular-progress>
+						<cp-circular-progress value="75" color="#7cb305"></cp-circular-progress>
+						<cp-circular-progress id="value-change" color="#08979c"> </cp-circular-progress>
+					</div>
+				</cp-paper>
 			</li>
 			<li>
 				<h4>带标签的环形进度条</h4>
-				<div style="display: flex">
-					<cp-circular-progress value="0" label="true"></cp-circular-progress>
-					<cp-circular-progress value="98" label="true"></cp-circular-progress>
-					<cp-circular-progress value="99" label="true"></cp-circular-progress>
-					<cp-circular-progress id="value-change-with-label" label="true"></cp-circular-progress>
-				</div>
+				<cp-paper>
+					<div style="display: flex">
+						<cp-circular-progress value="0" label="true"></cp-circular-progress>
+						<cp-circular-progress value="98" label="true"></cp-circular-progress>
+						<cp-circular-progress value="99" label="true"></cp-circular-progress>
+						<cp-circular-progress id="value-change-with-label" label="true"></cp-circular-progress>
+					</div>
+				</cp-paper>
 			</li>
 		</ul>
 		<script src="../index.js" type="module"></script>

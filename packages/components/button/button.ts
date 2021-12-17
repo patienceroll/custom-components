@@ -50,6 +50,10 @@ import "../circular-progress";
 	"loading-color"(newer) {
 		(this.loading.firstElementChild as SVGRectElement).setAttribute("stroke", newer || "#1976d2");
 	},
+	"ripple-color"(newer) {
+		if (newer) this.cpRipple.setAttribute("ripple-color", newer);
+		else this.cpRipple.removeAttribute("ripple-color");
+	},
 })
 export default class CpButton extends CpButtonBase {
 	/** 组件 loading(加载中动画) Dom元素  */
