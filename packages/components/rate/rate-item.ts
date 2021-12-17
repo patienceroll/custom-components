@@ -1,4 +1,13 @@
-import { style, watch, useLatestCall, createHtmlElement, createSvgElement, setAttributes } from "../../utils";
+import {
+	style,
+	watch,
+	useLatestCall,
+	createHtmlElement,
+	createSvgElement,
+	setAttributes,
+	dispatchCustomEvent,
+} from "../../utils";
+import type { CpRateItemEventDetail } from "./data";
 
 @style({
 	".light svg": {
@@ -86,15 +95,16 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 
 		this.addEventListener("click", (event) => {
 			const { offsetX } = event;
-			const { clientWidth } = event.target as HTMLElement;
-			this.dispatchEvent(
-				new CustomEvent("cp-rate-item-rate", {
-					detail: {
-						nativeEvent: event,
-						value: Math.abs(offsetX / clientWidth),
-					},
-					bubbles: true,
-				})
+			const { clientWidth } = this;
+			dispatchCustomEvent<CpRateItemEventDetail>(
+				this,
+				"cp-rate-item-rate",
+				{
+					nativeEvent: event,
+					value: Math.abs(offsetX / clientWidth),
+					rateItem: this,
+				},
+				{ bubbles: true }
 			);
 		});
 
@@ -102,15 +112,12 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 			"mousemove",
 			useLatestCall((event) => {
 				const { offsetX } = event;
-				const { clientWidth } = event.target as HTMLElement;
-				this.dispatchEvent(
-					new CustomEvent("cp-rate-item-moverate", {
-						detail: {
-							nativeEvent: event,
-							value: Math.abs(offsetX / clientWidth),
-						},
-						bubbles: true,
-					})
+				const { clientWidth } = this;
+				dispatchCustomEvent<CpRateItemEventDetail>(
+					this,
+					"cp-rate-item-rate",
+					{ nativeEvent: event, value: Math.abs(offsetX / clientWidth), rateItem: this },
+					{ bubbles: true }
 				);
 			})
 		);

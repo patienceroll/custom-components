@@ -1,4 +1,5 @@
 import { style, watch, useLatestCall } from "../../utils";
+import type { CpRateItemEventDetail } from "./data";
 
 @style({
 	":host": {
@@ -46,10 +47,10 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		const slot = document.createElement("slot");
 
 		this.addEventListener("cp-rate-item-rate", (event) => {
-			const { detail } = event as CustomEvent<{ value: number; nativeEvent: MouseEvent }>;
-			const { value, nativeEvent } = detail;
+			const { detail } = event as CustomEvent<CpRateItemEventDetail["cp-rate-item-rate"]>;
+			const { value, rateItem } = detail;
 			const rateItems = Array.from(this.rateItems.values());
-			const index = rateItems.findIndex((item) => item === nativeEvent.target);
+			const index = rateItems.findIndex((item) => item === rateItem);
 			if (index !== -1) {
 				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(
 					((index + value) * this.highest) / rateItems.length
@@ -57,6 +58,7 @@ export default class CpRate extends HTMLElement implements CustomElement {
 				const newRealValue = lightRateNum * perRateItemValue + partOfLightRateValue;
 
 				const valueAttr = this.getAttribute("value");
+
 				/** 如果是非受控的,才会去渲染评分 */
 				if (!valueAttr || Number.isNaN(Number(valueAttr))) {
 					this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
@@ -73,10 +75,10 @@ export default class CpRate extends HTMLElement implements CustomElement {
 		});
 
 		this.addEventListener("cp-rate-item-moverate", (event) => {
-			const { detail } = event as CustomEvent<{ value: number; nativeEvent: MouseEvent }>;
-			const { value, nativeEvent } = detail;
+			const { detail } = event as CustomEvent<CpRateItemEventDetail["cp-rate-item-rate"]>;
+			const { value, rateItem } = detail;
 			const rateItems = Array.from(this.rateItems.values());
-			const index = rateItems.findIndex((item) => item === nativeEvent.target);
+			const index = rateItems.findIndex((item) => item === rateItem);
 			if (index !== -1) {
 				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(
 					((index + value) * this.highest) / rateItems.length

@@ -3,10 +3,10 @@ import { formatStyle, formatKeyframes, disposeDomNodeStyle } from "./style";
 import { style, keyframe, watch } from "./decorators";
 import Stack from "./stack";
 import useLatestCall from "./use-latest-call";
-
 import setAttributes from "./set-attributes";
 import { createHtmlElement, createSvgElement, defineCustomComponents } from "./element";
 import { getOffsetLeft } from "./offset";
+import { dispatchCustomEvent } from "./event";
 
 const __default = {
 	AttrToNumber,
@@ -23,6 +23,7 @@ const __default = {
 	createHtmlElement,
 	createSvgElement,
 	getOffsetLeft,
+	dispatchCustomEvent,
 };
 
 export {
@@ -40,6 +41,7 @@ export {
 	createHtmlElement,
 	createSvgElement,
 	getOffsetLeft,
+	dispatchCustomEvent,
 };
 
 export default __default;

@@ -1,3 +1,5 @@
+import type CpRateItem from "./rate-item";
+
 export interface CpRateItemProps extends HTMLElement {
 	/** 值为 0 ~ 100 的字符串 */
 	"value"?: NumberCharacter;
@@ -9,6 +11,16 @@ export interface CpRateItemProps extends HTMLElement {
 	"disable"?: BooleanCharacter;
 	/** 是否是只读的评分 */
 	"readonly"?: BooleanCharacter;
+}
+
+export interface CpRateItemEventDetail {
+	/** 单个评分 评分事件 */
+	"cp-rate-item-rate": {
+		nativeEvent: Event;
+		value: number;
+		/** 触发这个事件的 rateItem */
+		rateItem: CpRateItem;
+	};
 }
 
 export interface CpRateProps extends Pick<CpRateItemProps, "disable" | "readonly" | "base-color" | "light-color"> {
