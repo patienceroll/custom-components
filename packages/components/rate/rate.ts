@@ -18,10 +18,6 @@ import { style, watch, useLatestCall } from "../../utils";
 	"highest"() {
 		this.renderRate();
 	},
-	"custom"(newer) {
-		if (newer) this.rateItems.forEach((item) => item.setAttribute("custom", newer));
-		else this.rateItems.forEach((item) => item.removeAttribute("custom"));
-	},
 	"disable"(newer) {
 		if (newer === "true") this.rateItems.forEach((item) => item.setAttribute("disable", newer));
 		else this.rateItems.forEach((item) => item.removeAttribute("disable"));

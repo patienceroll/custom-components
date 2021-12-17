@@ -9,12 +9,9 @@ export interface CpRateItemProps extends HTMLElement {
 	"disable"?: BooleanCharacter;
 	/** 是否是只读的评分 */
 	"readonly"?: BooleanCharacter;
-	/** 自定义图标的svg Xml字符串 */
-	"custom"?: string;
 }
 
-export interface CpRateProps
-	extends Pick<CpRateItemProps, "disable" | "readonly" | "custom" | "base-color" | "light-color"> {
+export interface CpRateProps extends Pick<CpRateItemProps, "disable" | "readonly" | "base-color" | "light-color"> {
 	/** 值为数字的字符串 */
 	value?: NumberCharacter;
 	/** 评分的精度,值不能大于单个评分所代表的值,不然会出现错误,默认5 */
@@ -24,7 +21,7 @@ export interface CpRateProps
 }
 
 /** rate item 监听的属性值 */
-export type CpRateItemObservedAttributes = "value" | "base-color" | "light-color" | "disable" | "readonly" | "custom";
+export type CpRateItemObservedAttributes = "value" | "base-color" | "light-color" | "disable" | "readonly";
 
 /** rate 监听的属性 */
 export type CpRateObservedAttributes =
@@ -33,6 +30,5 @@ export type CpRateObservedAttributes =
 	| "highest"
 	| "disable"
 	| "readonly"
-	| "custom"
 	| "base-color"
 	| "light-color";

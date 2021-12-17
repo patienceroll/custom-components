@@ -1,7 +1,4 @@
-import { style, watch, useLatestCall, createHtmlElement } from "../../utils";
-
-const svg =
-	"<svg viewBox='0 0 24 24'><path fill='currentcolor' d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z' /></svg>";
+import { style, watch, useLatestCall, createHtmlElement, createSvgElement, setAttributes } from "../../utils";
 
 @style({
 	".light svg": {
@@ -12,7 +9,7 @@ const svg =
 		height: "2em",
 	},
 	".light": {
-		position: " absolute",
+		position: "absolute",
 		overflow: "hidden",
 		top: "0",
 		left: "0",
@@ -55,9 +52,6 @@ const svg =
 		if (newer) this.cpBase.style.color = newer;
 		else this.cpBase.style.removeProperty("color");
 	},
-	"custom"(newer) {
-		this.setRateIcon(newer);
-	},
 })
 export default class CpRateItem extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
@@ -65,6 +59,9 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 	public cpBase: HTMLElement;
 	/** 评分点亮层 */
 	public cpLight: HTMLElement;
+	/** 默认的 svg 图标 */
+	public defaultRateSvg: SVGSVGElement;
+
 	constructor() {
 		super();
 		const shadowRoot = this.attachShadow({ mode: "open" });
@@ -75,8 +72,17 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 
 		this.cpBase.classList.add("base");
 		this.cpLight.classList.add("light");
+		const children = createHtmlElement("slot");
+		this.defaultRateSvg = createSvgElement("svg");
+		const defaultRateSvgPath = createSvgElement("path");
 
-		this.setRateIcon(this.getAttribute("custom"));
+		setAttributes(this.defaultRateSvg, { viewBox: "0 0 24 24" });
+		setAttributes(defaultRateSvgPath, {
+			fill: "currentcolor",
+			d: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",
+		});
+
+		children.addEventListener("slotchange", this.setRateSvg.bind(this));
 
 		this.addEventListener("click", (event) => {
 			const { offsetX } = event;
@@ -109,11 +115,28 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 			})
 		);
 
+		this.defaultRateSvg.appendChild(defaultRateSvgPath);
+		this.cpBase.appendChild(children);
 		shadowRoot.append(this.cpBase, this.cpLight);
 	}
-	/** 设置图标 */
-	setRateIcon(custom: string | null) {
-		this.cpBase.innerHTML = custom || svg;
-		this.cpLight.innerHTML = custom || svg;
+
+	/** 是否有 children  */
+	get hasChildren() {
+		return this.children.length !== 0;
+	}
+
+	/** 给评分添加svg图标 */
+	setRateSvg() {
+		if (this.hasChildren) {
+			this.cpLight.replaceChildren(this.children[0].cloneNode(true));
+			this.defaultRateSvg.remove();
+		} else {
+			this.cpBase.appendChild(this.defaultRateSvg);
+			this.cpLight.replaceChildren(this.defaultRateSvg.cloneNode(true));
+		}
+	}
+
+	connectedCallback() {
+		this.setRateSvg();
 	}
 }
