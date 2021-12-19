@@ -1,7 +1,7 @@
 import type CpAccordionItem from "./accordion-item";
-import type { AccordionEventDetail } from "./data";
+import type { AccordionEventDetail, AccordionItemEventDetail } from "./data";
 
-import { createHtmlElement, dispatchCustomEvent, style, watch } from "../../utils";
+import { addCustomEventListener, createHtmlElement, dispatchCustomEvent, style, watch } from "../../utils";
 
 @style({
 	":host": {
@@ -43,8 +43,9 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 		const slot = createHtmlElement("slot");
 
 		/** 监听单个折叠面板折叠 */
-		this.addEventListener("cp-accordion-item-fold", (event) => {
-			const key = (event.target as CpAccordionItem).getAttribute("key");
+
+		addCustomEventListener<AccordionItemEventDetail>(this, "cp-accordion-item-fold", (event) => {
+			const key = event.detail.accordionItem.getAttribute("key");
 			if (key) {
 				const newActiveKeys = this.realActiveKeys.filter((k) => k !== key);
 
@@ -61,9 +62,10 @@ export default class CpAccordion extends HTMLElement implements CustomElement {
 				});
 			}
 		});
+
 		/** 监听单个折叠面板展开 */
-		this.addEventListener("cp-accordion-item-expand", (event) => {
-			const key = (event.target as CpAccordionItem).getAttribute("key");
+		addCustomEventListener<AccordionItemEventDetail>(this, "cp-accordion-item-expand", (event) => {
+			const key = event.detail.accordionItem.getAttribute("key");
 			if (key) {
 				const newActiveKeys = this.realActiveKeys.concat(key);
 

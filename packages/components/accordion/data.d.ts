@@ -1,3 +1,5 @@
+import CpAccordionItem from "./accordion-item";
+
 /** 单个手风琴折叠面板props */
 export interface AccordionItemProps extends HTMLElement {
 	/** 是否展开 */
@@ -27,9 +29,13 @@ export interface AccordionProps extends HTMLElement {
 /** 单个折叠面板自定义事件 */
 export interface AccordionItemEventDetail {
 	/** 单个折叠面板折叠事件 */
-	"cp-accordion-item-fold": undefined;
+	"cp-accordion-item-fold": {
+		accordionItem: CpAccordionItem;
+	};
 	/** 单个折叠面板展开事件 */
-	"cp-accordion-item-expand": undefined;
+	"cp-accordion-item-expand": {
+		accordionItem: CpAccordionItem;
+	};
 }
 
 /** 折叠面板自定义事件 */
