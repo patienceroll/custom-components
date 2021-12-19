@@ -23,7 +23,7 @@ import type CpTabContext from "packages/components/tabs/tab-context";
 import type CpTabPanel from "packages/components/tabs/tab-panel";
 import type CpTabs from "packages/components/tabs/tabs";
 import type CpTag from "packages/components/tag/tag";
-import type CpInput from "packages/components/text-filed/text-filed";
+
 import type CpTooltip from "packages/components/tooltip/tooltip";
 
 interface HTMLS extends HTMLElementTagNameMap {
@@ -52,7 +52,6 @@ interface HTMLS extends HTMLElementTagNameMap {
 	"cp-tag": AttachedShadowRoot<CpTag>;
 	"cp-tooltip": AttachedShadowRoot<CpTooltip>;
 	"cp-popover": AttachedShadowRoot<CpPopover>;
-	"cp-text-field": AttachedShadowRoot<CpInput>;
 	"cp-switch": AttachedShadowRoot<CpSwitch>;
 	"cp-skeleton": AttachedShadowRoot<CpSkeleton>;
 }
