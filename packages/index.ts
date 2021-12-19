@@ -16,3 +16,4 @@ import "./components/avatar";
 import "./components/slider";
 import "./components/popover";
 import "./components/tooltip";
+import "./components/input";
