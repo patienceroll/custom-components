@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpTooltip from "./tooltip";
+import CpTooltip from './tooltip';
 
-defineCustomComponents("cp-tooltip", CpTooltip);
+defineCustomComponents('cp-tooltip', CpTooltip);

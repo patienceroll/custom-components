@@ -60,14 +60,14 @@
 					<cp-button id="cp-tooltip-controled-open"> 显示 </cp-button>
 					<cp-button id="cp-tooltip-controled-close"> 隐藏 </cp-button>
 					<script>
-						const tooltip = document.getElementById("cp-tooltip-controled");
-						const tooltipOpen = document.getElementById("cp-tooltip-controled-open");
-						const tooltipClose = document.getElementById("cp-tooltip-controled-close");
-						tooltipOpen.addEventListener("click", () => {
-							tooltip.setAttribute("open", "true");
+						const tooltip = document.getElementById('cp-tooltip-controled');
+						const tooltipOpen = document.getElementById('cp-tooltip-controled-open');
+						const tooltipClose = document.getElementById('cp-tooltip-controled-close');
+						tooltipOpen.addEventListener('click', () => {
+							tooltip.setAttribute('open', 'true');
 						});
-						tooltipClose.addEventListener("click", () => {
-							tooltip.setAttribute("open", "false");
+						tooltipClose.addEventListener('click', () => {
+							tooltip.setAttribute('open', 'false');
 						});
 					</script>
 				</cp-paper>

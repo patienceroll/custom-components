@@ -1,4 +1,4 @@
-import { formatKeyframes, formatStyle } from "../utils/style";
+import { formatKeyframes, formatStyle } from '../utils/style';
 
 /** 自定义组件样式装饰器 */
 export function style(param: CSSStyleObject) {
@@ -21,7 +21,7 @@ export function watch<Target extends HTMLElement = HTMLElement, watcherKey exten
 	return function (targetClass: typeof CustomElement) {
 		targetClass.observedAttributes = Object.keys(watcher);
 		targetClass.prototype.attributeChangedCallback = function (this: Target, attr, older, newer) {
-			if (typeof watcher[attr as watcherKey] === "function") watcher[attr as watcherKey].apply(this, [newer, older]);
+			if (typeof watcher[attr as watcherKey] === 'function') watcher[attr as watcherKey].apply(this, [newer, older]);
 		};
 	};
 }

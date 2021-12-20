@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpMask from "./mask";
+import CpMask from './mask';
 
-defineCustomComponents("cp-mask", CpMask);
+defineCustomComponents('cp-mask', CpMask);

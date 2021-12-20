@@ -1,4 +1,4 @@
-import { defineCustomComponents } from "../../utils";
-import CpSwitch from "./switch";
+import { defineCustomComponents } from '../../utils';
+import CpSwitch from './switch';
 
-defineCustomComponents("cp-switch", CpSwitch);
+defineCustomComponents('cp-switch', CpSwitch);

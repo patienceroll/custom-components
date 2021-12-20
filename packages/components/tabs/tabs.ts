@@ -1,37 +1,37 @@
-import { addCustomEventListener, dispatchCustomEvent, style, watch } from "../../utils";
-import type { TabEventDetail, TabsEventDetail } from "./data";
+import { addCustomEventListener, dispatchCustomEvent, style, watch } from '../../utils';
+import type { TabEventDetail, TabsEventDetail } from './data';
 
-import type CpTab from "./tab";
+import type CpTab from './tab';
 
 @style({
-	".cp-tabs-children": {
-		display: "flex",
+	'.cp-tabs-children': {
+		display: 'flex',
 	},
-	".cp-tabs-weapper-bar": {
-		position: "absolute",
-		width: "0",
-		bottom: "0",
-		left: "0",
-		height: "2px",
-		backgroundColor: "#007FFF",
-		transition: "left ease 500ms,width ease 300ms",
+	'.cp-tabs-weapper-bar': {
+		position: 'absolute',
+		width: '0',
+		bottom: '0',
+		left: '0',
+		height: '2px',
+		backgroundColor: '#007FFF',
+		transition: 'left ease 500ms,width ease 300ms',
 	},
-	".cp-tabs-wrapper": {
-		display: "flex",
-		position: "relative",
+	'.cp-tabs-wrapper': {
+		display: 'flex',
+		position: 'relative',
 	},
-	":host": {
-		display: "block",
-		wordSpacing: "0",
-		borderBottom: "1px solid rgba(0,0,0,0.12)",
+	':host': {
+		display: 'block',
+		wordSpacing: '0',
+		borderBottom: '1px solid rgba(0,0,0,0.12)',
 	},
 })
 @watch<AttachedShadowRoot<CpTabs>>({
-	"center"(newer) {
-		if (newer === "true") this.wrapper.style.justifyContent = "center";
-		else this.wrapper.style.removeProperty("justifyContent");
+	center(newer) {
+		if (newer === 'true') this.wrapper.style.justifyContent = 'center';
+		else this.wrapper.style.removeProperty('justifyContent');
 	},
-	"active-key"(newer) {
+	'active-key'(newer) {
 		if (newer) this.setRealActiveKey(newer);
 	},
 })
@@ -46,26 +46,26 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 
 	constructor() {
 		super();
-		this.realActiveKey = "";
-		const shadowRoot = this.attachShadow({ mode: "open" });
+		this.realActiveKey = '';
+		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpTabs.styleSheet];
 
-		this.wrapper = document.createElement("div");
-		this.wrapperBar = document.createElement("div");
-		const children = document.createElement("slot");
+		this.wrapper = document.createElement('div');
+		this.wrapperBar = document.createElement('div');
+		const children = document.createElement('slot');
 
-		this.wrapper.classList.add("cp-tabs-wrapper");
-		this.wrapperBar.classList.add("cp-tabs-weapper-bar");
-		children.classList.add("cp-tabs-children");
+		this.wrapper.classList.add('cp-tabs-wrapper');
+		this.wrapperBar.classList.add('cp-tabs-weapper-bar');
+		children.classList.add('cp-tabs-children');
 
-		addCustomEventListener<TabEventDetail>(this, "cp-tab-click", (event) => {
+		addCustomEventListener<TabEventDetail>(this, 'cp-tab-click', (event) => {
 			const { detail } = event;
 			if (detail.key) {
 				/** 如果是非受控的,更新内部维护的值,触发组件内部更新 */
-				if (!this.getAttribute("active-key")) this.setRealActiveKey(detail.key);
+				if (!this.getAttribute('active-key')) this.setRealActiveKey(detail.key);
 				dispatchCustomEvent<TabsEventDetail>(
 					this,
-					"change",
+					'change',
 					{ activeKey: detail.key, nativeEvent: event },
 					{ bubbles: true }
 				);
@@ -79,7 +79,7 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 
 	/** 当前tabs控制的tab节点 */
 	get tabNodes() {
-		return Array.from(this.children).filter((node) => node.localName === "cp-tab") as CpTab[];
+		return Array.from(this.children).filter((node) => node.localName === 'cp-tab') as CpTab[];
 	}
 
 	/** 激活某一个tab,其余tab应该被取消激活 */

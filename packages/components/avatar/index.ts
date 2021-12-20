@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpAvatar from "./avatar";
+import CpAvatar from './avatar';
 
-defineCustomComponents("cp-avatar", CpAvatar);
+defineCustomComponents('cp-avatar', CpAvatar);

@@ -2,7 +2,7 @@
  * @method 驼峰转中划线
  * @param str 需要转换的字符串
  */
-const humpToOverline = (str: keyof CSSProperty | string) => str.replace(/([A-Z])/g, "-$1").toLowerCase();
+const humpToOverline = (str: keyof CSSProperty | string) => str.replace(/([A-Z])/g, '-$1').toLowerCase();
 
 /**
  * @method 转换对象属性名为css类名
@@ -11,13 +11,16 @@ const humpToOverline = (str: keyof CSSProperty | string) => str.replace(/([A-Z])
  */
 const transitionStyle = (selector: string, style: CSSProperty) => {
 	let str = `${selector} {`;
+
 	Object.keys(style).forEach((key: keyof CSSProperty | string) => {
 		// 驼峰转中划线
 		const transitionKey = humpToOverline(key);
 		str += `${transitionKey}:${style[key as keyof CSSProperty]};`;
+		// if (key === "content") debugger;
+		if (key === 'content') console.log(str);
 	});
 
-	return str + "}";
+	return str + '}';
 };
 
 /**
@@ -28,6 +31,7 @@ const formatStyle = (style: CSSStyleObject) => {
 	const styleSheet = new CSSStyleSheet();
 	Object.keys(style).forEach((key) => {
 		const temp = humpToOverline(key as keyof CSSProperty);
+
 		styleSheet.insertRule(transitionStyle(temp, style[key]));
 	});
 
@@ -39,7 +43,7 @@ const formatKeyframes = (keyframes: KeyframeObject) => {
 	const styleSheet = new CSSStyleSheet();
 	const keyframeNames = Object.keys(keyframes);
 	keyframeNames.forEach((name) => {
-		let keyframeStepStr = "";
+		let keyframeStepStr = '';
 		Object.keys(keyframes[name]).forEach((step) => {
 			keyframeStepStr += transitionStyle(step, keyframes[name][step]);
 		});

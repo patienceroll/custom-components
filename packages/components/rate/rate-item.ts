@@ -6,60 +6,60 @@ import {
 	createSvgElement,
 	setAttributes,
 	dispatchCustomEvent,
-} from "../../utils";
-import type { CpRateItemEventDetail } from "./data";
+} from '../../utils';
+import type { CpRateItemEventDetail } from './data';
 
 @style({
-	".light svg": {
-		stroke: "currentcolor",
+	'.light svg': {
+		stroke: 'currentcolor',
 	},
-	".base svg,.light svg": {
-		width: "2em",
-		height: "2em",
+	'.base svg,.light svg': {
+		width: '2em',
+		height: '2em',
 	},
-	".light": {
-		position: "absolute",
-		overflow: "hidden",
-		top: "0",
-		left: "0",
-		color: "#faaf00",
+	'.light': {
+		position: 'absolute',
+		overflow: 'hidden',
+		top: '0',
+		left: '0',
+		color: '#faaf00',
 	},
-	".base,.light": {
-		width: "2em",
-		height: "2em",
-		color: "#bdbdbd",
+	'.base,.light': {
+		width: '2em',
+		height: '2em',
+		color: '#bdbdbd',
 	},
-	":host([disable='true'])": {
-		pointerEvents: "none",
-		opacity: "0.7",
+	':host([disable=\'true\'])': {
+		pointerEvents: 'none',
+		opacity: '0.7',
 	},
-	":host([readonly='true'])": {
-		pointerEvents: "none",
+	':host([readonly=\'true\'])': {
+		pointerEvents: 'none',
 	},
-	":host(:hover)": {
-		transform: "scale(1.2)",
+	':host(:hover)': {
+		transform: 'scale(1.2)',
 	},
-	":host": {
-		display: "inline-block",
-		verticalAlign: "top",
-		fontSize: "12px",
-		position: "relative",
-		transition: "transform 300ms ease",
-		cursor: "pointer",
+	':host': {
+		display: 'inline-block',
+		verticalAlign: 'top',
+		fontSize: '12px',
+		position: 'relative',
+		transition: 'transform 300ms ease',
+		cursor: 'pointer',
 	},
 })
 @watch<AttachedShadowRoot<CpRateItem>>({
-	"value"(newer) {
+	value(newer) {
 		if (newer) this.cpLight.style.width = `${newer}%`;
-		else this.cpLight.style.removeProperty("width");
+		else this.cpLight.style.removeProperty('width');
 	},
-	"light-color"(newer) {
+	'light-color'(newer) {
 		if (newer) this.cpLight.style.color = newer;
-		else this.cpLight.style.removeProperty("color");
+		else this.cpLight.style.removeProperty('color');
 	},
-	"base-color"(newer) {
+	'base-color'(newer) {
 		if (newer) this.cpBase.style.color = newer;
-		else this.cpBase.style.removeProperty("color");
+		else this.cpBase.style.removeProperty('color');
 	},
 })
 export default class CpRateItem extends HTMLElement implements CustomElement {
@@ -73,32 +73,32 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 
 	constructor() {
 		super();
-		const shadowRoot = this.attachShadow({ mode: "open" });
+		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpRateItem.styleSheet];
 
-		this.cpBase = createHtmlElement("div");
-		this.cpLight = createHtmlElement("div");
+		this.cpBase = createHtmlElement('div');
+		this.cpLight = createHtmlElement('div');
 
-		this.cpBase.classList.add("base");
-		this.cpLight.classList.add("light");
-		const children = createHtmlElement("slot");
-		this.defaultRateSvg = createSvgElement("svg");
-		const defaultRateSvgPath = createSvgElement("path");
+		this.cpBase.classList.add('base');
+		this.cpLight.classList.add('light');
+		const children = createHtmlElement('slot');
+		this.defaultRateSvg = createSvgElement('svg');
+		const defaultRateSvgPath = createSvgElement('path');
 
-		setAttributes(this.defaultRateSvg, { viewBox: "0 0 24 24" });
+		setAttributes(this.defaultRateSvg, { viewBox: '0 0 24 24' });
 		setAttributes(defaultRateSvgPath, {
-			fill: "currentcolor",
-			d: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",
+			fill: 'currentcolor',
+			d: 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z',
 		});
 
-		children.addEventListener("slotchange", this.setRateSvg.bind(this));
+		children.addEventListener('slotchange', this.setRateSvg.bind(this));
 
-		this.addEventListener("click", (event) => {
+		this.addEventListener('click', (event) => {
 			const { offsetX } = event;
 			const { clientWidth } = this;
 			dispatchCustomEvent<CpRateItemEventDetail>(
 				this,
-				"cp-rate-item-rate",
+				'cp-rate-item-rate',
 				{
 					nativeEvent: event,
 					value: Math.abs(offsetX / clientWidth),
@@ -109,13 +109,13 @@ export default class CpRateItem extends HTMLElement implements CustomElement {
 		});
 
 		this.addEventListener(
-			"mousemove",
+			'mousemove',
 			useLatestCall((event) => {
 				const { offsetX } = event;
 				const { clientWidth } = this;
 				dispatchCustomEvent<CpRateItemEventDetail>(
 					this,
-					"cp-rate-item-rate",
+					'cp-rate-item-rate',
 					{ nativeEvent: event, value: Math.abs(offsetX / clientWidth), rateItem: this },
 					{ bubbles: true }
 				);

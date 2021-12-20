@@ -13,7 +13,7 @@
 			cp-button {
 				width: 100px;
 			}
-			span[slot="popover-context"] {
+			span[slot='popover-context'] {
 				display: block;
 				background-color: #eee;
 				padding: 20px;
@@ -42,15 +42,15 @@
 					<cp-button id="cp-popover-hide"> 隐藏悬浮气泡 </cp-button>
 				</cp-paper>
 				<script>
-					const cpPopover = document.getElementById("cp-popover");
-					const show = document.getElementById("cp-popover-show");
-					const hide = document.getElementById("cp-popover-hide");
+					const cpPopover = document.getElementById('cp-popover');
+					const show = document.getElementById('cp-popover-show');
+					const hide = document.getElementById('cp-popover-hide');
 
-					show.addEventListener("click", () => {
-						cpPopover.setAttribute("open", "true");
+					show.addEventListener('click', () => {
+						cpPopover.setAttribute('open', 'true');
 					});
-					hide.addEventListener("click", () => {
-						cpPopover.setAttribute("open", "false");
+					hide.addEventListener('click', () => {
+						cpPopover.setAttribute('open', 'false');
 					});
 				</script>
 			</li>

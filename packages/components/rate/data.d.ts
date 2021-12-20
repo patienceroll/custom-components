@@ -1,21 +1,21 @@
-import type CpRateItem from "./rate-item";
+import type CpRateItem from './rate-item';
 
 export interface CpRateItemProps extends HTMLElement {
 	/** 值为 0 ~ 100 的字符串 */
-	"value"?: NumberCharacter;
+	value?: NumberCharacter;
 	/** 单个评分的基础颜色 */
-	"base-color"?: CSSProperty["color"];
+	'base-color'?: CSSProperty['color'];
 	/** 点亮时的颜色 */
-	"light-color"?: CSSProperty["color"];
+	'light-color'?: CSSProperty['color'];
 	/** 是否是禁用的单个评分 */
-	"disable"?: BooleanCharacter;
+	disable?: BooleanCharacter;
 	/** 是否是只读的评分 */
-	"readonly"?: BooleanCharacter;
+	readonly?: BooleanCharacter;
 }
 
 export interface CpRateItemEventDetail {
 	/** 单个评分 评分事件 */
-	"cp-rate-item-rate": {
+	'cp-rate-item-rate': {
 		nativeEvent: Event;
 		value: number;
 		/** 触发这个事件的 rateItem */
@@ -34,7 +34,7 @@ export interface CpRateEventDetail {
 	};
 }
 
-export interface CpRateProps extends Pick<CpRateItemProps, "disable" | "readonly" | "base-color" | "light-color"> {
+export interface CpRateProps extends Pick<CpRateItemProps, 'disable' | 'readonly' | 'base-color' | 'light-color'> {
 	/** 值为数字的字符串 */
 	value?: NumberCharacter;
 	/** 评分的精度,值不能大于单个评分所代表的值,不然会出现错误,默认5 */
@@ -44,14 +44,14 @@ export interface CpRateProps extends Pick<CpRateItemProps, "disable" | "readonly
 }
 
 /** rate item 监听的属性值 */
-export type CpRateItemObservedAttributes = "value" | "base-color" | "light-color" | "disable" | "readonly";
+export type CpRateItemObservedAttributes = 'value' | 'base-color' | 'light-color' | 'disable' | 'readonly';
 
 /** rate 监听的属性 */
 export type CpRateObservedAttributes =
-	| "value"
-	| "precision"
-	| "highest"
-	| "disable"
-	| "readonly"
-	| "base-color"
-	| "light-color";
+	| 'value'
+	| 'precision'
+	| 'highest'
+	| 'disable'
+	| 'readonly'
+	| 'base-color'
+	| 'light-color';

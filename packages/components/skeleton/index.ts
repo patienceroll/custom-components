@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpSkeleton from "./skeleton";
+import CpSkeleton from './skeleton';
 
-defineCustomComponents("cp-skeleton", CpSkeleton);
+defineCustomComponents('cp-skeleton', CpSkeleton);

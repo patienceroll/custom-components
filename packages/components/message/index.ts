@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpMessage from "./message";
+import CpMessage from './message';
 
-defineCustomComponents("cp-message", CpMessage);
+defineCustomComponents('cp-message', CpMessage);

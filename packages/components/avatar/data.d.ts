@@ -1,3 +1,3 @@
 export type CpAvatarProps = HTMLElement;
 
-export type CpAvatarObservedAttributes = "";
+export type CpAvatarObservedAttributes = '';

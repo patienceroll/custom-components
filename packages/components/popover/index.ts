@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpPopover from "./popover";
+import CpPopover from './popover';
 
-defineCustomComponents("cp-popover", CpPopover);
+defineCustomComponents('cp-popover', CpPopover);

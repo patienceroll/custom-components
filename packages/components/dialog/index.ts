@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpDialog from "./dialog";
+import CpDialog from './dialog';
 
-defineCustomComponents("cp-dialog", CpDialog);
+defineCustomComponents('cp-dialog', CpDialog);

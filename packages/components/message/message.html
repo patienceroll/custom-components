@@ -21,12 +21,12 @@
 		<script src="../index.js" type="module"></script>
 
 		<script>
-			const btns = document.getElementsByClassName("button");
-			const msgs = document.getElementsByClassName("message");
+			const btns = document.getElementsByClassName('button');
+			const msgs = document.getElementsByClassName('message');
 
 			for (let i = 0; i < btns.length; i++) {
 				btns[i].onclick = function () {
-					msgs[i].showMessage({ message: "测试消息", duration: 2000 });
+					msgs[i].showMessage({ message: '测试消息', duration: 2000 });
 				};
 			}
 		</script>

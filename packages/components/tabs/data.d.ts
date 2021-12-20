@@ -9,9 +9,9 @@ export interface TabProps extends HTMLElement {
 /** tabs选项的属性 */
 export interface TabsProps extends HTMLElement {
 	/** 当前激活的tab key */
-	"active-key"?: string;
+	'active-key'?: string;
 	/** tab是否居中显示 */
-	"center"?: BooleanCharacter;
+	center?: BooleanCharacter;
 }
 
 /** tabPanel 的属性 */
@@ -25,12 +25,12 @@ export interface TabPanelProps extends HTMLElement {
 /** tabContext 属性 */
 export interface TabContext extends HTMLElement {
 	/** 当前激活的tab key */
-	"active-key"?: string;
+	'active-key'?: string;
 }
 
 /** tab 选项事件详情 */
 export interface TabEventDetail {
-	"cp-tab-click": {
+	'cp-tab-click': {
 		nativeEvent: Event;
 		key: string | null;
 	};
@@ -44,10 +44,10 @@ export interface TabsEventDetail {
 	};
 }
 
-export type CpTabContextObservedAttributes = "active-key";
+export type CpTabContextObservedAttributes = 'active-key';
 
-export type CpTabsObservedAttributes = "center" | "active-key";
+export type CpTabsObservedAttributes = 'center' | 'active-key';
 
-export type CpTabObservedAttributes = "key";
+export type CpTabObservedAttributes = 'key';
 
-export type CpTabPanelObservedAttributes = "active";
+export type CpTabPanelObservedAttributes = 'active';
