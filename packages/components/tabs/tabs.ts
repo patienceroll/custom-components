@@ -74,7 +74,6 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 
 		this.wrapper.append(children, this.wrapperBar);
 		shadowRoot.append(this.wrapper);
-		console.dir(this);
 	}
 
 	/** 当前tabs控制的tab节点 */

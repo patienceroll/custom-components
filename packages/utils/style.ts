@@ -16,8 +16,6 @@ const transitionStyle = (selector: string, style: CSSProperty) => {
 		// 驼峰转中划线
 		const transitionKey = humpToOverline(key);
 		str += `${transitionKey}:${style[key as keyof CSSProperty]};`;
-		// if (key === "content") debugger;
-		if (key === 'content') console.log(str);
 	});
 
 	return str + '}';

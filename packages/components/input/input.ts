@@ -1,4 +1,5 @@
 import { createHtmlElement, setAttributes, style, watch } from 'packages/utils';
+import type { CpInputProps } from './data';
 
 @style({
 	'.label': {
@@ -14,20 +15,32 @@ import { createHtmlElement, setAttributes, style, watch } from 'packages/utils';
 		outline: 'none',
 		fontSize: 'inherit',
 	},
+	'.input-wrapper-focused::after': {
+		transform: 'scaleX(1)',
+	},
+	'.input-wrapper-standard::after': {
+		borderBottom: '2px solid #1976d2',
+		transform: 'scaleX(0)',
+		transformOrigin: 'center',
+		transition: 'transform 200ms cubic-bezier(0.0, 0, 0.2, 1)',
+	},
 	'.input-wrapper-standard::before': {
 		borderBottom: '1px solid rgba(0, 0, 0, 0.42)',
 	},
 	'.input-wrapper-standard': {
 		marginTop: '1em',
 	},
-	'.input-wrapper::before': {
+	'.input-wrapper::before,.input-wrapper::after': {
 		position: 'absolute',
-		top: '0',
 		left: '0',
 		right: '0',
 		bottom: '0',
 		content: '"\\00a0"',
 		boxSizing: 'inherit',
+		pointerEvents: 'none',
+	},
+	'.input-wrapper:hover::before': {
+		borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
 	},
 	'.input-wrapper': {
 		display: 'inline-block',
@@ -42,8 +55,8 @@ import { createHtmlElement, setAttributes, style, watch } from 'packages/utils';
 	},
 })
 @watch<CpInput>({
-	variant(newer) {
-		this.setVariant(newer);
+	variant() {
+		this.setVariant();
 	},
 })
 export default class CpInput extends HTMLElement implements CustomElement {
@@ -69,23 +82,30 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		setAttributes(this.cpInputLabel, { for: 'input', class: 'label' });
 		setAttributes(this.cpInputInputWrapper, { class: 'input-wrapper' });
 
+		this.cpInputInput.addEventListener('focus', () => {
+			this.cpInputInputWrapper.classList.add('input-wrapper-focused');
+		});
+		this.cpInputInput.addEventListener('blur', () => {
+			this.cpInputInputWrapper.classList.remove('input-wrapper-focused');
+		});
+
 		this.cpInputLabel.appendChild(labelContext);
 		this.cpInputInputWrapper.appendChild(this.cpInputInput);
 		shadowRoot.append(this.cpInputLabel, this.cpInputInputWrapper);
 	}
 
 	/** 设置输入框样式,默认 standard */
-	setVariant(variant?: string | null) {
+	setVariant() {
 		this.cpInputInput.classList.remove('input-outlined', 'input-filled', 'input-standard');
 		this.cpInputInputWrapper.classList.remove(
 			'input-wrapper-outlined',
 			'input-wrapper-filled',
 			'input-wrapper-standard'
 		);
-		if (variant === 'outlined') {
+		if (this.cpInputVariant === 'outlined') {
 			this.cpInputInput.classList.add('input-outlined');
 			this.cpInputInputWrapper.classList.add('input-wrapper-outlined');
-		} else if (variant === 'filled') {
+		} else if (this.cpInputVariant === 'filled') {
 			this.cpInputInput.classList.add('input-filled');
 			this.cpInputInputWrapper.classList.add('input-wrapper-filled');
 		} else {
@@ -96,5 +116,10 @@ export default class CpInput extends HTMLElement implements CustomElement {
 
 	connectedCallback() {
 		this.setVariant();
+	}
+
+	/** 获取当前组件变体类型 */
+	get cpInputVariant() {
+		return (this.getAttribute('variant') || 'standard') as NonNullable<CpInputProps['variant']>;
 	}
 }
