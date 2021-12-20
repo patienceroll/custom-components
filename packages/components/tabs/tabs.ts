@@ -1,5 +1,5 @@
-import { dispatchCustomEvent, style, watch } from "../../utils";
-import type { TabsEventDetail } from "./data";
+import { addCustomEventListener, dispatchCustomEvent, style, watch } from "../../utils";
+import type { TabEventDetail, TabsEventDetail } from "./data";
 
 import type CpTab from "./tab";
 
@@ -58,12 +58,17 @@ export default class CpTabs extends HTMLElement implements CustomElement {
 		this.wrapperBar.classList.add("cp-tabs-weapper-bar");
 		children.classList.add("cp-tabs-children");
 
-		this.addEventListener("cp-tab-click", (event) => {
-			const { detail } = event as CustomEvent<{ nativeEvent: MouseEvent; key: string | null }>;
+		addCustomEventListener<TabEventDetail>(this, "cp-tab-click", (event) => {
+			const { detail } = event;
 			if (detail.key) {
 				/** 如果是非受控的,更新内部维护的值,触发组件内部更新 */
 				if (!this.getAttribute("active-key")) this.setRealActiveKey(detail.key);
-				dispatchCustomEvent<TabsEventDetail>(this, "change", { activeKey: detail.key, nativeEvent: event });
+				dispatchCustomEvent<TabsEventDetail>(
+					this,
+					"change",
+					{ activeKey: detail.key, nativeEvent: event },
+					{ bubbles: true }
+				);
 			}
 		});
 

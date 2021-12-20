@@ -1,7 +1,8 @@
-import { style, watch } from "../../utils";
+import { addCustomEventListener, style, watch } from "../../utils";
 
 import type CpTabs from "./tabs";
 import type CpTabPanel from "./tab-panel";
+import { TabsEventDetail, TabsProps } from "./data";
 
 @style({
 	":host": {
@@ -29,8 +30,8 @@ export default class CpTabContext extends HTMLElement implements CustomElement {
 		if (tabNodes && tabNodes.length !== 0) this.realActivekey = tabNodes[0].key || "";
 		else this.realActivekey = "";
 
-		this.addEventListener("change", ($event) => {
-			const { detail } = $event as CustomEvent<{ activeKey: string }>;
+		addCustomEventListener<TabsEventDetail>(this, "change", (event) => {
+			const { detail } = event;
 			/** 如果是非受控的,更新内部维护的值,触发组件内部更新 */
 			if (!this.getAttribute("active-key")) this.setRealActiveKey(detail.activeKey);
 		});

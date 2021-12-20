@@ -28,12 +28,15 @@ export interface TabContext extends HTMLElement {
 	"active-key"?: string;
 }
 
+/** tab 选项事件详情 */
 export interface TabEventDetail {
 	"cp-tab-click": {
 		nativeEvent: Event;
 		key: string | null;
 	};
 }
+
+/** tab 选项控制器事件详情 */
 export interface TabsEventDetail {
 	change: {
 		activeKey: string;
