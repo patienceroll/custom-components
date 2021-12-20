@@ -2,7 +2,7 @@ import { addCustomEventListener, style, watch } from "../../utils";
 
 import type CpTabs from "./tabs";
 import type CpTabPanel from "./tab-panel";
-import { TabsEventDetail, TabsProps } from "./data";
+import type { TabsEventDetail } from "./data";
 
 @style({
 	":host": {

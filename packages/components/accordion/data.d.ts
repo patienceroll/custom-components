@@ -1,4 +1,4 @@
-import CpAccordionItem from "./accordion-item";
+import type CpAccordionItem from "./accordion-item";
 
 /** 单个手风琴折叠面板props */
 export interface AccordionItemProps extends HTMLElement {
