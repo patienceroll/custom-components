@@ -2,9 +2,15 @@ import { createHtmlElement, setAttributes, style, watch } from 'packages/utils';
 import type { CpInputProps } from './data';
 
 @style({
+	'.label-standard-focused': {},
 	'.label': {
 		display: 'inline-block',
 		position: 'absolute',
+		top: '0',
+		left: '0',
+		fontSize: '1em',
+		height: '1.4375em',
+		transform: 'translate()',
 	},
 	'.input-standard': {
 		height: '1.4375em',
@@ -14,8 +20,9 @@ import type { CpInputProps } from './data';
 		border: 'none',
 		outline: 'none',
 		fontSize: 'inherit',
+		backgroundColor: 'transparent',
 	},
-	'.input-wrapper-focused::after': {
+	'.input-wrapper-standard-focused::after': {
 		transform: 'scaleX(1)',
 	},
 	'.input-wrapper-standard::after': {
@@ -82,12 +89,8 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		setAttributes(this.cpInputLabel, { for: 'input', class: 'label' });
 		setAttributes(this.cpInputInputWrapper, { class: 'input-wrapper' });
 
-		this.cpInputInput.addEventListener('focus', () => {
-			this.cpInputInputWrapper.classList.add('input-wrapper-focused');
-		});
-		this.cpInputInput.addEventListener('blur', () => {
-			this.cpInputInputWrapper.classList.remove('input-wrapper-focused');
-		});
+		this.cpInputInput.addEventListener('focus', this.addFocusStyle.bind(this));
+		this.cpInputInput.addEventListener('blur', this.clearFocusStyle.bind(this));
 
 		this.cpInputLabel.appendChild(labelContext);
 		this.cpInputInputWrapper.appendChild(this.cpInputInput);
@@ -121,5 +124,34 @@ export default class CpInput extends HTMLElement implements CustomElement {
 	/** 获取当前组件变体类型 */
 	get cpInputVariant() {
 		return (this.getAttribute('variant') || 'standard') as NonNullable<CpInputProps['variant']>;
+	}
+
+	/** 聚焦的时候,添加css */
+	addFocusStyle() {
+		this.clearFocusStyle();
+		switch (this.cpInputVariant) {
+			case 'filled':
+				this.cpInputInputWrapper.classList.add('input-wrapper-filled-focused');
+				this.cpInputLabel.classList.add('label-filled-focused');
+				break;
+			case 'outlined':
+				this.cpInputInputWrapper.classList.add('input-wrapper-outlined-focused');
+				this.cpInputLabel.classList.add('label-outlined-focused');
+				break;
+			case 'standard':
+			default:
+				this.cpInputInputWrapper.classList.add('input-wrapper-standard-focused');
+				this.cpInputLabel.classList.add('label-standard-focused');
+		}
+	}
+
+	/** 清除聚焦状态下的css */
+	clearFocusStyle() {
+		this.cpInputInputWrapper.classList.remove(
+			'input-wrapper-standard-focused',
+			'input-wrapper-filled-focused',
+			'input-wrapper-outlined-focused'
+		);
+		this.cpInputLabel.classList.remove('label-standard-focused', 'label-filled-focused', 'label-outlined-focused');
 	}
 }
