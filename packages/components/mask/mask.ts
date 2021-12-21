@@ -71,14 +71,15 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	static styleSheet: CSSStyleSheet;
 	static keyframesSheet: CSSStyleSheet;
 
-	constructor() {
+	constructor(showMask = true) {
 		super();
 		const shadowRoot = this.attachShadow({ mode: 'open' });
 		const closable = this.getAttribute('mask-closable');
+
 		const mask = document.createElement('div');
 		const maskContent = document.createElement('div');
 		maskContent.classList.add('cp-mask-content');
-		mask.classList.add('cp-mask');
+		mask.classList.add(showMask ? 'cp-mask' : 'no-mask');
 		this.maskContent = maskContent;
 		this.#maskNode = mask;
 

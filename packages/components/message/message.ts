@@ -55,8 +55,7 @@ export default class CpMessage extends CpMask implements CustomElement {
 	static keyframesSheet: CSSStyleSheet;
 
 	constructor() {
-		super();
-
+		super(false);
 		const message = document.createElement('div');
 		this.maskContent.classList.add('cp-message-content');
 		this.#message = message;
@@ -74,9 +73,9 @@ export default class CpMessage extends CpMask implements CustomElement {
 	showMessage({ message, duration = 3000 }: MessageInt) {
 		this.#message.innerHTML = message;
 		this.show();
-		clearTimeout(this.#timer as number);
 		this.#timer = setTimeout(() => {
 			this.close();
+			clearTimeout(this.#timer as number);
 		}, duration);
 	}
 
