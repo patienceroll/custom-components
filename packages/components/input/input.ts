@@ -15,24 +15,10 @@ import type { CpInputProps } from './data';
 		transform: 'translate(0,1.25em) scale(1)',
 		transformOrigin: 'top left',
 		transition: 'transform ease 200ms',
-		color: 'rgba(0,0,0,0.6)',
-	},
-	'.label': {
-		display: 'inline-block',
-		position: 'absolute',
-		top: '0',
-		left: '0',
-		fontSize: '1em',
 	},
 	'.input-standard': {
 		height: '1.4375em',
 		padding: '0.25em 0 0.3125em',
-	},
-	'.input': {
-		border: 'none',
-		outline: 'none',
-		fontSize: 'inherit',
-		backgroundColor: 'transparent',
 	},
 	'.input-wrapper-standard-focused::after': {
 		transform: 'scaleX(1)',
@@ -43,13 +29,13 @@ import type { CpInputProps } from './data';
 		transformOrigin: 'center',
 		transition: 'transform 200ms cubic-bezier(0.0, 0, 0.2, 1)',
 	},
+	'.input-wrapper-standard:hover::before': {
+		borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+	},
 	'.input-wrapper-standard::before': {
 		borderBottom: '1px solid rgba(0, 0, 0, 0.42)',
 	},
-	'.input-wrapper-standard': {
-		marginTop: '1em',
-	},
-	'.input-wrapper::before,.input-wrapper::after': {
+	'.input-wrapper-standard::before,.input-wrapper-standard::after': {
 		position: 'absolute',
 		left: '0',
 		right: '0',
@@ -58,18 +44,33 @@ import type { CpInputProps } from './data';
 		boxSizing: 'inherit',
 		pointerEvents: 'none',
 	},
-	'.input-wrapper:hover::before': {
-		borderBottom: '2px solid rgba(0, 0, 0, 0.87)',
+	'.input-wrapper-standard': {
+		marginTop: '1em',
+	},
+	'.input': {
+		border: 'none',
+		outline: 'none',
+		fontSize: 'inherit',
+		backgroundColor: 'transparent',
 	},
 	'.input-wrapper': {
 		display: 'inline-block',
 		position: 'relative',
 		boxSizing: 'border-box',
 	},
+	'.label': {
+		display: 'inline-block',
+		position: 'absolute',
+		top: '0',
+		left: '0',
+		fontSize: '1em',
+		color: 'rgba(0,0,0,0.6)',
+	},
 	':host': {
 		display: 'inline-block',
 		position: 'relative',
 		height: '3em',
+		margin: '0.5em',
 		color: '#1976d2',
 		fontSize: '16px',
 	},
