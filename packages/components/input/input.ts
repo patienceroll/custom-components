@@ -2,15 +2,27 @@ import { createHtmlElement, setAttributes, style, watch } from 'packages/utils';
 import type { CpInputProps } from './data';
 
 @style({
-	'.label-standard-focused': {},
+	'.label-standard-inserted': {
+		transform: 'translate(0,0) scale(0.75)',
+	},
+	'.label-standard-focused': {
+		color: 'currentColor',
+		transform: 'translate(0,0) scale(0.75)',
+	},
+	'.label-standard': {
+		height: '1.4375em',
+		lineHeight: '1.4375em',
+		transform: 'translate(0,1.25em) scale(1)',
+		transformOrigin: 'top left',
+		transition: 'transform ease 200ms',
+		color: 'rgba(0,0,0,0.6)',
+	},
 	'.label': {
 		display: 'inline-block',
 		position: 'absolute',
 		top: '0',
 		left: '0',
 		fontSize: '1em',
-		height: '1.4375em',
-		transform: 'translate()',
 	},
 	'.input-standard': {
 		height: '1.4375em',
@@ -26,7 +38,7 @@ import type { CpInputProps } from './data';
 		transform: 'scaleX(1)',
 	},
 	'.input-wrapper-standard::after': {
-		borderBottom: '2px solid #1976d2',
+		borderBottom: '2px solid currentColor',
 		transform: 'scaleX(0)',
 		transformOrigin: 'center',
 		transition: 'transform 200ms cubic-bezier(0.0, 0, 0.2, 1)',
@@ -58,6 +70,7 @@ import type { CpInputProps } from './data';
 		display: 'inline-block',
 		position: 'relative',
 		height: '3em',
+		color: '#1976d2',
 		fontSize: '16px',
 	},
 })
@@ -90,7 +103,7 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		setAttributes(this.cpInputInputWrapper, { class: 'input-wrapper' });
 
 		this.cpInputInput.addEventListener('focus', this.addFocusStyle.bind(this));
-		this.cpInputInput.addEventListener('blur', this.clearFocusStyle.bind(this));
+		this.cpInputInput.addEventListener('blur', this.onInputBlur.bind(this));
 
 		this.cpInputLabel.appendChild(labelContext);
 		this.cpInputInputWrapper.appendChild(this.cpInputInput);
@@ -99,6 +112,7 @@ export default class CpInput extends HTMLElement implements CustomElement {
 
 	/** 设置输入框样式,默认 standard */
 	setVariant() {
+		this.cpInputLabel.classList.remove('label-standard', 'label-outlined', 'label-filled');
 		this.cpInputInput.classList.remove('input-outlined', 'input-filled', 'input-standard');
 		this.cpInputInputWrapper.classList.remove(
 			'input-wrapper-outlined',
@@ -106,12 +120,15 @@ export default class CpInput extends HTMLElement implements CustomElement {
 			'input-wrapper-standard'
 		);
 		if (this.cpInputVariant === 'outlined') {
+			this.cpInputLabel.classList.add('label-outlined');
 			this.cpInputInput.classList.add('input-outlined');
 			this.cpInputInputWrapper.classList.add('input-wrapper-outlined');
 		} else if (this.cpInputVariant === 'filled') {
+			this.cpInputLabel.classList.add('label-filled');
 			this.cpInputInput.classList.add('input-filled');
 			this.cpInputInputWrapper.classList.add('input-wrapper-filled');
 		} else {
+			this.cpInputLabel.classList.add('label-standard');
 			this.cpInputInput.classList.add('input-standard');
 			this.cpInputInputWrapper.classList.add('input-wrapper-standard');
 		}
@@ -129,6 +146,7 @@ export default class CpInput extends HTMLElement implements CustomElement {
 	/** 聚焦的时候,添加css */
 	addFocusStyle() {
 		this.clearFocusStyle();
+
 		switch (this.cpInputVariant) {
 			case 'filled':
 				this.cpInputInputWrapper.classList.add('input-wrapper-filled-focused');
@@ -153,5 +171,31 @@ export default class CpInput extends HTMLElement implements CustomElement {
 			'input-wrapper-outlined-focused'
 		);
 		this.cpInputLabel.classList.remove('label-standard-focused', 'label-filled-focused', 'label-outlined-focused');
+	}
+
+	/** 判断当前输入框是否输入了数据,根据不同情况进行样式操作 */
+	setInputInsertStyle() {
+		const { value } = this.cpInputInput;
+		if (value.length === 0)
+			this.cpInputLabel.classList.remove('label-standard-inserted', 'label-filled-inserted', 'label-outlined-inserted');
+		else {
+			switch (this.cpInputVariant) {
+				case 'filled':
+					this.cpInputLabel.classList.add('label-filled-inserted');
+					break;
+				case 'outlined':
+					this.cpInputLabel.classList.add('label-outlined-inserted');
+					break;
+				case 'standard':
+				default:
+					this.cpInputLabel.classList.add('label-standard-inserted');
+			}
+		}
+	}
+
+	/** 当 input元素失去焦点 */
+	onInputBlur() {
+		this.clearFocusStyle();
+		this.setInputInsertStyle();
 	}
 }
