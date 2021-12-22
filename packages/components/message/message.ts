@@ -71,7 +71,11 @@ export default class CpMessage extends CpMask implements CustomElement {
 
 	#timer = 0;
 	showMessage({ message, duration = 3000 }: MessageInt) {
-		this.#message.innerHTML = message;
+		if (message instanceof HTMLElement) {
+			this.#message.append(message);
+		} else {
+			this.#message.innerHTML = message;
+		}
 		this.show();
 		this.#timer = setTimeout(() => {
 			this.close();
