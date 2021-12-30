@@ -5,12 +5,27 @@ import type { CpInputProps } from './data';
 	/**
 	 * ----------------------------------       outlined 样式       -----------------------------------
 	 */
-	'.input-outlined': {},
-	'.fieldset-outlined': {},
-	'.input-wrapper-outlined:hover': {
-		// border: '2px solid rgba(0, 0, 0, 0.87)',
+	'.input-outlined': {
+		height: '3.5em',
+		padding: '1.03125em 0.875em',
+		boxSizing: 'border-box',
 	},
-	'.input-wrapper-outlined': {},
+	'.fieldset-outlined': {
+		position: 'absolute',
+		margin: '0',
+		inset: '-0.3215em 0 0',
+		pointerEvents: 'none',
+		borderRadius: 'inherit',
+		borderStyle: 'solid',
+	},
+	'.input-wrapper-outlined-focused': {},
+	'.input-wrapper-outlined:hover':{
+		
+	},
+	'.input-wrapper-outlined': {
+		boxSizing: 'border-box',
+		border: ''
+	},
 	':host([variant="outlined"])': {
 		boxSizing: 'border-box',
 		height: '3.5em',
@@ -111,10 +126,10 @@ export default class CpInput extends HTMLElement implements CustomElement {
 	public cpInputInputWrapper: HTMLDivElement;
 	/** 输入框组件Label元素 */
 	public cpInputLabel: HTMLLabelElement;
-	/** 输入框组件 fieldset 元素 */
-	public cpInputFieldset: HTMLFieldSetElement;
-	/** 输入框组件 legend 元素 */
-	public cpInputLegend: HTMLLegendElement;
+	// /** 输入框组件 fieldset 元素 */
+	// public cpInputFieldset: HTMLFieldSetElement;
+	// /** 输入框组件 legend 元素 */
+	// public cpInputLegend: HTMLLegendElement;
 	constructor() {
 		super();
 
@@ -125,8 +140,8 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		this.cpInputLabel = createHtmlElement('label');
 		this.cpInputInputWrapper = createHtmlElement('div');
 		const labelContext = createHtmlElement('slot');
-		this.cpInputFieldset = createHtmlElement('fieldset');
-		this.cpInputLegend = createHtmlElement('legend');
+		// this.cpInputFieldset = createHtmlElement('fieldset');
+		// this.cpInputLegend = createHtmlElement('legend');
 
 		setAttributes(this.cpInputInput, { id: 'input', class: 'input' });
 		setAttributes(this.cpInputLabel, { for: 'input', class: 'label' });
@@ -136,8 +151,9 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		this.cpInputInput.addEventListener('blur', this.onInputBlur.bind(this));
 
 		this.cpInputLabel.appendChild(labelContext);
-		this.cpInputFieldset.appendChild(this.cpInputLegend);
-		this.cpInputInputWrapper.append(this.cpInputInput, this.cpInputFieldset);
+		// this.cpInputFieldset.appendChild(this.cpInputLegend);
+		// this.cpInputInputWrapper.append(this.cpInputInput, this.cpInputFieldset);
+		this.cpInputInputWrapper.append(this.cpInputInput);
 		shadowRoot.append(this.cpInputLabel, this.cpInputInputWrapper);
 	}
 
@@ -150,22 +166,22 @@ export default class CpInput extends HTMLElement implements CustomElement {
 			'input-wrapper-filled',
 			'input-wrapper-standard'
 		);
-		this.cpInputFieldset.classList.remove('fieldset-standard', 'fieldset-outlined', 'fieldset-filled');
+		// this.cpInputFieldset.classList.remove('fieldset-standard', 'fieldset-outlined', 'fieldset-filled');
 		if (this.cpInputVariant === 'outlined') {
 			this.cpInputLabel.classList.add('label-outlined');
 			this.cpInputInput.classList.add('input-outlined');
 			this.cpInputInputWrapper.classList.add('input-wrapper-outlined');
-			this.cpInputFieldset.classList.add('fieldset-outlined');
+			// this.cpInputFieldset.classList.add('fieldset-outlined');
 		} else if (this.cpInputVariant === 'filled') {
 			this.cpInputLabel.classList.add('label-filled');
 			this.cpInputInput.classList.add('input-filled');
 			this.cpInputInputWrapper.classList.add('input-wrapper-filled');
-			this.cpInputFieldset.classList.add('fieldset-filled');
+			// this.cpInputFieldset.classList.add('fieldset-filled');
 		} else {
 			this.cpInputLabel.classList.add('label-standard');
 			this.cpInputInput.classList.add('input-standard');
 			this.cpInputInputWrapper.classList.add('input-wrapper-standard');
-			this.cpInputFieldset.classList.add('fieldset-standard');
+			// this.cpInputFieldset.classList.add('fieldset-standard');
 		}
 	}
 
