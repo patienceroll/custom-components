@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpRipple from "./ripple";
+import CpRipple from './ripple';
 
-defineCustomComponents("cp-ripple", CpRipple);
+defineCustomComponents('cp-ripple', CpRipple);

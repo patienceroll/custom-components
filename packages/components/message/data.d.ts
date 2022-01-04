@@ -1,1 +1,1 @@
-export type MessageInt = { message: string; duration: number };
+export type MessageInt = { message: string | HTMLElement; duration: number };

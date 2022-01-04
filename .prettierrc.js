@@ -1,5 +1,5 @@
 module.exports = {
-	singleQuote: false,
+	singleQuote: true,
 	printWidth: 120,
 	tabWidth: 2,
 	trailingComma: "es5",
@@ -7,6 +7,6 @@ module.exports = {
 	useTabs: true,
 	semi: true,
 	endOfLine: "auto",
-	quoteProps: "consistent",
+	quoteProps: "as-needed",
 	arrowParens: "always",
 };

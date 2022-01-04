@@ -1,1 +1,1 @@
-import type { TagCheckableObservedAttributes } from "./data";
+import type { TagCheckableObservedAttributes } from './data';

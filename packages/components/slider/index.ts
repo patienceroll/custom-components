@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpSlider from "./slider";
+import CpSlider from './slider';
 
-defineCustomComponents("cp-slider", CpSlider);
+defineCustomComponents('cp-slider', CpSlider);

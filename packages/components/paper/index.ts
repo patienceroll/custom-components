@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpPaper from "./paper";
+import CpPaper from './paper';
 
-defineCustomComponents("cp-paper", CpPaper);
+defineCustomComponents('cp-paper', CpPaper);

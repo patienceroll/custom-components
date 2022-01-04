@@ -1,39 +1,39 @@
-import { style, watch, useLatestCall } from "../../utils";
-import type { CpRateItemEventDetail } from "./data";
+import { style, watch, useLatestCall, dispatchCustomEvent } from '../../utils';
+import type { CpRateEventDetail, CpRateItemEventDetail } from './data';
 
 @style({
-	":host": {
-		display: "inline-block",
-		fontSize: "24px",
-		height: "24px",
-		verticalAlign: "middle",
+	':host': {
+		display: 'inline-block',
+		fontSize: '24px',
+		height: '24px',
+		verticalAlign: 'middle',
 	},
 })
 @watch<AttachedShadowRoot<CpRate>>({
-	"value"(newer) {
+	value(newer) {
 		if (newer && !Number.isNaN(Number(newer))) this.setRealValue(Number(newer));
 	},
-	"precision"() {
+	precision() {
 		this.renderRate();
 	},
-	"highest"() {
+	highest() {
 		this.renderRate();
 	},
-	"disable"(newer) {
-		if (newer === "true") this.rateItems.forEach((item) => item.setAttribute("disable", newer));
-		else this.rateItems.forEach((item) => item.removeAttribute("disable"));
+	disable(newer) {
+		if (newer === 'true') this.rateItems.forEach((item) => item.setAttribute('disable', newer));
+		else this.rateItems.forEach((item) => item.removeAttribute('disable'));
 	},
-	"readonly"(newer) {
-		if (newer === "true") this.rateItems.forEach((item) => item.setAttribute("readonly", newer));
-		else this.rateItems.forEach((item) => item.removeAttribute("readonly"));
+	readonly(newer) {
+		if (newer === 'true') this.rateItems.forEach((item) => item.setAttribute('readonly', newer));
+		else this.rateItems.forEach((item) => item.removeAttribute('readonly'));
 	},
-	"base-color"(newer) {
-		if (newer) this.rateItems.forEach((item) => item.setAttribute("base-color", newer));
-		else this.rateItems.forEach((item) => item.removeAttribute("base-color"));
+	'base-color'(newer) {
+		if (newer) this.rateItems.forEach((item) => item.setAttribute('base-color', newer));
+		else this.rateItems.forEach((item) => item.removeAttribute('base-color'));
 	},
-	"light-color"(newer) {
-		if (newer) this.rateItems.forEach((item) => item.setAttribute("light-color", newer));
-		else this.rateItems.forEach((item) => item.removeAttribute("light-color"));
+	'light-color'(newer) {
+		if (newer) this.rateItems.forEach((item) => item.setAttribute('light-color', newer));
+		else this.rateItems.forEach((item) => item.removeAttribute('light-color'));
 	},
 })
 export default class CpRate extends HTMLElement implements CustomElement {
@@ -42,12 +42,12 @@ export default class CpRate extends HTMLElement implements CustomElement {
 	public realValue = this.highest;
 	constructor() {
 		super();
-		const shadowRoot = this.attachShadow({ mode: "open" });
+		const shadowRoot = this.attachShadow({ mode: 'open' });
 		shadowRoot.adoptedStyleSheets = [CpRate.styleSheet];
-		const slot = document.createElement("slot");
+		const slot = document.createElement('slot');
 
-		this.addEventListener("cp-rate-item-rate", (event) => {
-			const { detail } = event as CustomEvent<CpRateItemEventDetail["cp-rate-item-rate"]>;
+		this.addEventListener('cp-rate-item-rate', (event) => {
+			const { detail } = event as CustomEvent<CpRateItemEventDetail['cp-rate-item-rate']>;
 			const { value, rateItem } = detail;
 			const rateItems = Array.from(this.rateItems.values());
 			const index = rateItems.findIndex((item) => item === rateItem);
@@ -57,25 +57,22 @@ export default class CpRate extends HTMLElement implements CustomElement {
 				);
 				const newRealValue = lightRateNum * perRateItemValue + partOfLightRateValue;
 
-				const valueAttr = this.getAttribute("value");
+				const valueAttr = this.getAttribute('value');
 
 				/** 如果是非受控的,才会去渲染评分 */
 				if (!valueAttr || Number.isNaN(Number(valueAttr))) {
 					this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
 					this.realValue = newRealValue;
 				}
-				this.dispatchEvent(
-					new CustomEvent("change", {
-						detail: {
-							value: newRealValue,
-						},
-					})
-				);
+				dispatchCustomEvent<CpRateEventDetail>(this, 'change', {
+					value: newRealValue,
+					nativeEvent: event,
+				});
 			}
 		});
 
-		this.addEventListener("cp-rate-item-moverate", (event) => {
-			const { detail } = event as CustomEvent<CpRateItemEventDetail["cp-rate-item-rate"]>;
+		this.addEventListener('cp-rate-item-moverate', (event) => {
+			const { detail } = event as CustomEvent<CpRateItemEventDetail['cp-rate-item-rate']>;
 			const { value, rateItem } = detail;
 			const rateItems = Array.from(this.rateItems.values());
 			const index = rateItems.findIndex((item) => item === rateItem);
@@ -84,20 +81,18 @@ export default class CpRate extends HTMLElement implements CustomElement {
 					((index + value) * this.highest) / rateItems.length
 				);
 				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
-				this.dispatchEvent(
-					new CustomEvent("changehover", {
-						detail: {
-							value: lightRateNum * perRateItemValue + partOfLightRateValue,
-						},
-					})
-				);
+
+				dispatchCustomEvent<CpRateEventDetail>(this, 'changehover', {
+					value: lightRateNum * perRateItemValue + partOfLightRateValue,
+					nativeEvent: event,
+				});
 			}
 		});
 
 		/** useLatestcall 的原因是,rateItem 的 moverate 也使用了 useLatestcall,
 		 * 保证 mouseleave 是在 moverate之后触发 */
 		this.addEventListener(
-			"mouseleave",
+			'mouseleave',
 			useLatestCall(() => {
 				const { lightRateNum, partOfLightRateValue, perRateItemValue } = this.calculateRenderParams(this.realValue);
 				this.renderLightItem(lightRateNum, partOfLightRateValue / perRateItemValue);
@@ -109,23 +104,23 @@ export default class CpRate extends HTMLElement implements CustomElement {
 
 	/** 评分组件下的所有 “单个评分” */
 	get rateItems() {
-		return this.querySelectorAll("cp-rate-item");
+		return this.querySelectorAll('cp-rate-item');
 	}
 
 	/** 评分的精度,默认为 5 */
 	get precision() {
-		const precision = this.getAttribute("precision");
+		const precision = this.getAttribute('precision');
 		return precision && !Number.isNaN(precision) ? Number(precision) : 5;
 	}
 	/** 评分的最高值,默认 100 */
 	get highest() {
-		const highest = this.getAttribute("highest");
+		const highest = this.getAttribute('highest');
 		return highest && !Number.isNaN(highest) ? Number(highest) : 100;
 	}
 
 	/** 当前组件的值 */
 	get value() {
-		const value = this.getAttribute("value");
+		const value = this.getAttribute('value');
 		return value && !Number.isNaN(value) ? Number(value) : this.highest;
 	}
 
@@ -169,11 +164,11 @@ export default class CpRate extends HTMLElement implements CustomElement {
 	renderLightItem(lightRateNum: number, partOfLightRatePercent: number) {
 		Array.from(this.rateItems.values()).forEach((item, i) => {
 			if (i < lightRateNum) {
-				item.setAttribute("value", "100");
+				item.setAttribute('value', '100');
 			} else if (i === lightRateNum) {
-				item.setAttribute("value", `${partOfLightRatePercent * 100}`);
+				item.setAttribute('value', `${partOfLightRatePercent * 100}`);
 			} else {
-				item.setAttribute("value", "0");
+				item.setAttribute('value', '0');
 			}
 		});
 	}

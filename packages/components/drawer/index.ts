@@ -1,5 +1,5 @@
-import { defineCustomComponents } from "../../utils";
+import { defineCustomComponents } from '../../utils';
 
-import CpDrawer from "./drawer";
+import CpDrawer from './drawer';
 
-defineCustomComponents("cp-drawer", CpDrawer);
+defineCustomComponents('cp-drawer', CpDrawer);

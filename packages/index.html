@@ -25,6 +25,7 @@
 				color: #333;
 				font-size: 16px;
 			}
+
 			a:hover {
 				color: #1976d2;
 			}
@@ -117,9 +118,10 @@
 					<li>
 						<div><a href="./html/radio.html">单选组件</a></div>
 					</li>
-
 					<li>
-						<div><a href="./html/text-field.html">输入框</a></div>
+						<div>
+							<a href="./html/input.html">输入框组件</a>
+						</div>
 					</li>
 				</ul>
 			</cp-accordion-item>
@@ -139,10 +141,10 @@
 			</cp-accordion-item>
 		</cp-accordion>
 		<script>
-			const cpAccordion = document.getElementById("cp-accordion");
-			cpAccordion.addEventListener("change", (event) => {
-				if (event.detail["active-keys"].length === 0) cpAccordion.setAttribute("active-keys", JSON.stringify([]));
-				else cpAccordion.setAttribute("active-keys", JSON.stringify([event.detail.current]));
+			const cpAccordion = document.getElementById('cp-accordion');
+			cpAccordion.addEventListener('change', (event) => {
+				if (event.detail['active-keys'].length === 0) cpAccordion.setAttribute('active-keys', JSON.stringify([]));
+				else cpAccordion.setAttribute('active-keys', JSON.stringify([event.detail.current]));
 			});
 		</script>
 	</body>

@@ -1,18 +1,18 @@
-import CpButtonBase from "./button-base";
+import CpButtonBase from './button-base';
 
-import { createHtmlElement, style } from "../../utils";
+import { createHtmlElement, style } from '../../utils';
 
-import "../ripple";
+import '../ripple';
 
 @style({
-	".cp-icon-button": {
-		padding: "8px",
-		borderRadius: "50%",
-		position: "relative",
-		outline: "0",
-		border: "none",
-		userSelect: "none",
-		cursor: "pointer",
+	'.cp-icon-button': {
+		padding: '8px',
+		borderRadius: '50%',
+		position: 'relative',
+		outline: '0',
+		border: 'none',
+		userSelect: 'none',
+		cursor: 'pointer',
 	},
 })
 export default class CpIconButton extends CpButtonBase {
@@ -25,9 +25,9 @@ export default class CpIconButton extends CpButtonBase {
 		shadowRoot.adoptedStyleSheets = [...shadowRoot.adoptedStyleSheets, CpIconButton.styleSheet];
 
 		const button = shadowRoot.firstElementChild as HTMLButtonElement;
-		const IconSlot = createHtmlElement("slot");
+		const IconSlot = createHtmlElement('slot');
 
-		button.classList.add("cp-icon-button");
+		button.classList.add('cp-icon-button');
 		button.append(IconSlot);
 	}
 }

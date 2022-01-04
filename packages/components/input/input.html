@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>输入框</title>
+		<title>输入框组件</title>
 		<style>
 			body {
 				background-color: #eaeef3;
 				color: #333;
-			}
-
-			div {
-				width: 60%;
 			}
 
 			cp-paper {
@@ -22,17 +18,19 @@
 	</head>
 
 	<body>
-		<h1>输入框</h1>
+		<h1>输入框组件</h1>
+
 		<ul>
 			<li>
-				<h4>输入框</h4>
+				<h4>默认</h4>
 				<cp-paper>
-					<cp-text-field>
-						<span slot="legend-context">label</span>
-					</cp-text-field>
+					<cp-input> standard </cp-input>
+					<cp-input variant="outlined"> outlined </cp-input>
+					<cp-input variant="filled"> filled </cp-input>
 				</cp-paper>
 			</li>
 		</ul>
+
 		<script src="../index.js" type="module"></script>
 	</body>
 </html>

@@ -1,15 +1,22 @@
 export interface CpSliderProps extends HTMLElement {
 	/** 不受控的默认值 */
-	"default-value": NumberCharacter;
-	"value": NumberCharacter;
+	'default-value': NumberCharacter;
+	value: NumberCharacter;
 	/** 最小值,默认为 0 */
-	"min"?: NumberCharacter;
+	min?: NumberCharacter;
 	/** 最大值,默认为 100 */
-	"max"?: NumberCharacter;
+	max?: NumberCharacter;
 	/** 评分的精度,默认为 1,值需要大于0 */
-	"precision"?: NumberCharacter;
+	precision?: NumberCharacter;
 	/** 显示标签 */
-	"show-label"?: BooleanCharacter;
+	'show-label'?: BooleanCharacter;
 }
 
-export type CpSliderObservedAttributes = "value" | "precision" | "min" | "max";
+export interface CpSliderEventDetail {
+	change: {
+		value: number;
+		nativeEvent: Event;
+	};
+}
+
+export type CpSliderObservedAttributes = 'value' | 'precision' | 'min' | 'max';
