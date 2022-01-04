@@ -1,12 +1,14 @@
 {
-  "name": "custom-components",
+  "name": "@picture-cutters/custom-components",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "debugge": "cross-env type=debugge rollup --config rollup.config.js --watch",
     "build": "cross-env type=build rollup --config rollup.config.js",
     "commit": "npx git-cz",
     "prettier": "prettier --write  ./packages/**/*.*",
-    "lint": "eslint packages/**/*.ts --fix"
+    "lint": "eslint packages/**/*.ts --fix",
+    "publish": "npm publish"
   },
   "dependencies": {},
   "devDependencies": {
