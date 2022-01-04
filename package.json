@@ -6,6 +6,11 @@
     "web components"
   ],
   "private": false,
+  "homepage": "http://gsea.top/web-components/packages/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patienceroll/custom-components"
+  },
   "scripts": {
     "debugge": "cross-env type=debugge rollup --config rollup.config.js --watch",
     "build": "cross-env type=build rollup --config rollup.config.js",
