@@ -27,12 +27,12 @@ import { style, watch } from "../../utils";
 	},
 })
 @watch<AttachedShadowRoot<CpTag>>({
-	color(newer) {
+	"color"(newer) {
 		this.style.setProperty("color", newer);
 		// this.style.setProperty('background',newer)
 		this.style.setProperty("border", `1px solid ${newer}`);
 	},
-	size(newer) {
+	"size"(newer) {
 		if (newer == "mini") {
 			this.style.setProperty("padding", "0.1em");
 		} else if (newer == "small") {
@@ -41,7 +41,7 @@ import { style, watch } from "../../utils";
 			this.style.setProperty("padding", "0.3em");
 		}
 	},
-	tagshow(newer) {
+	"tag-show"(newer) {
 		if (newer === "true") {
 			this.style.setProperty("display", "inline");
 		} else {
@@ -74,12 +74,12 @@ export default class CpTag extends HTMLElement implements CustomElement {
 		rightSlot.append(rightDiv);
 		this.Tag = document.createElement("div");
 		this.Tag.style.setProperty("display", "inline");
-		if (this.getAttribute("closeicon") && this.getAttribute("tagshow")) {
+		if (this.getAttribute("closeicon") && this.getAttribute("tag-show")) {
 			rightDiv.addEventListener("click", () => {
-				if (this.getAttribute("tagshow") !== "true") {
-					this.setAttribute("tagshow", "true");
+				if (this.getAttribute("tag-show") !== "true") {
+					this.setAttribute("tag-show", "true");
 				} else {
-					this.setAttribute("tagshow", "false");
+					this.setAttribute("tag-show", "false");
 				}
 			});
 
