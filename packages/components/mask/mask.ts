@@ -1,4 +1,4 @@
-import { style, keyframe, Stack, dispatchCustomEvent } from '../../utils';
+import { style, keyframe, Stack, dispatchCustomEvent, watch } from '../../utils';
 
 const stack = new Stack<CpMask>();
 stack.finished = function (removeItem: CpMask) {
@@ -61,13 +61,18 @@ stack.finished = function (removeItem: CpMask) {
 		},
 	},
 })
+@watch<CpMask>({
+	['mask-closable'](_, newValue) {
+		this.disposeMaskClosable(newValue as BooleanCharacter);
+	},
+})
 export default class CpMask extends HTMLElement implements CustomElement {
 	/** 层级 */
-	zIndex = 0;
+	public zIndex = 0;
 	/** 蒙层内容 */
-	maskContent: HTMLElement;
+	public maskContent: HTMLElement;
 	#maskNode: HTMLElement;
-	static index = 0;
+
 	static styleSheet: CSSStyleSheet;
 	static keyframesSheet: CSSStyleSheet;
 
@@ -83,11 +88,26 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		this.maskContent = maskContent;
 		this.#maskNode = mask;
 
-		this.#disposeMaskClosable(closable as BooleanCharacter);
+		this.disposeMaskClosable(closable as BooleanCharacter);
 		// 动画结束
 		this.#maskNode.addEventListener('animationend', this.#disposeMaskAnimation);
 		shadowRoot.adoptedStyleSheets = [CpMask.styleSheet, CpMask.keyframesSheet];
 		shadowRoot.append(mask, maskContent);
+	}
+
+	disconnectedCallback() {
+		this.#maskNode.removeEventListener('animationend', this.#disposeMaskAnimation);
+		this.#maskNode.removeEventListener('click', this.close.bind(this), false);
+	}
+
+	_disposeEvent(remove = false) {
+		if (!remove) {
+			this.addEventListener('close', this.close.bind(this), false);
+			document.addEventListener('keydown', this.#onKeydown, false);
+		} else {
+			this.removeEventListener('close', this.close.bind(this), false);
+			document.removeEventListener('keydown', this.#onKeydown, false);
+		}
 	}
 
 	#disposeMaskAnimation = (e: AnimationEvent) => {
@@ -104,40 +124,13 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		}
 	};
 
-	disconnectedCallback() {
-		this.#maskNode.removeEventListener('animationend', this.#disposeMaskAnimation);
-		this.#maskNode.removeEventListener('click', this.close.bind(this), false);
-	}
-
-	static observedAttributes = ['mask-closable'];
-	attributeChangedCallback(name: string, _: string | null, newValue: string | null) {
-		switch (name as 'mask-closable') {
-			case 'mask-closable':
-				this.#disposeMaskClosable(newValue as BooleanCharacter);
-				break;
-			default:
-				break;
-		}
-	}
-
 	#onKeydown = (e: KeyboardEvent) => {
 		if (e.keyCode === 27) {
-			// this.dispatchEvent(new CustomEvent("close", { detail: null, bubbles: false }));
 			dispatchCustomEvent(this, 'close', undefined, { bubbles: false });
 		}
 	};
 
-	_disposeEvent(remove = false) {
-		if (!remove) {
-			this.addEventListener('close', this.close.bind(this), false);
-			document.addEventListener('keydown', this.#onKeydown, false);
-		} else {
-			this.removeEventListener('close', this.close.bind(this), false);
-			document.removeEventListener('keydown', this.#onKeydown, false);
-		}
-	}
-
-	#disposeMaskClosable(closable: BooleanCharacter) {
+	disposeMaskClosable(closable: BooleanCharacter) {
 		if (closable === 'false') {
 			this.#maskNode.removeEventListener('click', this.close.bind(this), false);
 		} else {
@@ -157,10 +150,14 @@ export default class CpMask extends HTMLElement implements CustomElement {
 	}
 
 	/** 关闭mask回调 */
-	onMaskClose?() {}
+	protected onMaskClose?() {
+		// TODO
+	}
 
 	/** 开启mask回调 */
-	onMaskShow?() {}
+	protected onMaskShow?() {
+		// TODO
+	}
 
 	/** 打开蒙层 */
 	show() {
@@ -177,4 +174,12 @@ export default class CpMask extends HTMLElement implements CustomElement {
 		this.#disposeOpen('false');
 		this.onMaskClose?.();
 	}
+}
+
+interface A {
+	a: 1;
+}
+
+interface B extends A {
+	ccc: 1;
 }
