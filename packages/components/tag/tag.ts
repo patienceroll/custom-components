@@ -28,7 +28,7 @@ import { style, watch } from '../../utils';
 })
 @watch<AttachedShadowRoot<CpTag>>({
 	color(newer) {
-		this.style.setProperty('color', newer);
+		this.style.setProperty("color", newer);
 		// this.style.setProperty('background',newer)
 		this.style.setProperty('border', `1px solid ${newer}`);
 	},

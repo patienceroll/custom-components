@@ -2,6 +2,37 @@ import { createHtmlElement, setAttributes, style, watch } from 'packages/utils';
 import type { CpInputProps } from './data';
 
 @style({
+	/**
+	 * ----------------------------------       outlined 样式       -----------------------------------
+	 */
+	'.input-outlined': {
+		height: '3.5em',
+		padding: '1.03125em 0.875em',
+		boxSizing: 'border-box',
+	},
+	'.fieldset-outlined': {
+		position: 'absolute',
+		margin: '0',
+		inset: '-0.3215em 0 0',
+		pointerEvents: 'none',
+		borderRadius: 'inherit',
+		borderStyle: 'solid',
+	},
+	'.input-wrapper-outlined-focused': {},
+	'.input-wrapper-outlined:hover':{
+		
+	},
+	'.input-wrapper-outlined': {
+		boxSizing: 'border-box',
+		border: ''
+	},
+	':host([variant="outlined"])': {
+		boxSizing: 'border-box',
+		height: '3.5em',
+	},
+	/**
+	 * ----------------------------------       standard 样式       -----------------------------------
+	 */
 	'.label-standard-inserted': {
 		transform: 'translate(0,0) scale(0.75)',
 	},
@@ -19,6 +50,9 @@ import type { CpInputProps } from './data';
 	'.input-standard': {
 		height: '1.4375em',
 		padding: '0.25em 0 0.3125em',
+	},
+	'.fieldset-standard': {
+		display: 'none',
 	},
 	'.input-wrapper-standard-focused::after': {
 		transform: 'scaleX(1)',
@@ -47,6 +81,9 @@ import type { CpInputProps } from './data';
 	'.input-wrapper-standard': {
 		marginTop: '1em',
 	},
+	/**
+	 * ----------------------------------       基础样式       -----------------------------------
+	 */
 	'.input': {
 		border: 'none',
 		outline: 'none',
@@ -73,6 +110,7 @@ import type { CpInputProps } from './data';
 		margin: '0.5em',
 		color: '#1976d2',
 		fontSize: '16px',
+		verticalAlign: 'top',
 	},
 })
 @watch<CpInput>({
@@ -88,6 +126,10 @@ export default class CpInput extends HTMLElement implements CustomElement {
 	public cpInputInputWrapper: HTMLDivElement;
 	/** 输入框组件Label元素 */
 	public cpInputLabel: HTMLLabelElement;
+	// /** 输入框组件 fieldset 元素 */
+	// public cpInputFieldset: HTMLFieldSetElement;
+	// /** 输入框组件 legend 元素 */
+	// public cpInputLegend: HTMLLegendElement;
 	constructor() {
 		super();
 
@@ -98,6 +140,8 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		this.cpInputLabel = createHtmlElement('label');
 		this.cpInputInputWrapper = createHtmlElement('div');
 		const labelContext = createHtmlElement('slot');
+		// this.cpInputFieldset = createHtmlElement('fieldset');
+		// this.cpInputLegend = createHtmlElement('legend');
 
 		setAttributes(this.cpInputInput, { id: 'input', class: 'input' });
 		setAttributes(this.cpInputLabel, { for: 'input', class: 'label' });
@@ -107,7 +151,9 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		this.cpInputInput.addEventListener('blur', this.onInputBlur.bind(this));
 
 		this.cpInputLabel.appendChild(labelContext);
-		this.cpInputInputWrapper.appendChild(this.cpInputInput);
+		// this.cpInputFieldset.appendChild(this.cpInputLegend);
+		// this.cpInputInputWrapper.append(this.cpInputInput, this.cpInputFieldset);
+		this.cpInputInputWrapper.append(this.cpInputInput);
 		shadowRoot.append(this.cpInputLabel, this.cpInputInputWrapper);
 	}
 
@@ -120,18 +166,22 @@ export default class CpInput extends HTMLElement implements CustomElement {
 			'input-wrapper-filled',
 			'input-wrapper-standard'
 		);
+		// this.cpInputFieldset.classList.remove('fieldset-standard', 'fieldset-outlined', 'fieldset-filled');
 		if (this.cpInputVariant === 'outlined') {
 			this.cpInputLabel.classList.add('label-outlined');
 			this.cpInputInput.classList.add('input-outlined');
 			this.cpInputInputWrapper.classList.add('input-wrapper-outlined');
+			// this.cpInputFieldset.classList.add('fieldset-outlined');
 		} else if (this.cpInputVariant === 'filled') {
 			this.cpInputLabel.classList.add('label-filled');
 			this.cpInputInput.classList.add('input-filled');
 			this.cpInputInputWrapper.classList.add('input-wrapper-filled');
+			// this.cpInputFieldset.classList.add('fieldset-filled');
 		} else {
 			this.cpInputLabel.classList.add('label-standard');
 			this.cpInputInput.classList.add('input-standard');
 			this.cpInputInputWrapper.classList.add('input-wrapper-standard');
+			// this.cpInputFieldset.classList.add('fieldset-standard');
 		}
 	}
 

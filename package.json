@@ -1,12 +1,23 @@
 {
-  "name": "custom-components",
+  "name": "@picture-cutters/custom-components",
+  "version": "0.0.3",
   "license": "MIT",
+  "keywords": [
+    "web components"
+  ],
+  "private": false,
+  "homepage": "http://gsea.top/web-components/packages/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patienceroll/custom-components"
+  },
   "scripts": {
     "debugge": "cross-env type=debugge rollup --config rollup.config.js --watch",
     "build": "cross-env type=build rollup --config rollup.config.js",
     "commit": "npx git-cz",
     "prettier": "prettier --write  ./packages/**/*.*",
-    "lint": "eslint packages/**/*.ts --fix"
+    "lint": "eslint packages/**/*.ts --fix",
+    "publish": "npx publish --access public"
   },
   "dependencies": {},
   "devDependencies": {
