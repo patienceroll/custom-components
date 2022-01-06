@@ -25,6 +25,7 @@ import type CpTabs from 'packages/components/tabs/tabs';
 import type CpTag from 'packages/components/tag/tag';
 import type CpInput from 'packages/components/input/input';
 import type CpTooltip from 'packages/components/tooltip/tooltip';
+import type CpSwiper from 'packages/components/swiper/swiper';
 
 interface HTMLS extends HTMLElementTagNameMap {
 	'cp-accordion': AttachedShadowRoot<CpAccordion>;
@@ -55,6 +56,7 @@ interface HTMLS extends HTMLElementTagNameMap {
 	'cp-switch': AttachedShadowRoot<CpSwitch>;
 	'cp-skeleton': AttachedShadowRoot<CpSkeleton>;
 	'cp-input': AttachedShadowRoot<CpInput>;
+	'cp-swiper': AttachedShadowRoot<CpSwiper>;
 }
 
 /** ### 创建html元素（包括自定义组件）

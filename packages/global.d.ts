@@ -39,17 +39,17 @@ declare class CustomElement extends HTMLElement {
 	static styleSheet?: CSSStyleSheet;
 	static keyframesSheet?: CSSStyleSheet;
 	/** 当 custom element首次被插入文档DOM时，被调用 */
-	connectedCallback?: VoidFunction;
+	abstract connectedCallback?: VoidFunction;
 
 	/** 当 custom element从文档DOM中删除时，被调用 */
-	disconnectedCallback?: VoidFunction;
+	abstract disconnectedCallback?: VoidFunction;
 
 	/** 当 custom element被移动到新的文档时，被调用 */
-	adoptedCallback?: VoidFunction;
+	abstract adoptedCallback?: VoidFunction;
 
 	/** 需要监听的属性名称 */
-	static observedAttributes?: string[];
+	static abstract observedAttributes?: string[];
 
 	/** 当 custom element增加、删除、修改自身属性时，被调用 与 observedAttributes 配套使用 */
-	attributeChangedCallback?: (name: string, oldValue: string | null, newValue: string | null) => void;
+	abstract attributeChangedCallback?: (name: string, oldValue: string | null, newValue: string | null) => void;
 }
