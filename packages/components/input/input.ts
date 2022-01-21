@@ -43,6 +43,7 @@ import type { CpInputProps } from './data';
 		zIndex: '1',
 		padding: '0 0.3125em',
 		lineHeight: '1em',
+		pointerEvents: 'none'
 	},
 	'.input-outlined': {
 		height: '3.25em',
