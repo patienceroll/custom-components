@@ -5,11 +5,6 @@ import type { CpInputProps } from './data';
 	/**
 	 * ----------------------------------       outlined 样式       -----------------------------------
 	 */
-	'.input-outlined': {
-		height: '3.5em',
-		padding: '1.03125em 0.875em',
-		boxSizing: 'border-box',
-	},
 	'.fieldset-outlined': {
 		position: 'absolute',
 		margin: '0',
@@ -19,12 +14,41 @@ import type { CpInputProps } from './data';
 		borderStyle: 'solid',
 	},
 	'.input-wrapper-outlined-focused': {},
-	'.input-wrapper-outlined:hover':{
-		
-	},
+	'.input-wrapper-outlined:hover': {},
 	'.input-wrapper-outlined': {
 		boxSizing: 'border-box',
-		border: ''
+	},
+	'.label-outlined-inserted': {
+		transform: 'translate(0.71875em,-0.375em) scale(0.75)',
+	},
+	'.label-outlined-focused': {
+		transform: 'translate(0.71875em,-0.375em) scale(0.75)',
+		color: 'currentColor',
+	},
+	'.label-outlined': {
+		transform: 'translate(0.71875em,1.25em)',
+		transition: 'transform 200ms ease',
+		transformOrigin: 'top left',
+		backgroundColor: '#fff',
+		display: 'block',
+		zIndex: '1',
+		padding: '0 0.3125em',
+		lineHeight: '1em',
+	},
+	'.input-outlined:focus': {
+		borderColor: 'currentColor',
+		borderWidth: '2px',
+		padding:'1.03125em calc(0.875em - 1px)'
+	},
+	'.input-outlined:hover': {
+		borderColor: 'rgba(0, 0, 0, 0.87)',
+	},
+	'.input-outlined': {
+		height: '3.5em',
+		padding: '1.03125em 0.875em',
+		boxSizing: 'border-box',
+		border: '1px solid rgba(0, 0, 0, 0.23)',
+		borderRadius: '0.25em',
 	},
 	':host([variant="outlined"])': {
 		boxSizing: 'border-box',
@@ -88,7 +112,7 @@ import type { CpInputProps } from './data';
 		border: 'none',
 		outline: 'none',
 		fontSize: 'inherit',
-		backgroundColor: 'transparent',
+		backgroundColor: 'transparent'
 	},
 	'.input-wrapper': {
 		display: 'inline-block',
