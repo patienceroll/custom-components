@@ -13,10 +13,19 @@ import type { CpInputProps } from './data';
 		borderRadius: 'inherit',
 		borderStyle: 'solid',
 	},
-	'.input-wrapper-outlined-focused': {},
-	'.input-wrapper-outlined:hover': {},
+	'.input-wrapper-outlined-focused,.input-wrapper-outlined-focused:hover': {
+		borderColor: 'currentColor',
+		borderWidth: '2px',
+		padding: '0'
+	},
+	'.input-wrapper-outlined:hover': {
+		borderColor: 'rgba(0, 0, 0, 0.87)',
+	},
 	'.input-wrapper-outlined': {
 		boxSizing: 'border-box',
+		padding: '0.0625em',
+		border: '1px solid rgba(0, 0, 0, 0.23)',
+		borderRadius: '0.25em',
 	},
 	'.label-outlined-inserted': {
 		transform: 'translate(0.71875em,-0.375em) scale(0.75)',
@@ -35,20 +44,10 @@ import type { CpInputProps } from './data';
 		padding: '0 0.3125em',
 		lineHeight: '1em',
 	},
-	'.input-outlined:focus': {
-		borderColor: 'currentColor',
-		borderWidth: '2px',
-		padding:'1.03125em calc(0.875em - 1px)'
-	},
-	'.input-outlined:hover': {
-		borderColor: 'rgba(0, 0, 0, 0.87)',
-	},
 	'.input-outlined': {
-		height: '3.5em',
-		padding: '1.03125em 0.875em',
+		height: '3.25em',
+		padding: '0.90625em 0.75em',
 		boxSizing: 'border-box',
-		border: '1px solid rgba(0, 0, 0, 0.23)',
-		borderRadius: '0.25em',
 	},
 	':host([variant="outlined"])': {
 		boxSizing: 'border-box',
@@ -112,7 +111,7 @@ import type { CpInputProps } from './data';
 		border: 'none',
 		outline: 'none',
 		fontSize: 'inherit',
-		backgroundColor: 'transparent'
+		backgroundColor: 'transparent',
 	},
 	'.input-wrapper': {
 		display: 'inline-block',
