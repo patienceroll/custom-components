@@ -1,5 +1,12 @@
-import { createHtmlElement, setAttributes, style, watch } from 'packages/utils';
-import type { CpInputProps } from './data';
+import {
+	addCustomEventListener,
+	createHtmlElement,
+	dispatchCustomEvent,
+	setAttributes,
+	style,
+	watch,
+} from 'packages/utils';
+import type { CpInputEventDetail, CpInputProps } from './data';
 
 @style({
 	/**
@@ -231,8 +238,32 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		setAttributes(this.cpInputLabel, { for: 'input', class: 'label' });
 		setAttributes(this.cpInputInputWrapper, { class: 'input-wrapper' });
 
-		this.cpInputInput.addEventListener('focus', this.addFocusStyle.bind(this));
-		this.cpInputInput.addEventListener('blur', this.onInputBlur.bind(this));
+		this.cpInputInput.addEventListener('focus', (event) => {
+			this.addFocusStyle();
+			dispatchCustomEvent<CpInputEventDetail>(this, 'focus', { nativeEvent: event, input: this.cpInputInput });
+		});
+		this.cpInputInput.addEventListener('blur', (event) => {
+			this.onInputBlur();
+			dispatchCustomEvent<CpInputEventDetail>(this, 'blur', { nativeEvent: event, input: this.cpInputInput });
+		});
+		this.cpInputInput.addEventListener('change', (event) => {
+			dispatchCustomEvent<CpInputEventDetail>(this, 'change', {
+				value: this.cpInputInput.value,
+				nativeEvent: event,
+				input: this.cpInputInput,
+			});
+		});
+		this.cpInputInput.addEventListener('input', (event) => {
+			dispatchCustomEvent<CpInputEventDetail>(this, 'input', {
+				value: this.cpInputInput.value,
+				nativeEvent: event,
+				input: this.cpInputInput,
+			});
+		});
+
+		this.addEventListener('input', (event) => {
+			console.log(event);
+		});
 
 		this.cpInputLabel.appendChild(labelContext);
 		// this.cpInputFieldset.appendChild(this.cpInputLegend);
