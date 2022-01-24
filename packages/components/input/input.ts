@@ -3,6 +3,66 @@ import type { CpInputProps } from './data';
 
 @style({
 	/**
+	 * ----------------------------------       filled 样式       -----------------------------------
+	 *
+	 */
+	'.label-filled-focused,.label-filled-inserted': {
+		transform: 'translate(0.75em,0.4375em) scale(0.75)',
+	},
+	'.label-filled-focused': {
+		color: 'currentColor',
+	},
+	'.label-filled': {
+		transform: 'translate(0.75em,1em) scale(1)',
+		transition: 'transform 200ms ease',
+		transformOrigin: 'top left',
+		display: 'block',
+		zIndex: '1',
+		lineHeight: '1.4375em',
+		pointerEvents: 'none',
+		fontSize: '1em',
+	},
+	'.input-wrapper-filled-focused::after': {
+		transform: 'scaleX(1)',
+	},
+	'.input-wrapper-filled-focused:hover': {
+		backgroundColor: 'rgba(0, 0, 0, 0.06)',
+	},
+	'.input-wrapper-filled::after': {
+		borderBottom: '2px solid currentColor',
+		transform: 'scaleX(0)',
+		transformOrigin: 'center',
+		transition: 'transform 200ms cubic-bezier(0.0, 0, 0.2, 1)',
+	},
+	'.input-wrapper-filled::before': {
+		borderBottom: '1px solid rgba(0, 0, 0, 0.42)',
+	},
+	'.input-wrapper-filled::before,.input-wrapper-filled::after': {
+		position: 'absolute',
+		left: '0',
+		right: '0',
+		bottom: '0',
+		content: '"\\00a0"',
+		boxSizing: 'inherit',
+		pointerEvents: 'none',
+	},
+	'.input-wrapper-filled:hover': {
+		backgroundColor: 'rgba(0, 0, 0, 0.09)',
+	},
+	'.input-wrapper-filled': {
+		backgroundColor: 'rgba(0, 0, 0, 0.06)',
+		borderRadius: '0.25em 0.25em 0 0',
+	},
+	'.input-filled': {
+		boxSizing: 'border-box',
+		height: '3.5em',
+		padding: '1.5625em 0.75em 0.5em',
+	},
+	':host([variant="filled"])': {
+		boxSizing: 'border-box',
+		height: '3.5em',
+	},
+	/**
 	 * ----------------------------------       outlined 样式       -----------------------------------
 	 */
 	'.fieldset-outlined': {
@@ -16,7 +76,7 @@ import type { CpInputProps } from './data';
 	'.input-wrapper-outlined-focused,.input-wrapper-outlined-focused:hover': {
 		borderColor: 'currentColor',
 		borderWidth: '2px',
-		padding: '0'
+		padding: '0',
 	},
 	'.input-wrapper-outlined:hover': {
 		borderColor: 'rgba(0, 0, 0, 0.87)',
@@ -43,7 +103,7 @@ import type { CpInputProps } from './data';
 		zIndex: '1',
 		padding: '0 0.3125em',
 		lineHeight: '1em',
-		pointerEvents: 'none'
+		pointerEvents: 'none',
 	},
 	'.input-outlined': {
 		height: '3.25em',
@@ -183,29 +243,31 @@ export default class CpInput extends HTMLElement implements CustomElement {
 
 	/** 设置输入框样式,默认 standard */
 	setVariant() {
-		this.cpInputLabel.classList.remove('label-standard', 'label-outlined', 'label-filled');
-		this.cpInputInput.classList.remove('input-outlined', 'input-filled', 'input-standard');
-		this.cpInputInputWrapper.classList.remove(
-			'input-wrapper-outlined',
-			'input-wrapper-filled',
-			'input-wrapper-standard'
-		);
-		// this.cpInputFieldset.classList.remove('fieldset-standard', 'fieldset-outlined', 'fieldset-filled');
-		if (this.cpInputVariant === 'outlined') {
-			this.cpInputLabel.classList.add('label-outlined');
-			this.cpInputInput.classList.add('input-outlined');
-			this.cpInputInputWrapper.classList.add('input-wrapper-outlined');
-			// this.cpInputFieldset.classList.add('fieldset-outlined');
-		} else if (this.cpInputVariant === 'filled') {
-			this.cpInputLabel.classList.add('label-filled');
-			this.cpInputInput.classList.add('input-filled');
-			this.cpInputInputWrapper.classList.add('input-wrapper-filled');
-			// this.cpInputFieldset.classList.add('fieldset-filled');
-		} else {
-			this.cpInputLabel.classList.add('label-standard');
-			this.cpInputInput.classList.add('input-standard');
-			this.cpInputInputWrapper.classList.add('input-wrapper-standard');
-			// this.cpInputFieldset.classList.add('fieldset-standard');
+		switch (this.cpInputVariant) {
+			case 'standard':
+				this.cpInputLabel.classList.remove('label-outlined', 'label-filled');
+				this.cpInputInput.classList.remove('input-outlined', 'input-filled');
+				this.cpInputInputWrapper.classList.remove('input-wrapper-outlined', 'input-wrapper-filled');
+				this.cpInputLabel.classList.add('label-standard');
+				this.cpInputInput.classList.add('input-standard');
+				this.cpInputInputWrapper.classList.add('input-wrapper-standard');
+				break;
+			case 'outlined':
+				this.cpInputLabel.classList.remove('label-standard', 'label-filled');
+				this.cpInputInput.classList.remove('input-filled', 'input-standard');
+				this.cpInputInputWrapper.classList.remove('input-wrapper-filled', 'input-wrapper-standard');
+				this.cpInputLabel.classList.add('label-outlined');
+				this.cpInputInput.classList.add('input-outlined');
+				this.cpInputInputWrapper.classList.add('input-wrapper-outlined');
+				break;
+			case 'filled':
+				this.cpInputLabel.classList.remove('label-standard', 'label-outlined');
+				this.cpInputInput.classList.remove('input-outlined', 'input-standard');
+				this.cpInputInputWrapper.classList.remove('input-wrapper-outlined', 'input-wrapper-standard');
+				this.cpInputLabel.classList.add('label-filled');
+				this.cpInputInput.classList.add('input-filled');
+				this.cpInputInputWrapper.classList.add('input-wrapper-filled');
+				break;
 		}
 	}
 
@@ -221,7 +283,6 @@ export default class CpInput extends HTMLElement implements CustomElement {
 	/** 聚焦的时候,添加css */
 	addFocusStyle() {
 		this.clearFocusStyle();
-
 		switch (this.cpInputVariant) {
 			case 'filled':
 				this.cpInputInputWrapper.classList.add('input-wrapper-filled-focused');
