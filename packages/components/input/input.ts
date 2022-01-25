@@ -197,9 +197,30 @@ import type { CpInputEventDetail, CpInputProps } from './data';
 		verticalAlign: 'top',
 	},
 })
-@watch<CpInput>({
+@watch<AttachedShadowRoot<CpInput>>({
 	variant() {
 		this.setVariant();
+	},
+	name(name) {
+		setAttributes(this.cpInputInput, {
+			name: name || '',
+		});
+	},
+	value() {},
+	type(type) {
+		setAttributes(this.cpInputInput, {
+			type: type || '',
+		});
+	},
+	autocomplete(autocomplete) {
+		setAttributes(this.cpInputInput, {
+			autocomplete: autocomplete || '',
+		});
+	},
+	placeholder(placeholder) {
+		setAttributes(this.cpInputInput, {
+			placeholder: placeholder || '',
+		});
 	},
 })
 export default class CpInput extends HTMLElement implements CustomElement {
@@ -297,6 +318,7 @@ export default class CpInput extends HTMLElement implements CustomElement {
 
 	connectedCallback() {
 		this.setVariant();
+		if (this.getAttribute('autofocus') === 'true') this.cpInputInput.focus();
 	}
 
 	/** 获取当前组件变体类型 */
@@ -335,8 +357,8 @@ export default class CpInput extends HTMLElement implements CustomElement {
 
 	/** 判断当前输入框是否输入了数据,根据不同情况进行样式操作 */
 	setInputInsertStyle() {
-		const { value } = this.cpInputInput;
-		if (value.length === 0)
+		const { value, placeholder } = this.cpInputInput;
+		if (value.length === 0 && placeholder.length === 0)
 			this.cpInputLabel.classList.remove('label-standard-inserted', 'label-filled-inserted', 'label-outlined-inserted');
 		else {
 			switch (this.cpInputVariant) {
