@@ -212,6 +212,7 @@ import type { CpInputEventDetail, CpInputProps } from './data';
 		if (typeof value === 'string') {
 			setAttributes(this.cpInputInput, { value });
 			this.cpInputInput.value = value;
+			this.setInputInsertStyle();
 		}
 	},
 	type(type) {
