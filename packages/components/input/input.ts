@@ -57,6 +57,7 @@ import type { CpInputEventDetail, CpInputProps } from './data';
 		boxSizing: 'border-box',
 		height: '3.5em',
 		padding: '1.5625em 0.75em 0.5em',
+		width: '13.9375em',
 	},
 	':host([variant="filled"])': {
 		boxSizing: 'border-box',
@@ -134,6 +135,7 @@ import type { CpInputEventDetail, CpInputProps } from './data';
 	'.input-standard': {
 		height: '1.4375em',
 		padding: '0.25em 0 0.3125em',
+		width: '13.9375em',
 	},
 	'.fieldset-standard': {
 		display: 'none',
@@ -206,7 +208,12 @@ import type { CpInputEventDetail, CpInputProps } from './data';
 			name: name || '',
 		});
 	},
-	value() {},
+	value(value) {
+		if (typeof value === 'string') {
+			setAttributes(this.cpInputInput, { value });
+			this.cpInputInput.value = value;
+		}
+	},
 	type(type) {
 		setAttributes(this.cpInputInput, {
 			type: type || '',
@@ -257,6 +264,7 @@ export default class CpInput extends HTMLElement implements CustomElement {
 			this.addFocusStyle();
 			dispatchCustomEvent<CpInputEventDetail>(this, 'focus', { nativeEvent: event, input: this.cpInputInput });
 		});
+
 		this.cpInputInput.addEventListener('blur', (event) => {
 			event.stopPropagation();
 			this.onInputBlur();
@@ -269,6 +277,7 @@ export default class CpInput extends HTMLElement implements CustomElement {
 				nativeEvent: event,
 				input: this.cpInputInput,
 			});
+			if (this.value) this.cpInputInput.value = this.value;
 		});
 		this.cpInputInput.addEventListener('input', (event) => {
 			event.stopPropagation();
@@ -277,6 +286,7 @@ export default class CpInput extends HTMLElement implements CustomElement {
 				nativeEvent: event,
 				input: this.cpInputInput,
 			});
+			if (this.value) this.cpInputInput.value = this.value;
 		});
 
 		this.cpInputLabel.appendChild(labelContext);
@@ -284,6 +294,10 @@ export default class CpInput extends HTMLElement implements CustomElement {
 		// this.cpInputInputWrapper.append(this.cpInputInput, this.cpInputFieldset);
 		this.cpInputInputWrapper.append(this.cpInputInput);
 		shadowRoot.append(this.cpInputLabel, this.cpInputInputWrapper);
+	}
+
+	get value() {
+		return this.getAttribute('value');
 	}
 
 	/** 设置输入框样式,默认 standard */
@@ -317,8 +331,11 @@ export default class CpInput extends HTMLElement implements CustomElement {
 	}
 
 	connectedCallback() {
-		this.setVariant();
 		if (this.getAttribute('autofocus') === 'true') this.cpInputInput.focus();
+		const defaultValue = this.getAttribute('default-value');
+		if (typeof defaultValue === 'string') this.cpInputInput.value = defaultValue;
+		this.setVariant();
+		this.setInputInsertStyle();
 	}
 
 	/** 获取当前组件变体类型 */

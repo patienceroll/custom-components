@@ -32,12 +32,74 @@
 			<li>
 				<h4>类型</h4>
 				<cp-paper>
-					<cp-input variant="outlined" type="email" autofocus="true" placeholder="please insert your email" autocomplete="email"> Email </cp-input>
-					<cp-input variant="outlined" type="number" autocomplete="cc-number"> Number </cp-input>
-					<cp-input variant="outlined" type="password" autocomplete="current-password"> Password </cp-input>
-					<cp-input variant="outlined" type="tel" autocomplete="tel"> Tel </cp-input>
-					<cp-input variant="outlined" type="text" autocomplete="name"> Text </cp-input>
-					<cp-input variant="outlined" type="url" autocomplete="url"> Url </cp-input>
+					<form>
+						<cp-input type="email" autofocus="true" placeholder="please insert your email" autocomplete="email">
+							Email
+						</cp-input>
+						<cp-input type="number" autocomplete="cc-number"> Number </cp-input>
+						<cp-input type="password" autocomplete="current-password"> Password </cp-input>
+						<cp-input type="tel" autocomplete="tel"> Tel </cp-input>
+						<cp-input type="text" autocomplete="name"> Text </cp-input>
+						<cp-input type="url" autocomplete="url"> Url </cp-input>
+						<br />
+						<cp-input
+							variant="outlined"
+							type="email"
+							autofocus="true"
+							placeholder="please insert your email"
+							autocomplete="email"
+						>
+							Email
+						</cp-input>
+						<cp-input variant="outlined" type="number" autocomplete="cc-number"> Number </cp-input>
+						<cp-input variant="outlined" type="password" autocomplete="current-password"> Password </cp-input>
+						<cp-input variant="outlined" type="tel" autocomplete="tel"> Tel </cp-input>
+						<cp-input variant="outlined" type="text" autocomplete="name"> Text </cp-input>
+						<cp-input variant="outlined" type="url" autocomplete="url"> Url </cp-input>
+						<br />
+						<cp-input
+							variant="filled"
+							type="email"
+							autofocus="true"
+							placeholder="please insert your email"
+							autocomplete="email"
+						>
+							Email
+						</cp-input>
+						<cp-input variant="filled" type="number" autocomplete="cc-number"> Number </cp-input>
+						<cp-input variant="filled" type="password" autocomplete="current-password"> Password </cp-input>
+						<cp-input variant="filled" type="tel" autocomplete="tel"> Tel </cp-input>
+						<cp-input variant="filled" type="text" autocomplete="name"> Text </cp-input>
+						<cp-input variant="filled" type="url" autocomplete="url"> Url </cp-input>
+					</form>
+					<br />
+				</cp-paper>
+			</li>
+			<li>
+				<h4>默认值和受控</h4>
+				<cp-paper>
+					<cp-input default-value="defaultValue"> DefaultValue </cp-input>
+					<cp-input default-value="defaultValue" variant="outlined"> DefaultValue </cp-input>
+					<cp-input default-value="defaultValue" variant="filled"> DefaultValue </cp-input>
+					<br />
+					<cp-input tag="controled" value="controled">Controled</cp-input>
+					<cp-input tag="controled" variant="outlined" value="controled">Controled</cp-input>
+					<cp-input tag="controled" variant="filled" value="controled">Controled</cp-input>
+					<script>
+						const inputs = Array.from(document.querySelectorAll('cp-input[tag="controled"]'));
+						inputs.forEach((i) => {
+							i.addEventListener('change', (event) => {
+								inputs.forEach((input) => {
+									input.setAttribute('value', event.detail.value);
+								});
+							});
+							i.addEventListener('input', (event) => {
+								inputs.forEach((input) => {
+									input.setAttribute('value', event.detail.value);
+								});
+							});
+						});
+					</script>
 				</cp-paper>
 			</li>
 		</ul>
