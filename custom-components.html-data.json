@@ -1,0 +1,82 @@
+{
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "cp-accordion",
+      "description": "custom-components 手风琴折叠面板控制组件",
+      "attributes": [
+        {
+          "name": "active-keys",
+          "description": "受控状态,当前打开的折叠面板数组,值为JSON数组字符串"
+        }
+      ]
+    },
+    {
+      "name": "cp-accordion-item",
+      "description": "custom-components 手风琴折叠面板单项",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "当前这个折叠面板是否展开",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        },
+        {
+          "name": "disable",
+          "description": "折叠面板是否禁用",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        },
+        {
+          "name": "first-item",
+          "description": "是否是手风琴面板控制下的第一个折叠面板",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        },
+        {
+          "name": "last-item",
+          "description": "是否是手风琴面板控制下的第一个折叠面板",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        },
+        {
+          "name": "key",
+          "description": "当前折叠面板的key"
+        }
+      ]
+    },
+    {
+      "name": "cp-avatar",
+      "description": "头像组件"
+    },
+    {
+      "name": "cp-buttom",
+      "description": "按钮组件"
+    }
+
+  ]
+}
