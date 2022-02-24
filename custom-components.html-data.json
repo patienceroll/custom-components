@@ -74,9 +74,462 @@
       "description": "头像组件"
     },
     {
-      "name": "cp-buttom",
-      "description": "按钮组件"
+      "name": "cp-button",
+      "description": "按钮组件",
+      "attributes": [
+        {
+          "name": "ripple-color",
+          "description": "按钮涟漪的颜色"
+        },
+        {
+          "name": "loading-color",
+          "description": "加载中的颜色"
+        },
+        {
+          "name": "disable",
+          "description": "按钮是否禁用",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        },
+        {
+          "name": "loading",
+          "description": "按钮是否加载中",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cp-icon-button",
+      "description": "icon 按钮",
+      "attributes": [
+        {
+          "name": "ripple-color",
+          "description": "按钮涟漪的颜色"
+        },
+        {
+          "name": "disable",
+          "description": "按钮是否禁用",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cp-circular-progress",
+      "description": "环形进度条",
+      "attributes": [
+        {
+          "name": "color",
+          "description": "进度条的颜色"
+        },
+        {
+          "name": "value",
+          "description": "圆环状进度条百分比,值为0-100"
+        },
+        {
+          "name": "label",
+          "description": "是否展示进度条文字进度"
+        }
+      ]
+    },
+    {
+      "name": "cp-dialog",
+      "description": "弹窗组件",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "弹窗的标题"
+        },
+        {
+          "name": "mask-closabl",
+          "description": "点击阴影处是否能关闭",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cp-drawer",
+      "description": "抽屉组件",
+      "attributes": [
+        {
+          "name": "title",
+          "description": "弹窗的标题"
+        },
+        {
+          "name": "mask-closabl",
+          "description": "点击阴影处是否能关闭",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        },
+        {
+          "name": "direction",
+          "description": "抽屉出现方向",
+          "values": [
+            {
+              "name": "bottom"
+            },
+            {
+              "name": "left"
+            },
+            {
+              "name": "right"
+            },
+            {
+              "name": "top"
+            }
+          ],
+          "valueSet": "top"
+        }
+      ]
+    },
+    {
+      "name": "cp-input",
+      "description": "输入框组件",
+      "attributes": [
+        {
+          "name": "variant",
+          "description": "输入框变体,默认是standard",
+          "values": [
+            {
+              "name": "standard"
+            },
+            {
+              "name": "outlined"
+            },
+            {
+              "name": "filled"
+            }
+          ]
+        },
+        {
+          "name": "default-value",
+          "description": "输入框的默认值"
+        },
+        {
+          "name": "value",
+          "description": "输入框的值,当有此属性的时候,组件为受控状态"
+        },
+        {
+          "name": "name",
+          "description": "同input标签的name字段"
+        },
+        {
+          "name": "autofocus",
+          "description": "意义和input的autofocus一样,但是值为true或false的字符串",
+          "values": [
+            {
+              "name": "false"
+            },
+            {
+              "name": "true"
+            }
+          ]
+        },
+        {
+          "name": "placeholder",
+          "description": "同input的placeholder"
+        },
+        {
+          "name": "type",
+          "description": "继承自input的type,目前只支持 'email' | 'number' | 'password' | 'tel' | 'text' | 'url' 几个值",
+          "values": [
+            {
+              "name": "email"
+            },
+            {
+              "name": "number"
+            },
+            {
+              "name": "password"
+            },
+            {
+              "name": "tel"
+            },
+            {
+              "name": "text"
+            },
+            {
+              "name": "url"
+            }
+          ]
+        },
+        {
+          "name": "autocomplete",
+          "description": "同input的autocomplete属性",
+          "values": [
+            {
+              "name": "off"
+            },
+            {
+              "name": "on"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "honorific-prefix"
+            },
+            {
+              "name": "given-name"
+            },
+            {
+              "name": "additional-name"
+            },
+            {
+              "name": "family-name"
+            },
+            {
+              "name": "honorific-suffix"
+            },
+            {
+              "name": "nickname"
+            },
+            {
+              "name": "username"
+            },
+            {
+              "name": "new-password"
+            },
+            {
+              "name": "current-password"
+            },
+            {
+              "name": "one-time-code"
+            },
+            {
+              "name": "organization-title"
+            },
+            {
+              "name": "organization"
+            },
+            {
+              "name": "street-address"
+            },
+            {
+              "name": "address-line1"
+            },
+            {
+              "name": "address-line2"
+            },
+            {
+              "name": "address-line3"
+            },
+            {
+              "name": "address-level4"
+            },
+            {
+              "name": "address-level3"
+            },
+            {
+              "name": "address-level2"
+            },
+            {
+              "name": "address-level1"
+            },
+            {
+              "name": "country"
+            },
+            {
+              "name": "country-name"
+            },
+            {
+              "name": "postal-code"
+            },
+            {
+              "name": "cc-name"
+            },
+            {
+              "name": "cc-given-name"
+            },
+            {
+              "name": "cc-additional-name"
+            },
+            {
+              "name": "cc-family-name"
+            },
+            {
+              "name": "cc-number"
+            },
+            {
+              "name": "cc-exp"
+            },
+            {
+              "name": "cc-exp-month"
+            },
+            {
+              "name": "cc-exp-year"
+            },
+            {
+              "name": "cc-csc"
+            },
+            {
+              "name": "cc-type"
+            },
+            {
+              "name": "transaction-currency"
+            },
+            {
+              "name": "transaction-amount"
+            },
+            {
+              "name": "language"
+            },
+            {
+              "name": "bday"
+            },
+            {
+              "name": "bday-day"
+            },
+            {
+              "name": "bday-month"
+            },
+            {
+              "name": "bday-year"
+            },
+            {
+              "name": "sex"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "photo"
+            },
+            {
+              "name": "home"
+            },
+            {
+              "name": "work"
+            },
+            {
+              "name": "fax"
+            },
+            {
+              "name": "mobile"
+            },
+            {
+              "name": "pager"
+            },
+            {
+              "name": "tel"
+            },
+            {
+              "name": "tel-country-code"
+            },
+            {
+              "name": "tel-national"
+            },
+            {
+              "name": "tel-area-code"
+            },
+            {
+              "name": "tel-local"
+            },
+            {
+              "name": "tel-local-prefix"
+            },
+            {
+              "name": "tel-local-suffix"
+            },
+            {
+              "name": "tel-extension"
+            },
+            {
+              "name": "email"
+            },
+            {
+              "name": "impp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cp-mask",
+      "description": "基础组件,mask",
+      "attributes": [
+        {
+          "name": "mask-closable",
+          "description": "点击阴影处是否可以关闭mask",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        },
+        {
+          "name": "open",
+          "description": "阴影是否展示",
+          "values": [
+            {
+              "name": "true"
+            },
+            {
+              "name": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cp-message",
+      "description": "消息组件"
+    },
+    {
+      "name": "cp-paper",
+      "description": "纸张组件",
+      "attributes": [
+        {
+          "name": "variant",
+          "description": "纸张的变体",
+          "values": [
+            {
+              "name": "outlined"
+            },
+            {
+              "name": "primary"
+            }
+          ]
+        },
+        {
+          "name": "方形"
+        }
+      ]
     }
-
   ]
 }
